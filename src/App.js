@@ -10,18 +10,18 @@ import AssignedPostPage from "./components/staff-assigned-post/assigned-post-pag
 function App() {
   return (
     <React.Fragment>
-      <Router>
+      {/* <Router>
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
           <Route path="/search-result-page/:searchtext" component={SearchResultPage}></Route>
           <Route path="/product-detail-page" component={ProductDetailPage}></Route>
         </Switch>
-      </Router>
+      </Router> */}
       {/* <Example /> */}
       {/* <HomePage /> */}
       {/* <SearchResultPage /> */}
       {/* <ProductDetailPage /> */}
-      {/* <AssignedPostPage /> */}
+      <AssignedPostPage />
     </React.Fragment>
 
     // <div className="App">

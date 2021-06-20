@@ -79,7 +79,7 @@ class AssignedPostItem extends Component {
                   </div>
                 }
               >
-                {(close) => <TransactionPopUpContent />}
+                {(close) => <TransactionPopUpContent close={close} />}
               </Popup>
 
               {/* <div className="staff-product-phone-contact horizontal">
