@@ -8,6 +8,8 @@ import { BiMoney } from "react-icons/bi";
 import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
+import { Link } from "react-router-dom";
+import chat from "../chat/Chat";
 
 class ProductDetailPage extends Component {
   state = {
@@ -58,7 +60,9 @@ class ProductDetailPage extends Component {
                 <div style={{ height: "10px", width: "100%" }}></div>
 
                 <div className="product-short-detail">Ngày đăng: Hôm nay</div>
-                <div className="product-short-detail">Giá trung bình khu vực: 100 triệu/m²</div>
+                <div className="product-short-detail">
+                  Giá trung bình khu vực: 100 triệu/m²
+                </div>
 
                 <div className="divide"></div>
 
@@ -188,14 +192,20 @@ class ProductDetailPage extends Component {
                 <div className="contact-name">Nguyen Duc Huy</div>
                 <div className="contact-button">
                   {/* <BsFillChatDotsFill /> */}
-                  
+
                   {/* <div style={{width: "18px"}}></div> */}
-                  <div className="contact-title-container">&#32;Nhắn tin</div>
-                  
+                  <div className="contact-title-container">
+                    &#32;
+                    <Link className="link" to="/chat-page">
+                      Nhan tin
+                    </Link>
+                  </div>
                 </div>
 
                 <div className="more-post-button">
-                  <div className="contact-title-container">&#32;Xem thêm bài viết</div>
+                  <div className="contact-title-container">
+                    &#32;Xem thêm bài viết
+                  </div>
                 </div>
 
                 <div className="more-post-button">
