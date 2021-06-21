@@ -20,7 +20,6 @@ export default function ChatHeader(props) {
   const [buttonPopup, setButtonPopup] = useState(false);
   const [startDate, setStartDate] = useState(addDays(new Date(), 1));
   const years = range(1990, getYear(new Date()) + 3, 1);
-
   const months = [
     "January",
     "February",
