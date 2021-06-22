@@ -9,7 +9,6 @@ import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { Link } from "react-router-dom";
-import chat from "../chat/Chat";
 
 class ProductDetailPage extends Component {
   state = {

@@ -4,16 +4,19 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "react-datepicker/dist/react-datepicker.css";
+import { BrowserRouter as Router } from "react-router-dom";
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <App style={{fontFamily: "'Roboto', sans-serif"}} /> */}
-    <App
-      style={{
-        fontFamily:
-          "'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif",
-      }}
-    />
+    <Router>
+      {/* <App style={{fontFamily: "'Roboto', sans-serif"}} /> */}
+      <App
+        style={{
+          fontFamily:
+            "'Haas Grot Text R Web', 'Helvetica Neue', Helvetica, Arial, sans-serif",
+        }}
+      />
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

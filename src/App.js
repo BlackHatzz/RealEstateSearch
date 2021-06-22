@@ -1,35 +1,49 @@
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch, useHistory } from "react-router-dom";
 import AssignedPostPage from "./components/staff-assigned-post/assigned-post-page";
-import Chat from "./components/chat/Chat";
-
+// import { ChatProvider } from "context";
+import { useAuth, useResolved } from "./hooks";
+import { Login } from "components";
+import { Signup } from "components";
+import { ChatProvider } from "context";
+import Chat from "components/chat-old/Chat";
 function App() {
-  return (
-    <React.Fragment>
-      {/* <Router>
+  const history = useHistory();
+  const { authUser } = useAuth();
+  const authResolved = useResolved(authUser);
+
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
+
+  return authResolved ? (
+    <ChatProvider authUser={authUser}>
+      <div className="app">
         <Switch>
-          <Route exact path="/" component={HomePage}></Route>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
           <Route
             path="/search-result-page/:searchtext"
             component={SearchResultPage}
-          ></Route>
-          <Route
-            path="/product-detail-page"
-            component={ProductDetailPage}
-          ></Route>
-          <Route path="/chat-page" component={Chat}></Route>
+          />
+          <Route path="/product-detail-page" component={ProductDetailPage} />
+          <Route path="/chat-page" component={Chat} />
         </Switch>
-      </Router> */}
-      {/* <Example /> */}
-      {/* <HomePage /> */}
-      {/* <SearchResultPage /> */}
-      {/* <ProductDetailPage /> */}
-      <AssignedPostPage />
-    </React.Fragment>
+      </div>
+    </ChatProvider>
+  ) : (
+    // {/* <Example /> */}
+    // {/* <HomePage /> */}
+    // {/* <SearchResultPage /> */}
+    // {/* <ProductDetailPage /> */}
+    // {/* <AssignedPostPage /> */}
 
     // <div className="App">
     //   <header className="App-header">
@@ -47,6 +61,7 @@ function App() {
     //     </a>
     //   </header>
     // </div>
+    <>Loading...</>
   );
 }
 
