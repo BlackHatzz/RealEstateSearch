@@ -55,9 +55,19 @@ class SearchResultPage extends Component {
           <div className="horizontal">
             <div className="product-list">
               {this.state.items.map((item) => (
-                <Link className="link" to="/product-detail-page">
-                <ProductItem item={item} />
+                <Link
+                  key={item.id}
+                  className="link"
+                  to={{
+                    pathname: "/product-detail-page",
+                    product: item,
+                  }}
+                >
+                  <ProductItem item={item} />
                 </Link>
+                // <Link className="link" to="/product-detail-page">
+                // <ProductItem item={item} />
+                // </Link>
               ))}
               {/* <ProductItem />
               <ProductItem />

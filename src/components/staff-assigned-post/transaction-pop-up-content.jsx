@@ -3,8 +3,10 @@ import "./transaction-pop-up-content.css";
 import "../global/shared.css";
 import SolidField from "./solid-field";
 import "./solid-field.css";
-import { RiArrowDropDownLine } from "react-icons/ri";
+import { RiArrowDropDownLine, RiTruckLine } from "react-icons/ri";
+import Popup from "reactjs-popup";
 import { AiOutlineConsoleSql } from "react-icons/ai";
+import PositionedSnackbar from "../global/PositionedSnackbar";
 
 class TransactionPopUpContent extends Component {
   state = {
@@ -15,6 +17,7 @@ class TransactionPopUpContent extends Component {
       { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
     ],
     selectedBuyer: null,
+    // isTransactionPopupShown: false,
   };
 
   showBuyerMenu = () => {
@@ -48,11 +51,18 @@ class TransactionPopUpContent extends Component {
         </div>
         <div className="info-container">
           <span className="dropdown-item">{this.state.selectedBuyer.name}</span>
-          <span className="dropdown-item2">ID: {this.state.selectedBuyer.id}</span>
+          <span className="dropdown-item2">
+            ID: {this.state.selectedBuyer.id}
+          </span>
         </div>
       </div>
     );
   }
+
+  handleConfirm = () => {
+    console.log("confirm");
+    this.props.close();
+  };
 
   render() {
     return (
@@ -148,8 +158,21 @@ class TransactionPopUpContent extends Component {
               />
               <div style={{ height: "28px" }}></div>
               <div className="bottom">
-                <div onClick={this.props.close} className="noselect cancel-button">HỦY</div>
-                <div className="noselect confirm-button">XÁC NHẬN</div>
+                <div
+                  onClick={this.props.close}
+                  className="noselect cancel-button"
+                >
+                  HỦY
+                </div>
+
+
+                <div
+                  onClick={this.handleConfirm}
+                  className="noselect confirm-button"
+                >
+                  XÁC NHẬN
+                </div>
+                
               </div>
 
               {/* {" "}
@@ -169,6 +192,7 @@ class TransactionPopUpContent extends Component {
             </div>
           </div>
         </div>
+        {/* {this.state.isBuyerMenuShown ? <TickPopup /> : null } */}
       </React.Fragment>
     );
   }

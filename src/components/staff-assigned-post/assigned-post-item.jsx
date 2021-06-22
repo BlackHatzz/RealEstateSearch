@@ -9,7 +9,8 @@ class AssignedPostItem extends Component {
   state = {
       overlayStyle: {
           backgroundColor: "rgba(10, 10, 10, 0.6)",
-      }
+      },
+      isTransactionPopupShown: false
   };
   render() {
     console.log("in");
@@ -81,6 +82,7 @@ class AssignedPostItem extends Component {
               >
                 {(close) => <TransactionPopUpContent close={close} />}
               </Popup>
+              {console.log("tq" + this.state.isTransactionPopupShown)}
 
               {/* <div className="staff-product-phone-contact horizontal">
                   &#65291;

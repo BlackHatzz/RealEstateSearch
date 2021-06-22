@@ -10,7 +10,7 @@ import Chat from "./components/chat/Chat";
 function App() {
   return (
     <React.Fragment>
-      {/* <Router>
+      <Router>
         <Switch>
           <Route exact path="/" component={HomePage}></Route>
           <Route
@@ -22,13 +22,14 @@ function App() {
             component={ProductDetailPage}
           ></Route>
           <Route path="/chat-page" component={Chat}></Route>
+          <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
         </Switch>
-      </Router> */}
+      </Router>
       {/* <Example /> */}
       {/* <HomePage /> */}
       {/* <SearchResultPage /> */}
       {/* <ProductDetailPage /> */}
-      <AssignedPostPage />
+      {/* <AssignedPostPage /> */}
     </React.Fragment>
 
     // <div className="App">
