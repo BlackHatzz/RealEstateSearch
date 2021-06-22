@@ -97,7 +97,7 @@ export default function ChatHeader(props) {
               setButtonPopup(true);
             }}
           >
-            Create a deal
+            Create a dealaaa
           </button>
         )}
       </div>
