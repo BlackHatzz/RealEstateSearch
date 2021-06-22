@@ -9,7 +9,6 @@ import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { Link, useLocation } from "react-router-dom";
-import chat from "../chat/Chat";
 
 class ProductDetailPage extends Component {
   state = {
@@ -67,7 +66,10 @@ class ProductDetailPage extends Component {
                 </span>
                 <div style={{ height: "10px", width: "100%" }}></div>
 
-                <div className="product-short-detail">Ngày đăng: {product.createAt}{/*Hôm nay*/}</div>
+                <div className="product-short-detail">
+                  Ngày đăng: {product.createAt}
+                  {/*Hôm nay*/}
+                </div>
                 <div className="product-short-detail">
                   Giá trung bình khu vực: {product.averagePrice} triệu/m²
                 </div>
@@ -185,7 +187,10 @@ class ProductDetailPage extends Component {
                         <span className="short-info-label1">
                           Hướng ban công:
                         </span>
-                        <span className="short-info-label2">{product.balconyDirection}{/*Đông nam*/}</span>
+                        <span className="short-info-label2">
+                          {product.balconyDirection}
+                          {/*Đông nam*/}
+                        </span>
                       </div>
                     </li>
                   </ul>
