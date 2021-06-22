@@ -7,16 +7,29 @@ import TransactionPopUpContent from "./transaction-pop-up-content";
 
 class AssignedPostItem extends Component {
   state = {
-      overlayStyle: {
-          backgroundColor: "rgba(10, 10, 10, 0.6)",
-      },
-      isTransactionPopupShown: false
+    overlayStyle: {
+      backgroundColor: "rgba(10, 10, 10, 0.6)",
+    },
+    isTransactionPopupShown: false,
+    isNotiShown: false,
   };
+
+  handleClosePopup = (close) => {
+    console.log("this is close");
+    close();
+    // this.props.handleSnackbar();
+    this.setState({
+      isNotiShown: true
+    });
+  };
+
   render() {
-    console.log("in");
-    console.log(this.props);
+    // console.log("in");
+    // console.log(this.props);
     return (
       <React.Fragment>
+        {/* {this.props.handleSnackbar()} */}
+        {this.state.isNotiShown ? this.props.handleSnackbar() : null}
         <div className="staff-product-item-container">
           {/* left: image of the product */}
           <div className="staff-product-image-container">
@@ -69,7 +82,7 @@ class AssignedPostItem extends Component {
               <div className="staff-product-owner">Nguyen Duc Huy</div>
 
               {/* create a transaction */}
-              <Popup
+              {/* <Popup
               overlayStyle={this.state.overlayStyle}
                 modal
                 trigger={
@@ -81,7 +94,22 @@ class AssignedPostItem extends Component {
                 }
               >
                 {(close) => <TransactionPopUpContent close={close} />}
+              </Popup> */}
+
+              <Popup
+                overlayStyle={this.state.overlayStyle}
+                modal
+                trigger={
+                  <div className="staff-product-phone-contact horizontal">
+                    &#65291;
+                    <div style={{ width: "12px" }}></div>
+                    <span>&#32;Tạo giao dịch</span>
+                  </div>
+                }
+              >
+                {(close) => <TransactionPopUpContent close={() => this.handleClosePopup(close)} />}
               </Popup>
+
               {console.log("tq" + this.state.isTransactionPopupShown)}
 
               {/* <div className="staff-product-phone-contact horizontal">

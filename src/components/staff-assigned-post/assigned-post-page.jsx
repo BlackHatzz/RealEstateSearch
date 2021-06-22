@@ -1,17 +1,12 @@
 import React, { Component } from "react";
 import "./assigned-post.css";
 import AssignedPostItem from "./assigned-post-item";
-import Alert from "@material-ui/lab/Alert";
-import { Link } from "react-router-dom";
-import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
-import MuiAlert from "@material-ui/lab/Alert";
-import { makeStyles } from "@material-ui/core/styles";
-import PositionedSnackbar from "../global/PositionedSnackbar";
 
 class AssignedPostPage extends Component {
   state = {
     items: [],
+    isSnackbarShown: true,
   };
 
   componentDidMount() {
@@ -42,12 +37,63 @@ class AssignedPostPage extends Component {
       );
   }
 
+  handleCloseSnackbar = () => {
+    this.setState({
+      isSnackbarShown: false
+    });
+  }
+
+
+  handleSnackbar = () => {
+    return (
+      <Snackbar
+      autoHideDuration={2000}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+        open={this.state.isSnackbarShown}
+        onClose={this.handleCloseSnackbar}
+        message="Great! You've created a new transaction!"
+        key={"top" + "right"}
+      ></Snackbar>
+    );
+  };
+  switchToggle = () => {
+    this.setState({
+      isSnackbarShown: !this.state.isSnackbarShown,
+    });
+  };
+  renderSnackbar() {
+    if (this.state.isSnackbarShown) {
+      return (
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "right" }}
+          open={true}
+          // onClose={handleClose}
+          message="I love snacks"
+          key={"top" + "right"}
+        />
+      );
+    }
+    return null;
+  }
+
   render() {
     return (
       <React.Fragment>
         {/* <SearchSuggestion /> */}
+        {/* <div onClick={this.switchToggle}>switch</div>
+        {this.renderSnackbar()} */}
 
-        <PositionedSnackbar child={<p>stuooo</p>} />
+        {/* {this.state.isSnackbarShown ? (
+          <Snackbar
+            anchorOrigin={{ vertical: "top", horizontal: "right" }}
+            open={true}
+            // onClose={handleClose}
+            message="I love snacks"
+            key={"top" + "right"}
+          />
+        ) : null} */}
+
+        {/* <z  child={<p>stuooo</p>} /> */}
         {/* search result list */}
         <div style={{ width: "100%" }}>
           <div className="horizontal">
@@ -55,7 +101,10 @@ class AssignedPostPage extends Component {
               {/* {this.state.items.map((item) => (
                     <AssignedPostItem item={item} />
                   ))} */}
-              <AssignedPostItem item={[]} />
+              <AssignedPostItem
+                item={[]}
+                handleSnackbar={this.handleSnackbar}
+              />
               {/* <ProductItem />
                   <ProductItem />
                   <ProductItem />
