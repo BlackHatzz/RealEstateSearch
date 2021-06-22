@@ -166,7 +166,7 @@ class ProductDetailPage extends Component {
                       <FaBuilding className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Loại:</span>
-                        <span className="short-info-label2">Chung Cư</span>
+                        <span className="short-info-label2">{product.typeName}{/*Chung Cư*/}</span>
                       </div>
                     </li>
 
@@ -214,8 +214,8 @@ class ProductDetailPage extends Component {
 
               {/* right content */}
               <div className="linear-gray-border contact-wrapper">
-                <div className="contact-pic"></div>
-                <div className="contact-name">Nguyen Duc Huy</div>
+                <div style={{background: "url('" + product.avatar + "')"}} className="contact-pic"></div>
+                <div className="contact-name">{product.sellerName}{/*Nguyen Duc Huy*/}</div>
                 <div className="contact-button">
                   {/* <BsFillChatDotsFill /> */}
 
