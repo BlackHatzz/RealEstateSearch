@@ -63,6 +63,7 @@
     object-fit: cover;
     background-repeat: no-repeat;
     border-radius: 25px;
+    margin-left: 10px;
 }
 .profile-name-text {
     font-size: 14px;
@@ -98,15 +99,6 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-}
-
-.profile-menu-container > .top-item {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-.profile-menu-container > .bottom-item {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
 }
 
 .profile-menu-container > .profile-menu-item:hover {

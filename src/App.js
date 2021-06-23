@@ -14,11 +14,11 @@ const App = () => {
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
 
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
   return authResolved ? (
     <div className="app">
       <Switch>
