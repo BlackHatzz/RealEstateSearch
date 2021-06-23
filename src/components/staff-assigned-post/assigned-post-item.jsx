@@ -21,6 +21,7 @@ class AssignedPostItem extends Component {
     this.setState({
       isNotiShown: true
     });
+    this.props.handleOpenSnackbar();
   };
 
   render() {
@@ -107,7 +108,7 @@ class AssignedPostItem extends Component {
                   </div>
                 }
               >
-                {(close) => <TransactionPopUpContent close={() => this.handleClosePopup(close)} />}
+                {(close) => <TransactionPopUpContent buyers={this.props.item.buyers} close={() => this.handleClosePopup(close)} />}
               </Popup>
 
               {console.log("tq" + this.state.isTransactionPopupShown)}

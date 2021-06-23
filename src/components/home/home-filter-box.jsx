@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { FaLastfmSquare } from "react-icons/fa";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import "../global/shared.css";
 import HomeFilterMenuOption from "./home-filter-menu-option";

@@ -2,28 +2,39 @@ import React, { Component } from "react";
 import "./assigned-post.css";
 import AssignedPostItem from "./assigned-post-item";
 import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
+import { AiOutlineConsoleSql } from "react-icons/ai";
 
 class AssignedPostPage extends Component {
   state = {
     items: [],
     isSnackbarShown: true,
+    stupid: true,
   };
 
   componentDidMount() {
     console.log("hehe2");
-    fetch("http://localhost:8080/api/v1/rs")
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "page": 0,
+        "size": 20,
+        "staffId": "ddddddddd"
+    }),
+    };
+
+    fetch("http://localhost:8080/api/v1/transaction/getRealEstateAssignStaff", requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
-          // console.log(result.content);
+          console.log("get assign");
+          console.log(result);
+          
           this.setState({
             items: result.content,
           });
-          console.log(this.state.items);
-          // this.setState({
-          //   isLoaded: true,
-          //   items: result.items,
-          // });
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -37,23 +48,34 @@ class AssignedPostPage extends Component {
       );
   }
 
+  handleOpenSnackbar = () => {
+    this.setState({
+      isSnackbarShown: true,
+    });
+  };
+
   handleCloseSnackbar = () => {
     this.setState({
-      isSnackbarShown: false
+      isSnackbarShown: false,
     });
-  }
-
+  };
 
   handleSnackbar = () => {
     return (
       <Snackbar
-      autoHideDuration={2000}
+        autoHideDuration={5000}
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
         open={this.state.isSnackbarShown}
         onClose={this.handleCloseSnackbar}
         message="Great! You've created a new transaction!"
         key={"top" + "right"}
-      ></Snackbar>
+      >
+        <Alert style={{ backgroundColor: "black" }} severity="success">
+          <span style={{ color: "white" }}>
+            Tuyệt! Bạn đã tạo thành công 1 giao dịch giữa Nguyễn A và Trần B
+          </span>
+        </Alert>
+      </Snackbar>
     );
   };
   switchToggle = () => {
@@ -81,9 +103,9 @@ class AssignedPostPage extends Component {
       <React.Fragment>
         {/* <SearchSuggestion /> */}
         {/* <div onClick={this.switchToggle}>switch</div>
-        {this.renderSnackbar()} */}
+        {this.renderSnackbar()}
 
-        {/* {this.state.isSnackbarShown ? (
+        {this.state.isSnackbarShown ? (
           <Snackbar
             anchorOrigin={{ vertical: "top", horizontal: "right" }}
             open={true}
@@ -101,10 +123,15 @@ class AssignedPostPage extends Component {
               {/* {this.state.items.map((item) => (
                     <AssignedPostItem item={item} />
                   ))} */}
-              <AssignedPostItem
-                item={[]}
-                handleSnackbar={this.handleSnackbar}
-              />
+                  {this.state.items.map((item) => (
+                    <AssignedPostItem
+                    key={item.realEstateId}
+                    item={item}
+                    handleSnackbar={this.handleSnackbar}
+                    handleOpenSnackbar={this.handleOpenSnackbar}
+                  />
+                  ))}
+              
               {/* <ProductItem />
                   <ProductItem />
                   <ProductItem />

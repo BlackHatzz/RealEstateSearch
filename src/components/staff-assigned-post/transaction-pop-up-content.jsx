@@ -3,22 +3,27 @@ import "./transaction-pop-up-content.css";
 import "../global/shared.css";
 import SolidField from "./solid-field";
 import "./solid-field.css";
-import { RiArrowDropDownLine, RiTruckLine } from "react-icons/ri";
-import Popup from "reactjs-popup";
-import { AiOutlineConsoleSql } from "react-icons/ai";
-import PositionedSnackbar from "../global/PositionedSnackbar";
+import { RiArrowDropDownLine } from "react-icons/ri";
 
 class TransactionPopUpContent extends Component {
   state = {
     isBuyerMenuShown: false,
-    buyerBasicInfos: [
-      { id: "1", name: "nguyen duc huy 1", profilePicUrl: "thisisurl" },
-      { id: "2", name: "nguyen duc huy 2", profilePicUrl: "thisisurl" },
-      { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
-    ],
+    buyerBasicInfos: [],
+    // buyerBasicInfos: [
+    //   { id: "1", name: "nguyen duc huy 1", profilePicUrl: "thisisurl" },
+    //   { id: "2", name: "nguyen duc huy 2", profilePicUrl: "thisisurl" },
+    //   { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
+    // ],
     selectedBuyer: null,
     // isTransactionPopupShown: false,
   };
+
+  componentDidMount() {
+    
+    this.setState({
+      buyerBasicInfos: this.props.buyers
+    })
+  }
 
   showBuyerMenu = () => {
     this.setState({
@@ -50,9 +55,9 @@ class TransactionPopUpContent extends Component {
           <img src="" alt="" className="profile-pic" />
         </div>
         <div className="info-container">
-          <span className="dropdown-item">{this.state.selectedBuyer.name}</span>
+          <span className="dropdown-item">{this.state.selectedBuyer.buyerName}</span>
           <span className="dropdown-item2">
-            ID: {this.state.selectedBuyer.id}
+            ID: {this.state.selectedBuyer.buyerId}
           </span>
         </div>
       </div>
@@ -62,9 +67,45 @@ class TransactionPopUpContent extends Component {
   handleConfirm = () => {
     console.log("confirm");
     this.props.close();
+    // create a new transaction by using api
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        "title": "Chung Cư Vip",
+        "buyerId": "aaaaaaaaa",
+        "sellerId": "bbbbbbbbb",
+        "staffId": "ddddddddd",
+        "realEstateId": 1,
+        "downPrice": 23445,
+        "createAt": "2021-02-10"
+    }),
+    };
+
+    fetch("http://localhost:8080/api/v1/transaction", requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("create trans");
+          console.log(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          // this.setState({
+          //   isLoaded: true,
+          //   error,
+          // });
+        }
+      );
+
   };
 
   render() {
+    console.log("buyers ");
+    console.log(this.props.buyers);
+
     return (
       <React.Fragment>
         <div className="pop-up-box">
@@ -96,7 +137,7 @@ class TransactionPopUpContent extends Component {
                   {this.state.isBuyerMenuShown
                     ? this.state.buyerBasicInfos.map((buyer) => (
                         <div
-                          key={buyer.id}
+                          key={buyer.buyerId}
                           onClick={() => this.handleBuyerSelection(buyer)}
                           className="dropdown-item padding-field"
                         >
@@ -104,9 +145,9 @@ class TransactionPopUpContent extends Component {
                             <img src="" alt="" className="profile-pic" />
                           </div>
                           <div className="info-container">
-                            <span className="dropdown-item">{buyer.name}</span>
+                            <span className="dropdown-item">{buyer.buyerName}</span>
                             <span className="dropdown-item2">
-                              ID: {buyer.id}
+                              ID: {buyer.buyerId}
                             </span>
                           </div>
                         </div>
