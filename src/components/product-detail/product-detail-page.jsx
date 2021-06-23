@@ -8,6 +8,7 @@ import { BiMoney } from "react-icons/bi";
 import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
+import { Link, useLocation } from "react-router-dom";
 
 class ProductDetailPage extends Component {
   state = {
@@ -29,7 +30,14 @@ class ProductDetailPage extends Component {
     }
   };
 
+  componentDidMount() {
+    console.log("detail");
+    console.log(this.props.location.product);
+  }
+
   render() {
+    const product = this.props.location.product;
+
     return (
       <React.Fragment>
         <SearchSuggestion />
@@ -52,13 +60,19 @@ class ProductDetailPage extends Component {
                 <div style={{ height: "30px", width: "100%" }}></div>
                 {/* product title */}
                 <span className="product-info-title">
-                  PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
-                  ĐẸP, GIÁ TỐT
+                  {product.title}
+                  {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+                  ĐẸP, GIÁ TỐT */}
                 </span>
                 <div style={{ height: "10px", width: "100%" }}></div>
 
-                <div className="product-short-detail">Ngày đăng: Hôm nay</div>
-                <div className="product-short-detail">Giá trung bình khu vực: 100 triệu/m²</div>
+                <div className="product-short-detail">
+                  Ngày đăng: {product.createAt}
+                  {/*Hôm nay*/}
+                </div>
+                <div className="product-short-detail">
+                  Giá trung bình khu vực: {product.averagePrice} triệu/m²
+                </div>
 
                 <div className="divide"></div>
 
@@ -68,7 +82,9 @@ class ProductDetailPage extends Component {
                       <BiMoney className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Mức giá:</span>
-                        <span className="short-info-label2">2.15 tỷ</span>
+                        <span className="short-info-label2">
+                          {product.price} tỷ{/*2.15 tỷ*/}
+                        </span>
                       </div>
                     </li>
 
@@ -76,7 +92,9 @@ class ProductDetailPage extends Component {
                       <BiArea className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Diện tích:</span>
-                        <span className="short-info-label2">68 m²</span>
+                        <span className="short-info-label2">
+                          {product.area} m²{/*68 m²*/}
+                        </span>
                       </div>
                     </li>
 
@@ -84,7 +102,9 @@ class ProductDetailPage extends Component {
                       <FaBed className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Phòng ngủ:</span>
-                        <span className="short-info-label2">2</span>
+                        <span className="short-info-label2">
+                          {product.numberOfBedroom}
+                        </span>
                       </div>
                     </li>
 
@@ -92,7 +112,9 @@ class ProductDetailPage extends Component {
                       <FaBath className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Phòng tắm:</span>
-                        <span className="short-info-label2">2</span>
+                        <span className="short-info-label2">
+                          {product.numberOfBathroom}
+                        </span>
                       </div>
                     </li>
                   </ul>
@@ -106,7 +128,8 @@ class ProductDetailPage extends Component {
                     style={{ height: this.state.desHeight }}
                     className="description-content"
                   >
-                    PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+                    {product.description}
+                    {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
                     ĐẸP, GIÁ TỐT, TRẢ TRƯỚC 1 TỶ.NHÀ CHƯA Ở ảnh 1 PHÚ ĐÔNG
                     PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG ĐẸP, GIÁ
                     TỐT, TRẢ TRƯỚC 1 TỶ.NHÀ CHƯA Ở ảnh 4 PHÚ ĐÔNG PREMIER KÝ HĐ
@@ -126,7 +149,7 @@ class ProductDetailPage extends Component {
                     TẦNG ĐẸP, GIÁ TỐT, TRẢ TRƯỚC 1 TỶ.NHÀ CHƯA Ở ảnh 12 PHÚ ĐÔNG
                     PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG ĐẸP, GIÁ
                     TỐT, TRẢ TRƯỚC 1 TỶ.NHÀ CHƯA Ở ảnh 13 PHÚ ĐÔNG PREMIER KÝ HĐ
-                    TRỰC TIẾP CDT CÒN CĂN ĐỘC
+                    TRỰC TIẾP CDT CÒN CĂN ĐỘC */}
                   </div>
                   <div onClick={this.switchToggle}>
                     <CollapseBox />
@@ -151,7 +174,10 @@ class ProductDetailPage extends Component {
                       <GrDirections className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Hướng nhà:</span>
-                        <span className="short-info-label2">Đông Nam</span>
+                        <span className="short-info-label2">
+                          {product.direction}
+                          {/*Đông Nam*/}
+                        </span>
                       </div>
                     </li>
 
@@ -161,25 +187,29 @@ class ProductDetailPage extends Component {
                         <span className="short-info-label1">
                           Hướng ban công:
                         </span>
-                        <span className="short-info-label2">Đông nam</span>
+                        <span className="short-info-label2">
+                          {product.balconyDirection}
+                          {/*Đông nam*/}
+                        </span>
                       </div>
                     </li>
-
-                    {/* <li className="short-info-item">
-                    <MdLocationOn className="short-info-icon" />
-                    <div className="short-info-content-box">
-                      <span className="short-info-label1">Địa điểm:</span>
-                      <span className="short-info-label2">Quận Thủ Đức</span>
-                    </div>
-                  </li> */}
                   </ul>
                 </div>
 
                 <div className="divide"></div>
 
-                <span className="description-title">Thông tin dự án</span>
+                <span className="description-title">
+                  Thông tin bất động sản
+                </span>
 
-                <DetailBox />
+                <DetailBox
+                  project={product.project}
+                  investor={product.investor}
+                  streetName={product.streetName}
+                  wardName={product.wardName}
+                  disName={product.disName}
+                  facilities={product.facilities}
+                />
               </div>
 
               {/* right content */}
@@ -188,14 +218,22 @@ class ProductDetailPage extends Component {
                 <div className="contact-name">Nguyen Duc Huy</div>
                 <div className="contact-button">
                   {/* <BsFillChatDotsFill /> */}
-                  
+
                   {/* <div style={{width: "18px"}}></div> */}
-                  <div className="contact-title-container">&#32;Nhắn tin</div>
-                  
+                  <Link
+                    className="link contact-title-container"
+                    to="/chat-page"
+                  >
+                    <div className="contact-title-container">
+                      &#32; Nhắn tin
+                    </div>
+                  </Link>
                 </div>
 
                 <div className="more-post-button">
-                  <div className="contact-title-container">&#32;Xem thêm bài viết</div>
+                  <div className="contact-title-container">
+                    &#32;Xem thêm bài viết
+                  </div>
                 </div>
 
                 <div className="more-post-button">
