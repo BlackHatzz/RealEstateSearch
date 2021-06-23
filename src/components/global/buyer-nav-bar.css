@@ -28,6 +28,7 @@
     justify-content: flex-start;
     padding-left: 12px;
     padding-right: 12px;
+    cursor: pointer;
 }
 
 .nav-bar-item .nav-bar-logo {
@@ -44,6 +45,7 @@
     object-fit: cover;
     background-repeat: no-repeat;
 }
+
 
 .nav-bar-item-horizontal {
     height: 100%;
@@ -76,7 +78,53 @@
 
 .profile-menu-container {
     width: 200px;
-    height: 300px;
-    background-color: blue;
+    height: 80px;
+    background-color: white;
     position: relative;
+    border-radius: 6px;
+    border: 1px solid rgb(190, 190, 190);
+    left: -14px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; */
+    padding: 0;
+}
+.profile-menu-container > .profile-menu-item {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.profile-menu-container > .top-item {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.profile-menu-container > .bottom-item {
+    border-bottom-left-radius: 6px;
+    border-bottom-right-radius: 6px;
+}
+
+.profile-menu-container > .profile-menu-item:hover {
+    background-color: #D8DADF;
+    cursor: pointer;
+}
+.profile-menu-container > .profile-menu-item > .icon {
+    padding-left: 12px;
+}
+.profile-menu-container > .profile-menu-item > .title {
+    padding-left: 12px;
+    font-size: 16px;
+    text-align: left;
+}
+.profile-menu-container > .divide {
+    width: 100%;
+    height: 1px;
+    background-color: rgb(190, 190, 190);
+    padding: 0;
+    margin: 0;
 }

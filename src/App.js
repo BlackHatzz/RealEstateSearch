@@ -14,11 +14,11 @@ const App = () => {
   const authResolved = useResolved(authUser);
 
   useEffect(() => {
-    if (authResolved) {
+    if (false) {
       history.push(!!authUser ? "/" : "/login");
     }
   }, [authResolved, authUser, history]);
-  return authResolved ? (
+  return true ? (
     <div className="app">
       <Switch>
         <Route exact path="/" component={HomePage} />

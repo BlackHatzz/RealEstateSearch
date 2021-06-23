@@ -4,6 +4,8 @@ import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
 
 class BuyerNavbar extends Component {
@@ -24,14 +26,14 @@ class BuyerNavbar extends Component {
           {/* right content */}
           <div className="nav-bar-container">
             <div className="nav-bar-item">
-              <Badge color="secondary" badgeContent={3}>
-                <ChatIcon />
-              </Badge>
+                <Badge color="secondary" badgeContent={3}>
+                  <ChatIcon />
+                </Badge>
             </div>
             <div className="nav-bar-item">
-              <Badge color="secondary" badgeContent={2}>
-                <NotificationsIcon />
-              </Badge>
+                <Badge color="secondary" badgeContent={2}>
+                  <NotificationsIcon />
+                </Badge>
             </div>
             <div className="nav-bar-item-horizontal">
               <div className="nav-bar-item">
@@ -40,6 +42,17 @@ class BuyerNavbar extends Component {
                 <RiArrowDropDownLine
                   style={{ width: "30px", height: "30px" }}
                 />
+              </div>
+              <div className="profile-menu-container">
+                <div className="profile-menu-item top-item">
+                  <AccountCircleIcon className="icon" />
+                  <span className="title">Xem Hồ Sơ</span>
+                </div>
+                <div className="divide"></div>
+                <div className="profile-menu-item bottom-item">
+                  <ExitToAppIcon className="icon" />
+                  <span className="title">Đăng Xuất</span>
+                </div>
               </div>
             </div>
           </div>
