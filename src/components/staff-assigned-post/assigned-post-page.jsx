@@ -19,7 +19,7 @@ class AssignedPostPage extends Component {
       body: JSON.stringify({
         "page": 0,
         "size": 20,
-        "staffId": "ddddddddd"
+        "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1"
     }),
     };
 

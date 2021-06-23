@@ -14,47 +14,6 @@ class HomePage extends Component {
     items: [],
   };
 
-  componentDidMount() {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        page: 0,
-        size: 20,
-        search: "nguyen huu canh",
-        price: null,
-        fromArea: null,
-        toArea: null,
-        type: null,
-      }),
-    };
-
-    fetch("http://localhost:8080/api/v1/rs", requestOptions)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            items: result.content,
-          });
-          // console.log(this.state.items);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
-        }
-      );
-
-    // fetch("http://localhost:8080/api/v1/rs", requestOptions)
-    //   .then((response) => response.json())
-    //   .then((data) => this.setState({items: data.content}));
-
-    // console.log(this.state.items);
-  }
 
   handleSearch = () => {
     alert("text: " + this.state.searchText);

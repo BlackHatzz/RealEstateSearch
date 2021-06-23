@@ -102,13 +102,13 @@ class TransactionPopUpContent extends Component {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        title: "Chung Cư Vip",
-        buyerId: "aaaaaaaaa",
-        sellerId: "bbbbbbbbb",
-        staffId: "ddddddddd",
-        realEstateId: 2,
-        downPrice: 23445,
-      }),
+        "title": this.state.title,
+        "buyerId": this.state.selectedBuyer.buyerId,
+        "sellerId": "fSUJL0Vjoraru92zOuLbp0Rcff32",
+        "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
+        "realEstateId": 2,
+        "downPrice": this.state.downprice
+    }),
     };
 
     fetch(Constants.createTransactionRef, requestOptions)
