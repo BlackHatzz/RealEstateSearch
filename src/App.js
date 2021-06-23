@@ -7,6 +7,7 @@ import AssignedPostPage from "./components/staff-assigned-post/assigned-post-pag
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
+import { Chat } from "./components/Chat";
 
 const App = () => {
   const history = useHistory();
@@ -14,11 +15,11 @@ const App = () => {
   const authResolved = useResolved(authUser);
 
   useEffect(() => {
-    if (false) {
+    if (authResolved) {
       history.push(!!authUser ? "/" : "/login");
     }
   }, [authResolved, authUser, history]);
-  return true ? (
+  return authResolved ? (
     <div className="app">
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -33,7 +34,7 @@ const App = () => {
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
-        {/* <Route path="/chat-page" component={Chat} /> */}
+        <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
   ) : (
