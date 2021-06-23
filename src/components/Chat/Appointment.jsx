@@ -10,7 +10,7 @@ import {
   getDay,
 } from "date-fns";
 import range from "lodash/range";
-function Appointment() {
+function Appointment(props) {
   const currentDate = new Date();
   const [startDate, setStartDate] = useState(addDays(new Date(), 1));
   const years = range(1990, getYear(new Date()) + 3, 1);
@@ -50,6 +50,8 @@ function Appointment() {
         staffId: "ddddddddd",
         status: "upcoming",
       }),
+    }).then(() => {
+      props.setTrigger((value) => !value);
     });
   };
   return (

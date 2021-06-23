@@ -11,7 +11,7 @@ const Realestate = () => {
   const [error, setError] = useState(null);
   const [trigger, setTrigger] = useState(false);
   const [deals, setDeals] = useState([]);
-  const [isaccepted, setIsaccepted] = useState(false);
+  const [appointments, setAppointments] = useState([]);
   useEffect(() => {
     fetch(
       "http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=1&buyerId=aaaaaaaaa&sellerId=ccccccccc"
@@ -23,9 +23,8 @@ const Realestate = () => {
         throw response;
       })
       .then((data) => {
-        setData(data);
         setDeals(data.deals);
-        console.log(data);
+        setAppointments(data.appointments);
       })
       .catch((error) => {
         setError(error);
@@ -69,8 +68,7 @@ const Realestate = () => {
         status: "waiting",
       }),
     }).then(() => {
-      setTrigger(true);
-      console.log(!!trigger);
+      setTrigger((value) => !value);
     });
   }
   return (
@@ -86,7 +84,7 @@ const Realestate = () => {
               <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
             )}
             {deals[0].status === "refuse" && (
-              <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
+              <div>{deals[0].offeredPrice} - bị từ chối</div>
             )}
           </div>
         ) : (
@@ -109,8 +107,17 @@ const Realestate = () => {
       </div>
       <div>
         <p>lịch hẹn</p>
-        {deals.length > 0 && <p></p>}
-        <Appointment />
+        {appointments.length > 0 ? (
+          <div>
+            {appointments[0].status === "upcoming" ? (
+              <div>{appointments[0].scheduleDate}</div>
+            ) : (
+              <Appointment trigger={trigger} setTrigger={setTrigger} />
+            )}
+          </div>
+        ) : (
+          <Appointment trigger={trigger} setTrigger={setTrigger} />
+        )}
       </div>
     </div>
   );
