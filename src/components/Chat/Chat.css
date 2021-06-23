@@ -1,0 +1,128 @@
+.chat {
+  width: 90%;
+  height: 80vh;
+  border: 1px solid black;
+  display: flex;
+}
+
+.sidebar {
+  height: 100%;
+  width: 35%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid black;
+}
+
+.sidebar-header {
+  display: flex;
+  height: fit-content;
+}
+
+.sidebar-chatlist {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background-color: aqua;
+  overflow-y: scroll;
+}
+
+.sidebarChat {
+  display: flex;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 1px solid gray;
+}
+
+.sidebarChat:hover {
+  background-color: aliceblue;
+}
+
+.sidebarChat_info > h2 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.sidebarChat_info {
+  margin-left: 15px;
+}
+
+.messageBoard {
+  display: flex;
+  width: 65%;
+  height: 100%;
+  background-color: white;
+  flex-direction: column;
+}
+
+.messageBoard_header {
+  display: flex;
+  height: 60px;
+  padding: 10px;
+  background-color: bisque;
+}
+
+.messageBoard_header_info > h3 {
+  margin-bottom: 1px;
+  font-weight: 500;
+}
+.messageBoard_header_info {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.messageBoard_header_right {
+}
+.messageBoard_realestate {
+  display: flex;
+  background-color: cornsilk;
+}
+
+.messageBoard_container {
+  flex: 1;
+  padding: 30px;
+  overflow-y: scroll;
+}
+
+.message {
+  position: relative;
+  font-size: 16px;
+  padding: 10px;
+  background-color: cornsilk;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 20px;
+}
+
+.message_send {
+  margin-left: auto;
+  background-color: aquamarine;
+}
+.message_name {
+  position: absolute;
+  top: -10px;
+  left: -20px;
+  font-size: x-small;
+  font-weight: 800;
+}
+
+.messageBoard_sendform {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
+  border-top: 1px solid gray;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.messageBoard_sendform > form {
+  flex: 1;
+  display: flex;
+}
+
+.messageBoard_sendform > form > input {
+  flex: 1;
+  border-radius: 20px;
+  padding: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+}

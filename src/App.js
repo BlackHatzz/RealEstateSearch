@@ -7,23 +7,24 @@ import AssignedPostPage from "./components/staff-assigned-post/assigned-post-pag
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
+import { Chat } from "./components/Chat";
 
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
 
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
   return authResolved ? (
     <div className="app">
       <Switch>
+        <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={HomePage}></Route>
         <Route
           path="/search-result-page/:searchtext"
           component={SearchResultPage}
@@ -33,6 +34,7 @@ const App = () => {
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
+        <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
   ) : (

@@ -1,6 +1,6 @@
-import { fb } from 'services';
-import { createContext, useContext, useEffect, useState } from 'react';
-import { newChat, leaveChat, deleteChat, getMessages } from 'react-chat-engine';
+import { fb } from "../services";
+import { createContext, useContext, useEffect, useState } from "react";
+import { newChat, leaveChat, deleteChat, getMessages } from "react-chat-engine";
 
 export const ChatContext = createContext();
 
@@ -10,22 +10,22 @@ export const ChatProvider = ({ children, authUser }) => {
   const [selectedChat, setSelectedChat] = useState();
 
   const createChatClick = () => {
-    newChat(chatConfig, { title: '' });
+    newChat(chatConfig, { title: "" });
   };
-  const deleteChatClick = chat => {
+  const deleteChatClick = (chat) => {
     const isAdmin = chat.admin === chatConfig.userName;
 
     if (
       isAdmin &&
-      window.confirm('Are you sure you want to delete this chat?')
+      window.confirm("Are you sure you want to delete this chat?")
     ) {
       deleteChat(chatConfig, chat.id);
-    } else if (window.confirm('Are you sure you want to leave this chat?')) {
+    } else if (window.confirm("Are you sure you want to leave this chat?")) {
       leaveChat(chatConfig, chat.id, chatConfig.userName);
     }
   };
-  const selectChatClick = chat => {
-    getMessages(chatConfig, chat.id, messages => {
+  const selectChatClick = (chat) => {
+    getMessages(chatConfig, chat.id, (messages) => {
       setSelectedChat({
         ...chat,
         messages,
@@ -38,14 +38,14 @@ export const ChatProvider = ({ children, authUser }) => {
   useEffect(() => {
     if (authUser) {
       fb.firestore
-        .collection('users')
+        .collection("users")
         .doc(authUser.uid)
-        .onSnapshot(snap => {
+        .onSnapshot((snap) => {
           setChatConfig({
             userSecret: authUser.uid,
             avatar: snap.data().avatar,
             userName: snap.data().userName,
-            projectID: 'c0304dac-5c99-42f7-ad86-3711575f68d0',
+            projectID: "c0304dac-5c99-42f7-ad86-3711575f68d0",
           });
         });
     }
