@@ -3,12 +3,14 @@ import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import SidebarChat from "./SidebarChat";
 import { fb } from "../../services";
+import { useStateValue } from "../../StateProvider";
 
 export const Sidebar = () => {
   const [conversations, setConversations] = useState([]);
+  const [{ user }, dispatch] = useStateValue();
   useEffect(() => {
     const unsubscribe = fb.firestore
-      .collection("realestates")
+      .collection("conversations")
       .onSnapshot((snapshot) => {
         setConversations(
           snapshot.docs.map((doc) => ({

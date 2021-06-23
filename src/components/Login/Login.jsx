@@ -4,9 +4,12 @@ import { Form, Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { FormField } from "../FormField";
 import { validationSchema, defaultValues } from "./formikConfig";
+import { useStateValue } from "../../StateProvider";
+import { actionTypes } from "../../reducer";
 
 export const Login = () => {
   const history = useHistory();
+  const [{}, dispatch] = useStateValue();
   const [serverError, setServerError] = useState("");
 
   const login = ({ email, password }, { setSubmitting }) => {
@@ -18,6 +21,10 @@ export const Login = () => {
             "We're having trouble logging you in. Please try again."
           );
         }
+        dispatch({
+          type: actionTypes.SET_USER,
+          user: res.user,
+        });
       })
       .catch((err) => {
         if (err.code === "auth/wrong-password") {
