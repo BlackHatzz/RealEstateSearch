@@ -3,17 +3,15 @@ import "./assigned-post.css";
 import AssignedPostItem from "./assigned-post-item";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { AiOutlineConsoleSql } from "react-icons/ai";
+import Constants from "../global/Constants";
 
 class AssignedPostPage extends Component {
   state = {
     items: [],
     isSnackbarShown: true,
-    stupid: true,
   };
 
   componentDidMount() {
-    console.log("hehe2");
 
     const requestOptions = {
       method: "POST",
@@ -25,7 +23,7 @@ class AssignedPostPage extends Component {
     }),
     };
 
-    fetch("http://localhost:8080/api/v1/transaction/getRealEstateAssignStaff", requestOptions)
+    fetch(Constants.getRealEstateAssignStaffRef, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {

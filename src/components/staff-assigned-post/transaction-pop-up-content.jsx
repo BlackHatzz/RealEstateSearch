@@ -4,6 +4,7 @@ import "../global/shared.css";
 import SolidField from "./solid-field";
 import "./solid-field.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Constants from "../global/Constants";
 
 class TransactionPopUpContent extends Component {
   state = {
@@ -75,13 +76,12 @@ class TransactionPopUpContent extends Component {
         "buyerId": "aaaaaaaaa",
         "sellerId": "bbbbbbbbb",
         "staffId": "ddddddddd",
-        "realEstateId": 1,
-        "downPrice": 23445,
-        "createAt": "2021-02-10"
+        "realEstateId": 2,
+        "downPrice": 23445
     }),
     };
 
-    fetch("http://localhost:8080/api/v1/transaction", requestOptions)
+    fetch(Constants.createTransactionRef, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {

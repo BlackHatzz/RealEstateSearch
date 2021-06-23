@@ -3,6 +3,7 @@ import "./search-result.css";
 import ProductItem from "./product-item";
 import SearchSuggestion from "../global/search-suggestion";
 import { Link } from "react-router-dom";
+import Constants from "../global/Constants";
 
 class SearchResultPage extends Component {
   state = {
@@ -24,7 +25,7 @@ class SearchResultPage extends Component {
       }),
     };
 
-    fetch("http://localhost:8080/api/v1/rs", requestOptions)
+    fetch(Constants.getRealEstateRef, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
