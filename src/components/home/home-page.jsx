@@ -6,6 +6,7 @@ import HomeFilterBox from "./home-filter-box";
 // import {Router, Route, Link, RouteHandler} from 'react-router';
 // import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import { Link } from "react-router-dom";
+import BuyerNavbar from "../global/BuyerNavbar";
 class HomePage extends Component {
   // var useHistory = useHistory();
   state = {
@@ -70,6 +71,7 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
+        <BuyerNavbar />
         <div className="home-show">
           <div className="black-glass">
             <div style={{ height: "120px" }}></div>
