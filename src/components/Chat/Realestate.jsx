@@ -83,7 +83,7 @@ const Realestate = () => {
             {deals[0].status === "accepted" && (
               <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
             )}
-            {deals[0].status === "refuse" && (
+            {deals[0].status === "refused" && (
               <div>{deals[0].offeredPrice} - bị từ chối</div>
             )}
           </div>
