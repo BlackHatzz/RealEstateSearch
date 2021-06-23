@@ -51,8 +51,7 @@ class TransactionPopUpContent extends Component {
 
     return (
       <div className="dropdown-item padding-field">
-        <div className="profile-pic">
-          <img src="" alt="" className="profile-pic" />
+        <div style={{backgroundImage: "url('" + this.state.selectedBuyer.avatar + "')"}} className="profile-pic">
         </div>
         <div className="info-container">
           <span className="dropdown-item">{this.state.selectedBuyer.buyerName}</span>
@@ -120,7 +119,7 @@ class TransactionPopUpContent extends Component {
                 className="padding-field"
                 placeholder="Nhập tên giao dịch..."
               />
-              <div className="session-title">Người Bán: Nguyễn Đức Huy</div>
+              <div className="session-title">Người Bán: {this.props.sellerName}{/*Nguyễn Đức Huy*/}</div>
               <div className="session-title">Người Mua:</div>
 
               <div className="dropdown-container">
@@ -141,8 +140,8 @@ class TransactionPopUpContent extends Component {
                           onClick={() => this.handleBuyerSelection(buyer)}
                           className="dropdown-item padding-field"
                         >
-                          <div className="profile-pic">
-                            <img src="" alt="" className="profile-pic" />
+                          <div style={{backgroundImage: "url('" + buyer.avatar + "')" }} className="profile-pic">
+                            {/* <img src="" alt="" className="profile-pic" /> */}
                           </div>
                           <div className="info-container">
                             <span className="dropdown-item">{buyer.buyerName}</span>
@@ -191,7 +190,7 @@ class TransactionPopUpContent extends Component {
 
               {/* {this.state.isBuyerMenuShown ? (<p>qweasd</p>) : null} */}
 
-              <div className="session-title">Giá Trị Ban Đầu: 2 tỷ</div>
+              <div className="session-title">Giá Trị Ban Đầu: {this.props.price} tỷ</div>
               <div className="session-title">Giá Trị Lúc Bán:</div>
               <SolidField
                 className="padding-field"

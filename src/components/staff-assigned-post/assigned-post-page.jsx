@@ -60,7 +60,7 @@ class AssignedPostPage extends Component {
     });
   };
 
-  handleSnackbar = () => {
+  handleSnackbar = (sellerName, buyerName) => {
     return (
       <Snackbar
         autoHideDuration={5000}
@@ -72,7 +72,7 @@ class AssignedPostPage extends Component {
       >
         <Alert style={{ backgroundColor: "black" }} severity="success">
           <span style={{ color: "white" }}>
-            Tuyệt! Bạn đã tạo thành công 1 giao dịch giữa Nguyễn A và Trần B
+            Tuyệt! Bạn đã tạo thành công 1 giao dịch
           </span>
         </Alert>
       </Snackbar>

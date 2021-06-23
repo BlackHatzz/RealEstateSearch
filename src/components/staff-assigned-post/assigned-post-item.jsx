@@ -19,7 +19,7 @@ class AssignedPostItem extends Component {
     close();
     // this.props.handleSnackbar();
     this.setState({
-      isNotiShown: true
+      isNotiShown: true,
     });
     this.props.handleOpenSnackbar();
   };
@@ -80,7 +80,9 @@ class AssignedPostItem extends Component {
               <div className="staff-product-uptime">
                 {this.props.item.createAt}
               </div>
-              <div className="staff-product-owner">Nguyen Duc Huy</div>
+              <div className="staff-product-owner">
+                {this.props.item.sellerName}
+              </div>
 
               {/* create a transaction */}
               {/* <Popup
@@ -108,7 +110,14 @@ class AssignedPostItem extends Component {
                   </div>
                 }
               >
-                {(close) => <TransactionPopUpContent buyers={this.props.item.buyers} close={() => this.handleClosePopup(close)} />}
+                {(close) => (
+                  <TransactionPopUpContent
+                    price={this.props.item.price}
+                    sellerName={this.props.item.sellerName}
+                    buyers={this.props.item.buyers}
+                    close={() => this.handleClosePopup(close)}
+                  />
+                )}
               </Popup>
 
               {console.log("tq" + this.state.isTransactionPopupShown)}
