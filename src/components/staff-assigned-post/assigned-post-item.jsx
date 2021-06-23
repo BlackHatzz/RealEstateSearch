@@ -100,6 +100,7 @@ class AssignedPostItem extends Component {
               </Popup> */}
 
               <Popup
+                ref={React.createRef()}
                 overlayStyle={this.state.overlayStyle}
                 modal
                 trigger={
@@ -112,6 +113,7 @@ class AssignedPostItem extends Component {
               >
                 {(close) => (
                   <TransactionPopUpContent
+                    realEstateId={this.props.item.realEstateId}
                     price={this.props.item.price}
                     sellerName={this.props.item.sellerName}
                     buyers={this.props.item.buyers}
