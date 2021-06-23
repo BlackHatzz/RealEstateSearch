@@ -14,21 +14,26 @@ export const Signup = () => {
       .createUserWithEmailAndPassword(email, password)
       .then((res) => {
         if (res?.user?.uid) {
-          fetch("/api/createUser", {
-            method: "POST",
-            body: JSON.stringify({
-              userName,
-              userId: res.user.uid,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }).then(() => {
-            fb.firestore
-              .collection("users")
-              .doc(res.user.uid)
-              .set({ userName, avatar: "" });
-          });
+          // fetch("/api/createUser", {
+          //   method: "POST",
+          //   body: JSON.stringify({
+          //     userName,
+          //     userId: res.user.uid,
+          //   }),
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          // })
+          //   .then(() => {
+          // res.user.updateProfile({
+          //   displayName: userName,
+          // });
+
+          fb.firestore
+            .collection("users")
+            .doc(res.user.uid)
+            .set({ userName, avatar: "" });
+          // })
         } else {
           setServerError(
             "We're having trouble signing you up. Please try again."

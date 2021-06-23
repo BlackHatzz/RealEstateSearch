@@ -1,5 +1,5 @@
 .chat {
-  width: 90%;
+  width: 90vh;
   height: 80vh;
   border: 1px solid black;
   display: flex;
@@ -125,4 +125,26 @@
   padding: 5px;
   margin-right: 5px;
   margin-left: 5px;
+}
+
+.dealAndBook {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+.deal {
+  border-bottom: 1px solid gray;
+  display: flex;
+  flex: 1;
+  background-color: rgb(228, 218, 204);
+}
+
+.appointment {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+}
+.bookForm {
+  display: flex;
+  flex: 1;
 }

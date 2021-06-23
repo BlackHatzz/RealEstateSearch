@@ -16,7 +16,7 @@ const App = () => {
 
   // useEffect(() => {
   //   if (authResolved) {
-  //     history.push(!!authUser ? "/" : "/login");
+  //     history.push(!!authUser ? "/chat-app" : "/login");
   //   }
   // }, [authResolved, authUser, history]);
   return authResolved ? (

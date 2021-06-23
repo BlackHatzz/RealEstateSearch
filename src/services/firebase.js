@@ -1,7 +1,7 @@
-import firebase from 'firebase/app'; // <-- This must be first
-import 'firebase/auth';
-import 'firebase/storage';
-import 'firebase/firestore';
+import firebase from "firebase/app"; // <-- This must be first
+import "firebase/auth";
+import "firebase/storage";
+import "firebase/firestore";
 
 try {
   firebase.initializeApp({
@@ -16,7 +16,7 @@ try {
   });
 } catch (error) {
   if (!/already exists/u.test(error.message)) {
-    console.error('Firebase admin initialization error', error.stack);
+    console.error("Firebase admin initialization error", error.stack);
   }
 }
 
@@ -28,4 +28,5 @@ export const fb = {
   auth: firebase.auth(),
   storage: firebase.storage(),
   firestore: firebase.firestore(),
+  provider: new firebase.auth.GoogleAuthProvider(),
 };

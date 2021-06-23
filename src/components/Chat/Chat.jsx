@@ -2,17 +2,22 @@ import React from "react";
 import { Sidebar } from "./Sidebar";
 import "./Chat.css";
 import Messageboard from "./Messageboard";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, useRouteMatch } from "react-router-dom";
 
 export const Chat = () => {
+  let match = useRouteMatch();
+
   return (
     <div className="chat">
+      <Sidebar />
+
       <Switch>
-        <Sidebar />
-        <Route path="/chat-page/">
+        <Route exact path={`${match.path}`}>
+          <h1>select a conversation</h1>
+        </Route>
+        <Route path={`${match.path}/:conId`}>
           <Messageboard />
         </Route>
-        <Route path="/chat-page/">{/* <Messageboard /> */}</Route>
       </Switch>
     </div>
   );
