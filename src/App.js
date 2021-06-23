@@ -21,9 +21,9 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       <Switch>
+        <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
-        <Route exact path="/" component={HomePage}></Route>
         <Route
           path="/search-result-page/:searchtext"
           component={SearchResultPage}
@@ -33,6 +33,7 @@ const App = () => {
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
+        {/* <Route path="/chat-page" component={Chat} /> */}
       </Switch>
     </div>
   ) : (

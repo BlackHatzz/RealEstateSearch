@@ -12,10 +12,6 @@ code {
     monospace;
 }
 .app {
-  display: flex;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
   height: 100vh;
 }
 .auth-form {
