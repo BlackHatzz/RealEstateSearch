@@ -10,9 +10,12 @@ import {
   getDay,
 } from "date-fns";
 import range from "lodash/range";
+import { useParams } from "react-router-dom";
 function Appointment(props) {
+  const { conId } = useParams();
   const currentDate = new Date();
-  const [startDate, setStartDate] = useState(addDays(new Date(), 1));
+  const [startDate, setStartDate] = useState(null);
+
   const years = range(1990, getYear(new Date()) + 3, 1);
   const months = [
     "January",
@@ -31,10 +34,11 @@ function Appointment(props) {
 
   const filterDay = (date) => {
     const day = getDay(date);
-    return day !== 0;
+    const weekdays = [1, 2, 3, 4, 5, 6, 7];
+    // console.log(props.wDay[0]);
+    return day !== 2;
   };
   const handleAppointmentSubmit = (event) => {
-    console.log("adasdsa" + startDate.toISOString());
     event.preventDefault();
     fetch("http://localhost:8080/apis/v1/appointments/create", {
       method: "POST",
@@ -43,11 +47,11 @@ function Appointment(props) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        conversationId: 1,
+        conversationId: conId.slice(3),
         createAt: currentDate.toISOString(),
         id: 0,
         scheduleDate: startDate.toISOString(),
-        staffId: "ddddddddd",
+        staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
         status: "upcoming",
       }),
     }).then(() => {
@@ -127,7 +131,9 @@ function Appointment(props) {
           excludeTimes={[setHours(setMinutes(new Date(), 30), 14)]}
           timeIntervals={120}
         />
-        <button type="submit">Tạo</button>
+        <button type="submit" disabled={props.isDisabled}>
+          đặt
+        </button>
       </form>
     </div>
   );

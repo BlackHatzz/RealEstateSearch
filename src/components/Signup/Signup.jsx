@@ -28,11 +28,23 @@ export const Signup = () => {
           // res.user.updateProfile({
           //   displayName: userName,
           // });
-
+          fb.auth.currentUser.updateProfile({
+            displayName: userName,
+          });
           fb.firestore
             .collection("users")
             .doc(res.user.uid)
             .set({ userName, avatar: "" });
+          // fb.firestore
+          //   .collection("users")
+          //   .doc(res.user.uid)
+          //   .collection("conversations")
+          //   .doc("chatdummy")
+          //   .collection("messages")
+          //   .doc("messagedummy")
+          //   .set({
+          //     message: "dummy",
+          //   });
           // })
         } else {
           setServerError(

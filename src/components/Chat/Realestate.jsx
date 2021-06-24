@@ -1,20 +1,29 @@
 import React, { useEffect, useState } from "react";
-import { Form, Formik } from "formik";
+import { Form, Formik, Field } from "formik";
 import Appointment from "./Appointment";
 import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
+import { fb } from "../../services";
+import { useParams } from "react-router-dom";
+import moment from "moment";
 
-const Realestate = () => {
+const Realestate = (props) => {
+  const { conId } = useParams();
   const currentDate = new Date();
-  const [data, setData] = useState(null);
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [trigger, setTrigger] = useState(false);
   const [deals, setDeals] = useState([]);
+  const [freeWeekdays, setfreeWeekdays] = useState([]);
   const [appointments, setAppointments] = useState([]);
+  const uuid = fb.auth.currentUser.uid;
+  const [isdeal, setIsdeal] = useState(true);
+  console.log(props);
+
   useEffect(() => {
     fetch(
-      "http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=1&buyerId=aaaaaaaaa&sellerId=ccccccccc"
+      `http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=${props.realId}&buyerId=${uuid}&sellerId=${props.sellerId}`
     )
       .then((response) => {
         if (response.ok) {
@@ -23,6 +32,7 @@ const Realestate = () => {
         throw response;
       })
       .then((data) => {
+        console.log(data);
         setDeals(data.deals);
         setAppointments(data.appointments);
       })
@@ -33,7 +43,33 @@ const Realestate = () => {
       .finally(() => {
         setLoading(false);
       });
-  }, [trigger]);
+    // fetch(
+    //   `http://localhost:8080/apis/v1/schedules/all?sellerId=${props.sellerId}`
+    // )
+    //   .then((response) => {
+    //     if (response.ok) {
+    //       return response.json();
+    //     }
+    //     throw response;
+    //   })
+    //   .then((data) => {
+    //     console.log(data);
+    //     const freeDays = data
+    //       .filter((item) => item.status === "Not booked yet")
+    //       .map((item) => item.weekDay.id);
+    //     const uFreeDays = freeDays.filter(
+    //       (item, index) => freeDays.indexOf(item) === index
+    //     );
+    //     setfreeWeekdays(uFreeDays);
+    //   })
+    //   .catch((error) => {
+    //     setError(error);
+    //     console.log(error);
+    //   })
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
+  }, [trigger, conId]);
 
   if (loading) return "Loading...";
   if (error) return "error";
@@ -57,24 +93,29 @@ const Realestate = () => {
     fetch("http://localhost:8080/apis/apis/deals/create", {
       method: "POST",
       headers: {
-        Accept: "application/json",
+        Accept: "*/*",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        conversationId: 1,
-        createAt: currentDate.toISOString(),
         id: 0,
+        conversationId: conId.slice(3),
+        createAt: currentDate.toISOString(),
         offeredPrice: deal,
         status: "waiting",
       }),
-    }).then(() => {
-      setTrigger((value) => !value);
-    });
+    })
+      .then(() => {
+        setTrigger((value) => !value);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => setSubmitting(false));
   }
   return (
     <div className="dealAndBook">
       <div className="deal">
-        <p>Thỏa thuận (triệu VND) </p>
+        <div className="daLabel">Thỏa thuận (triệu VND) </div>
         {deals.length > 0 ? (
           <div>
             {deals[0].status === "waiting" && (
@@ -105,18 +146,41 @@ const Realestate = () => {
           </Formik>
         )}
       </div>
-      <div>
-        <p>lịch hẹn</p>
+      <div className="appointment_main">
+        <div className="daLabel">Lịch hẹn</div>
+
         {appointments.length > 0 ? (
           <div>
-            {appointments[0].status === "upcoming" ? (
-              <div>{appointments[0].scheduleDate}</div>
-            ) : (
-              <Appointment trigger={trigger} setTrigger={setTrigger} />
+            {appointments.slice(-1)[0].status === "upcoming" && (
+              <div>
+                {moment(appointments.slice(-1)[0].scheduleDate).format(
+                  "DD/MM/YYYY hh:mm a"
+                )}
+              </div>
+            )}
+            {appointments.slice(-1)[0].status === "passed" && (
+              <div>
+                <Appointment
+                  trigger={trigger}
+                  setTrigger={setTrigger}
+                  isDisabled={isdeal}
+                />
+              </div>
             )}
           </div>
         ) : (
-          <Appointment trigger={trigger} setTrigger={setTrigger} />
+          // <div>
+          //   {appointments[0].status === "upcoming" ? (
+          //     <div>{appointments[0].scheduleDate}</div>
+          //   ) : (
+          //     <Appointment trigger={trigger} setTrigger={setTrigger} />
+          //   )}
+          // </div>
+          <Appointment
+            trigger={trigger}
+            setTrigger={setTrigger}
+            isDisabled={isdeal}
+          />
         )}
       </div>
     </div>

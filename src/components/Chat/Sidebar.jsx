@@ -4,12 +4,16 @@ import "./Chat.css";
 import SidebarChat from "./SidebarChat";
 import { fb } from "../../services";
 import { useStateValue } from "../../StateProvider";
+import { useAuth } from "../../hooks";
 
 export const Sidebar = () => {
   const [conversations, setConversations] = useState([]);
-  const [{ user }, dispatch] = useStateValue();
+  const uid = fb.auth.currentUser.uid;
+
   useEffect(() => {
     const unsubscribe = fb.firestore
+      .collection("users")
+      .doc(uid)
       .collection("conversations")
       .onSnapshot((snapshot) => {
         setConversations(
@@ -26,12 +30,18 @@ export const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <Avatar />
+        <h2>Cuộc trò chuyện</h2>
       </div>
       <div className="sidebar-chatlist">
         {/* <SidebarChat newChat /> */}
         {conversations.map((con) => (
-          <SidebarChat key={con.id} id={con.id} title={con.data.title} />
+          <SidebarChat
+            key={con.id}
+            id={con.id}
+            title={con.data.title}
+            seller={con.data.sellerId}
+            real={con.data.realId}
+          />
         ))}
       </div>
     </div>

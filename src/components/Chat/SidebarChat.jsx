@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "./Chat.css";
 import { Link, useRouteMatch } from "react-router-dom";
 
-export default function SidebarChat({ id, title, newChat }) {
+export default function SidebarChat({ real, seller, id, title, newChat }) {
   let match = useRouteMatch();
 
   const createChat = () => {
@@ -12,9 +12,9 @@ export default function SidebarChat({ id, title, newChat }) {
     }
   };
   return !newChat ? (
-    <Link to={`${match.url}/${id}`}>
+    <Link to={`${match.url}/${id}/${real}/${seller}`}>
       <div className="sidebarChat">
-        <Avatar src="https://www.w3schools.com/w3images/avatar2.png" />
+        {/* <Avatar src="https://www.w3schools.com/w3images/avatar2.png" /> */}
         <div className="sidebarChat_info">
           <h2>{title}</h2>
           <p>last ms</p>
