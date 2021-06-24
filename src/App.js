@@ -8,6 +8,7 @@ import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
+import ProfilePage from "./components/profile/ProfilePage";
 
 const App = () => {
   const history = useHistory();
@@ -25,6 +26,7 @@ const App = () => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
+        <Route path="/profile-page" component={ProfilePage} />
         <Route path="/signup" component={Signup} />
         <Route
           path="/search-result-page/:searchtext"

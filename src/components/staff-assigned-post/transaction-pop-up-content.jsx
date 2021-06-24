@@ -4,6 +4,7 @@ import "../global/shared.css";
 import SolidField from "./solid-field";
 import "./solid-field.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Constants from "../global/Constants";
 
 class TransactionPopUpContent extends Component {
   state = {
@@ -14,15 +15,23 @@ class TransactionPopUpContent extends Component {
     //   { id: "2", name: "nguyen duc huy 2", profilePicUrl: "thisisurl" },
     //   { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
     // ],
+    sellerId: null,
+    realEstateId: null,
     selectedBuyer: null,
+    title: null,
+    downprice: null,
     // isTransactionPopupShown: false,
   };
 
   componentDidMount() {
-    
+    console.log("llller");
+    // console.log(this.props.sellerId);
     this.setState({
-      buyerBasicInfos: this.props.buyers
-    })
+      buyerBasicInfos: this.props.buyers,
+      realEstateId: this.props.realEstateId,
+      sellerId: this.props.sellerId,
+    });
+    // console.log(this.state.sellerId);
   }
 
   showBuyerMenu = () => {
@@ -51,11 +60,16 @@ class TransactionPopUpContent extends Component {
 
     return (
       <div className="dropdown-item padding-field">
-        <div className="profile-pic">
-          <img src="" alt="" className="profile-pic" />
-        </div>
+        <div
+          style={{
+            backgroundImage: "url('" + this.state.selectedBuyer.avatar + "')",
+          }}
+          className="profile-pic"
+        ></div>
         <div className="info-container">
-          <span className="dropdown-item">{this.state.selectedBuyer.buyerName}</span>
+          <span className="dropdown-item">
+            {this.state.selectedBuyer.buyerName}
+          </span>
           <span className="dropdown-item2">
             ID: {this.state.selectedBuyer.buyerId}
           </span>
@@ -64,25 +78,47 @@ class TransactionPopUpContent extends Component {
     );
   }
 
+  updateInputValue = (event) => {
+    console.log("value " + event.target.value);
+    console.log(event.target.name);
+    switch (event.target.name.toString()) {
+      case "title":
+        this.setState({
+          title: event.target.value.toString()
+        });
+        break;
+      case "downprice":
+        this.setState({
+          downprice: event.target.value.toString()
+        });
+      default:
+        break;
+    }
+  };
+
   handleConfirm = () => {
     console.log("confirm");
     this.props.close();
+
+    console.log("titlezz", this.state.title);
+    console.log("downpricezz", this.state.downprice);
+    console.log("selectzzz", this.state.selectedBuyer.buyerId);
+
     // create a new transaction by using api
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        "title": "Chung Cư Vip",
-        "buyerId": "aaaaaaaaa",
-        "sellerId": "bbbbbbbbb",
-        "staffId": "ddddddddd",
-        "realEstateId": 1,
-        "downPrice": 23445,
-        "createAt": "2021-02-10"
+        "title": this.state.title,
+        "buyerId": this.state.selectedBuyer.buyerId,
+        "sellerId": this.props.sellerId,
+        "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
+        "realEstateId": this.state.realEstateId,
+        "downPrice": this.state.downprice
     }),
     };
 
-    fetch("http://localhost:8080/api/v1/transaction", requestOptions)
+    fetch(Constants.createTransactionRef, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -99,7 +135,6 @@ class TransactionPopUpContent extends Component {
           // });
         }
       );
-
   };
 
   render() {
@@ -108,19 +143,26 @@ class TransactionPopUpContent extends Component {
 
     return (
       <React.Fragment>
-        <div className="pop-up-box">
+        <div ref={React.createRef()} className="pop-up-box">
           <div className="header">Tạo Giao Dịch</div>
           <div className="divide"></div>
+
           <div className="content">
-            <div className="content-layout">
+            {/* <div className="content-layout"> */}
+            <form ref={React.createRef()} action="" className="transaction-form content-layout">
               <div style={{ paddingTop: "12px" }} className="session-title">
                 Tên Giao Dịch
               </div>
               <SolidField
+                name="title"
+                onChange={this.updateInputValue}
                 className="padding-field"
                 placeholder="Nhập tên giao dịch..."
               />
-              <div className="session-title">Người Bán: Nguyễn Đức Huy</div>
+              <div className="session-title">
+                Người Bán: {this.props.sellerName}
+                {/*Nguyễn Đức Huy*/}
+              </div>
               <div className="session-title">Người Mua:</div>
 
               <div className="dropdown-container">
@@ -141,11 +183,18 @@ class TransactionPopUpContent extends Component {
                           onClick={() => this.handleBuyerSelection(buyer)}
                           className="dropdown-item padding-field"
                         >
-                          <div className="profile-pic">
-                            <img src="" alt="" className="profile-pic" />
+                          <div
+                            style={{
+                              backgroundImage: "url('" + buyer.avatar + "')",
+                            }}
+                            className="profile-pic"
+                          >
+                            {/* <img src="" alt="" className="profile-pic" /> */}
                           </div>
                           <div className="info-container">
-                            <span className="dropdown-item">{buyer.buyerName}</span>
+                            <span className="dropdown-item">
+                              {buyer.buyerName}
+                            </span>
                             <span className="dropdown-item2">
                               ID: {buyer.buyerId}
                             </span>
@@ -191,9 +240,13 @@ class TransactionPopUpContent extends Component {
 
               {/* {this.state.isBuyerMenuShown ? (<p>qweasd</p>) : null} */}
 
-              <div className="session-title">Giá Trị Ban Đầu: 2 tỷ</div>
+              <div className="session-title">
+                Giá Trị Ban Đầu: {this.props.price} tỷ
+              </div>
               <div className="session-title">Giá Trị Lúc Bán:</div>
               <SolidField
+                name="downprice"
+                onChange={this.updateInputValue}
                 className="padding-field"
                 placeholder="Nhập số tiền lúc bán..."
               />
@@ -206,17 +259,16 @@ class TransactionPopUpContent extends Component {
                   HỦY
                 </div>
 
-
                 <div
                   onClick={this.handleConfirm}
                   className="noselect confirm-button"
                 >
                   XÁC NHẬN
                 </div>
-                
               </div>
+            </form>
 
-              {/* {" "}
+            {/* {" "}
               Lorem ipsumvfdsfsadf dolor sit amet consectetur adipisicing elit.
               Atque, a nostrum.
               <br /> Dolorem, repellat quidem ut, minima sint vel eveniet
@@ -230,8 +282,8 @@ class TransactionPopUpContent extends Component {
               <br />
               andae explicabo nemo nam libero ad, doloribus, voluptas rem alias.
               Vitae? */}
-            </div>
           </div>
+          {/* </div> */}
         </div>
         {/* {this.state.isBuyerMenuShown ? <TickPopup /> : null } */}
       </React.Fragment>

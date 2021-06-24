@@ -138,6 +138,10 @@ div.dropdown-item .profile-pic {
   border-radius: 14px;
   border: none;
   padding: 0;
+  vertical-align: middle;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  background-size: 28px 28px;
 }
 
 div.dropdown-item img.profile-pic {
@@ -184,3 +188,8 @@ span.dropdown-item2 {
   padding-bottom: 4px;
 }
 
+.transaction-form {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
