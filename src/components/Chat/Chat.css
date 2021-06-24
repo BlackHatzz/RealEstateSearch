@@ -92,22 +92,33 @@
   position: relative;
   font-size: 16px;
   padding: 10px;
-
   border-radius: 20px;
   width: fit-content;
   margin-bottom: 20px;
+  background-color: rgb(235, 235, 235);
+  color: black;
 }
 
 .message_send {
   margin-left: auto;
-  background-color: aquamarine;
+  background-color: rgb(14, 68, 216);
+  color: white;
 }
 .message_name {
   position: absolute;
-  top: -10px;
+  top: -20px;
   left: -20px;
   font-size: x-small;
   font-weight: 800;
+  color: black;
+}
+.message_name_send {
+  position: absolute;
+  top: -20px;
+  left: -10px;
+  font-size: x-small;
+  font-weight: 800;
+  color: black;
 }
 
 .messageBoard_sendform {

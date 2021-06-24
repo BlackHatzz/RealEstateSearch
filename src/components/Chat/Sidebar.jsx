@@ -41,6 +41,7 @@ export const Sidebar = () => {
             title={con.data.title}
             seller={con.data.sellerId}
             real={con.data.realId}
+            buyer={con.data.buyerId}
           />
         ))}
       </div>
