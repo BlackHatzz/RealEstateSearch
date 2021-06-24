@@ -19,11 +19,11 @@ const Realestate = (props) => {
   const [appointments, setAppointments] = useState([]);
   const uuid = fb.auth.currentUser.uid;
   const [isdeal, setIsdeal] = useState(true);
-  console.log(props);
 
   useEffect(() => {
+    console.log("das " + props.buyerId);
     fetch(
-      `http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=${props.realId}&buyerId=${uuid}&sellerId=${props.sellerId}`
+      `http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=${props.realId}&buyerId=${props.buyerId}&sellerId=${props.sellerId}`
     )
       .then((response) => {
         if (response.ok) {
@@ -32,7 +32,7 @@ const Realestate = (props) => {
         throw response;
       })
       .then((data) => {
-        console.log(data);
+        console.log(data.deals);
         setDeals(data.deals);
         setAppointments(data.appointments);
       })
@@ -73,16 +73,25 @@ const Realestate = (props) => {
 
   if (loading) return "Loading...";
   if (error) return "error";
+
   function handleAccept(id) {
-    //let query = { id: id };
     let url =
       "http://localhost:8080/apis/apis/deals/update?%20dealId=" +
       id +
-      "&%20status=true";
+      "&%20status=accepted";
     fetch(url, {
       method: "PUT",
-    }).then();
-    //window.location.reload();
+    });
+  }
+
+  function handleRefused(id) {
+    let url =
+      "http://localhost:8080/apis/apis/deals/update?%20dealId=" +
+      id +
+      "&%20status=refused";
+    fetch(url, {
+      method: "PUT",
+    });
   }
   function formatDate(string) {
     var options = { year: "numeric", month: "long", day: "numeric" };
@@ -114,75 +123,143 @@ const Realestate = (props) => {
   }
   return (
     <div className="dealAndBook">
-      <div className="deal">
-        <div className="daLabel">Thỏa thuận (triệu VND) </div>
-        {deals.length > 0 ? (
-          <div>
-            {deals[0].status === "waiting" && (
-              <div>{deals[0].offeredPrice} - đang chờ phản hồi</div>
-            )}
-            {deals[0].status === "accepted" && (
-              <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
-            )}
-            {deals[0].status === "refused" && (
-              <div>{deals[0].offeredPrice} - bị từ chối</div>
-            )}
-          </div>
-        ) : (
-          <Formik
-            onSubmit={submitDeal}
-            validateOnMount={true}
-            initialValues={defaultValues}
-            validationSchema={validationSchema}
-          >
-            {({ isValid, isSubmitting }) => (
-              <Form>
-                <FormField name="deal" />
-                <button disabled={isSubmitting || !isValid} type="submit">
-                  tạo
-                </button>
-              </Form>
-            )}
-          </Formik>
-        )}
-      </div>
-      <div className="appointment_main">
-        <div className="daLabel">Lịch hẹn</div>
-
-        {appointments.length > 0 ? (
-          <div>
-            {appointments.slice(-1)[0].status === "upcoming" && (
+      {uuid !== "fSUJL0Vjoraru92zOuLbp0Rcff32" ? (
+        <div>
+          <div className="deal">
+            <div className="daLabel">Thỏa thuận (triệu VND) </div>
+            {console.log("deals")}
+            {console.log(deals[0].offeredPrice)}
+            {deals.length > 0 ? (
               <div>
-                {moment(appointments.slice(-1)[0].scheduleDate).format(
-                  "DD/MM/YYYY hh:mm a"
+                {deals[0].status === "waiting" && (
+                  <div>{deals[0].offeredPrice} - đang chờ phản hồi</div>
+                )}
+                {deals[0].status === "accepted" && (
+                  <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
+                )}
+                {deals[0].status === "refused" && (
+                  <div>{deals[0].offeredPrice} - bị từ chối</div>
                 )}
               </div>
-            )}
-            {appointments.slice(-1)[0].status === "passed" && (
-              <div>
-                <Appointment
-                  trigger={trigger}
-                  setTrigger={setTrigger}
-                  isDisabled={isdeal}
-                />
-              </div>
+            ) : (
+              <Formik
+                onSubmit={submitDeal}
+                validateOnMount={true}
+                initialValues={defaultValues}
+                validationSchema={validationSchema}
+              >
+                {({ isValid, isSubmitting }) => (
+                  <Form>
+                    <FormField name="deal" />
+                    <button disabled={isSubmitting || !isValid} type="submit">
+                      tạo
+                    </button>
+                  </Form>
+                )}
+              </Formik>
             )}
           </div>
-        ) : (
-          // <div>
-          //   {appointments[0].status === "upcoming" ? (
-          //     <div>{appointments[0].scheduleDate}</div>
-          //   ) : (
-          //     <Appointment trigger={trigger} setTrigger={setTrigger} />
-          //   )}
-          // </div>
-          <Appointment
-            trigger={trigger}
-            setTrigger={setTrigger}
-            isDisabled={isdeal}
-          />
-        )}
-      </div>
+          <div className="appointment_main">
+            <div className="daLabel">Lịch hẹn</div>
+
+            {appointments.length > 0 ? (
+              <div>
+                {appointments.slice(-1)[0].status === "upcoming" && (
+                  <div>
+                    {moment(appointments.slice(-1)[0].scheduleDate).format(
+                      "DD/MM/YYYY hh:mm a"
+                    )}
+                  </div>
+                )}
+                {appointments.slice(-1)[0].status === "passed" && (
+                  <div>
+                    <Appointment
+                      trigger={trigger}
+                      setTrigger={setTrigger}
+                      isDisabled={isdeal}
+                    />
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Appointment
+                trigger={trigger}
+                setTrigger={setTrigger}
+                isDisabled={isdeal}
+              />
+            )}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <div className="deal">
+            <div className="daLabel">Thỏa thuận (triệu VND) </div>
+            {deals.length > 0 ? (
+              <div>
+                {deals[0].status === "waiting" && (
+                  <div>
+                    {deals[0].offeredPrice}
+                    <button onClick={() => handleAccept(deals[0].id)}>
+                      Đồng ý
+                    </button>
+                    <button onClick={() => handleRefused(deals[0].id)}>
+                      Từ chối
+                    </button>
+                  </div>
+                )}
+                {deals[0].status === "accepted" && (
+                  <div>{deals[0].offeredPrice} - bạn đã chấp nhận</div>
+                )}
+                {deals[0].status === "refused" && (
+                  <div>{deals[0].offeredPrice} - bạn đã từ chối</div>
+                )}
+              </div>
+            ) : (
+              <Formik
+                onSubmit={submitDeal}
+                validateOnMount={true}
+                initialValues={defaultValues}
+                validationSchema={validationSchema}
+              >
+                {({ isValid, isSubmitting }) => (
+                  <Form>
+                    <FormField name="deal" />
+                    <button disabled={isSubmitting || !isValid} type="submit">
+                      tạo
+                    </button>
+                  </Form>
+                )}
+              </Formik>
+            )}
+          </div>
+          <div className="appointment_main">
+            <div className="daLabel">Lịch hẹn</div>
+
+            {appointments.length > 0 ? (
+              <div>
+                <p>Săp tới</p>
+                {appointments.slice(-1)[0].status === "upcoming" && (
+                  <div>
+                    {moment(appointments.slice(-1)[0].scheduleDate).format(
+                      "DD/MM/YYYY hh:mm a"
+                    )}
+                  </div>
+                )}
+                {appointments.slice(-1)[0].status === "passed" && (
+                  <div>
+                    <p>Đã xảy ra</p>
+                    {moment(appointments.slice(-1)[0].scheduleDate).format(
+                      "DD/MM/YYYY hh:mm a"
+                    )}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div>Chưa có</div>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

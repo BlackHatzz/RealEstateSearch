@@ -12,11 +12,11 @@ import Realestate from "./Realestate";
 const Messageboard = () => {
   // const [{ user }, dispatch] = useStateValue();
   const [input, setInput] = useState("");
-  const { conId, realId, sellerId } = useParams();
+  const { conId, realId, sellerId, buyerId } = useParams();
   const [title, setTitle] = useState("");
   const [sellerName, setSellerName] = useState("");
   const [buyerName, setBuyerName] = useState("");
-  const [buyerId, setBuyerId] = useState("");
+
   const [messages, setMessages] = useState([]);
   const uuid = fb.auth.currentUser.uid;
   const username = fb.auth.currentUser.displayName;
@@ -32,7 +32,6 @@ const Messageboard = () => {
           setTitle(snapshot.data().title);
           setSellerName(snapshot.data().seller);
           setBuyerName(snapshot.data().buyer);
-          setBuyerId(snapshot.data().buyerId);
         });
 
       fb.firestore
@@ -112,7 +111,12 @@ const Messageboard = () => {
         </div>
       </div>
       <div className="messageBoard_realestate">
-        <Realestate sellerId={sellerId} realId={realId} convId={conId} />
+        <Realestate
+          sellerId={sellerId}
+          realId={realId}
+          convId={conId}
+          buyerId={buyerId}
+        />
       </div>
       <div className="messageBoard_container">
         {messages.map((message) => (
@@ -122,7 +126,13 @@ const Messageboard = () => {
             }`}
           >
             {message.message}
-            <span className="message_name">{message.sender}</span>
+            <span
+              className={`message_name ${
+                message.sender === username && "message_name_send"
+              }`}
+            >
+              {message.sender}
+            </span>
           </p>
         ))}
       </div>
