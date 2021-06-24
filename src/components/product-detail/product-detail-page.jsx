@@ -9,6 +9,7 @@ import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { Link, useLocation } from "react-router-dom";
+import { ChatButton } from "./ChatButton";
 
 class ProductDetailPage extends Component {
   state = {
@@ -34,6 +35,8 @@ class ProductDetailPage extends Component {
     console.log("detail");
     console.log(this.props.location.product);
   }
+
+  handleChat() {}
 
   render() {
     const product = this.props.location.product;
@@ -166,7 +169,10 @@ class ProductDetailPage extends Component {
                       <FaBuilding className="short-info-icon" />
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Loại:</span>
-                        <span className="short-info-label2">{product.typeName}{/*Chung Cư*/}</span>
+                        <span className="short-info-label2">
+                          {product.typeName}
+                          {/*Chung Cư*/}
+                        </span>
                       </div>
                     </li>
 
@@ -214,20 +220,30 @@ class ProductDetailPage extends Component {
 
               {/* right content */}
               <div className="linear-gray-border contact-wrapper">
-                <div style={{background: "url('" + product.avatar + "')"}} className="contact-pic"></div>
-                <div className="contact-name">{product.sellerName}{/*Nguyen Duc Huy*/}</div>
+                <div
+                  style={{ background: "url('" + product.avatar + "')" }}
+                  className="contact-pic"
+                ></div>
+                <div className="contact-name">
+                  {product.sellerName}
+                  {/*Nguyen Duc Huy*/}
+                </div>
                 <div className="contact-button">
                   {/* <BsFillChatDotsFill /> */}
 
                   {/* <div style={{width: "18px"}}></div> */}
-                  <Link
+                  {/* <Link
                     className="link contact-title-container"
                     to="/chat-page"
+                    onClick={() => {
+                      
+                    }}
                   >
                     <div className="contact-title-container">
                       &#32; Nhắn tin
                     </div>
-                  </Link>
+                  </Link> */}
+                  <ChatButton product={product} />
                 </div>
 
                 <div className="more-post-button">

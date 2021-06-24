@@ -10,20 +10,31 @@ import firebase from "firebase";
 import Realestate from "./Realestate";
 
 const Messageboard = () => {
-  const [{ user }, dispatch] = useStateValue();
+  // const [{ user }, dispatch] = useStateValue();
   const [input, setInput] = useState("");
-  const { conId } = useParams();
+  const { conId, realId, sellerId } = useParams();
   const [title, setTitle] = useState("");
+  const [sellerName, setSellerName] = useState("");
+
   const [messages, setMessages] = useState([]);
+  const uuid = fb.auth.currentUser.uid;
+  const username = fb.auth.currentUser.displayName;
 
   useEffect(() => {
     if (conId) {
       fb.firestore
+        .collection("users")
+        .doc(uuid)
         .collection("conversations")
         .doc(conId)
-        .onSnapshot((snapshot) => setTitle(snapshot.data().title));
+        .onSnapshot((snapshot) => {
+          setTitle(snapshot.data().title);
+          setSellerName(snapshot.data().seller);
+        });
 
       fb.firestore
+        .collection("users")
+        .doc(uuid)
         .collection("conversations")
         .doc(conId)
         .collection("messages")
@@ -36,23 +47,27 @@ const Messageboard = () => {
     e.preventDefault();
 
     fb.firestore
+      .collection("users")
+      .doc(uuid)
       .collection("conversations")
       .doc(conId)
       .collection("messages")
       .add({
         message: input,
-        sender: user.displayName,
+        sender: username,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
     setInput("");
   };
+
+  console.log("sellerid" + sellerId);
   return (
     <div className="messageBoard">
       <div className="messageBoard_header">
         <Avatar />
         <div className="messageBoard_header_info">
-          <h3>{title}</h3>
-          <p>last seen</p>
+          <h3>{sellerName}</h3>
+          {/* <p>last seen</p> */}
         </div>
         <div className="messageBoard_header_right">
           <IconButton>
@@ -64,7 +79,7 @@ const Messageboard = () => {
         </div>
       </div>
       <div className="messageBoard_realestate">
-        <Realestate />
+        <Realestate sellerId={sellerId} realId={realId} convId={conId} />
       </div>
       <div className="messageBoard_container">
         {messages.map((message) => (

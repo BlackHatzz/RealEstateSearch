@@ -1,8 +1,9 @@
 .chat {
-  width: 90vh;
-  height: 80vh;
+  width: 60%;
+  height: 90vh;
   border: 1px solid black;
   display: flex;
+  align-self: center;
 }
 
 .sidebar {
@@ -12,17 +13,21 @@
   flex-direction: column;
   border-right: 1px solid black;
 }
+.chat_main {
+  display: flex;
+  flex-direction: column;
+}
 
 .sidebar-header {
   display: flex;
   height: fit-content;
+  border-bottom: 1px solid black;
 }
 
 .sidebar-chatlist {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: aqua;
   overflow-y: scroll;
 }
 
@@ -50,7 +55,7 @@
   display: flex;
   width: 65%;
   height: 100%;
-  background-color: white;
+
   flex-direction: column;
 }
 
@@ -58,7 +63,7 @@
   display: flex;
   height: 60px;
   padding: 10px;
-  background-color: bisque;
+  border-bottom: 1px solid black;
 }
 
 .messageBoard_header_info > h3 {
@@ -74,20 +79,20 @@
 }
 .messageBoard_realestate {
   display: flex;
-  background-color: cornsilk;
 }
 
 .messageBoard_container {
   flex: 1;
   padding: 30px;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .message {
   position: relative;
   font-size: 16px;
   padding: 10px;
-  background-color: cornsilk;
+
   border-radius: 20px;
   width: fit-content;
   margin-bottom: 20px;
@@ -121,7 +126,7 @@
 
 .messageBoard_sendform > form > input {
   flex: 1;
-  border-radius: 20px;
+
   padding: 5px;
   margin-right: 5px;
   margin-left: 5px;
@@ -136,9 +141,15 @@
   border-bottom: 1px solid gray;
   display: flex;
   flex: 1;
-  background-color: rgb(228, 218, 204);
+
+  padding: 10px;
 }
 
+.appointment_main {
+  display: flex;
+  padding: 10px;
+  border-bottom: 1px solid black;
+}
 .appointment {
   display: flex;
   flex: 1;
@@ -147,4 +158,8 @@
 .bookForm {
   display: flex;
   flex: 1;
+}
+
+.daLabel {
+  width: 30%;
 }

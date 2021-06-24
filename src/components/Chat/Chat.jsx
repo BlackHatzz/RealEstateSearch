@@ -2,23 +2,27 @@ import React from "react";
 import { Sidebar } from "./Sidebar";
 import "./Chat.css";
 import Messageboard from "./Messageboard";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
+import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import BuyerNavbar from "../global/BuyerNavbar";
 
 export const Chat = () => {
   let match = useRouteMatch();
 
   return (
-    <div className="chat">
-      <Sidebar />
+    <div className="chat_main">
+      <BuyerNavbar />
+      <div className="chat">
+        <Sidebar />
 
-      <Switch>
-        <Route exact path={`${match.path}`}>
-          <h1>select a conversation</h1>
-        </Route>
-        <Route path={`${match.path}/:conId`}>
-          <Messageboard />
-        </Route>
-      </Switch>
+        <Switch>
+          <Route exact path={`${match.path}`}>
+            <h2>Nhắn tin trực tiếp với người bán</h2>
+          </Route>
+          <Route path={`${match.path}/:conId?/:realId?/:sellerId?`}>
+            <Messageboard />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 };

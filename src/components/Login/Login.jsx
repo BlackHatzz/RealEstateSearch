@@ -16,6 +16,7 @@ export const Login = () => {
     fb.auth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
+        console.log(res.user.uid);
         if (!res.user) {
           setServerError(
             "We're having trouble logging you in. Please try again."
