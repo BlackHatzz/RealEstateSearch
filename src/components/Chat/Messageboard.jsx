@@ -15,7 +15,8 @@ const Messageboard = () => {
   const { conId, realId, sellerId } = useParams();
   const [title, setTitle] = useState("");
   const [sellerName, setSellerName] = useState("");
-
+  const [buyerName, setBuyerName] = useState("");
+  const [buyerId, setBuyerId] = useState("");
   const [messages, setMessages] = useState([]);
   const uuid = fb.auth.currentUser.uid;
   const username = fb.auth.currentUser.displayName;
@@ -30,6 +31,8 @@ const Messageboard = () => {
         .onSnapshot((snapshot) => {
           setTitle(snapshot.data().title);
           setSellerName(snapshot.data().seller);
+          setBuyerName(snapshot.data().buyer);
+          setBuyerId(snapshot.data().buyerId);
         });
 
       fb.firestore
@@ -45,7 +48,6 @@ const Messageboard = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
-
     fb.firestore
       .collection("users")
       .doc(uuid)
@@ -57,16 +59,47 @@ const Messageboard = () => {
         sender: username,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
+
+    if (uuid !== "fSUJL0Vjoraru92zOuLbp0Rcff32") {
+      fb.firestore
+        .collection("users")
+        .doc(sellerId)
+        .collection("conversations")
+        .doc(conId)
+        .collection("messages")
+        .add({
+          message: input,
+          sender: username,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    } else {
+      fb.firestore
+        .collection("users")
+        .doc(buyerId)
+        .collection("conversations")
+        .doc(conId)
+        .collection("messages")
+        .add({
+          message: input,
+          sender: username,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+    }
+
     setInput("");
   };
 
-  console.log("sellerid" + sellerId);
   return (
     <div className="messageBoard">
       <div className="messageBoard_header">
         <Avatar />
         <div className="messageBoard_header_info">
-          <h3>{sellerName}</h3>
+          {uuid !== "fSUJL0Vjoraru92zOuLbp0Rcff32" ? (
+            <h3>{sellerName}</h3>
+          ) : (
+            <h3>{buyerName}</h3>
+          )}
+
           {/* <p>last seen</p> */}
         </div>
         <div className="messageBoard_header_right">
@@ -83,7 +116,11 @@ const Messageboard = () => {
       </div>
       <div className="messageBoard_container">
         {messages.map((message) => (
-          <p className={`message ${true && "message_send"}`}>
+          <p
+            className={`message ${
+              message.sender === username && "message_send"
+            }`}
+          >
             {message.message}
             <span className="message_name">{message.sender}</span>
           </p>

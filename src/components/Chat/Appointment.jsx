@@ -131,9 +131,7 @@ function Appointment(props) {
           excludeTimes={[setHours(setMinutes(new Date(), 30), 14)]}
           timeIntervals={120}
         />
-        <button type="submit" disabled={props.isDisabled}>
-          đặt
-        </button>
+        <button type="submit" /*disabled={props.isDisabled}*/>đặt</button>
       </form>
     </div>
   );
