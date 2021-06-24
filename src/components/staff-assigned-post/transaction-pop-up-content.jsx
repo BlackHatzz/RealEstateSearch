@@ -15,6 +15,7 @@ class TransactionPopUpContent extends Component {
     //   { id: "2", name: "nguyen duc huy 2", profilePicUrl: "thisisurl" },
     //   { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
     // ],
+    realEstateId: null,
     selectedBuyer: null,
     title: null,
     downprice: null,
@@ -24,6 +25,7 @@ class TransactionPopUpContent extends Component {
   componentDidMount() {
     this.setState({
       buyerBasicInfos: this.props.buyers,
+      realEstateId: this.props.realEstateId
     });
   }
 
@@ -106,7 +108,7 @@ class TransactionPopUpContent extends Component {
         "buyerId": this.state.selectedBuyer.buyerId,
         "sellerId": "fSUJL0Vjoraru92zOuLbp0Rcff32",
         "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
-        "realEstateId": 2,
+        "realEstateId": this.state.realEstateId,
         "downPrice": this.state.downprice
     }),
     };
