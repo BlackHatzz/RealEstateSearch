@@ -1,11 +1,13 @@
 .profile-wrapper {
   width: 100%;
-  height: 4000px;
-  background-color: white;
+  height: auto;
+  padding-bottom: 80px;
+  background-color: #dadde2;
 }
 .profile-container {
-  width: 1000px;
+  width: 850px;
   height: auto;
+  background-color: white;
   /* background-color: blue; */
   margin: 0 auto;
   box-shadow: 0px 2px 10px 10px rgba(3, 44, 71, 0.18);
@@ -13,28 +15,43 @@
 }
 
 .profile-pic-container {
-  background-color: gray;
-  width: 200px;
-  height: 200px;
+  /* background-color: #D9D9D9; */
+  background-color: red;
+  width: 190px;
+  height: 190px;
   border-radius: 50%;
   margin: 0px auto;
+  background-image: url("https://static.bongda24h.vn/medias/original/2020/9/23/7-Cristiano-Ronaldo-TienDao.jpg");
+  background-size: 190px 190px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+}
+
+.profile-pic-container > img {
+  margin: auto;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-size: 180px 180px;
 }
 
 .profile-id-container {
-    width: 100%;
-    text-align: center;
-    height: 50px;
-    /* background-color: green; */
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  text-align: center;
+  height: 50px;
+  /* background-color: green; */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 .profile-id-container > span {
-    text-align: center;
-    font-size: 18px;
-    color: gray;
-    /* background-color: red; */
+  text-align: center;
+  font-size: 18px;
+  color: gray;
+  /* background-color: red; */
 }
 
 .profile-pic-tab-bar-container {
@@ -49,7 +66,7 @@
 
 .profile-pic-tab-bar-container > .item {
   height: 100%;
-  width: 100px;
+  width: 200px;
   /* background-color: darkkhaki; */
   display: flex;
   flex-direction: row;
@@ -66,48 +83,56 @@
 
 .profile-content-container {
   width: 100%;
-  height: 1000px;
+  height: auto;
   /* background-color: darkorange; */
-  padding-top: 40px;
+  padding-top: 20px;
 }
 
 .profile-content-container .silver-circle {
-    width: 40px;
-    height: 40px;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    background-color: #dadde2;
-    border-radius: 50%;
-    margin-left: 6%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: #dadde2;
+  border-radius: 50%;
+  margin-left: 15%;
 }
 
 .profile-content-container .icon {
-    width: 24px;
-    height: 24px;
+  width: 24px;
+  height: 24px;
 }
 
 .profile-content-container .title {
-    font-size: 18px;
-    padding-left: 12px;
-    padding-right: 24px;
-    width: 100px;
+  font-size: 18px;
+  padding-left: 12px;
+  padding-right: 24px;
+  width: 100px;
 }
 
 .profile-content-container > .row {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    padding-bottom: 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-bottom: 24px;
 }
-
 
 div.solid-field-container {
   background-color: #dadde2 /*#f1f1f1*/;
-  width: 500px;
+  width: 220px;
+  height: 50px;
+  border-radius: 4px;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+div.read-only-solid-field-container {
+  background-color: transparent /*#f1f1f1*/;
+  width: 300px;
   height: 50px;
   border-radius: 4px;
   padding-left: 12px;
@@ -144,133 +169,126 @@ div.solid-field-container {
   align-items: center;
 }
 
-
-
 .profile-content-container > .row > .transaction-item {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
-
-
-
 
 div.transaction-item-container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start;
-    /* background-color: thistle; */
-    border: 1px solid rgb(230, 230, 230);
-    border-radius: 8px;
-    box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18);
-    margin-top: 2px;
-    margin-bottom: 2px;
-    /* width: ; */
-    /* height: 500px; */
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  /* background-color: thistle; */
+  border: 1px solid rgb(230, 230, 230);
+  border-radius: 8px;
+  box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18);
+  margin-top: 2px;
+  margin-bottom: 2px;
+  /* width: ; */
+  /* height: 500px; */
 }
-
 
 div.transaction-image-container {
-    border-radius: 4px;
-    /* background-color: yellow; */
-    width: 224px;
-    height: 172px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+  border-radius: 4px;
+  /* background-color: yellow; */
+  width: 224px;
+  height: 172px;
+  padding-top: 12px;
+  padding-bottom: 12px;
 }
 img.transaction-image {
-    background-repeat: no-repeat;
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    border-radius: 2px;
-    margin-left: 12px;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  margin-left: 12px;
 }
 
 div.content-transaction-container {
-    padding: 14px 12px 12px 12px;
-    margin-left: 12px;
-    /* margin: auto; */
-    width: 550px;
-    /* background-color: teal; */
+  padding: 14px 12px 12px 12px;
+  margin-left: 12px;
+  /* margin: auto; */
+  width: 550px;
+  /* background-color: teal; */
 }
 
 .transaction-title {
-    color: #c12f25;
-    text-indent: 20px;
-    text-transform: uppercase;
-    padding-bottom: 8px;
-    font-weight: bold;
-    font-size: 14px;
-    line-height: 12px;
-    text-rendering: optimizeLegibility;
+  color: #c12f25;
+  text-indent: 20px;
+  text-transform: uppercase;
+  padding-bottom: 8px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 12px;
+  text-rendering: optimizeLegibility;
 }
-
 
 div.transaction-price-box {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 .transaction-price {
-    font-weight: bold;
-    color: #2c2f36;
-    font-size: 14px;
-    margin-right: 8px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+  font-weight: bold;
+  color: #2c2f36;
+  font-size: 14px;
+  margin-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 4px;
 }
 .transaction-area {
-    font-weight: bold;
-    color: #2c2f36;
-    font-size: 14px;
-    margin-right: 8px;
+  font-weight: bold;
+  color: #2c2f36;
+  font-size: 14px;
+  margin-right: 8px;
 }
 
 .transaction-address {
-    margin-top: 8px;
-    font-size: 14px;
-    color: black;
+  margin-top: 8px;
+  font-size: 14px;
+  color: black;
 }
 
 .transaction-description {
-    margin-top: 8px;
-    font-size: 14px;
-    height: 51px;
-    color: #747c87;
-    overflow: hidden;
+  margin-top: 8px;
+  font-size: 14px;
+  height: 51px;
+  color: #747c87;
+  overflow: hidden;
 }
 
 .transaction-other-info {
-    margin-top: 8px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .transaction-uptime {
-    font-size: 14px;
-    color: #747c87;
+  font-size: 14px;
+  color: #747c87;
 }
 
 .transaction-owner {
-    font-size: 14px;
-    color: black;
+  font-size: 14px;
+  color: black;
 }
 
 .transaction-phone-contact {
-    color: white;
-    background-color: black;
-    /* vertical-align: middle; */
-    line-height: 20px;
-    padding: 6px 12px 6px 12px;
-    font-size: 14px;
-    font-weight: bold;
-    /* text-align: center; */
-    border-radius: 4px;
+  color: white;
+  background-color: black;
+  /* vertical-align: middle; */
+  line-height: 20px;
+  padding: 6px 12px 6px 12px;
+  font-size: 14px;
+  font-weight: bold;
+  /* text-align: center; */
+  border-radius: 4px;
 }
