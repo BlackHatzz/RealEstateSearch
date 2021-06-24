@@ -30,7 +30,7 @@ export const Sidebar = () => {
   return (
     <div className="sidebar">
       <div className="sidebar-header">
-        <h2>Cuộc trò chuyện</h2>
+        <h3>Cuộc trò chuyện</h3>
       </div>
       <div className="sidebar-chatlist">
         {/* <SidebarChat newChat /> */}

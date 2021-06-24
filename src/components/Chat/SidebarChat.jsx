@@ -8,8 +8,6 @@ export default function SidebarChat({ real, seller, id, title, newChat }) {
 
   const createChat = () => {
     const title = prompt("asdasdasdasd");
-    if (title) {
-    }
   };
   return !newChat ? (
     <Link to={`${match.url}/${id}/${real}/${seller}`}>
@@ -17,7 +15,7 @@ export default function SidebarChat({ real, seller, id, title, newChat }) {
         {/* <Avatar src="https://www.w3schools.com/w3images/avatar2.png" /> */}
         <div className="sidebarChat_info">
           <h2>{title}</h2>
-          <p>last ms</p>
+          {/* <p>last ms</p> */}
         </div>
       </div>
     </Link>
