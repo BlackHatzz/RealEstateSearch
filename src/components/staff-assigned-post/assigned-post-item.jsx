@@ -115,7 +115,7 @@ class AssignedPostItem extends Component {
                   <TransactionPopUpContent
                     realEstateId={this.props.item.realEstateId}
                     price={this.props.item.price}
-                    sellerId={this.props.item.sellId}
+                    sellerId={this.props.item.sellerId}
                     sellerName={this.props.item.sellerName}
                     buyers={this.props.item.buyers}
                     close={() => this.handleClosePopup(close)}

@@ -15,6 +15,7 @@ class TransactionPopUpContent extends Component {
     //   { id: "2", name: "nguyen duc huy 2", profilePicUrl: "thisisurl" },
     //   { id: "3", name: "nguyen duc huy 3", profilePicUrl: "thisisurl" },
     // ],
+    sellerId: null,
     realEstateId: null,
     selectedBuyer: null,
     title: null,
@@ -23,10 +24,14 @@ class TransactionPopUpContent extends Component {
   };
 
   componentDidMount() {
+    console.log("llller");
+    // console.log(this.props.sellerId);
     this.setState({
       buyerBasicInfos: this.props.buyers,
-      realEstateId: this.props.realEstateId
+      realEstateId: this.props.realEstateId,
+      sellerId: this.props.sellerId,
     });
+    // console.log(this.state.sellerId);
   }
 
   showBuyerMenu = () => {
@@ -106,7 +111,7 @@ class TransactionPopUpContent extends Component {
       body: JSON.stringify({
         "title": this.state.title,
         "buyerId": this.state.selectedBuyer.buyerId,
-        "sellerId": "fSUJL0Vjoraru92zOuLbp0Rcff32",
+        "sellerId": this.props.sellerId,
         "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
         "realEstateId": this.state.realEstateId,
         "downPrice": this.state.downprice

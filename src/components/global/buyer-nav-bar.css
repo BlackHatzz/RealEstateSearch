@@ -108,10 +108,11 @@
 .profile-menu-container > .profile-menu-item > .icon {
     padding-left: 12px;
 }
-.profile-menu-container > .profile-menu-item > .title {
+.profile-menu-container > .profile-menu-item .title {
     padding-left: 12px;
     font-size: 16px;
     text-align: left;
+    color: black;
 }
 .profile-menu-container > .divide {
     width: 100%;

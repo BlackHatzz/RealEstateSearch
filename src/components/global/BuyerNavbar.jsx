@@ -7,6 +7,8 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
+import "../global/shared.css";
+import { Link } from "react-router-dom";
 
 class BuyerNavbar extends Component {
   state = {
@@ -18,7 +20,6 @@ class BuyerNavbar extends Component {
       isProfileMenuShown: !this.state.isProfileMenuShown,
     });
   };
-
 
   render() {
     return (
@@ -59,7 +60,9 @@ class BuyerNavbar extends Component {
                 <div className="profile-menu-container">
                   <div className="profile-menu-item top-item">
                     <AccountCircleIcon className="icon" />
-                    <span className="title">Xem Hồ Sơ</span>
+                    <Link className="link" to="/profile-page">
+                      <span className="title">Xem Hồ Sơ</span>
+                    </Link>
                   </div>
                   <div className="divide"></div>
                   <div className="profile-menu-item bottom-item">
