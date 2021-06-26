@@ -147,7 +147,8 @@ div.home-filter-box {
 div.home-filter-menu {
   background-color: #303030;
   width: 162px;
-  height: auto;
+  height: 164px;
+  overflow: auto;
   position: absolute;
   padding-bottom: 12px;
   border-radius: 4px;

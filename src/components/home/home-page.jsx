@@ -43,9 +43,25 @@ class HomePage extends Component {
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "Quận 1" },
+          {
+            key: 1,
+            text: "Quận 1",
+            children: [
+              { key: 0, text: "child 1" },
+              { key: 0, text: "child 1" },
+            ],
+          },
           { key: 2, text: "Quận 2" },
           { key: 3, text: "Quận 3" },
+          { key: 4, text: "Quận 4" },
+          { key: 5, text: "Quận 5" },
+          { key: 6, text: "Quận 6" },
+          { key: 7, text: "Quận 7" },
+          { key: 8, text: "Quận 8" },
+          { key: 9, text: "Quận 9" },
+          { key: 10, text: "Quận 10" },
+          { key: 11, text: "Quận 11" },
+          { key: 12, text: "Quận 12" },
         ],
       },
       {
@@ -71,6 +87,48 @@ class HomePage extends Component {
     //   [{key: 0, text: "Chung Cư"}, {key: 1, text: "Nhà"}, {key: 2, text: "Đất"}],
     //   [{key: 0, text: "< 500 triệu"}, {key: 1, text: "500 - 1 tỷ"}, {key: 2, text: "1 tỷ - 2 tỷ"}, {key: 3, text: "2 tỷ - 5 tỷ"}]
     // ]
+  };
+
+  componentDidMount() {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        page: 0,
+        size: 20,
+        search: "",
+        price: null,
+        fromArea: null,
+        toArea: null,
+        type: 1,
+      }),
+    };
+
+    fetch(
+      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/getRealEstateDetail",
+      requestOptions
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          // console.log(result.content);
+          console.log("cloud");
+          console.log(result);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          // this.setState({
+          //   isLoaded: true,
+          //   error,
+          // });
+        }
+      );
+  }
+
+  handleFilter = (filterKey, itemKey, title) => {
+    console.log("inssss" + filterKey + itemKey + title);
   };
 
   handleSearch = () => {
@@ -121,6 +179,14 @@ class HomePage extends Component {
     );
   };
 
+  // hit enter
+  handleSubmitForm = (e) => {
+    e.preventDefault();
+    if (this.state.searchText.length >= 3) {
+      this.props.history.push("/search-result-page/" + this.state.searchText);
+    }
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -135,19 +201,22 @@ class HomePage extends Component {
             <div className="home-search-wrapper">
               {this.state.isTooltipShown ? (
                 <div className="home-tooltip noselect">
-                  <span className="tooltiptext">Thông tin phải ít nhất 3 ký tự</span>
+                  <span className="tooltiptext">
+                    Thông tin phải ít nhất 3 ký tự
+                  </span>
                 </div>
               ) : null}
               {/* search bar */}
-              <div className="home-search-bar">
-                <input
-                  onChange={this.handleChange}
-                  className="home-search-field"
-                  placeholder="Nhập địa điểm, khu vực, tên dự án..."
-                  value={this.state.value}
-                ></input>
+              <form onSubmit={this.handleSubmitForm}>
+                <div className="home-search-bar">
+                  <input
+                    onChange={this.handleChange}
+                    className="home-search-field"
+                    placeholder="Nhập địa điểm, khu vực, tên dự án..."
+                    value={this.state.value}
+                  ></input>
 
-                {/* <button className="home-search-button">
+                  {/* <button className="home-search-button">
                   <Link
                     className="link"
                     to={{
@@ -157,17 +226,21 @@ class HomePage extends Component {
                     <AiOutlineSearch className="home-search-icon" />
                   </Link>
                 </button> */}
-                {this.renderSearchConditionaLink()}
-              </div>
+                  {this.renderSearchConditionaLink()}
+                </div>
+              </form>
 
               {/* filter */}
               <div className="home-filter-wrapper">
                 {this.state.filters.map((filter) => (
                   <HomeFilterBox
                     key={filter.key}
-                    filterName={filter.filterName}
-                    title={filter.title}
-                    options={filter.options}
+                    handler={this.handleFilter}
+                    filter={filter}
+                    // filterKey={filter.key}
+                    // filterName={filter.filterName}
+                    // title={filter.title}
+                    // options={filter.options}
                   />
                 ))}
                 {/* <HomeFilterBox title="Loại nhà đất" />

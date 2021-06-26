@@ -8,6 +8,12 @@ class HomeFilterMenuOption extends Component {
       { key: 3, value: "Đất" },
     ],
   };
+
+  handleSelectFilterOption = (key, title) => {
+    this.props.handler(key, title);
+    // this.props.options.map(option)
+  }
+
   render() {
     const divide = {
       width: "100%",
@@ -26,7 +32,7 @@ class HomeFilterMenuOption extends Component {
         
         {this.props.options.map((option) => (
           <div key={option.key}>
-            <div className="noselect home-filter-menu-option">
+            <div onClick={() => this.handleSelectFilterOption(option.key, option.text)} className="noselect home-filter-menu-option">
               <div className="noselect home-filter-menu-option-title">
                 {option.text}
               </div>

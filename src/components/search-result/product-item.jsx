@@ -7,7 +7,8 @@ class ProductItem extends Component {
     
   };
   render() {
-    console.log("in");
+    console.log("search result item:");
+    // console.log(this.props.item.images[0].imgUrl);
     console.log(this.props);
     return (
       <React.Fragment>
@@ -16,7 +17,8 @@ class ProductItem extends Component {
           <div className="product-image-container">
             <img
               className="product-image"
-              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+              src={this.props.item.images[0].imgUrl}
+              // src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
               alt=""
             />
           </div>
@@ -50,8 +52,8 @@ class ProductItem extends Component {
             </div>
 
             <div className="product-other-info">
-              <div className="product-uptime">{this.props.item.createAt}</div>
-              <div className="product-owner">Nguyen Duc Huy</div>
+              <div className="product-uptime">Ngày đăng: {this.props.item.createAt}</div>
+              <div className="product-owner">Người đăng: {this.props.item.sellerName}</div>
               {/* <div className="product-phone-contact horizontal">
                 <BsFillChatDotsFill />
                 <div style={{ width: "12px" }}></div>
