@@ -27,7 +27,12 @@ class HomeFilterBox extends Component {
       <div>
         {/* <Multiselect options={this.state.options} singleSelect displayValue="name" /> */}
         <div onClick={this.switchToggle} className="home-filter-box">
-          <span className="noselect home-filter-title">{this.props.title}</span>
+          <div className="home-filter-title-container">
+          <span className="noselect home-filter-title">{this.props.filterName}</span>
+          <br />
+          <span className="noselect home-filter-title2">{this.props.title}</span>
+          </div>
+          
           <RiArrowDropDownLine className="home-filter-icon" />
         </div>
         {/* <HomeFilterMenuOption /> */}

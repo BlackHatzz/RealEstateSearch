@@ -91,6 +91,7 @@ div.home-filter-wrapper {
     margin-left: auto;
     margin-right: auto;
     width: 692px;
+    /* width: 692px; */
     /* height: 40px; */
     background-color: transparent;
     display: flex;
@@ -99,11 +100,12 @@ div.home-filter-wrapper {
 }
 
 div.home-filter-box {
-    background-color: 303030;
+    background-color: #303030;
     border: 1px solid white;
     border-radius: 4px;
     width: 160px;
-    height: 44px;
+    height: 46px;
+    /* height: 44px; */
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -111,18 +113,35 @@ div.home-filter-box {
     cursor: pointer;
 }
 
+.home-filter-title-container {
+  width: 100%;
+  /* background-color: red; */
+  height: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+
 .home-filter-title {
     font-size: 14px;
     color: white;
-    padding-left: 14px;
+    padding-left: 10px;
     /* float: left; */
 }
+.home-filter-title2 {
+  font-size: 16px;
+  color: white;
+  padding-left: 16px;
+  text-align: right;
+  /* float: left; */
+}
+
+
 
 .home-filter-icon {
     width: 32px;
     height: 32px;
     color: white;
-    padding-right: 8px;
+    padding: 0px;
 }
 
 div.home-filter-menu {

@@ -17,7 +17,8 @@ class HomePage extends Component {
     filters: [
       {
         key: 0,
-        title: "Loại nhà đất",
+        filterName: "Loại nhà đất",
+        title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
           { key: 1, text: "Chung Cư" },
@@ -27,34 +28,40 @@ class HomePage extends Component {
       },
       {
         key: 1,
-        title: "Mức giá",
+        filterName: "Mức giá",
+        title: "Tất cả",
         options: [
-          { key: 0, text: "< 500 triệu" },
-          { key: 1, text: "500 triệu - 1 tỷ" },
-          { key: 2, text: "1 tỷ - 3 tỷ" },
+          { key: 0, text: "Tất cả" },
+          { key: 1, text: "< 500 triệu" },
+          { key: 2, text: "500 triệu - 1 tỷ" },
+          { key: 3, text: "1 tỷ - 3 tỷ" },
         ],
       },
       {
         key: 2,
-        title: "Khu vực",
+        filterName: "Khu vực",
+        title: "Tất cả",
         options: [
-          { key: 0, text: "Quận 1" },
-          { key: 1, text: "Quận 2" },
-          { key: 2, text: "Quận 3" },
+          { key: 0, text: "Tất cả" },
+          { key: 1, text: "Quận 1" },
+          { key: 2, text: "Quận 2" },
+          { key: 3, text: "Quận 3" },
         ],
       },
       {
         key: 4,
-        title: "Diện tích",
+        filterName: "Diện tích",
+        title: "Tất cả",
         options: [
-          { key: 0, text: "< 30" + Constants.squareMeter },
+          { key: 0, text: "Tất cả" },
+          { key: 1, text: "< 30" + Constants.squareMeter },
           {
-            key: 1,
+            key: 2,
             text:
               "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
           },
           {
-            key: 2,
+            key: 3,
             text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
           },
         ],
@@ -127,7 +134,7 @@ class HomePage extends Component {
 
             <div className="home-search-wrapper">
               {this.state.isTooltipShown ? (
-                <div className="home-tooltip">
+                <div className="home-tooltip noselect">
                   <span className="tooltiptext">Thông tin phải ít nhất 3 ký tự</span>
                 </div>
               ) : null}
@@ -158,6 +165,7 @@ class HomePage extends Component {
                 {this.state.filters.map((filter) => (
                   <HomeFilterBox
                     key={filter.key}
+                    filterName={filter.filterName}
                     title={filter.title}
                     options={filter.options}
                   />
