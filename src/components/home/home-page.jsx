@@ -10,8 +10,8 @@ import BuyerNavbar from "../global/BuyerNavbar";
 import Constants from "../global/Constants";
 
 class HomePage extends Component {
-  // var useHistory = useHistory();
   state = {
+    isTooltipShown: false,
     searchText: "",
     items: [],
     filters: [
@@ -19,14 +19,15 @@ class HomePage extends Component {
         key: 0,
         title: "Loại nhà đất",
         options: [
-          { key: 0, text: "Chung Cư" },
-          { key: 1, text: "Nhà" },
-          { key: 2, text: "Đất" },
+          { key: 0, text: "Tất cả" },
+          { key: 1, text: "Chung Cư" },
+          { key: 2, text: "Nhà" },
+          { key: 3, text: "Đất" },
         ],
       },
       {
         key: 1,
-        title: "Diện tích",
+        title: "Mức giá",
         options: [
           { key: 0, text: "< 500 triệu" },
           { key: 1, text: "500 triệu - 1 tỷ" },
@@ -47,8 +48,15 @@ class HomePage extends Component {
         title: "Diện tích",
         options: [
           { key: 0, text: "< 30" + Constants.squareMeter },
-          { key: 1, text: "30" + Constants.squareMeter + " - 50" + Constants.squareMeter },
-          { key: 2, text: "50"+ Constants.squareMeter + "- 80" + Constants.squareMeter },
+          {
+            key: 1,
+            text:
+              "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
+          },
+          {
+            key: 2,
+            text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
+          },
         ],
       },
     ],
@@ -70,6 +78,42 @@ class HomePage extends Component {
     });
   };
 
+  handleShowTooltip = () => {
+    if (this.state.searchText.length < 3) {
+      this.setState({
+        isTooltipShown: true,
+      });
+    } else {
+      this.setState({
+        isTooltipShown: false,
+      });
+    }
+  };
+
+  renderSearchConditionaLink = () => {
+    // console.log(this.state.searchText.length)
+    if (this.state.searchText.length >= 3) {
+      return (
+        <button className="home-search-button">
+          <Link
+            className="link"
+            to={{
+              pathname: "/search-result-page/" + this.state.searchText,
+            }}
+          >
+            <AiOutlineSearch className="home-search-icon" />
+          </Link>
+        </button>
+      );
+    }
+
+    return (
+      <button onClick={this.handleShowTooltip} className="home-search-button">
+        <AiOutlineSearch className="home-search-icon" />
+      </button>
+    );
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -82,6 +126,11 @@ class HomePage extends Component {
             </h1>
 
             <div className="home-search-wrapper">
+              {this.state.isTooltipShown ? (
+                <div className="home-tooltip">
+                  <span className="tooltiptext">Thông tin phải ít nhất 3 ký tự</span>
+                </div>
+              ) : null}
               {/* search bar */}
               <div className="home-search-bar">
                 <input
@@ -91,7 +140,7 @@ class HomePage extends Component {
                   value={this.state.value}
                 ></input>
 
-                <button className="home-search-button">
+                {/* <button className="home-search-button">
                   <Link
                     className="link"
                     to={{
@@ -100,13 +149,18 @@ class HomePage extends Component {
                   >
                     <AiOutlineSearch className="home-search-icon" />
                   </Link>
-                </button>
+                </button> */}
+                {this.renderSearchConditionaLink()}
               </div>
 
               {/* filter */}
               <div className="home-filter-wrapper">
                 {this.state.filters.map((filter) => (
-                  <HomeFilterBox key={filter.key} title={filter.title} options={filter.options} />
+                  <HomeFilterBox
+                    key={filter.key}
+                    title={filter.title}
+                    options={filter.options}
+                  />
                 ))}
                 {/* <HomeFilterBox title="Loại nhà đất" />
                 <HomeFilterBox title="Khu vực" /> */}

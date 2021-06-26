@@ -162,5 +162,44 @@ div.home-filter-menu-option {
   margin: 0 auto;
 }
 
+.home-tooltip {
+  position: relative;
+  /* display: inline-block; */
+  left: 12px;
+  bottom: 40px;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  background-color: gray;
+}
+
+.home-tooltip > .tooltiptext {
+  /* visibility: hidden; */
+  visibility: visible;
+  width: 230px;
+  background-color: #EA6863;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+
+.home-tooltip > .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 25%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #EA6863 transparent transparent transparent;
+}
+
+
 
 
