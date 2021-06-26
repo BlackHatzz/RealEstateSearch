@@ -1,4 +1,6 @@
 class Constants {
+    static squareMeter = "m²";
+
     static host = "http://localhost:8080/";
     static getRealEstateRef = Constants.host + "api/v1/realEstate/getRealEstateDetail";
     static getRealEstateAssignStaffRef = Constants.host + "api/v1/realEstate/getRealEstateAssignStaff";

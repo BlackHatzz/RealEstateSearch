@@ -30,8 +30,8 @@ class HomeFilterBox extends Component {
           <span className="noselect home-filter-title">{this.props.title}</span>
           <RiArrowDropDownLine className="home-filter-icon" />
         </div>
-
-        {this.state.showMenu ? (<HomeFilterMenuOption />) : null}
+        {/* <HomeFilterMenuOption /> */}
+        {this.state.showMenu ? (<HomeFilterMenuOption options={this.props.options} />) : null}
 
       </div>
     );

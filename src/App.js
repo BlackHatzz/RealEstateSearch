@@ -9,6 +9,7 @@ import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
 import ProfilePage from "./components/profile/ProfilePage";
+import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
 
 const App = () => {
   const history = useHistory();
@@ -16,11 +17,11 @@ const App = () => {
   const authResolved = useResolved(authUser);
 
   //
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
 
   return authResolved ? (
     <div className="app">
@@ -28,6 +29,7 @@ const App = () => {
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
         <Route path="/profile-page" component={ProfilePage} />
+        <Route path="/transaction-history-page" component={TransactionHistoryPage} />
         <Route path="/signup" component={Signup} />
         <Route
           path="/search-result-page/:searchtext"

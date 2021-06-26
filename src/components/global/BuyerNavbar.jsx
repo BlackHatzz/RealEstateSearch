@@ -66,10 +66,10 @@ class BuyerNavbar extends Component {
                       <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
-                  <div className="profile-menu-item">
+                  <Link className="link profile-menu-item" to="/transaction-history-page">
                     <HistoryIcon className="icon" />
                     <span className="title">Lịch Sử Giao Dịch</span>
-                  </div>
+                  </Link>
                   <div className="divide"></div>
                   <div className="profile-menu-item bottom-item">
                     <ExitToAppIcon className="icon" />
