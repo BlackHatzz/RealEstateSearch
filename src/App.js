@@ -33,7 +33,8 @@ const App = () => {
         <Route path="/signup" component={Signup} />
         <Route
           path="/search-result-page/:searchtext"
-          component={SearchResultPage}
+          // component={SearchResultPage}
+          render={props => <SearchResultPage key={props.match.params.searchtext} {...props} />}
         ></Route>
         <Route
           path="/product-detail-page"

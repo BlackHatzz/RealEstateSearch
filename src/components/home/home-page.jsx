@@ -28,13 +28,20 @@ class HomePage extends Component {
       },
       {
         key: 1,
-        filterName: "Mức giá",
+        filterName: "Diện tích",
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 500 triệu" },
-          { key: 2, text: "500 triệu - 1 tỷ" },
-          { key: 3, text: "1 tỷ - 3 tỷ" },
+          { key: 1, text: "< 30" + Constants.squareMeter },
+          {
+            key: 2,
+            text:
+              "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
+          },
+          {
+            key: 3,
+            text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
+          },
         ],
       },
       {
@@ -64,22 +71,16 @@ class HomePage extends Component {
           { key: 12, text: "Quận 12" },
         ],
       },
+      
       {
         key: 4,
-        filterName: "Diện tích",
+        filterName: "Mức giá",
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 30" + Constants.squareMeter },
-          {
-            key: 2,
-            text:
-              "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
-          },
-          {
-            key: 3,
-            text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
-          },
+          { key: 1, text: "< 500 triệu" },
+          { key: 2, text: "500 triệu - 1 tỷ" },
+          { key: 3, text: "1 tỷ - 3 tỷ" },
         ],
       },
     ],
