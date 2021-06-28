@@ -71,7 +71,7 @@ class HomePage extends Component {
           { key: 12, text: "Quận 12" },
         ],
       },
-      
+
       {
         key: 4,
         filterName: "Mức giá",
@@ -91,17 +91,23 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
+    const { searchText } = this.state
+    console.log("search ");
+    console.log(searchText);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page: 0,
         size: 20,
-        search: "",
-        price: null,
+        address: null,
+        title: null,
+        project: null,
+        fromPrice: null,
+        toPrice: null,
         fromArea: null,
         toArea: null,
-        type: 1,
+        type: null,
       }),
     };
 

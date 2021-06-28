@@ -32,7 +32,7 @@ class FilterDropBox extends Component {
             {this.state.filter.options.map((option) => (
               <React.Fragment key={option.key}>
                 <div key={option.key} onClick={() => this.handleSelectItem(option)} className="search-suggestion-filter-menu-item">
-                  <span>{option.text}</span>
+                  <span className="title">{option.text}</span>
                 </div>
                 <div className="line"></div>
               </React.Fragment>
