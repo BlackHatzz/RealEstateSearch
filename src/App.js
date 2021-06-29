@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useContext } from "react";
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";
@@ -10,7 +10,7 @@ import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
 import ProfilePage from "./components/profile/ProfilePage";
 import { ChatLauncher } from "./components/Chat/ChatLauncher";
-import ChatContext from "./ChatContext";
+import ChatContext, { Context } from "./ChatContext";
 import { Role } from "./components/Role/Role";
 import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
@@ -19,17 +19,19 @@ const App = () => {
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
 
-  
-const [test, setTest] = useState("initialState");
+  const { role } = useContext(Context);
+
+
   useEffect(() => {
     if (authResolved) {
       history.push(!!authUser ? "/role" : "/login");
     }
   }, [authResolved, authUser, history]);
   return authResolved ? (
+
     <ChatContext>
     <div className="app">
-      {authUser && <ChatLauncher />}
+      {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
@@ -52,6 +54,7 @@ const [test, setTest] = useState("initialState");
       </Switch>
     </div>
     </ChatContext>
+
   ) : (
     <div>Loading ...</div>
   );
