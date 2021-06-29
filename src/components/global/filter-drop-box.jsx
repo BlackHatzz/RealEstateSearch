@@ -22,7 +22,7 @@ class FilterDropBox extends Component {
 
   handleSelectItem = (option) => {
     this.state.filter.title = option.text;
-    this.props.handler(option);
+    this.props.handler(this.props.filterKey, option);
   }
 
   renderMenu = () => {

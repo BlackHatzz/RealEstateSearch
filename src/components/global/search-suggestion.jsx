@@ -26,15 +26,31 @@ class SearchSuggestion extends Component {
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 30" + Constants.squareMeter },
+          { key: 1, text: "< 50" + Constants.squareMeter },
           {
             key: 2,
             text:
-              "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
+              "50" + Constants.squareMeter + " - 100" + Constants.squareMeter,
           },
           {
             key: 3,
-            text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
+            text: "100" + Constants.squareMeter + "- 200" + Constants.squareMeter,
+          },
+          {
+            key: 4,
+            text: "200" + Constants.squareMeter + "- 300" + Constants.squareMeter,
+          },
+          {
+            key: 5,
+            text: "300" + Constants.squareMeter + "- 400" + Constants.squareMeter,
+          },
+          {
+            key: 6,
+            text: "400" + Constants.squareMeter + "- 500" + Constants.squareMeter,
+          },
+          {
+            key: 7,
+            text: "> 500" + Constants.squareMeter,
           },
         ],
       },
@@ -65,19 +81,39 @@ class SearchSuggestion extends Component {
           { key: 12, text: "Quận 12" },
         ],
       },
-      
+
       {
-        key: 4,
+        key: 3,
         filterName: "Mức giá",
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 500 triệu" },
-          { key: 2, text: "500 triệu - 1 tỷ" },
-          { key: 3, text: "1 tỷ - 3 tỷ" },
+          { key: 1, text: "< 1 tỷ" },
+          { key: 2, text: "1 tỷ - 2 tỷ" },
+          { key: 3, text: "2 tỷ - 3 tỷ" },
+          { key: 4, text: "3 tỷ - 5 tỷ" },
+          { key: 5, text: "5 tỷ - 10 tỷ" },
+          { key: 6, text: "10 tỷ - 20 tỷ" },
+          { key: 7, text: "> 20 tỷ" },
         ],
       },
     ],
+    type: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    area: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    address: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    price: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
   };
 
   handleSearch = (event) => {
@@ -88,7 +124,18 @@ class SearchSuggestion extends Component {
       this.setState({
         isTooltipShown: false,
       })
-      this.props.history.push("/search-result-page/" + this.state.searchText);
+      this.props.history.push(
+        "/search-result-page/" +
+          this.state.searchText +
+          "/" +
+          this.state.type.selectedKey +
+          "/" +
+          this.state.area.selectedKey +
+          "/" +
+          this.state.address.selectedKey +
+          "/" +
+          this.state.price.selectedKey
+      );
     } else {
       this.setState({
         isTooltipShown: true,
@@ -104,8 +151,45 @@ class SearchSuggestion extends Component {
     });
   };
 
-  handleSelectItem = (option) => {
+  handleSelectItem = (filterKey, option) => {
     console.log("select!");
+    console.log(filterKey, option.key, option.text)
+    switch (filterKey) {
+      case 0:
+        this.state.type = {
+          selectedKey: option.key,
+          text: option.text,
+        };
+        // console.log(this.state.type);
+        break;
+      case 1:
+        this.state.area = {
+          selectedKey: option.key,
+          text: option.text,
+        };
+        break;
+      case 2:
+        this.state.address = {
+          selectedKey: option.key,
+          text: option.text,
+        };
+        break;
+      case 3:
+        this.state.price = {
+          selectedKey: option.key,
+          text: option.text,
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    console.log("zzz");
+    console.log(this.state.type);
+    console.log(this.state.area);
+    console.log(this.state.address);
+    console.log(this.state.price);
   }
 
   render() {
@@ -141,7 +225,7 @@ class SearchSuggestion extends Component {
           {/* filter for searching */}
           {this.state.filters.map((filter) => (
             <React.Fragment key={filter.key}>
-              <FilterDropBox handler={this.handleSelectItem} filter={filter} title="Khu vực" value="Hồ Chí Minh" />
+              <FilterDropBox handler={this.handleSelectItem} filterKey={filter.key} filter={filter} title="Khu vực" value="Hồ Chí Minh" />
             </React.Fragment>
           ))}
           {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />

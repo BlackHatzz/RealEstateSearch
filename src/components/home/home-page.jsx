@@ -8,6 +8,7 @@ import HomeFilterBox from "./home-filter-box";
 import { Link } from "react-router-dom";
 import BuyerNavbar from "../global/BuyerNavbar";
 import Constants from "../global/Constants";
+import { fb } from "../../services";
 
 class HomePage extends Component {
   state = {
@@ -32,15 +33,31 @@ class HomePage extends Component {
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 30" + Constants.squareMeter },
+          { key: 1, text: "< 50" + Constants.squareMeter },
           {
             key: 2,
             text:
-              "30" + Constants.squareMeter + " - 50" + Constants.squareMeter,
+              "50" + Constants.squareMeter + " - 100" + Constants.squareMeter,
           },
           {
             key: 3,
-            text: "50" + Constants.squareMeter + "- 80" + Constants.squareMeter,
+            text: "100" + Constants.squareMeter + "- 200" + Constants.squareMeter,
+          },
+          {
+            key: 4,
+            text: "200" + Constants.squareMeter + "- 300" + Constants.squareMeter,
+          },
+          {
+            key: 5,
+            text: "300" + Constants.squareMeter + "- 400" + Constants.squareMeter,
+          },
+          {
+            key: 6,
+            text: "400" + Constants.squareMeter + "- 500" + Constants.squareMeter,
+          },
+          {
+            key: 7,
+            text: "> 500" + Constants.squareMeter,
           },
         ],
       },
@@ -73,17 +90,37 @@ class HomePage extends Component {
       },
 
       {
-        key: 4,
+        key: 3,
         filterName: "Mức giá",
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 500 triệu" },
-          { key: 2, text: "500 triệu - 1 tỷ" },
-          { key: 3, text: "1 tỷ - 3 tỷ" },
+          { key: 1, text: "< 1 tỷ" },
+          { key: 2, text: "1 tỷ - 2 tỷ" },
+          { key: 3, text: "2 tỷ - 3 tỷ" },
+          { key: 4, text: "3 tỷ - 5 tỷ" },
+          { key: 5, text: "5 tỷ - 10 tỷ" },
+          { key: 6, text: "10 tỷ - 20 tỷ" },
+          { key: 7, text: "> 20 tỷ" },
         ],
       },
     ],
+    type: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    area: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    address: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
+    price: {
+      selectedKey: 0,
+      text: "Tất cả",
+    },
     // optionList: [
     //   [{key: 0, text: "Chung Cư"}, {key: 1, text: "Nhà"}, {key: 2, text: "Đất"}],
     //   [{key: 0, text: "< 500 triệu"}, {key: 1, text: "500 - 1 tỷ"}, {key: 2, text: "1 tỷ - 2 tỷ"}, {key: 3, text: "2 tỷ - 5 tỷ"}]
@@ -91,7 +128,8 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    const { searchText } = this.state
+    console.log(fb.auth.currentUser.uid);
+    const { searchText } = this.state;
     console.log("search ");
     console.log(searchText);
     const requestOptions = {
@@ -99,9 +137,8 @@ class HomePage extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page: 0,
-        size: 20,
-        address: null,
-        title: null,
+        address: "phu",
+        title: "phu",
         project: null,
         fromPrice: null,
         toPrice: null,
@@ -136,6 +173,42 @@ class HomePage extends Component {
 
   handleFilter = (filterKey, itemKey, title) => {
     console.log("inssss" + filterKey + itemKey + title);
+    switch (filterKey) {
+      case 0:
+        this.state.type = {
+          selectedKey: itemKey,
+          text: title,
+        };
+        // console.log(this.state.type);
+        break;
+      case 1:
+        this.state.area = {
+          selectedKey: itemKey,
+          text: title,
+        };
+        break;
+      case 2:
+        this.state.address = {
+          selectedKey: itemKey,
+          text: title,
+        };
+        break;
+      case 3:
+        this.state.price = {
+          selectedKey: itemKey,
+          text: title,
+        };
+        break;
+
+      default:
+        break;
+    }
+
+    console.log("qwe");
+    console.log(this.state.type);
+    console.log(this.state.area);
+    console.log(this.state.address);
+    console.log(this.state.price);
   };
 
   handleSearch = () => {
@@ -164,18 +237,33 @@ class HomePage extends Component {
 
   renderSearchConditionaLink = () => {
     // console.log(this.state.searchText.length)
+    console.log("shshshsh");
+    console.log(this.state.area);
     if (this.state.searchText.length >= 3) {
       return (
-        <button className="home-search-button">
-          <Link
-            className="link"
-            to={{
-              pathname: "/search-result-page/" + this.state.searchText,
-            }}
-          >
+        <button onClick={this.handlePush} className="home-search-button">
             <AiOutlineSearch className="home-search-icon" />
-          </Link>
         </button>
+        // <button className="home-search-button">
+        //   <Link
+        //     className="link"
+        //     to={{
+        //       pathname:
+        //         "/search-result-page/" +
+        //         this.state.searchText +
+        //         "/" +
+        //         this.state.type.selectedKey +
+        //         "/" +
+        //         this.state.area.selectedKey +
+        //         "/" +
+        //         this.state.address.selectedKey +
+        //         "/" +
+        //         this.state.price.selectedKey,
+        //     }}
+        //   >
+        //     <AiOutlineSearch className="home-search-icon" />
+        //   </Link>
+        // </button>
       );
     }
 
@@ -190,9 +278,36 @@ class HomePage extends Component {
   handleSubmitForm = (e) => {
     e.preventDefault();
     if (this.state.searchText.length >= 3) {
-      this.props.history.push("/search-result-page/" + this.state.searchText);
+      this.props.history.push(
+        "/search-result-page/" +
+          this.state.searchText +
+          "/" +
+          this.state.type.selectedKey +
+          "/" +
+          this.state.area.selectedKey +
+          "/" +
+          this.state.address.selectedKey +
+          "/" +
+          this.state.price.selectedKey
+      );
     }
   };
+  handlePush = () => {
+    if (this.state.searchText.length >= 3) {
+      this.props.history.push(
+        "/search-result-page/" +
+          this.state.searchText +
+          "/" +
+          this.state.type.selectedKey +
+          "/" +
+          this.state.area.selectedKey +
+          "/" +
+          this.state.address.selectedKey +
+          "/" +
+          this.state.price.selectedKey
+      );
+    }
+  }
 
   render() {
     return (

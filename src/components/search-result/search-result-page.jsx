@@ -13,18 +13,121 @@ class SearchResultPage extends Component {
   };
 
   componentDidMount() {
+    //this.props.match.params.searchtext
+
+    var fromPrice = 0.0; // million vnd
+    var toPrice = 0.0;
+    var fromArea = 0; // million / m2
+    var toArea = 0;
+
+    // if (this.props.match.params.area == 0) {
+    //   fromArea = null;
+    //   toArea = null;
+    // } else if (this.props.match.params.area == 1) {
+    //   fromArea = 0;
+    //   toArea = 50;
+    // }
+
+    switch (this.props.match.params.area) {
+      case "0":
+        fromArea = null;
+        toArea = null;
+        break;
+      case "1":
+        fromArea = 0;
+        toArea = 50;
+        break;
+      case "2":
+        fromArea = 50;
+        toArea = 100;
+        break;
+      case "3":
+        fromArea = 100;
+        toArea = 200.0;
+        break;
+      case "4":
+        fromArea = 200;
+        toArea = 300;
+        break;
+      case "5":
+        fromArea = 300;
+        toArea = 400;
+        break;
+      case "6":
+        fromArea = 400;
+        toArea = 500;
+        break;
+      case "7":
+        fromArea = 500;
+        toArea = 1000;
+        break;
+
+      default:
+        fromArea = null;
+        toArea = null;
+        break;
+    }
+
+    console.log(this.props.match.params.area);
+    console.log(fromArea);
+    console.log(toArea);
+
+    switch (this.props.match.params.price) {
+      case "0":
+        fromPrice = null;
+        toPrice = null;
+        break;
+      case "1":
+        fromPrice = null;
+        toPrice = 1;
+        break;
+      case "2":
+        fromPrice = 1;
+        toPrice = 2;
+        break;
+      case "3":
+        fromPrice = 2;
+        toPrice = 3;
+        break;
+      case "4":
+        fromPrice = 3;
+        toPrice = 5;
+        break;
+      case "5":
+        fromPrice = 5;
+        toPrice = 10;
+        break;
+      case "6":
+        fromPrice = 10;
+        toPrice = 20;
+        break;
+      case "7":
+        fromPrice = 20;
+        toPrice = 1000;
+        break;
+
+      default:
+        break;
+    }
+
+    // console.log(this.props.match.params.price);
+    // console.log(fromPrice);
+    // console.log(toPrice);
 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page: 0,
-        size: 20,
         search: this.props.match.params.searchtext,
-        price: null,
-        fromArea: null,
-        toArea: null,
-        type: null,
+        fromPrice: fromPrice,
+        toPrice: toPrice,
+        fromArea: fromArea,
+        toArea: toArea,
+        type:
+          this.props.match.params.type == 0
+            ? null
+            : this.props.match.params.type,
       }),
     };
 
@@ -98,7 +201,14 @@ class SearchResultPage extends Component {
     return (
       <React.Fragment>
         <BuyerNavbar />
-        <div style={{backgroundColor: "silver", width: "100%", height: "1px", padding: "0"}}></div>
+        <div
+          style={{
+            backgroundColor: "silver",
+            width: "100%",
+            height: "1px",
+            padding: "0",
+          }}
+        ></div>
         <SearchSuggestion history={this.props.history} />
 
         {/* search result list */}

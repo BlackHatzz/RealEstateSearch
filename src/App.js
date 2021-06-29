@@ -16,12 +16,12 @@ const App = () => {
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
 
-  //
-  // useEffect(() => {
-  //   if (authResolved) {
-  //     history.push(!!authUser ? "/" : "/login");
-  //   }
-  // }, [authResolved, authUser, history]);
+  
+  useEffect(() => {
+    if (authResolved) {
+      history.push(!!authUser ? "/" : "/login");
+    }
+  }, [authResolved, authUser, history]);
 
   return authResolved ? (
     <div className="app">
@@ -32,7 +32,7 @@ const App = () => {
         <Route path="/transaction-history-page" component={TransactionHistoryPage} />
         <Route path="/signup" component={Signup} />
         <Route
-          path="/search-result-page/:searchtext"
+          path="/search-result-page/:searchtext/:type/:area/:adress/:price"
           // component={SearchResultPage}
           render={props => <SearchResultPage key={props.match.params.searchtext} {...props} />}
         ></Route>
