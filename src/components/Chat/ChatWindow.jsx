@@ -136,7 +136,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
 
                 <div>
                   <button
-                    disabled={currentChat.data.deal}
+                    disabled={currentChat.data.deal ? false : true}
                     onClick={handleDeal}
                     type="button"
                   >

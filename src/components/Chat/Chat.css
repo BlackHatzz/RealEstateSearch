@@ -225,10 +225,12 @@
   display: flex;
   /* width: 100%; */
   height: 60px;
+  border-bottom: 1px solid rgb(219, 217, 217);
 }
 .chat_window_container_message_box_display_realestate_image {
   /* height: 80%; */
   margin: 5px 5px 5px 5px;
+  width: 30%;
 }
 .chat_window_container_message_box_display_realestate_image > img {
   height: 100%;
@@ -237,11 +239,10 @@
 .chat_window_container_message_box_display_realestate_info {
   display: flex;
   flex-direction: column;
-  border-bottom: 1px solid rgb(219, 217, 217);
+
   margin-top: 5px;
   padding-left: 5px;
-  width: 100%;
-  /* background-color: aqua; */
+  width: 70%;
 }
 .chat_window_container_message_box_display_realestate_info_title {
   text-overflow: ellipsis;
@@ -307,6 +308,15 @@
 }
 .contact_item {
   cursor: pointer;
+  height: 40px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  border-bottom: 1px solid rgb(219, 217, 217);
+}
+.contact_item > h4 {
+  font-size: 14px;
+  font-weight: 700;
 }
 
 .deal_message {

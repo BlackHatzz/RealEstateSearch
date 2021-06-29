@@ -8,7 +8,8 @@ export const Contact = ({ id, data }) => {
         console.log(data.title);
       }}
     >
-      <p>{data.title}</p>
+      <h4>{data.title}</h4>
+      <p>{data.seller}</p>
     </div>
   );
 };
