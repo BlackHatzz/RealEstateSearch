@@ -10,6 +10,8 @@ import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
 import ProfilePage from "./components/profile/ProfilePage";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
+import ChatContext from "./ChatContext";
+import { ChatLauncher } from "./components/Chat/ChatLauncher";
 
 const App = () => {
   const history = useHistory();
@@ -17,14 +19,16 @@ const App = () => {
   const authResolved = useResolved(authUser);
 
   
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
 
   return authResolved ? (
+    <ChatContext>
     <div className="app">
+      {authUser && <ChatLauncher />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route path="/login" component={Login} />
@@ -44,6 +48,7 @@ const App = () => {
         <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
+    </ChatContext>
   ) : (
     <div>Loading ...</div>
   );

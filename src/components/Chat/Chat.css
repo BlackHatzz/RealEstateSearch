@@ -8,7 +8,6 @@
 
 .sidebar {
   height: 100%;
-  width: 35%;
   display: flex;
   flex-direction: column;
   border-right: 1px solid black;
@@ -88,39 +87,6 @@
   overflow-x: hidden;
 }
 
-.message {
-  position: relative;
-  font-size: 16px;
-  padding: 10px;
-  border-radius: 20px;
-  width: fit-content;
-  margin-bottom: 20px;
-  background-color: rgb(235, 235, 235);
-  color: black;
-}
-
-.message_send {
-  margin-left: auto;
-  background-color: rgb(14, 68, 216);
-  color: white;
-}
-.message_name {
-  position: absolute;
-  top: -20px;
-  left: -20px;
-  font-size: x-small;
-  font-weight: 800;
-  color: black;
-}
-.message_name_send {
-  position: absolute;
-  top: -20px;
-  left: -10px;
-  font-size: x-small;
-  font-weight: 800;
-  color: black;
-}
-
 .messageBoard_sendform {
   display: flex;
   justify-content: space-between;
@@ -137,7 +103,6 @@
 
 .messageBoard_sendform > form > input {
   flex: 1;
-
   padding: 5px;
   margin-right: 5px;
   margin-left: 5px;
@@ -152,7 +117,6 @@
   border-bottom: 1px solid gray;
   display: flex;
   flex: 1;
-
   padding: 10px;
 }
 
@@ -173,4 +137,177 @@
 
 .daLabel {
   width: 30%;
+}
+.launcher,
+.launcher_opened {
+  position: fixed;
+  bottom: 0px;
+  right: 10px;
+}
+.chat_window,
+.chat_window_button {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  box-sizing: border-box;
+  border: 1px solid rgb(219, 217, 217);
+}
+.chat_window {
+  width: 500px;
+}
+
+.chat_window_button_content {
+  display: flex;
+  flex-direction: row;
+  padding: 5px;
+}
+
+.chat_window_header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  border-bottom: 1px solid rgb(219, 217, 217);
+}
+.chat_window_close_button {
+  align-self: flex-end;
+  padding-right: 10px;
+}
+.chat_window_header_title {
+  padding-left: 5px;
+  padding-right: 5px;
+  flex: 1;
+}
+.chat_window_container {
+  width: 100%;
+  height: 40vh;
+  display: flex;
+  flex-direction: row;
+}
+.chat_window_user {
+  width: 100%;
+  display: flex;
+  border-bottom: 1px solid rgb(219, 217, 217);
+}
+.chat_window_container_right_box {
+  display: flex;
+  /* flex-direction: column; */
+  width: 60%;
+  height: 100%;
+  border-right: 1px solid rgb(219, 217, 217);
+}
+.chat_window_container_message_box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* height: 100%; */
+  /* border-right: 1px solid rgb(219, 217, 217); */
+}
+.chat_window_container_contact_box {
+  width: 40%;
+}
+
+.chat_window_container_message_box_display {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* background-color: bisque; */
+}
+.chat_window_container_message_box_display_realestate {
+  margin: 5px 5px 5px 5px;
+  border-radius: 2px;
+  background-color: rgb(245, 245, 245);
+  flex-direction: row;
+  display: flex;
+  /* width: 100%; */
+  height: 60px;
+}
+.chat_window_container_message_box_display_realestate_image {
+  /* height: 80%; */
+  margin: 5px 5px 5px 5px;
+}
+.chat_window_container_message_box_display_realestate_image > img {
+  height: 100%;
+  width: auto;
+}
+.chat_window_container_message_box_display_realestate_info {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid rgb(219, 217, 217);
+  margin-top: 5px;
+  padding-left: 5px;
+  width: 100%;
+  background-color: aqua;
+}
+.chat_window_container_message_box_display_realestate_info_title {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 65%;
+  font-size: 10px;
+  font-weight: 700;
+}
+.chat_window_container_message_box_display_realestate_info > p {
+  font-size: 10px;
+}
+
+.message {
+  position: relative;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 20px;
+  width: fit-content;
+  margin-bottom: 20px;
+  background-color: rgb(235, 235, 235);
+  color: black;
+  margin-left: 10px;
+}
+
+.message_send {
+  margin-left: auto;
+  background-color: rgb(14, 68, 216);
+  color: white;
+  margin-right: 10px;
+}
+.message_name {
+  position: absolute;
+  top: -20px;
+  left: 0px;
+  font-size: x-small;
+  font-weight: 800;
+  color: black;
+}
+.message_name_send {
+  position: absolute;
+  top: -20px;
+  right: 0px;
+  font-size: x-small;
+  font-weight: 800;
+  color: black;
+}
+.chat_window_container_message_box_input {
+  padding: 5px;
+  border-top: 1px solid rgb(219, 217, 217);
+}
+
+.button_send_message {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.button_send_message:hover {
+  background-color: rgb(219, 217, 217);
+}
+.contact_item:hover {
+  background-color: rgb(219, 217, 217);
+}
+.contact_item {
+  cursor: pointer;
+}
+
+.deal_message {
 }

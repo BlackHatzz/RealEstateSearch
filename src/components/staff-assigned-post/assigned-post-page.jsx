@@ -14,16 +14,15 @@ class AssignedPostPage extends Component {
   componentDidMount() {
 
     const requestOptions = {
-      method: "POST",
+      method: "GET",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         "page": 0,
-        "size": 20,
         "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1"
     }),
     };
 
-    fetch(Constants.getRealEstateAssignStaffRef, requestOptions)
+    fetch(Constants.getRealEstateAssignStaffRef + "/SaLjk0fE9xTr2qu3JLj6bFgNUPq1/0", requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
