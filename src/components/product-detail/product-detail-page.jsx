@@ -8,7 +8,6 @@ import { BiMoney } from "react-icons/bi";
 import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
-import { Link, useLocation } from "react-router-dom";
 import { ChatButton } from "./ChatButton";
 
 class ProductDetailPage extends Component {
@@ -35,8 +34,6 @@ class ProductDetailPage extends Component {
     console.log("detail");
     console.log(this.props.location.product);
   }
-
-  handleChat() {}
 
   render() {
     const product = this.props.location.product;

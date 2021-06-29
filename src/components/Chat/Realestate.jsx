@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, Formik, Field } from "formik";
+import { Form, Formik } from "formik";
 import Appointment from "./Appointment";
 import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
@@ -15,13 +15,12 @@ const Realestate = (props) => {
   const [error, setError] = useState(null);
   const [trigger, setTrigger] = useState(false);
   const [deals, setDeals] = useState([]);
-  const [freeWeekdays, setfreeWeekdays] = useState([]);
+
   const [appointments, setAppointments] = useState([]);
   const uuid = fb.auth.currentUser.uid;
   const [isdeal, setIsdeal] = useState(true);
 
   useEffect(() => {
-    console.log("das " + props.buyerId);
     fetch(
       `http://localhost:8080/apis/v1/conversations/messages?%20realEstateId=${props.realId}&buyerId=${props.buyerId}&sellerId=${props.sellerId}`
     )
@@ -43,32 +42,6 @@ const Realestate = (props) => {
       .finally(() => {
         setLoading(false);
       });
-    // fetch(
-    //   `http://localhost:8080/apis/v1/schedules/all?sellerId=${props.sellerId}`
-    // )
-    //   .then((response) => {
-    //     if (response.ok) {
-    //       return response.json();
-    //     }
-    //     throw response;
-    //   })
-    //   .then((data) => {
-    //     console.log(data);
-    //     const freeDays = data
-    //       .filter((item) => item.status === "Not booked yet")
-    //       .map((item) => item.weekDay.id);
-    //     const uFreeDays = freeDays.filter(
-    //       (item, index) => freeDays.indexOf(item) === index
-    //     );
-    //     setfreeWeekdays(uFreeDays);
-    //   })
-    //   .catch((error) => {
-    //     setError(error);
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }, [trigger, conId]);
 
   if (loading) return "Loading...";
@@ -127,8 +100,7 @@ const Realestate = (props) => {
         <div>
           <div className="deal">
             <div className="daLabel">Thỏa thuận (triệu VND) </div>
-            {console.log("deals")}
-            {console.log(deals[0].offeredPrice)}
+
             {deals.length > 0 ? (
               <div>
                 {deals[0].status === "waiting" && (
@@ -138,7 +110,27 @@ const Realestate = (props) => {
                   <div>{deals[0].offeredPrice} - đã được chấp nhận</div>
                 )}
                 {deals[0].status === "refused" && (
-                  <div>{deals[0].offeredPrice} - bị từ chối</div>
+                  <div>
+                    {/* <div>{deals[0].offeredPrice} - bị từ chối</div> */}
+                    <Formik
+                      onSubmit={submitDeal}
+                      validateOnMount={true}
+                      initialValues={defaultValues}
+                      validationSchema={validationSchema}
+                    >
+                      {({ isValid, isSubmitting }) => (
+                        <Form>
+                          <FormField name="deal" />
+                          <button
+                            disabled={isSubmitting || !isValid}
+                            type="submit"
+                          >
+                            tạo
+                          </button>
+                        </Form>
+                      )}
+                    </Formik>
+                  </div>
                 )}
               </div>
             ) : (
@@ -215,21 +207,7 @@ const Realestate = (props) => {
                 )}
               </div>
             ) : (
-              <Formik
-                onSubmit={submitDeal}
-                validateOnMount={true}
-                initialValues={defaultValues}
-                validationSchema={validationSchema}
-              >
-                {({ isValid, isSubmitting }) => (
-                  <Form>
-                    <FormField name="deal" />
-                    <button disabled={isSubmitting || !isValid} type="submit">
-                      tạo
-                    </button>
-                  </Form>
-                )}
-              </Formik>
+              <div>Chưa có</div>
             )}
           </div>
           <div className="appointment_main">
@@ -237,9 +215,9 @@ const Realestate = (props) => {
 
             {appointments.length > 0 ? (
               <div>
-                <p>Săp tới</p>
                 {appointments.slice(-1)[0].status === "upcoming" && (
                   <div>
+                    <p>Săp tới</p>
                     {moment(appointments.slice(-1)[0].scheduleDate).format(
                       "DD/MM/YYYY hh:mm a"
                     )}

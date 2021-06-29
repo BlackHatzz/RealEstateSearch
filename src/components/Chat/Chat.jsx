@@ -16,7 +16,7 @@ export const Chat = () => {
 
         <Switch>
           <Route exact path={`${match.path}`}>
-            <h2>Nhắn tin trực tiếp với người bán</h2>
+            {/* <h2>Nhắn tin trực tiếp với người bán</h2> */}
           </Route>
           <Route path={`${match.path}/:conId?/:realId?/:sellerId?/:buyerId?`}>
             <Messageboard />

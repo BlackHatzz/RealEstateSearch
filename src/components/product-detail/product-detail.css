@@ -1,16 +1,16 @@
-
 div.product-info-container {
   /* background-color: blue; */
   width: 692px;
   height: auto;
   padding-bottom: 48px;
+  background-color: white;
 }
 
 div.product-info-dislayed-wrapper {
   margin: 0px 12px 0px 12px;
   padding-top: 16px;
   width: 950px;
-  background-color: inherit;
+  /* background-color: inherit; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -22,7 +22,6 @@ div.product-image-wrapper {
   height: 352px;
   border-radius: 4px;
 }
-
 
 img.product-selected-image {
   margin: 0px;
@@ -192,7 +191,6 @@ div.detail-box-row {
   padding: 0;
 }
 
-
 .contact-button {
   color: white;
   background-color: black;
@@ -224,4 +222,8 @@ div.detail-box-row {
   flex-direction: row;
   align-items: center;
   cursor: pointer;
+}
+
+.product-item-container {
+  /* background-color: white; */
 }
