@@ -6,6 +6,7 @@ import HomeFilterMenuOption from "./home-filter-menu-option";
 class HomeFilterBox extends Component {
   state = {
     showMenu: false,
+    title: "",
   };
 
   switchToggle = () => {
@@ -13,13 +14,18 @@ class HomeFilterBox extends Component {
       showMenu: !this.state.showMenu,
     });
   };
+  componentDidMount() {
+    this.setState({
+      title: this.props.filter.title,
+    });
+  }
 
-  showMenu = () => {
-    if (this.state.showMenu) {
-      return (
-        <HomeFilterMenuOption />
-      );
-    }
+  handleUpdateTitle = (itemKey, title) => {
+    this.setState({
+      title: title,
+      showMenu: false,
+    });
+    this.props.handler(this.props.filter.key, itemKey, title);
   };
 
   render() {
@@ -27,12 +33,25 @@ class HomeFilterBox extends Component {
       <div>
         {/* <Multiselect options={this.state.options} singleSelect displayValue="name" /> */}
         <div onClick={this.switchToggle} className="home-filter-box">
-          <span className="noselect home-filter-title">{this.props.title}</span>
+          <div className="home-filter-title-container">
+            <span className="noselect home-filter-title">
+              {this.props.filter.filterName}
+            </span>
+            <br />
+            <span className="noselect home-filter-title2">
+              {this.state.title}
+            </span>
+          </div>
+
           <RiArrowDropDownLine className="home-filter-icon" />
         </div>
-
-        {this.state.showMenu ? (<HomeFilterMenuOption />) : null}
-
+        {/* <HomeFilterMenuOption /> */}
+        {this.state.showMenu ? (
+          <HomeFilterMenuOption
+            handler={this.handleUpdateTitle}
+            options={this.props.filter.options}
+          />
+        ) : null}
       </div>
     );
   }

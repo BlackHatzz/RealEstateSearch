@@ -83,50 +83,73 @@ img.intro-image {
 }
 
 div.home-filter-wrapper {
-  margin-top: 10px;
-  padding: 0px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 692px;
-  /* height: 40px; */
-  background-color: transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    margin-top: 10px;
+    padding: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 692px;
+    /* width: 692px; */
+    /* height: 40px; */
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 div.home-filter-box {
-  background-color: 303030;
-  border: 1px solid white;
-  border-radius: 4px;
-  width: 160px;
-  height: 44px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  cursor: pointer;
+    background-color: #303030;
+    border: 1px solid white;
+    border-radius: 4px;
+    width: 160px;
+    height: 46px;
+    /* height: 44px; */
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.home-filter-title-container {
+  width: 100%;
+  /* background-color: red; */
+  height: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
 }
 
 .home-filter-title {
-  font-size: 14px;
+    font-size: 14px;
+    color: white;
+    padding-left: 10px;
+    /* float: left; */
+}
+.home-filter-title2 {
+  font-size: 16px;
   color: white;
-  padding-left: 14px;
+  padding-left: 16px;
+  text-align: right;
   /* float: left; */
 }
 
+
+
 .home-filter-icon {
-  width: 32px;
-  height: 32px;
-  color: white;
-  padding-right: 8px;
+    width: 32px;
+    height: 32px;
+    color: white;
+    padding: 0px;
 }
 
 div.home-filter-menu {
-  background-color: inherit;
-  width: 100%;
-  height: 120px;
-  position: relative;
+  background-color: #303030;
+  width: 162px;
+  height: 164px;
+  overflow: auto;
+  position: absolute;
+  padding-bottom: 12px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 6px 2px rgba(20, 20, 20, 0.5);
 }
 
 div.home-filter-menu-option {
@@ -146,7 +169,7 @@ div.home-filter-menu-option {
   color: white;
   display: block;
   background-color: inherit;
-  font-size: 18px;
+  font-size: 16px;
 }
 
 .home-filter-menu-option-divide {
@@ -155,3 +178,45 @@ div.home-filter-menu-option {
   height: 1px;
   margin: 0 auto;
 }
+
+.home-tooltip {
+  position: relative;
+  /* display: inline-block; */
+  left: 12px;
+  bottom: 40px;
+  width: 0;
+  height: 0;
+  z-index: 1;
+  background-color: gray;
+}
+
+.home-tooltip > .tooltiptext {
+  /* visibility: hidden; */
+  visibility: visible;
+  width: 230px;
+  background-color: #EA6863;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+
+.home-tooltip > .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 25%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #EA6863 transparent transparent transparent;
+}
+
+
+
+

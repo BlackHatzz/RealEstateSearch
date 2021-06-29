@@ -52,7 +52,8 @@ class ProductDetailPage extends Component {
                 <div className="product-image-wrapper">
                   <img
                     className="product-selected-image"
-                    src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
+                    src={product.images[0].imgUrl}
+                    // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
                     alt=""
                   />
                 </div>

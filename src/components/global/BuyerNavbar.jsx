@@ -9,6 +9,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
 import "../global/shared.css";
 import { Link } from "react-router-dom";
+import HistoryIcon from '@material-ui/icons/History';
 
 class BuyerNavbar extends Component {
   state = {
@@ -28,9 +29,11 @@ class BuyerNavbar extends Component {
           {/* left content */}
           <div className="nav-bar-container">
             <div className="nav-bar-item">
-              <div className="nav-bar-logo">
-                <img src="https://i.ibb.co/MhLF1VS/abc.png" alt="" />
-              </div>
+              <Link to="/">
+                <div className="nav-bar-logo">
+                  <img src="https://i.ibb.co/MhLF1VS/abc.png" alt="" />
+                </div>
+              </Link>
             </div>
           </div>
 
@@ -58,12 +61,15 @@ class BuyerNavbar extends Component {
               {/* profile menu */}
               {this.state.isProfileMenuShown ? (
                 <div className="profile-menu-container">
-                  <div className="profile-menu-item top-item">
-                    <AccountCircleIcon className="icon" />
-                    <Link className="link" to="/profile-page">
+                  <Link className="link profile-menu-item top-item" to="/profile-page">
+                      <AccountCircleIcon className="icon" />
                       <span className="title">Xem Hồ Sơ</span>
-                    </Link>
-                  </div>
+                  </Link>
+                  <div className="divide"></div>
+                  <Link className="link profile-menu-item" to="/transaction-history-page">
+                    <HistoryIcon className="icon" />
+                    <span className="title">Lịch Sử Giao Dịch</span>
+                  </Link>
                   <div className="divide"></div>
                   <div className="profile-menu-item bottom-item">
                     <ExitToAppIcon className="icon" />

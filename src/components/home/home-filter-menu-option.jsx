@@ -8,6 +8,12 @@ class HomeFilterMenuOption extends Component {
       { key: 3, value: "Đất" },
     ],
   };
+
+  handleSelectFilterOption = (key, title) => {
+    this.props.handler(key, title);
+    // this.props.options.map(option)
+  }
+
   render() {
     const divide = {
       width: "100%",
@@ -15,12 +21,20 @@ class HomeFilterMenuOption extends Component {
       backgroundColor: "white",
     };
     return (
+      // <React.Fragment>
+      //   <div className="menu"></div>
+      // </React.Fragment>
+      // <div class="menu"></div>
       <div className="home-filter-menu">
-        {this.state.options.map((option) => (
-          <div>
-            <div key={option.key} className="noselect home-filter-menu-option">
+        {/* <input className="home-slider" defaultValue="50" type="range" min="1" max="100"></input> */}
+        {/* <Slider /> */}
+        {/* <input type="range" min="1" max="100" value="50"></input> */}
+        
+        {this.props.options.map((option) => (
+          <div key={option.key}>
+            <div onClick={() => this.handleSelectFilterOption(option.key, option.text)} className="noselect home-filter-menu-option">
               <div className="noselect home-filter-menu-option-title">
-                {option.value}
+                {option.text}
               </div>
               
             </div>

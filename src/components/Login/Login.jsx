@@ -40,37 +40,41 @@ export const Login = () => {
   };
 
   return (
-    <div className="auth-form">
-      <h1>Login</h1>
-      <Formik
-        onSubmit={login}
-        validateOnMount={true}
-        initialValues={defaultValues}
-        validationSchema={validationSchema}
-      >
-        {({ isValid, isSubmitting }) => (
-          <Form>
-            <FormField name="email" label="Email" type="email" />
-            <FormField name="password" label="Password" type="password" />
+    <div className="auth-form-container">
+      <div className="auth-form">
+        <h1 className="title">Đăng Nhập</h1>
+        <Formik
+          onSubmit={login}
+          validateOnMount={true}
+          initialValues={defaultValues}
+          validationSchema={validationSchema}
+        >
+          {({ isValid, isSubmitting }) => (
+            <Form>
+              <h2 className="label">Email</h2>  
+              <FormField name="email" type="email" placeholder="Nhập email của bạn..."/>
+              <h2 className="label">Mật Khẩu</h2>
+              <FormField name="password" type="password" placeholder="Nhập mật khẩu của bạn..." />
 
-            <div className="auth-link-container">
-              Don't have an account?{" "}
-              <span
-                className="auth-link"
-                onClick={() => history.push("signup")}
-              >
-                Sign Up!
-              </span>
-            </div>
+              <div className="auth-link-container">
+                Bạn chưa có tài khoản?{" "}
+                <span
+                  className="auth-link"
+                  onClick={() => history.push("signup")}
+                >
+                  Đăng ký ngay!
+                </span>
+              </div>
 
-            <button type="submit" disabled={!isValid || isSubmitting}>
-              Login
-            </button>
-          </Form>
-        )}
-      </Formik>
+              <button className="login-btn" type="submit" disabled={!isValid || isSubmitting}>
+                Đăng Nhập
+              </button>
+            </Form>
+          )}
+        </Formik>
 
-      {!!serverError && <div className="error">{serverError}</div>}
+        {!!serverError && <div className="error">{serverError}</div>}
+      </div>
     </div>
   );
 };
