@@ -65,40 +65,49 @@ export const Signup = () => {
   };
 
   return (
-    <div className="auth-form">
-      <h1>Signup</h1>
-      <Formik
-        onSubmit={signup}
-        validateOnMount={true}
-        initialValues={defaultValues}
-        validationSchema={validationSchema}
-      >
-        {({ isValid, isSubmitting }) => (
-          <Form>
-            <FormField name="userName" label="User Name" />
-            <FormField name="email" label="Email" type="email" />
-            <FormField name="password" label="Password" type="password" />
-            <FormField
-              type="password"
-              name="verifyPassword"
-              label="Verify Password"
-            />
+    <div className="auth-form-container">
+      <div className="auth-form">
+        <h1 className="title">Đăng Ký</h1>
+        <Formik
+          onSubmit={signup}
+          validateOnMount={true}
+          initialValues={defaultValues}
+          validationSchema={validationSchema}
+        >
+          {({ isValid, isSubmitting }) => (
+            <Form>
+              <h2 className="label">Tên tài khoản</h2>
+              <FormField name="userName" placeholder="Nhập tên tài khoản..." />
+              <h2 className="label" >Email</h2>
+              <FormField name="email" type="email" placeholder="Nhập email..." />
+              <h2 className="label">Mật khẩu</h2>
+              <FormField name="password" type="password" placeholder="Nhập mật khẩu..." />
+              <h2 className="label">Xác nhận mật khẩu</h2>
+              <FormField
+                type="password"
+                name="verifyPassword"
+                placeholder="Nhập lại mật khẩu..."
+              />
 
-            <div className="auth-link-container">
-              Already have an account?{" "}
-              <span className="auth-link" onClick={() => history.push("login")}>
-                Log In!
-              </span>
-            </div>
+              <div className="auth-link-container">
+                Bạn đã có tài khoản?{" "}
+                <span
+                  className="auth-link"
+                  onClick={() => history.push("login")}
+                >
+                  Đăng nhập ngay!
+                </span>
+              </div>
 
-            <button disabled={isSubmitting || !isValid} type="submit">
-              Sign Up
-            </button>
-          </Form>
-        )}
-      </Formik>
+              <button disabled={isSubmitting || !isValid} type="submit">
+                Đăng Ký
+              </button>
+            </Form>
+          )}
+        </Formik>
 
-      {!!serverError && <div className="error">{serverError}</div>}
+        {!!serverError && <div className="error">{serverError}</div>}
+      </div>
     </div>
   );
 };

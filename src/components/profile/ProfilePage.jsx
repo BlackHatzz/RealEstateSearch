@@ -5,10 +5,12 @@ import "../global/shared.css";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
 import { GrContactInfo } from "react-icons/gr";
+import { AiFillIdcard } from "react-icons/ai";
 import PhoneIcon from "@material-ui/icons/Phone";
 import MailIcon from "@material-ui/icons/Mail";
 import TransactionItem from "./TransactionItem";
 import Constants from "../global/Constants";
+
 
 class ProfilePage extends Component {
   state = {
@@ -28,10 +30,7 @@ class ProfilePage extends Component {
       }),
     };
 
-    fetch(
-      Constants.getTransactionByUserId,
-      requestOptions
-    )
+    fetch(Constants.getTransactionByUserId, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -61,10 +60,20 @@ class ProfilePage extends Component {
           <div className="profile-content-container">
             <div className="row">
               <div className="silver-circle">
+                <AiFillIdcard className="icon" />
+              </div>
+              <span className="title">ID</span>
+              <div className="read-only-solid-field-container">
+                <input value="fSUJL0Vjoraru92zOuLbp0Rcff32" type="text" className="solid-field" />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="silver-circle">
                 <PersonIcon className="icon" />
               </div>
               <span className="title">Tài khoản</span>
-              <div className="solid-field-container">
+              <div className="read-only-solid-field-container">
                 <input value="huynd123" type="text" className="solid-field" />
               </div>
             </div>
@@ -158,9 +167,8 @@ class ProfilePage extends Component {
 
             <div className="profile-container">
               <div style={{ height: "15px" }}></div>
-              <div className="profile-pic-container"></div>
-              <div className="profile-id-container">
-                <span>ID: fSUJL0Vjoraru92zOuLbp0Rcff32</span>
+              <div className="profile-pic-container">
+                  {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
               </div>
               <div style={{ height: "15px" }}></div>
 
@@ -168,10 +176,7 @@ class ProfilePage extends Component {
 
               <div className="profile-pic-tab-bar-container">
                 <div onClick={() => this.switchTab(0)} className="item">
-                  <span className="title">Hồ Sơ</span>
-                </div>
-                <div onClick={() => this.switchTab(1)} className="item">
-                  <span className="title">Giao Dịch</span>
+                  <span className="title">Thông Tin Hồ Sơ</span>
                 </div>
               </div>
 

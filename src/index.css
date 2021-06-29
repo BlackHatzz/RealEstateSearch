@@ -18,33 +18,78 @@ code {
 .app {
   height: 100vh;
 }
+
+.auth-form-container {
+  width: 100%;
+  height: 100vh;
+  min-height: 700px;
+  background-color: #303030;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
 .auth-form {
   width: 500px;
   padding: 25px;
   max-width: 100%;
-  border-radius: 10px;
-  background-color: #c9e4cb;
+  /* margin-bottom: 10%; */
+  border-radius: 4px;
+  background-color: white;
   box-shadow: 0px 0px 10px black;
 }
+.auth-form .title {
+  margin-bottom: 25px;
+  text-align: center;
+  font-size: 32px;
+}
+
+.auth-form .label {
+  display: block;
+  /* background-color: red; */
+  font-size: 18px;
+  font-weight: normal;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
 .auth-form label {
   display: block;
-  margin-bottom: 25px;
+  /* margin-bottom: 50px; */
+  /* background-color: red; */
+  font-size: 16px;
+  /* padding-top: 12px;
+  padding-bottom: 12px; */
 }
 .auth-form input {
-  width: 100%;
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid black;
-  background-color: #d2d2d2;
+  width: 95%;
+  padding: 5px 12px 5px 12px;
+  text-decoration: none;
+  outline: none;
+  border: none;
+  background-color: #dadde2 /*#f1f1f1*/;
+  height: 40px;
+  border-radius: 4px;
+  font-size: 15px;
 }
+.auth-form input:focus {
+  outline: none;
+  text-decoration: none;
+}
+
 .auth-form button {
-  padding: 10px;
-  border-radius: 3px;
+  padding: 10px 32px 10px 32px;
+  border-radius: 4px;
   outline: none;
   border: none;
   color: white;
   cursor: pointer;
   background-color: #030a24;
+  font-size: 17px;
+  font-weight: bold;
+  margin: 0 auto;
+  display: block;
 }
 .auth-form button:hover {
   box-shadow: 0px 0px 3px black;
@@ -57,6 +102,7 @@ code {
 .auth-link-container {
   margin-top: 25px;
   margin-bottom: 25px;
+  text-align: center;
 }
 .auth-link {
   color: gray;
@@ -69,4 +115,5 @@ code {
 .error {
   color: #cd0000;
   font-weight: bold;
+  height: 40px;
 }

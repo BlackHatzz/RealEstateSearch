@@ -7,7 +7,8 @@ class ProductItem extends Component {
     
   };
   render() {
-    console.log("in");
+    console.log("search result item:");
+    // console.log(this.props.item.images[0].imgUrl);
     console.log(this.props);
     return (
       <React.Fragment>
@@ -16,7 +17,8 @@ class ProductItem extends Component {
           <div className="product-image-container">
             <img
               className="product-image"
-              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+              src={this.props.item.images[0].imgUrl}
+              // src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
               alt=""
             />
           </div>
@@ -31,13 +33,13 @@ class ProductItem extends Component {
 
             {/* price and area */}
             <div className="product-price-box">
-              <span className="product-price">{this.props.item.price} tỷ/m²</span>
+              <span className="product-price">~{Math.round( ((this.props.item.price / this.props.item.area) * 1000) * 100 ) / 100} triệu/m²</span>
               <span className="product-price">&#8226;</span>
               <span className="product-area">{this.props.item.area} m²</span>
             </div>
 
             {/* address */}
-            <span className="product-address">{this.props.item.streetName} {this.props.item.wardName} {this.props.item.disName}</span>
+            <span className="product-address">Đường {this.props.item.streetName}, Phường {this.props.item.wardName}, Quận {this.props.item.disName}</span>
 
             {/* description */}
             <div className="product-description">
@@ -50,8 +52,8 @@ class ProductItem extends Component {
             </div>
 
             <div className="product-other-info">
-              <div className="product-uptime">{this.props.item.createAt}</div>
-              <div className="product-owner">Nguyen Duc Huy</div>
+              <div className="product-uptime">Ngày đăng: {this.props.item.createAt}</div>
+              <div className="product-owner">Người đăng: {this.props.item.sellerName}</div>
               {/* <div className="product-phone-contact horizontal">
                 <BsFillChatDotsFill />
                 <div style={{ width: "12px" }}></div>
