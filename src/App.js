@@ -8,9 +8,11 @@ import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
+
 // import ProfilePage from "./components/profile/ProfilePage";
 import { ChatLauncher } from "./components/Chat/ChatLauncher";
 import ChatContext from "./ChatContext";
+
 
 const App = () => {
   const history = useHistory();
@@ -24,6 +26,7 @@ const App = () => {
   }, [authResolved, authUser, history]);
 
   return authResolved ? (
+
     <ChatContext>
       <div className="app">
         {authUser && <ChatLauncher />}
@@ -43,6 +46,7 @@ const App = () => {
         </Switch>
       </div>
     </ChatContext>
+
   ) : (
     <div>Loading ...</div>
   );

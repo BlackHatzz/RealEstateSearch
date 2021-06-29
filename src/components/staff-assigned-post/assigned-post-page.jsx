@@ -3,17 +3,15 @@ import "./assigned-post.css";
 import AssignedPostItem from "./assigned-post-item";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
-import { AiOutlineConsoleSql } from "react-icons/ai";
+import Constants from "../global/Constants";
 
 class AssignedPostPage extends Component {
   state = {
     items: [],
     isSnackbarShown: true,
-    stupid: true,
   };
 
   componentDidMount() {
-    console.log("hehe2");
 
     const requestOptions = {
       method: "POST",
@@ -21,11 +19,11 @@ class AssignedPostPage extends Component {
       body: JSON.stringify({
         "page": 0,
         "size": 20,
-        "staffId": "ddddddddd"
+        "staffId": "SaLjk0fE9xTr2qu3JLj6bFgNUPq1"
     }),
     };
 
-    fetch("http://localhost:8080/api/v1/transaction/getRealEstateAssignStaff", requestOptions)
+    fetch(Constants.getRealEstateAssignStaffRef, requestOptions)
       .then((res) => res.json())
       .then(
         (result) => {
@@ -60,7 +58,7 @@ class AssignedPostPage extends Component {
     });
   };
 
-  handleSnackbar = () => {
+  handleSnackbar = (sellerName, buyerName) => {
     return (
       <Snackbar
         autoHideDuration={5000}
@@ -72,7 +70,7 @@ class AssignedPostPage extends Component {
       >
         <Alert style={{ backgroundColor: "black" }} severity="success">
           <span style={{ color: "white" }}>
-            Tuyệt! Bạn đã tạo thành công 1 giao dịch giữa Nguyễn A và Trần B
+            Tuyệt! Bạn đã tạo thành công 1 giao dịch
           </span>
         </Alert>
       </Snackbar>
