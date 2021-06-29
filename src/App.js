@@ -8,6 +8,7 @@ import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
 import { Chat } from "./components/Chat";
+
 // import ProfilePage from "./components/profile/ProfilePage";
 import { ChatLauncher } from "./components/Chat/ChatLauncher";
 import ChatContext from "./ChatContext";

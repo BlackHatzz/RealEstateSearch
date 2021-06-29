@@ -63,6 +63,7 @@
     object-fit: cover;
     background-repeat: no-repeat;
     border-radius: 25px;
+    margin-left: 10px;
 }
 .profile-name-text {
     font-size: 14px;
@@ -100,15 +101,6 @@
     align-items: center;
 }
 
-.profile-menu-container > .top-item {
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-.profile-menu-container > .bottom-item {
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-}
-
 .profile-menu-container > .profile-menu-item:hover {
     background-color: #D8DADF;
     cursor: pointer;
@@ -116,10 +108,11 @@
 .profile-menu-container > .profile-menu-item > .icon {
     padding-left: 12px;
 }
-.profile-menu-container > .profile-menu-item > .title {
+.profile-menu-container > .profile-menu-item .title {
     padding-left: 12px;
     font-size: 16px;
     text-align: left;
+    color: black;
 }
 .profile-menu-container > .divide {
     width: 100%;

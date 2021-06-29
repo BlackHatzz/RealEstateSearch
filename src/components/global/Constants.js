@@ -1,4 +1,5 @@
 class Constants {
+
   // static host = "http://localhost:8080/";
   static host =
     "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
@@ -13,3 +14,4 @@ class Constants {
 }
 
 export default Constants;
+
