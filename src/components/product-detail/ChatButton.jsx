@@ -6,7 +6,7 @@ import firebase from "firebase";
 export const ChatButton = (props) => {
   const currentDate = new Date();
   const { chatId, updateChat } = useContext(Context);
-
+  const { updateOpen } = useContext(Context);
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
     const buyername = fb.auth.currentUser.displayName;
@@ -24,7 +24,7 @@ export const ChatButton = (props) => {
         fb.firestore
           .collection("conversations")
           .doc("" + data.id)
-          .update({
+          .set({
             lastvisit: currentDate.toUTCString(),
             title: props.product.title,
             realId: props.product.id,
@@ -47,7 +47,7 @@ export const ChatButton = (props) => {
         //   sender: '',
         //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         // });
-
+        updateOpen();
         updateChat(data.id + "");
         console.log("click");
       })

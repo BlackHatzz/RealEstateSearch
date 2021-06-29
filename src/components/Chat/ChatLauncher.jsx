@@ -5,7 +5,8 @@ import { ChatWindow } from "./ChatWindow";
 import { ChatWindowButton } from "./ChatWindowButton";
 
 export const ChatLauncher = () => {
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
+  const { isOpen, updateOpen, updateClose } = useContext(Context);
   const classList = ["launcher", isOpen ? "_opened" : ""];
   const uid = fb.auth.currentUser.uid;
   const [conversations, setConversations] = useState([]);
@@ -36,22 +37,22 @@ export const ChatLauncher = () => {
       unsubscribe();
     };
   }, [uid]);
-  const handleClick = () => {
-    setIsOpen((value) => !value);
-  };
+  // const handleClick = () => {
+  //   setIsOpen((value) => !value);
+  // };
   return (
     <div id="launcher">
       {/* {console.log("asdasd" + currentChat.id)} */}
       <div className={classList.join("")}>
         {isOpen ? (
           <ChatWindow
-            onClickChat={handleClick}
+            onClickChat={updateClose}
             conversations={conversations}
             // currentChat={currentChat}
             // setChat={setCurrentChat}
           />
         ) : (
-          <ChatWindowButton onClickChat={handleClick} />
+          <ChatWindowButton onClickChat={updateOpen} />
         )}
       </div>
     </div>

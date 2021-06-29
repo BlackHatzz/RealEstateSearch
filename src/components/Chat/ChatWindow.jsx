@@ -63,10 +63,13 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
         setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
-    fb.firestore.collection("conversations").doc(currentChat.id).update({
-      deal: "pending",
-      dealId: dealId,
-    });
+    fb.firestore.collection("conversations").doc(currentChat.id).set(
+      {
+        deal: "pending",
+        dealId: dealId,
+      },
+      { merge: true }
+    );
   }
   const sendMessage = (e) => {
     e.preventDefault();
@@ -136,10 +139,15 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
 
                 <div>
                   <button
-                    disabled={currentChat.data.deal ? false : true}
+                    disabled={
+                      currentChat.data.deal === "pending" ? true : false
+                    }
                     onClick={handleDeal}
                     type="button"
                   >
+                    {console.log(
+                      currentChat.data.deal === "pending" ? true : false
+                    )}
                     Thỏa thuận
                   </button>
                 </div>
@@ -151,7 +159,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                       setInput(event.target.value);
                     }}
                     type="text"
-                    placeholder="Aa"
+                    placeholder="Gửi tin nhắn"
                   />
                   <button className="button_send_message" type="submit">
                     <TelegramIcon fontSize="small" />
