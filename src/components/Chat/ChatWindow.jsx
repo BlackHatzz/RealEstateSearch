@@ -60,13 +60,13 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       .then(function (docRef) {
         console.log("Document written with ID: ", docRef.id);
         setDealId(docRef.id);
+        setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
     fb.firestore.collection("conversations").doc(currentChat.id).update({
       deal: "pending",
       dealId: dealId,
     });
-    setDealtrigger((value) => !value);
   }
   const sendMessage = (e) => {
     e.preventDefault();
@@ -111,7 +111,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
               <MessageContainer conversation={currentChat} />
               <div className="chat_window_container_message_box_input">
                 <div>
-                  {!dealtrigger && (
+                  {dealtrigger && (
                     <Formik
                       onSubmit={submitDeal}
                       validateOnMount={true}
@@ -136,7 +136,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
 
                 <div>
                   <button
-                    // disabled={currentChat.data.deals[0]}
+                    disabled={currentChat.data.deal}
                     onClick={handleDeal}
                     type="button"
                   >
