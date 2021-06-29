@@ -11,7 +11,7 @@ import { Context } from "../../ChatContext";
 import { FormField } from "../FormField";
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
-  const { chatId, updateChat } = useContext(Context);
+  const { role, chatId } = useContext(Context);
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState();
   const uuid = fb.auth.currentUser.uid;
@@ -57,15 +57,16 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
         status: "pending",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
-      .then(function (docRef) {
+      .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
         setDealId(docRef.id);
         setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
+
     fb.firestore.collection("conversations").doc(currentChat.id).set(
       {
-        deal: "pending",
+        deal: "pending2",
         dealId: dealId,
       },
       { merge: true }
@@ -111,7 +112,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   </p>
                 </div>
               </div>
-              <MessageContainer conversation={currentChat} />
+              <MessageContainer conversation={currentChat} dealId={dealId} />
               <div className="chat_window_container_message_box_input">
                 <div>
                   {dealtrigger && (
@@ -138,18 +139,20 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 </div>
 
                 <div>
-                  <button
-                    disabled={
-                      currentChat.data.deal === "pending" ? true : false
-                    }
-                    onClick={handleDeal}
-                    type="button"
-                  >
-                    {console.log(
-                      currentChat.data.deal === "pending" ? true : false
-                    )}
-                    Thỏa thuận
-                  </button>
+                  {role === "buyer" && (
+                    <button
+                      disabled={
+                        currentChat.data.deal === "pending" ? true : false
+                      }
+                      onClick={handleDeal}
+                      type="button"
+                    >
+                      {console.log(
+                        currentChat.data.deal === "pending" ? true : false
+                      )}
+                      Thỏa thuận
+                    </button>
+                  )}
                 </div>
 
                 <form onSubmit={sendMessage}>

@@ -6,7 +6,7 @@ import { ChatWindowButton } from "./ChatWindowButton";
 
 export const ChatLauncher = () => {
   // const [isOpen, setIsOpen] = useState(false);
-  const { isOpen, updateOpen, updateClose } = useContext(Context);
+  const { role, isOpen, updateOpen, updateClose } = useContext(Context);
   const classList = ["launcher", isOpen ? "_opened" : ""];
   const uid = fb.auth.currentUser.uid;
   const [conversations, setConversations] = useState([]);
@@ -21,9 +21,10 @@ export const ChatLauncher = () => {
   //   console.log("not found");
   // }
   useEffect(() => {
+    console.log(role);
     const unsubscribe = fb.firestore
       .collection("conversations")
-      .where("buyerId", "==", uid)
+      .where(role + "Id", "==", uid)
       // .orderBy("lastvisit", "desc")
       .onSnapshot((snapshot) => {
         setConversations(

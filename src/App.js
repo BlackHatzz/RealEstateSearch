@@ -11,7 +11,8 @@ import { Chat } from "./components/Chat";
 // import ProfilePage from "./components/profile/ProfilePage";
 import { ChatLauncher } from "./components/Chat/ChatLauncher";
 import ChatContext from "./ChatContext";
-
+import { Role } from "./components/Role/Role";
+import { Seller } from "./components/Seller/Seller";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -19,7 +20,7 @@ const App = () => {
   const [test, setTest] = useState("initialState");
   useEffect(() => {
     if (authResolved) {
-      history.push(!!authUser ? "/" : "/login");
+      history.push(!!authUser ? "/role" : "/login");
     }
   }, [authResolved, authUser, history]);
 
@@ -28,8 +29,9 @@ const App = () => {
       <div className="app">
         {authUser && <ChatLauncher />}
         <Switch>
+          <Route exact path="/role" component={Role} />
+          <Route exact path="/sell" component={Seller} />
           <Route exact path="/" component={HomePage} />
-          {/* <Route path="/home" component={HomePage} /> */}
           <Route path="/login" component={Login} />
           {/* <Route path="/profile-page" component={ProfilePage} /> */}
           <Route path="/signup" component={Signup} />
