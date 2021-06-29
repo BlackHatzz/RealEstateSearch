@@ -5,7 +5,7 @@ import AttachFile from "@material-ui/icons/AttachFile";
 import MoreVert from "@material-ui/icons/MoreVert";
 import { useParams } from "react-router-dom";
 import { fb } from "../../services";
-import { useStateValue } from "../../StateProvider";
+
 import firebase from "firebase";
 import Realestate from "./Realestate";
 
