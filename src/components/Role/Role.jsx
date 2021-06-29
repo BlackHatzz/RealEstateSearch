@@ -2,35 +2,26 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../ChatContext";
 export const Role = () => {
-  const { updateRole } = useContext(Context);
+  const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
   return (
     <div>
+      {console.log(role)}
       select role
       <Link
         to={{
           pathname: "/",
         }}
+        onClick={updateBuyerRole}
       >
-        <div
-          onClick={() => {
-            updateRole("buyer");
-          }}
-        >
-          Buyer
-        </div>
+        <div>Buyer</div>
       </Link>
       <Link
         to={{
           pathname: "/sell",
         }}
+        onClick={updateSellerRole}
       >
-        <div
-          onClick={() => {
-            updateRole("seller");
-          }}
-        >
-          Seller
-        </div>
+        <div>Seller</div>
       </Link>
     </div>
   );

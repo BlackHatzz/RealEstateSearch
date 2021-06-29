@@ -7,7 +7,7 @@ const ChatContext = (props) => {
 
   const [chatId, setChatId] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
-  const [role, setRole] = useState("buyer");
+  const [role, setRole] = useState();
   return (
     <Context.Provider
       value={{
@@ -17,7 +17,8 @@ const ChatContext = (props) => {
         updateChat: (id) => setChatId(id),
         updateOpen: () => setIsOpen(true),
         updateClose: () => setIsOpen(false),
-        updateRole: (value) => setRole(value),
+        updateSellerRole: () => setRole("seller"),
+        updateBuyerRole: () => setRole("buyer"),
         // aCallback: aCallback,
       }}
     >

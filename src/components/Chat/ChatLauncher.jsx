@@ -21,7 +21,7 @@ export const ChatLauncher = () => {
   //   console.log("not found");
   // }
   useEffect(() => {
-    console.log(role);
+    console.log(role + "Id");
     const unsubscribe = fb.firestore
       .collection("conversations")
       .where(role + "Id", "==", uid)
