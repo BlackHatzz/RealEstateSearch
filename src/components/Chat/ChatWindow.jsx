@@ -9,6 +9,9 @@ import { MessageContainer } from "./MessageContainer";
 import firebase from "firebase";
 import { Context } from "../../ChatContext";
 import { FormField } from "../FormField";
+import "../global/shared.css";
+import { BsChevronDoubleLeft } from "react-icons/bs";
+// import SendIcon from '@material-ui/icons/Send';
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
   const { role, chatId } = useContext(Context);
@@ -72,6 +75,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       { merge: true }
     );
   }
+
   const sendMessage = (e) => {
     e.preventDefault();
     fb.firestore
@@ -88,14 +92,15 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
   const handleDeal = () => {
     setDealtrigger((value) => !value);
   };
+
   return (
     <div className="chat_window">
       <ChatWindowHeader onClickChat={onClickChat} />
       <div className="chat_window_container">
         <div className="chat_window_container_right_box">
           {currentChat ? (
-            <div className="chat_window_container_message_box">
-              <div className="chat_window_container_message_box_display_realestate">
+            <div key={currentChat.id} className="chat_window_container_message_box">
+              {/* <div className="chat_window_container_message_box_display_realestate">
                 <div className="chat_window_container_message_box_display_realestate_image">
                   <img
                     src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
@@ -111,7 +116,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                     {currentChat.data.bath} WC
                   </p>
                 </div>
-              </div>
+              </div> */}
               <MessageContainer conversation={currentChat} dealId={dealId} />
               <div className="chat_window_container_message_box_input">
                 <div>
@@ -138,9 +143,10 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   )}
                 </div>
 
-                <div>
+                <div className="interact-box">
                   {role === "buyer" && (
                     <button
+                      className="primary-box deal-button"
                       disabled={
                         currentChat.data.deal === "pending" ? true : false
                       }
@@ -155,17 +161,21 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   )}
                 </div>
 
-                <form onSubmit={sendMessage}>
-                  <input
-                    value={input}
-                    onChange={(event) => {
-                      setInput(event.target.value);
-                    }}
-                    type="text"
-                    placeholder="Gửi tin nhắn"
-                  />
+                <form className="send-message-container" onSubmit={sendMessage}>
+                  <div className="chat-field-container">
+                    <input
+                      className="chat-field"
+                      value={input}
+                      onChange={(event) => {
+                        setInput(event.target.value);
+                      }}
+                      type="text"
+                      placeholder="Gửi tin nhắn..."
+                    />
+                  </div>
+
                   <button className="button_send_message" type="submit">
-                    <TelegramIcon fontSize="small" />
+                    <TelegramIcon className="send-message-icon" />
                   </button>
                 </form>
               </div>
@@ -178,8 +188,18 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
           <div className="chat_window_container_contact_list">
             {conversations.map((conversation) => (
               <div
+                key={conversation.id}
                 onClick={() => {
                   setCurrentChat(conversation);
+                  // refesh item list
+                  const list = document.getElementsByClassName("right-content-container");
+                  console.log("outtttt");
+                  for(var i = 0; i < list.length; i++) {
+                    list[i].style.backgroundColor = "white";
+                    console.log("yahooo");
+                  }
+                  const selectedItem = document.getElementById(conversation.id);
+                  selectedItem.style.backgroundColor = "#dadde2";
                 }}
               >
                 <Contact

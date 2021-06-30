@@ -29,7 +29,7 @@ const App = () => {
   }, [authResolved, authUser, history]);
   return authResolved ? (
 
-    <ChatContext>
+    
     <div className="app">
       {authUser && role && <ChatLauncher />}
       <Switch>
@@ -53,7 +53,7 @@ const App = () => {
         <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
-    </ChatContext>
+    
 
   ) : (
     <div>Loading ...</div>

@@ -128,7 +128,7 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
-    console.log(fb.auth.currentUser.uid);
+    // console.log(fb.auth.currentUser.uid);
     const { searchText } = this.state;
     console.log("search ");
     console.log(searchText);
@@ -241,7 +241,23 @@ class HomePage extends Component {
     console.log(this.state.area);
     if (this.state.searchText.length >= 3) {
       return (
-        <button onClick={this.handlePush} className="home-search-button">
+        <button className="home-search-button">
+          <Link
+            className="link"
+            to={{
+              pathname:
+                "/search-result-page/" +
+                this.state.searchText +
+                "/" +
+                this.state.type.selectedKey +
+                "/" +
+                this.state.area.selectedKey +
+                "/" +
+                this.state.address.selectedKey +
+                "/" +
+                this.state.price.selectedKey,
+            }}
+          ></Link>
             <AiOutlineSearch className="home-search-icon" />
         </button>
         // <button className="home-search-button">
