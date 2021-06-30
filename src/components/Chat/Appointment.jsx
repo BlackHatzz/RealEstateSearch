@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
-import {
-  getMonth,
-  getYear,
-  subDays,
-  addDays,
-  setHours,
-  setMinutes,
-  getDay,
-} from "date-fns";
+import { getMonth, getYear, addDays, getDay } from "date-fns";
 import range from "lodash/range";
 import moment from "moment";
+import { fb } from "../../services";
+import { v4 as uuidv4 } from "uuid";
+import firebase from "firebase";
 
 function Appointment({ setTrigger, conversation }) {
-  const currentDate = new Date();
+  const username = fb.auth.currentUser.displayName;
+  const [bookId, setBookId] = useState();
   const [startDate, setStartDate] = useState(null);
   const [startTime, setStartTime] = useState("");
   const [weekdays, setWeekdays] = useState([7, 7, 7, 7, 7, 7, 7]); //0->6:sun->sat
@@ -45,6 +41,7 @@ function Appointment({ setTrigger, conversation }) {
   ];
 
   useEffect(() => {
+    setBookId(uuidv4());
     if (conversation) {
       fetch(
         `http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/schedules/all?sellerId=${conversation.data.sellerId}`
@@ -113,11 +110,35 @@ function Appointment({ setTrigger, conversation }) {
   };
   const handleAppointmentSubmit = (event) => {
     event.preventDefault();
-    console.log(startDate);
     console.log(startTime);
+    console.log(startDate);
     const d = moment(startDate).format("L");
-    const date = moment(d + " " + startTime).toISOString();
+    console.log(d);
+    const date = moment(d + " " + startTime, "DD/MM/YYYY hh:mm").toISOString();
+
     console.log(date);
+
+    fb.firestore
+      .collection("conversations")
+      .doc(conversation.id)
+      .collection("messages")
+      .doc(bookId)
+      .set({
+        appointment: date,
+        sender: username,
+        status: "upcoming",
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .then(() => {
+        fb.firestore.collection("conversations").doc(conversation.id).set(
+          {
+            appointment: "upcoming",
+            appointmentId: bookId,
+          },
+          { merge: true }
+        );
+        setTrigger((value) => !value);
+      });
     // fetch(
     //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/appointments/create",
     //   {

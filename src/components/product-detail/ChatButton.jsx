@@ -36,6 +36,8 @@ export const ChatButton = (props) => {
             bath: props.product.numberOfBathroom,
             deal: "none",
             dealId: "",
+            appointment: "none",
+            appointmentId: "",
           });
 
         updateOpen();

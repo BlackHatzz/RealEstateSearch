@@ -1,3 +1,5 @@
+import moment from "moment";
+import "moment/locale/vi";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
@@ -8,6 +10,7 @@ export const MessageContainer = ({ conversation }) => {
   const [messages, setMessages] = useState([]);
   const { role } = useContext(Context);
   const [dealId, setDealId] = useState();
+  const [bookId, setBookId] = useState();
 
   // const [deals, setDeals] = useState([]);
   // const [appointments, setAppointments] = useState([]);
@@ -33,6 +36,7 @@ export const MessageContainer = ({ conversation }) => {
         .doc(conversation.id)
         .onSnapshot((doc) => {
           setDealId(doc.data().dealId);
+          setBookId(doc.data().appointmentId);
         });
     }
   }, [conversation, uuid]);
@@ -71,15 +75,32 @@ export const MessageContainer = ({ conversation }) => {
         });
     }
   };
+
+  const handelCancelAppointment = () => {
+    if (bookId) {
+      fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .collection("messages")
+        .doc(bookId)
+        .update({
+          status: "cancel",
+        })
+        .then(() => {
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            appointment: "cancel",
+          });
+        });
+    }
+  };
   return (
     <div className="chat_window_container_message_box_display" ref={messageEl}>
       {messages.map((message) => (
         <div
           className={`message ${message.sender === username && "message_send"}`}
         >
-          {message.message ? (
-            <p>{message.message}</p>
-          ) : (
+          {message.message && <p>{message.message}</p>}
+          {message.deal && (
             <div className="deal_message">
               Thỏa thuận
               <p>giá {message.deal} tỷ</p>
@@ -102,6 +123,37 @@ export const MessageContainer = ({ conversation }) => {
                   {message.status === "accepted" && <div>đã chấp nhận</div>}
                   {message.status === "refused" && <div>đã từ chối</div>}
                   {message.status === "cancel" && <div>đã hủy</div>}
+                </div>
+              )}
+            </div>
+          )}
+          {message.appointment && (
+            <div>
+              {role === "buyer" && (
+                <div>
+                  {message.status === "upcoming" && (
+                    <div>
+                      <p>Lịch hẹn sắp tới</p>
+                      {moment(message.appointment).locale("vi").format("LLLL")}
+                      <button onClick={handelCancelAppointment}>Hủy</button>
+                    </div>
+                  )}
+                  {message.status === "cancel" && <div>Lịch hẹn đã hủy</div>}
+                </div>
+              )}
+              {role === "seller" && (
+                <div>
+                  <div>
+                    {message.status === "upcoming" && (
+                      <div>
+                        <p>Lịch hẹn sắp tới</p>
+                        {moment(message.appointment)
+                          .locale("vi")
+                          .format("LLLL")}
+                      </div>
+                    )}
+                    {message.status === "cancel" && <div>Lịch hẹn đã hủy</div>}
+                  </div>
                 </div>
               )}
             </div>

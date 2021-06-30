@@ -147,9 +147,11 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                         Thỏa thuận
                       </button>
                       <button
-                        // disabled={
-                        //   currentChat.data.deal === "accepted" ? false : true
-                        // }
+                        disabled={
+                          currentChat.data.appointment === "upcoming"
+                            ? true
+                            : false
+                        }
                         onClick={handleBook}
                       >
                         Đặt lịch
