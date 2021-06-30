@@ -163,6 +163,7 @@ function Appointment({ setTrigger, conversation }) {
   return (
     <div className="appointment">
       <form onSubmit={handleAppointmentSubmit} className="bookForm">
+        <p>Đặt lịch hẹn</p>
         <DatePicker
           renderCustomHeader={({
             date,
@@ -250,15 +251,15 @@ function Appointment({ setTrigger, conversation }) {
           </select>
         )}
 
-        <div>
-          <button type="submit">đặt</button>
+        <div className="deal-form-button">
+          <button type="submit">Đặt</button>
           <button
             type="button"
             onClick={() => {
               setTrigger((value) => !value);
             }}
           >
-            hủy
+            Hủy
           </button>
         </div>
       </form>

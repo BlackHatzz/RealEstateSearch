@@ -12,7 +12,7 @@ import { FormField } from "../FormField";
 import { v4 as uuidv4 } from "uuid";
 import Appointment from "./Appointment";
 import "../global/shared.css";
-import { BsChevronDoubleLeft } from "react-icons/bs";
+
 // import SendIcon from '@material-ui/icons/Send';
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
@@ -91,6 +91,13 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
               key={currentChat.id}
               className="chat_window_container_message_box"
             >
+              <div className="chat_window_container_message_box_user">
+                <p>
+                  {role === "buyer"
+                    ? currentChat.data.seller
+                    : currentChat.data.buyer}
+                </p>
+              </div>
               <div className="chat_window_container_message_box_display_realestate">
                 <div className="chat_window_container_message_box_display_realestate_image">
                   <img
@@ -109,36 +116,51 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 </div>
               </div>
               <MessageContainer conversation={currentChat} />
-              <div className="chat_window_container_message_box_popup">
-                {dealtrigger && (
-                  <Formik
-                    onSubmit={submitDeal}
-                    validateOnMount={true}
-                    initialValues={defaultValues}
-                    validationSchema={validationSchema}
-                  >
-                    {({ isValid, isSubmitting }) => (
-                      <Form>
-                        <p>Giá gốc: {currentChat.data.price} tỷ</p>
-                        <FormField name="deal" />
-                        <button
-                          disabled={isSubmitting || !isValid}
-                          type="submit"
-                        >
-                          gửi
-                        </button>
-                      </Form>
-                    )}
-                  </Formik>
-                )}
-                {booktrigger && (
-                  <Appointment
-                    trigger={booktrigger}
-                    setTrigger={setBooktrigger}
-                    conversation={currentChat}
-                  />
-                )}
-              </div>
+              {(dealtrigger || booktrigger) && (
+                <div className="chat_window_container_message_box_popup">
+                  {dealtrigger && (
+                    <Formik
+                      onSubmit={submitDeal}
+                      validateOnMount={true}
+                      initialValues={defaultValues}
+                      validationSchema={validationSchema}
+                    >
+                      {({ isValid, isSubmitting, errors }) => (
+                        <Form className="deal-form">
+                          <p>Giá gốc: {currentChat.data.price} tỷ</p>
+                          <FormField
+                            name="deal"
+                            placeholder={currentChat.data.price}
+                          />
+                          <div className="deal-form-button">
+                            <button
+                              // disabled={isSubmitting || !isValid}
+                              type="submit"
+                            >
+                              Gửi
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setDealtrigger((value) => !value);
+                              }}
+                            >
+                              Hủy
+                            </button>
+                          </div>
+                        </Form>
+                      )}
+                    </Formik>
+                  )}
+                  {booktrigger && (
+                    <Appointment
+                      trigger={booktrigger}
+                      setTrigger={setBooktrigger}
+                      conversation={currentChat}
+                    />
+                  )}
+                </div>
+              )}
 
               <div className="chat_window_container_message_box_input">
                 {role === "buyer" && (
