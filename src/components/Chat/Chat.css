@@ -149,8 +149,8 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   box-sizing: border-box;
   border: 1px solid rgb(219, 217, 217);
 }
@@ -177,7 +177,7 @@
 }
 
 .chat_window_header h2 {
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   font-weight: 500;
   margin-left: 4px;
 }
@@ -189,7 +189,6 @@
   border-radius: 50%;
   background-color: black;
 }
-
 
 .chat_window_close_button {
   align-self: flex-end;
@@ -343,7 +342,6 @@
   margin-left: 4px;
   height: 40px;
   width: 40px;
-  
 }
 .button_send_message:hover {
   background-color: rgb(219, 217, 217);
@@ -361,7 +359,6 @@
   border-bottom: 1px solid rgb(219, 217, 217);
   display: flex;
   flex-direction: row;
-  
 }
 
 .contact_item > .right-content-container {
@@ -380,7 +377,7 @@
   font-weight: 500;
   overflow: hidden;
   /* word-break: break-work; */
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   word-wrap: break-word;
   text-align: left;
 }
@@ -390,7 +387,7 @@
   overflow: hidden;
   color: rgb(101, 103, 107);
   /* word-break: break-work; */
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   word-wrap: break-word;
   text-align: left;
 }
@@ -429,7 +426,6 @@ option {
   background-repeat: no-repeat;
 }
 
-
 .send-message-container {
   background-color: transparent;
   display: flex;
@@ -465,7 +461,6 @@ option {
   height: 2px;
   /* font-size: 50px; */
 }
-
 
 .interact-box {
   width: 100%;
