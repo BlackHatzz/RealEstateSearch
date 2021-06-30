@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 
 export const Seller = () => {

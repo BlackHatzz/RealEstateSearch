@@ -1,11 +1,10 @@
-import React, { useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
-import firebase from "firebase";
 
 export const ChatButton = (props) => {
   const currentDate = new Date();
-  const { chatId, updateChat } = useContext(Context);
+  const { updateChat } = useContext(Context);
   const { updateOpen } = useContext(Context);
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
@@ -20,7 +19,6 @@ export const ChatButton = (props) => {
         throw response;
       })
       .then((data) => {
-        console.log(data.deals);
         fb.firestore
           .collection("conversations")
           .doc("" + data.id)
@@ -36,20 +34,14 @@ export const ChatButton = (props) => {
             area: props.product.area,
             bed: props.product.numberOfBedroom,
             bath: props.product.numberOfBathroom,
+            deal: "none",
+            dealId: "",
+            appointment: "none",
+            appointmentId: "",
           });
 
-        // fb.firestore
-        // .collection("conversations")
-        // .doc("" + data.id)
-        // .collection("messages")
-        // .add({
-        //   message: '',
-        //   sender: '',
-        //   timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        // });
         updateOpen();
         updateChat(data.id + "");
-        console.log("click");
       })
       .catch((error) => {
         console.log(error);

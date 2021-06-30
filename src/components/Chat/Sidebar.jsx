@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./Chat.css";
 import SidebarChat from "./SidebarChat";
 import { fb } from "../../services";
-import { useAuth } from "../../hooks";
 
 export const Sidebar = () => {
   const [conversations, setConversations] = useState([]);
@@ -24,7 +23,7 @@ export const Sidebar = () => {
     return () => {
       unsubscribe();
     };
-  }, []);
+  }, [uid]);
   return (
     <div className="sidebar">
       <div className="sidebar-header">

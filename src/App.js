@@ -21,29 +21,31 @@ const App = () => {
 
   const { role } = useContext(Context);
 
-
   useEffect(() => {
     if (authResolved) {
       history.push(!!authUser ? "/role" : "/login");
     }
   }, [authResolved, authUser, history]);
   return authResolved ? (
-
-    <ChatContext>
     <div className="app">
       {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
-          <Route exact path="/sell" component={Seller} />
+        <Route exact path="/sell" component={Seller} />
         <Route path="/login" component={Login} />
         <Route path="/profile-page" component={ProfilePage} />
-        <Route path="/transaction-history-page" component={TransactionHistoryPage} />
+        <Route
+          path="/transaction-history-page"
+          component={TransactionHistoryPage}
+        />
         <Route path="/signup" component={Signup} />
         <Route
           path="/search-result-page/:searchtext/:type/:area/:adress/:price"
           // component={SearchResultPage}
-          render={props => <SearchResultPage key={props.match.params.searchtext} {...props} />}
+          render={(props) => (
+            <SearchResultPage key={props.match.params.searchtext} {...props} />
+          )}
         ></Route>
         <Route
           path="/product-detail-page"
@@ -53,8 +55,6 @@ const App = () => {
         <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
-    </ChatContext>
-
   ) : (
     <div>Loading ...</div>
   );
