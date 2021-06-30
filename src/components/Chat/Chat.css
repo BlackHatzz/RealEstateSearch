@@ -130,9 +130,11 @@
 }
 .bookForm {
   display: flex;
-  flex: 1;
+  flex-direction: column;
 }
-
+.bookForm-datetime {
+  flex-direction: column;
+}
 .daLabel {
   width: 30%;
 }
@@ -264,6 +266,7 @@
   background-color: rgb(235, 235, 235);
   color: black;
   margin-left: 10px;
+  max-width: 90%;
 }
 
 .message_send {
@@ -304,6 +307,7 @@
 .contact_item:hover {
   background-color: rgb(219, 217, 217);
 }
+
 .contact_item {
   cursor: pointer;
   height: 40px;
@@ -315,4 +319,17 @@
 .contact_item > h4 {
   font-size: 14px;
   font-weight: 700;
+}
+
+option[value=""][disabled] {
+  display: none;
+}
+select:required:invalid {
+  color: gray;
+}
+option {
+  color: black;
+}
+.chat_window_container_message_box_popup {
+  border-top: 1px solid gray;
 }

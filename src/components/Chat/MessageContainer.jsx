@@ -78,7 +78,7 @@ export const MessageContainer = ({ conversation }) => {
           className={`message ${message.sender === username && "message_send"}`}
         >
           {message.message ? (
-            message.message
+            <p>{message.message}</p>
           ) : (
             <div className="deal_message">
               Thỏa thuận

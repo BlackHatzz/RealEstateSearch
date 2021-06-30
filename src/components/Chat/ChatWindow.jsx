@@ -10,6 +10,7 @@ import firebase from "firebase";
 import { Context } from "../../ChatContext";
 import { FormField } from "../FormField";
 import { v4 as uuidv4 } from "uuid";
+import Appointment from "./Appointment";
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
   const { role, chatId } = useContext(Context);
@@ -19,6 +20,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
   const [dealId, setDealId] = useState();
   // const [appointments, setAppointments] = useState([]);
   const [dealtrigger, setDealtrigger] = useState(false);
+  const [booktrigger, setBooktrigger] = useState(false);
   useEffect(() => {
     const index = conversations.findIndex((e) => e.id === chatId);
     if (index > -1) {
@@ -70,6 +72,9 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
   const handleDeal = () => {
     setDealtrigger((value) => !value);
   };
+  const handleBook = () => {
+    setBooktrigger((value) => !value);
+  };
   return (
     <div className="chat_window">
       <ChatWindowHeader onClickChat={onClickChat} />
@@ -95,45 +100,61 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 </div>
               </div>
               <MessageContainer conversation={currentChat} />
+              <div className="chat_window_container_message_box_popup">
+                {dealtrigger && (
+                  <Formik
+                    onSubmit={submitDeal}
+                    validateOnMount={true}
+                    initialValues={defaultValues}
+                    validationSchema={validationSchema}
+                  >
+                    {({ isValid, isSubmitting }) => (
+                      <Form>
+                        <p>Giá gốc: {currentChat.data.price} tỷ</p>
+                        <FormField name="deal" />
+                        <button
+                          disabled={isSubmitting || !isValid}
+                          type="submit"
+                        >
+                          gửi
+                        </button>
+                      </Form>
+                    )}
+                  </Formik>
+                )}
+                {booktrigger && (
+                  <Appointment
+                    trigger={booktrigger}
+                    setTrigger={setBooktrigger}
+                    conversation={currentChat}
+                  />
+                )}
+              </div>
               <div className="chat_window_container_message_box_input">
                 <div>
-                  {dealtrigger && (
-                    <Formik
-                      onSubmit={submitDeal}
-                      validateOnMount={true}
-                      initialValues={defaultValues}
-                      validationSchema={validationSchema}
-                    >
-                      {({ isValid, isSubmitting }) => (
-                        <Form>
-                          <p>Giá gốc: {currentChat.data.price} tỷ</p>
-                          <FormField name="deal" />
-                          <button
-                            disabled={isSubmitting || !isValid}
-                            type="submit"
-                          >
-                            gửi
-                          </button>
-                        </Form>
-                      )}
-                    </Formik>
-                  )}
-                </div>
-
-                <div>
                   {role === "buyer" && (
-                    <button
-                      disabled={
-                        currentChat.data.deal === "refused" ||
-                        currentChat.data.deal === "none"
-                          ? false
-                          : true
-                      }
-                      onClick={handleDeal}
-                      type="button"
-                    >
-                      Thỏa thuận
-                    </button>
+                    <div>
+                      <button
+                        disabled={
+                          currentChat.data.deal === "refused" ||
+                          currentChat.data.deal === "none"
+                            ? false
+                            : true
+                        }
+                        onClick={handleDeal}
+                        type="button"
+                      >
+                        Thỏa thuận
+                      </button>
+                      <button
+                        // disabled={
+                        //   currentChat.data.deal === "accepted" ? false : true
+                        // }
+                        onClick={handleBook}
+                      >
+                        Đặt lịch
+                      </button>
+                    </div>
                   )}
                 </div>
 

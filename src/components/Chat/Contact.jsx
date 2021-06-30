@@ -7,6 +7,7 @@ export const Contact = ({ id, data }) => {
       onClick={() => {
         console.log(data.title);
       }}
+      tabIndex="0"
     >
       <h4>{data.title}</h4>
     </div>
