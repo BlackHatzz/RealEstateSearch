@@ -9,68 +9,50 @@ import { MessageContainer } from "./MessageContainer";
 import firebase from "firebase";
 import { Context } from "../../ChatContext";
 import { FormField } from "../FormField";
+import { v4 as uuidv4 } from "uuid";
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
   const { role, chatId } = useContext(Context);
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState();
-  const uuid = fb.auth.currentUser.uid;
   const username = fb.auth.currentUser.displayName;
-  const [deals, setDeals] = useState([]);
   const [dealId, setDealId] = useState();
-  const [appointments, setAppointments] = useState([]);
+  // const [appointments, setAppointments] = useState([]);
   const [dealtrigger, setDealtrigger] = useState(false);
-  const currentDate = new Date();
   useEffect(() => {
     const index = conversations.findIndex((e) => e.id === chatId);
     if (index > -1) {
       setCurrentChat(conversations[index]);
     }
-    if (currentChat) {
-      // fetch(
-      //   `http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/conversations/messages?%20realEstateId=${currentChat.data.realId}&buyerId=${uuid}&sellerId=${currentChat.data.sellerId}`
-      // )
-      //   .then((response) => {
-      //     if (response.ok) {
-      //       return response.json();
-      //     }
-      //     throw response;
-      //   })
-      //   .then((data) => {
-      //     console.log(data.deals.length);
-      //     setDeals(data.deals);
-      //     setAppointments(data.appointments);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //   });
-    }
+    setDealId(uuidv4());
   }, [chatId, conversations]);
   function submitDeal({ deal }, { setSubmitting }) {
     fb.firestore
       .collection("conversations")
       .doc(currentChat.id)
       .collection("messages")
-      .add({
+      .doc(dealId)
+      .set({
         deal: deal,
         sender: username,
         status: "pending",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
-      .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        setDealId(docRef.id);
+      .then(() => {
+        fb.firestore
+          .collection("conversations")
+          .doc(currentChat.id)
+          .update(
+            {
+              deal: "pending",
+              dealId: dealId + "",
+            }
+            // { merge: true }
+          );
+
         setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
-
-    fb.firestore.collection("conversations").doc(currentChat.id).set(
-      {
-        deal: "pending2",
-        dealId: dealId,
-      },
-      { merge: true }
-    );
   }
   const sendMessage = (e) => {
     e.preventDefault();
@@ -112,7 +94,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   </p>
                 </div>
               </div>
-              <MessageContainer conversation={currentChat} dealId={dealId} />
+              <MessageContainer conversation={currentChat} />
               <div className="chat_window_container_message_box_input">
                 <div>
                   {dealtrigger && (
@@ -142,14 +124,14 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   {role === "buyer" && (
                     <button
                       disabled={
-                        currentChat.data.deal === "pending" ? true : false
+                        currentChat.data.deal === "refused" ||
+                        currentChat.data.deal === "none"
+                          ? false
+                          : true
                       }
                       onClick={handleDeal}
                       type="button"
                     >
-                      {console.log(
-                        currentChat.data.deal === "pending" ? true : false
-                      )}
                       Thỏa thuận
                     </button>
                   )}

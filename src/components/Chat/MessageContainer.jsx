@@ -8,10 +8,10 @@ export const MessageContainer = ({ conversation }) => {
   const [messages, setMessages] = useState([]);
   const { role } = useContext(Context);
   const [dealId, setDealId] = useState();
+
   // const [deals, setDeals] = useState([]);
   // const [appointments, setAppointments] = useState([]);
   const messageEl = useRef(null);
-  console.log("id :" + conversation.id);
   useEffect(() => {
     if (messageEl) {
       messageEl.current.addEventListener("DOMNodeInserted", (event) => {
@@ -25,21 +25,19 @@ export const MessageContainer = ({ conversation }) => {
       fb.firestore
         .collection("conversations")
         .doc(conversation.id)
-        .onSnapshot((snapshot) => {
-          setDealId(snapshot.data().dealId);
-        });
-
-      fb.firestore
-        .collection("conversations")
-        .doc(conversation.id)
         .collection("messages")
         .orderBy("timestamp", "asc")
         .onSnapshot((snap) => setMessages(snap.docs.map((doc) => doc.data())));
+      fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .onSnapshot((doc) => {
+          setDealId(doc.data().dealId);
+        });
     }
   }, [conversation, uuid]);
 
   const handleAccept = () => {
-    console.log(dealId);
     if (dealId) {
       fb.firestore
         .collection("conversations")
@@ -48,19 +46,31 @@ export const MessageContainer = ({ conversation }) => {
         .doc(dealId)
         .update({
           status: "accepted",
+        })
+        .then(() => {
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            deal: "accepted",
+          });
         });
     }
   };
-  // const handleRefuse = () => {
-  //   fb.firestore
-  //     .collection("conversations")
-  //     .doc(conversation.id)
-  //     .collection("messages")
-  //     .doc(dealId)
-  //     .update({
-  //       status: "refused",
-  //     });
-  // };
+  const handleRefuse = () => {
+    if (dealId) {
+      fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .collection("messages")
+        .doc(dealId)
+        .update({
+          status: "refused",
+        })
+        .then(() => {
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            deal: "refused",
+          });
+        });
+    }
+  };
   return (
     <div className="chat_window_container_message_box_display" ref={messageEl}>
       {messages.map((message) => (
@@ -78,6 +88,7 @@ export const MessageContainer = ({ conversation }) => {
                   {message.status === "pending" && <div>đang chờ trả lời</div>}
                   {message.status === "accepted" && <div>đã chấp nhận</div>}
                   {message.status === "refused" && <div>đã từ chối</div>}
+                  {message.status === "cancel" && <div>đã hủy</div>}
                 </div>
               )}
               {role === "seller" && (
@@ -85,11 +96,12 @@ export const MessageContainer = ({ conversation }) => {
                   {message.status === "pending" && (
                     <div>
                       <button onClick={handleAccept}>đồng ý</button>
-                      {/* <button onClick={handleRefuse}>từ chối</button> */}
+                      <button onClick={handleRefuse}>từ chối</button>
                     </div>
                   )}
                   {message.status === "accepted" && <div>đã chấp nhận</div>}
                   {message.status === "refused" && <div>đã từ chối</div>}
+                  {message.status === "cancel" && <div>đã hủy</div>}
                 </div>
               )}
             </div>

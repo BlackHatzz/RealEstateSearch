@@ -5,7 +5,6 @@ export const Role = () => {
   const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
   return (
     <div>
-      {console.log(role)}
       select role
       <Link
         to={{
