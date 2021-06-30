@@ -97,7 +97,7 @@ export const MessageContainer = ({ conversation }) => {
     <div className="chat_window_container_message_box_display" ref={messageEl}>
       {messages.map((message) => (
         <div
-          className={`message ${message.sender === username && "message_send"}`}
+          className={`message ${message.sender === username ? "message_send" : "message-receive"}`}
         >
           {message.message && <p>{message.message}</p>}
           {message.deal && (
@@ -160,7 +160,7 @@ export const MessageContainer = ({ conversation }) => {
           )}
           <span
             className={`message_name ${
-              message.sender === username && "message_name_send"
+              message.sender === username ? "message_name_send" : "message_name_receive"
             }`}
           >
             {message.sender}

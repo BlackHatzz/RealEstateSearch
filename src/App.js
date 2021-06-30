@@ -55,6 +55,8 @@ const App = () => {
         <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
+    
+
   ) : (
     <div>Loading ...</div>
   );

@@ -33,9 +33,9 @@ class ProductItem extends Component {
 
             {/* price and area */}
             <div className="product-price-box">
-              <span className="product-price">~{Math.round( ((this.props.item.price / this.props.item.area) * 1000) * 100 ) / 100} triệu/m²</span>
+              <span className="product-price">Giá trị ~{Math.round( ((this.props.item.price / this.props.item.area) * 1000) * 100 ) / 100} triệu/m²</span>
               <span className="product-price">&#8226;</span>
-              <span className="product-area">{this.props.item.area} m²</span>
+              <span className="product-area">Diện tích {this.props.item.area} m²</span>
             </div>
 
             {/* address */}

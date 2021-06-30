@@ -155,7 +155,9 @@
   border: 1px solid rgb(219, 217, 217);
 }
 .chat_window {
-  width: 500px;
+  width: 650px;
+  /* box-shadow: 0px 2px 6px 2px rgba(40, 40, 20, 0.5); */
+  box-shadow: 0px 0px 2px 2px rgba(3, 44, 71, 0.18);
 }
 
 .chat_window_button_content {
@@ -166,10 +168,29 @@
 
 .chat_window_header {
   width: 100%;
+  padding-top: 8px;
+  padding-bottom: 8px;
   display: flex;
   flex-direction: row;
+  align-items: center;
   border-bottom: 1px solid rgb(219, 217, 217);
 }
+
+.chat_window_header h2 {
+  font-size: .9375rem;
+  font-weight: 500;
+  margin-left: 4px;
+}
+
+.chat-profile-header-container {
+  margin-left: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: black;
+}
+
+
 .chat_window_close_button {
   align-self: flex-end;
   padding-right: 10px;
@@ -181,7 +202,7 @@
 }
 .chat_window_container {
   width: 100%;
-  height: 40vh;
+  height: 48vh;
   display: flex;
   flex-direction: row;
 }
@@ -215,6 +236,8 @@
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 32px;
+  padding-bottom: 12px;
   /* background-color: bisque; */
 }
 .chat_window_container_message_box_display_realestate {
@@ -259,29 +282,34 @@
 .message {
   position: relative;
   font-size: 16px;
-  padding: 10px;
-  border-radius: 20px;
+  padding: 7px 12px 8px 12px;
+  border-radius: 18px;
   width: fit-content;
   margin-bottom: 20px;
-  background-color: rgb(235, 235, 235);
   color: black;
   margin-left: 10px;
-  max-width: 90%;
+  max-width: 220px;
+  word-wrap: break-word;
 }
 
 .message_send {
   margin-left: auto;
-  background-color: rgb(14, 68, 216);
+  /* background-color: rgb(14, 68, 216); */
+  background-color: black;
   color: white;
-  margin-right: 10px;
+  margin-right: 14px;
+  font-size: 15px;
 }
 .message_name {
   position: absolute;
   top: -20px;
-  left: 0px;
+  /* left: px; */
   font-size: x-small;
   font-weight: 800;
   color: black;
+  word-wrap: normal;
+  min-width: 200px;
+  text-align: right;
 }
 .message_name_send {
   position: absolute;
@@ -291,8 +319,18 @@
   font-weight: 800;
   color: black;
 }
+.message_name_receive {
+  position: absolute;
+  top: -20px;
+  left: 0px;
+  font-size: x-small;
+  font-weight: 800;
+  color: black;
+  text-align: left;
+}
+
 .chat_window_container_message_box_input {
-  padding: 5px;
+  padding: 12px 8px;
   border-top: 1px solid rgb(219, 217, 217);
 }
 
@@ -300,25 +338,61 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  border-radius: 4px;
+  padding: 0 8px;
+  margin-left: 4px;
+  height: 40px;
+  width: 40px;
+  
 }
 .button_send_message:hover {
   background-color: rgb(219, 217, 217);
 }
-.contact_item:hover {
-  background-color: rgb(219, 217, 217);
+.contact_item:hover .right-content-container {
+  background-color: rgb(225, 225, 225);
 }
 
 .contact_item {
   cursor: pointer;
-  height: 40px;
+  height: 60px;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
   border-bottom: 1px solid rgb(219, 217, 217);
+  display: flex;
+  flex-direction: row;
+  
 }
-.contact_item > h4 {
+
+.contact_item > .right-content-container {
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding-left: 12px;
+  padding-right: 12px;
+  width: 85%;
+  margin: 4px auto;
+  border-radius: 6px;
+}
+.contact_item > .right-content-container h4 {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 500;
+  overflow: hidden;
+  /* word-break: break-work; */
+  font-size: .9375rem;
+  word-wrap: break-word;
+  text-align: left;
+}
+.contact_item > .right-content-container span {
+  font-size: 13px;
+  font-weight: 400;
+  overflow: hidden;
+  color: rgb(101, 103, 107);
+  /* word-break: break-work; */
+  font-size: .9375rem;
+  word-wrap: break-word;
+  text-align: left;
 }
 
 option[value=""][disabled] {
@@ -332,4 +406,77 @@ option {
 }
 .chat_window_container_message_box_popup {
   border-top: 1px solid gray;
+}
+
+.deal-button {
+  margin-bottom: 12px;
+}
+
+.presentation-pic-container {
+  width: 75px;
+  height: 50px;
+  background-color: gray;
+  background-repeat: no-repeat;
+  object-fit: cover;
+  padding: 4px;
+  /* background-image: url('https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg'); */
+}
+.presentation-pic-container > img {
+  width: 75px;
+  height: 50px;
+  object-fit: fill;
+  background-repeat: no-repeat;
+}
+
+
+.send-message-container {
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.chat-field-container {
+  width: 100%;
+  background-color: #dadde2;
+  height: 25px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 25px;
+}
+.chat-field {
+  background-color: transparent;
+  width: 100%;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  margin: auto;
+  font-size: 14px;
+}
+.chat-field:focus {
+  outline: none;
+  border: none;
+  text-decoration: none;
+}
+.send-message-icon {
+  width: 2px;
+  height: 2px;
+  /* font-size: 50px; */
+}
+
+
+.interact-box {
+  width: 100%;
+  height: auto;
+  /* padding-bottom: 12px; */
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.message-receive {
+  background-color: rgb(220, 220, 220);
 }
