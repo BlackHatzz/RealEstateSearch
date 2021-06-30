@@ -70,9 +70,11 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
     setInput("");
   };
   const handleDeal = () => {
+    setBooktrigger(false);
     setDealtrigger((value) => !value);
   };
   const handleBook = () => {
+    setDealtrigger(false);
     setBooktrigger((value) => !value);
   };
   return (

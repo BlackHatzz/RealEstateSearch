@@ -332,4 +332,5 @@ option {
 }
 .chat_window_container_message_box_popup {
   border-top: 1px solid gray;
+  /* position: absolute; */
 }
