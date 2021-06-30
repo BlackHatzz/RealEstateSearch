@@ -186,6 +186,13 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                       )}
                     </Formik>
                   )}
+                  {booktrigger && (
+                  <Appointment
+                    trigger={booktrigger}
+                    setTrigger={setBooktrigger}
+                    conversation={currentChat}
+                  />
+                )}
                 </div>
 
                 <div>
