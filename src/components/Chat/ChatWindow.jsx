@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import TelegramIcon from "@material-ui/icons/Telegram";
@@ -59,9 +60,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       })
       .finally(() => setSubmitting(false));
   }
-
-  const sendMessage = (e) => {
-    e.preventDefault();
+  function sendMessage({ input }, { setSubmitting, resetForm }) {
     fb.firestore
       .collection("conversations")
       .doc(currentChat.id)
@@ -70,9 +69,26 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
         message: input,
         sender: username,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+      })
+      .finally(() => {
+        setSubmitting(false);
+        resetForm();
       });
-    setInput("");
-  };
+  }
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   fb.firestore
+  //     .collection("conversations")
+  //     .doc(currentChat.id)
+  //     .collection("messages")
+  //     .add({
+  //       message: input,
+  //       sender: username,
+  //       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+  //     });
+  //   setInput("");
+  // };
+
   const handleDeal = () => {
     setBooktrigger(false);
     setDealtrigger((value) => !value);
@@ -134,7 +150,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                           />
                           <div className="deal-form-button">
                             <button
-                              // disabled={isSubmitting || !isValid}
+                              disabled={isSubmitting || !isValid}
                               type="submit"
                             >
                               Gửi
@@ -169,7 +185,8 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                       className="primary-box deal-button"
                       disabled={
                         currentChat.data.deal === "refused" ||
-                        currentChat.data.deal === "none"
+                        currentChat.data.deal === "none" ||
+                        currentChat.data.deal === "cancel"
                           ? false
                           : true
                       }
@@ -192,9 +209,68 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   </div>
                 )}
 
-                <form className="send-message-container" onSubmit={sendMessage}>
+                <Formik
+                  onSubmit={(values, { setSubmitting, resetForm }) => {
+                    fb.firestore
+                      .collection("conversations")
+                      .doc(currentChat.id)
+                      .collection("messages")
+                      .add({
+                        message: values.Input,
+                        sender: username,
+                        timestamp:
+                          firebase.firestore.FieldValue.serverTimestamp(),
+                      })
+                      .finally(() => {
+                        resetForm({ values: "" });
+                        setSubmitting(false);
+                      });
+                  }}
+                  // validateOnMount={true}
+                  initialValues={{ Input: "" }}
+                  validationSchema={Yup.object({
+                    Input: Yup.string().required().max(1000),
+                  })}
+                >
+                  {({
+                    isValid,
+                    isSubmitting,
+                    resetForm,
+                    handleSubmit,
+                    values,
+                    handleChange,
+                  }) => (
+                    <Form
+                      className="send-message-container"
+                      onSubmit={handleSubmit}
+                    >
+                      <div className="chat-field-container">
+                        <input
+                          maxlength="1000"
+                          className="chat-field"
+                          autocomplete="off"
+                          id="Input"
+                          value={values.Input}
+                          onChange={handleChange}
+                          type="text"
+                          placeholder="Gửi tin nhắn..."
+                        />
+                      </div>
+                      <button
+                        className="button_send_message"
+                        type="submit"
+                        disabled={isSubmitting || !isValid}
+                      >
+                        <TelegramIcon className="send-message-icon" />
+                      </button>
+                    </Form>
+                  )}
+                </Formik>
+
+                {/* <form className="send-message-container" onSubmit={sendMessage}>
                   <div className="chat-field-container">
                     <input
+                      required={true}
                       className="chat-field"
                       value={input}
                       onChange={(event) => {
@@ -208,7 +284,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   <button className="button_send_message" type="submit">
                     <TelegramIcon className="send-message-icon" />
                   </button>
-                </form>
+                </form> */}
               </div>
             </div>
           ) : (
