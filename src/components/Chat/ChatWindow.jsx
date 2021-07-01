@@ -60,34 +60,6 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       })
       .finally(() => setSubmitting(false));
   }
-  function sendMessage({ input }, { setSubmitting, resetForm }) {
-    fb.firestore
-      .collection("conversations")
-      .doc(currentChat.id)
-      .collection("messages")
-      .add({
-        message: input,
-        sender: username,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .finally(() => {
-        setSubmitting(false);
-        resetForm();
-      });
-  }
-  // const sendMessage = (e) => {
-  //   e.preventDefault();
-  //   fb.firestore
-  //     .collection("conversations")
-  //     .doc(currentChat.id)
-  //     .collection("messages")
-  //     .add({
-  //       message: input,
-  //       sender: username,
-  //       timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-  //     });
-  //   setInput("");
-  // };
 
   const handleDeal = () => {
     setBooktrigger(false);
@@ -268,25 +240,6 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                     </Form>
                   )}
                 </Formik>
-
-                {/* <form className="send-message-container" onSubmit={sendMessage}>
-                  <div className="chat-field-container">
-                    <input
-                      required={true}
-                      className="chat-field"
-                      value={input}
-                      onChange={(event) => {
-                        setInput(event.target.value);
-                      }}
-                      type="text"
-                      placeholder="Gửi tin nhắn..."
-                    />
-                  </div>
-
-                  <button className="button_send_message" type="submit">
-                    <TelegramIcon className="send-message-icon" />
-                  </button>
-                </form> */}
               </div>
             </div>
           ) : (
