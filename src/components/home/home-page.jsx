@@ -15,10 +15,15 @@ class HomePage extends Component {
     isTooltipShown: false,
     searchText: "",
     items: [],
+    fromAreaText: null,
+    toAreaText: null,
+    // type 0: is drop down menu
+    // type 1: from to field
     filters: [
       {
         key: 0,
         filterName: "Loại nhà đất",
+        typeKey: 0,
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
@@ -30,40 +35,46 @@ class HomePage extends Component {
       {
         key: 1,
         filterName: "Diện tích",
+        typeKey: 1,
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 50" + Constants.squareMeter },
-          {
-            key: 2,
-            text:
-              "50" + Constants.squareMeter + " - 100" + Constants.squareMeter,
-          },
-          {
-            key: 3,
-            text: "100" + Constants.squareMeter + "- 200" + Constants.squareMeter,
-          },
-          {
-            key: 4,
-            text: "200" + Constants.squareMeter + "- 300" + Constants.squareMeter,
-          },
-          {
-            key: 5,
-            text: "300" + Constants.squareMeter + "- 400" + Constants.squareMeter,
-          },
-          {
-            key: 6,
-            text: "400" + Constants.squareMeter + "- 500" + Constants.squareMeter,
-          },
-          {
-            key: 7,
-            text: "> 500" + Constants.squareMeter,
-          },
+          // { key: 1, text: "< 50" + Constants.squareMeter },
+          // {
+          //   key: 2,
+          //   text:
+          //     "50" + Constants.squareMeter + " - 100" + Constants.squareMeter,
+          // },
+          // {
+          //   key: 3,
+          //   text:
+          //     "100" + Constants.squareMeter + "- 200" + Constants.squareMeter,
+          // },
+          // {
+          //   key: 4,
+          //   text:
+          //     "200" + Constants.squareMeter + "- 300" + Constants.squareMeter,
+          // },
+          // {
+          //   key: 5,
+          //   text:
+          //     "300" + Constants.squareMeter + "- 400" + Constants.squareMeter,
+          // },
+          // {
+          //   key: 6,
+          //   text:
+          //     "400" + Constants.squareMeter + "- 500" + Constants.squareMeter,
+          // },
+          // {
+          //   key: 7,
+          //   text: "> 500" + Constants.squareMeter,
+          // },
         ],
       },
       {
         key: 2,
         filterName: "Khu vực",
+        typeKey: 0,
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
@@ -92,6 +103,7 @@ class HomePage extends Component {
       {
         key: 3,
         filterName: "Mức giá",
+        typeKey: 0,
         title: "Tất cả",
         options: [
           { key: 0, text: "Tất cả" },
@@ -171,7 +183,7 @@ class HomePage extends Component {
       );
   }
 
-  handleFilter = (filterKey, itemKey, title) => {
+  handleFilter = (filterKey, filterTypeKey, itemKey, title) => {
     console.log("inssss" + filterKey + itemKey + title);
     switch (filterKey) {
       case 0:
@@ -182,6 +194,31 @@ class HomePage extends Component {
         // console.log(this.state.type);
         break;
       case 1:
+        const split = title.split("-");
+        console.log(split);
+        var from = 0;
+        var to = 0;
+        // get number only
+        // 2 loop times is maximum
+        for(var i = 0; i < split.length; i++) {
+          const number = split[i].match(/\d+/)[0];
+          // console.log(number);
+          if(i == 0) {
+            from = parseInt(number);
+          } else if(i == 1) {
+            to = parseInt(number);
+          }
+        }
+        this.state.fromAreaText = from.toString();
+        this.state.toAreaText = to.toString();
+        console.log("afterrr");
+        console.log(this.state.fromAreaText);
+        console.log(this.state.toAreaText);
+
+        // console.log("after");
+        // console.log(from);
+        // console.log(to);
+
         this.state.area = {
           selectedKey: itemKey,
           text: title,
@@ -251,14 +288,15 @@ class HomePage extends Component {
                 "/" +
                 this.state.type.selectedKey +
                 "/" +
-                this.state.area.selectedKey +
+                this.state.fromArea + "-" + this.state.toArea +
+                // this.state.area.selectedKey +
                 "/" +
                 this.state.address.selectedKey +
                 "/" +
                 this.state.price.selectedKey,
             }}
           ></Link>
-            <AiOutlineSearch className="home-search-icon" />
+          <AiOutlineSearch className="home-search-icon" />
         </button>
         // <button className="home-search-button">
         //   <Link
@@ -300,7 +338,8 @@ class HomePage extends Component {
           "/" +
           this.state.type.selectedKey +
           "/" +
-          this.state.area.selectedKey +
+          this.state.fromAreaText + "-" + this.state.toAreaText +
+          // this.state.area.selectedKey +
           "/" +
           this.state.address.selectedKey +
           "/" +
@@ -323,7 +362,7 @@ class HomePage extends Component {
           this.state.price.selectedKey
       );
     }
-  }
+  };
 
   render() {
     return (
@@ -375,12 +414,18 @@ class HomePage extends Component {
                     key={filter.key}
                     handler={this.handleFilter}
                     filter={filter}
+                  />
+                ))}
+                {/* <HomeFilterBox
+                    key={filter.key}
+                    handler={this.handleFilter}
+                    filter={filter}
                     // filterKey={filter.key}
                     // filterName={filter.filterName}
                     // title={filter.title}
                     // options={filter.options}
-                  />
-                ))}
+                  /> */}
+
                 {/* <HomeFilterBox title="Loại nhà đất" />
                 <HomeFilterBox title="Khu vực" /> */}
                 {/* <HomeFilterBox title="Mức giá" />

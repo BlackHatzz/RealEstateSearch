@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import "../global/shared.css";
+import FromToMenuFilter from "./FromToMenuFilter";
 import HomeFilterMenuOption from "./home-filter-menu-option";
 
 class HomeFilterBox extends Component {
@@ -25,7 +26,31 @@ class HomeFilterBox extends Component {
       title: title,
       showMenu: false,
     });
-    this.props.handler(this.props.filter.key, itemKey, title);
+    this.props.handler(this.props.filter.key, this.props.filter.typeKey, itemKey, title);
+  };
+
+  renderFilterMenu = () => {
+    switch (this.props.filter.typeKey) {
+      case 0:
+        console.log("normal");
+        return (
+          <HomeFilterMenuOption
+            handler={this.handleUpdateTitle}
+            options={this.props.filter.options}
+          />
+        );
+      case 1:
+        console.log("special");
+        return(
+          <FromToMenuFilter
+          handler={this.handleUpdateTitle}
+          options={this.props.filter.options}
+        />
+        );
+
+      default:
+        break;
+    }
   };
 
   render() {
@@ -47,11 +72,14 @@ class HomeFilterBox extends Component {
         </div>
         {/* <HomeFilterMenuOption /> */}
         {this.state.showMenu ? (
+          this.renderFilterMenu()
+        ) : null}
+        {/* {this.state.showMenu ? (
           <HomeFilterMenuOption
             handler={this.handleUpdateTitle}
             options={this.props.filter.options}
           />
-        ) : null}
+        ) : null} */}
       </div>
     );
   }

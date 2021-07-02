@@ -17,8 +17,8 @@ class SearchResultPage extends Component {
 
     var fromPrice = 0.0; // million vnd
     var toPrice = 0.0;
-    var fromArea = 0; // million / m2
-    var toArea = 0;
+    var fromArea = null; // million / m2
+    var toArea = null;
 
     // if (this.props.match.params.area == 0) {
     //   fromArea = null;
@@ -29,42 +29,56 @@ class SearchResultPage extends Component {
     // }
 
     switch (this.props.match.params.area) {
-      case "0":
+      case "-1":
         fromArea = null;
         toArea = null;
         break;
-      case "1":
-        fromArea = 0;
-        toArea = 50;
-        break;
-      case "2":
-        fromArea = 50;
-        toArea = 100;
-        break;
-      case "3":
-        fromArea = 100;
-        toArea = 200.0;
-        break;
-      case "4":
-        fromArea = 200;
-        toArea = 300;
-        break;
-      case "5":
-        fromArea = 300;
-        toArea = 400;
-        break;
-      case "6":
-        fromArea = 400;
-        toArea = 500;
-        break;
-      case "7":
-        fromArea = 500;
-        toArea = 1000;
-        break;
+      // case "1":
+      //   fromArea = 0;
+      //   toArea = 50;
+      //   break;
+      // case "2":
+      //   fromArea = 50;
+      //   toArea = 100;
+      //   break;
+      // case "3":
+      //   fromArea = 100;
+      //   toArea = 200.0;
+      //   break;
+      // case "4":
+      //   fromArea = 200;
+      //   toArea = 300;
+      //   break;
+      // case "5":
+      //   fromArea = 300;
+      //   toArea = 400;
+      //   break;
+      // case "6":
+      //   fromArea = 400;
+      //   toArea = 500;
+      //   break;
+      // case "7":
+      //   fromArea = 500;
+      //   toArea = 1000;
+      //   break;
 
       default:
-        fromArea = null;
-        toArea = null;
+        // 2 elements is max
+        const split = this.props.match.params.area.toString().split("-");
+        
+        if(split[0] !== "null" || split[1] !== "null") {
+          for(var i = 0; i < split.length; i++) {
+            const numberString = split[i].match(/\d+/)[0];
+            if(i == 0) {
+              fromArea = parseInt(numberString);
+            } else if(i == 1) {
+              toArea = parseInt(numberString);
+            }
+          }
+        }
+        
+        // fromArea = null;
+        // toArea = null;
         break;
     }
 
