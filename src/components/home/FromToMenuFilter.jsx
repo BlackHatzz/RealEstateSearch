@@ -63,7 +63,7 @@ class FromToMenuFilter extends Component {
         <div>
           <div className="noselect home-filter-from-to-option">
             <form className="home-filter-from-to-container">
-              <span className="title">Từ</span>
+              <span className="title">Tối thiểu</span>
               <div className="home-filter-input-container">
                 <input
                   id="fromInput"
@@ -71,7 +71,7 @@ class FromToMenuFilter extends Component {
                   placeholder={Constants.squareMeter}
                 />
               </div>
-              <span className="title">Tới</span>
+              <span className="title">Tối đa</span>
               <div className="home-filter-input-container">
                 <input
                   id="toInput"

@@ -196,24 +196,31 @@ class HomePage extends Component {
       case 1:
         const split = title.split("-");
         console.log(split);
-        var from = 0;
-        var to = 0;
+        var from = null;
+        var to = null;
         // get number only
         // 2 loop times is maximum
-        for(var i = 0; i < split.length; i++) {
-          const number = split[i].match(/\d+/)[0];
-          // console.log(number);
-          if(i == 0) {
-            from = parseInt(number);
-          } else if(i == 1) {
-            to = parseInt(number);
+        console.log("first split");
+        console.log(split);
+        for (var i = 0; i < split.length; i++) {
+          if(split[i].match(/\d+/) != null) {
+            if (split[i].match(/\d+/).length > 0) {
+              const number = split[i].match(/\d+/)[0];
+              // console.log(number);
+              if (i == 0) {
+                from = parseInt(number);
+              } else if (i == 1) {
+                to = parseInt(number);
+              }
+            }
           }
+          
         }
-        this.state.fromAreaText = from.toString();
-        this.state.toAreaText = to.toString();
+        this.state.fromAreaText = (from == null) ? "null" : from.toString();
+        this.state.toAreaText = (to == null ) ? "null" : to.toString();
         console.log("afterrr");
-        console.log(this.state.fromAreaText);
-        console.log(this.state.toAreaText);
+        // console.log(this.state.fromAreaText);
+        // console.log(this.state.toAreaText);
 
         // console.log("after");
         // console.log(from);
@@ -288,7 +295,9 @@ class HomePage extends Component {
                 "/" +
                 this.state.type.selectedKey +
                 "/" +
-                this.state.fromArea + "-" + this.state.toArea +
+                this.state.fromArea +
+                "-" +
+                this.state.toArea +
                 // this.state.area.selectedKey +
                 "/" +
                 this.state.address.selectedKey +
@@ -338,7 +347,9 @@ class HomePage extends Component {
           "/" +
           this.state.type.selectedKey +
           "/" +
-          this.state.fromAreaText + "-" + this.state.toAreaText +
+          this.state.fromAreaText +
+          "-" +
+          this.state.toAreaText +
           // this.state.area.selectedKey +
           "/" +
           this.state.address.selectedKey +

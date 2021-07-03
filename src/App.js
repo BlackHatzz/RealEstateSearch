@@ -44,7 +44,15 @@ const App = () => {
           path="/search-result-page/:searchtext/:type/:area/:adress/:price"
           // component={SearchResultPage}
           render={(props) => (
-            <SearchResultPage key={props.match.params.searchtext} {...props} />
+            <SearchResultPage
+              key={
+                // props.match.params.searchtext,
+                // props.match.params.type,
+                // props.match.params.area,
+                props.location.key
+              }
+              {...props}
+            />
           )}
         ></Route>
         <Route
@@ -55,8 +63,6 @@ const App = () => {
         <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
-    
-
   ) : (
     <div>Loading ...</div>
   );

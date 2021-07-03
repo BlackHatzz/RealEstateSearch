@@ -66,7 +66,7 @@ class SearchResultPage extends Component {
         // 2 elements is max
         const split = this.props.match.params.area.toString().split("-");
         
-        if(split[0] !== "null" || split[1] !== "null") {
+        if(split[0] !== "null" && split[1] !== "null") {
           for(var i = 0; i < split.length; i++) {
             const numberString = split[i].match(/\d+/)[0];
             if(i == 0) {
@@ -75,6 +75,10 @@ class SearchResultPage extends Component {
               toArea = parseInt(numberString);
             }
           }
+        } else if(split[0] !== "null" && split[1] === "null") {
+          fromArea = parseInt(split[1]);
+        } else if(split[0] === "null" && split[1] !== "null") {
+          toArea = parseInt(split[1]);
         }
         
         // fromArea = null;
