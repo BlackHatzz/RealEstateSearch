@@ -2,6 +2,7 @@ import firebase from "firebase/app"; // <-- This must be first
 import "firebase/auth";
 import "firebase/storage";
 import "firebase/firestore";
+import "firebase/messaging";
 
 try {
   firebase.initializeApp({
@@ -20,13 +21,41 @@ try {
   }
 }
 
-// Passing off firebase.auth() instead of firebase.auth
-// allows us to share the same instance of Firebase throughout
-// the entire app whenever we import it from here.
+const messaging = firebase.messaging();
 
 export const fb = {
   auth: firebase.auth(),
   storage: firebase.storage(),
   firestore: firebase.firestore(),
-  provider: new firebase.auth.GoogleAuthProvider(),
+  googleAuth: new firebase.auth.GoogleAuthProvider(),
+  messaging: firebase.messaging(),
 };
+
+export const getToken = (setTokenFound) => {
+  return messaging
+    .getToken({
+      vapidKey:
+        "BLJINxH_ZrHfiPYaPnJza3ULLB2_Irpmt2F7EnZg4ifFWnxYuaPD1nbS2rW8bv01bAWTXYXru9ULDJTZAutSbyI",
+    })
+    .then((currentToken) => {
+      if (currentToken) {
+        console.log("current token for client: ", currentToken);
+        setTokenFound(true);
+      } else {
+        console.log(
+          "No registration token available. Request permission to generate one."
+        );
+        setTokenFound(false);
+      }
+    })
+    .catch((err) => {
+      console.log("An error occurred while retrieving token. ", err);
+    });
+};
+
+export const onMessageListener = () =>
+  new Promise((resolve) => {
+    messaging.onMessage((payload) => {
+      resolve(payload);
+    });
+  });

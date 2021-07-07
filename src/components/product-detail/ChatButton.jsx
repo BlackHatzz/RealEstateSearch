@@ -9,6 +9,12 @@ export const ChatButton = (props) => {
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
     const buyername = fb.auth.currentUser.displayName;
+    const address =
+      props.product.streetName +
+      ", Phường " +
+      props.product.wardName +
+      ", " +
+      props.product.disName;
 
     const reqUrl = `http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/conversations/messages?%20realEstateId=${props.product.id}&buyerId=${uuid}&sellerId=${props.product.sellerId}`;
     fetch(reqUrl)
@@ -26,6 +32,7 @@ export const ChatButton = (props) => {
             lastvisit: currentDate.toUTCString(),
             title: props.product.title,
             realId: props.product.id,
+            address: address,
             seller: props.product.sellerName,
             sellerId: props.product.sellerId,
             buyerId: uuid,

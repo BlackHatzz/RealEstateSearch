@@ -91,6 +91,24 @@ export const MessageContainer = ({ conversation }) => {
             appointment: "cancel",
           });
         });
+
+      fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("appointments")
+        .doc(bookId)
+        .update({
+          status: "cancel",
+        });
+
+      fb.firestore
+        .collection("users")
+        .doc(conversation.data.sellerId)
+        .collection("appointments")
+        .doc(bookId)
+        .update({
+          status: "cancel",
+        });
     }
   };
   const handleCancelDeal = () => {
