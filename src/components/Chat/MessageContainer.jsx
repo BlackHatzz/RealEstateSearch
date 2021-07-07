@@ -91,31 +91,79 @@ export const MessageContainer = ({ conversation }) => {
             appointment: "cancel",
           });
         });
+
+      fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("appointments")
+        .doc(bookId)
+        .update({
+          status: "cancel",
+        });
+
+      fb.firestore
+        .collection("users")
+        .doc(conversation.data.sellerId)
+        .collection("appointments")
+        .doc(bookId)
+        .update({
+          status: "cancel",
+        });
     }
   };
+  const handleCancelDeal = () => {
+    if (dealId) {
+      fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .collection("messages")
+        .doc(dealId)
+        .update({
+          status: "cancel",
+        })
+        .then(() => {
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            deal: "cancel",
+          });
+        });
+    }
+  };
+
   return (
     <div className="chat_window_container_message_box_display" ref={messageEl}>
       {messages.map((message) => (
         <div
-          className={`message ${message.sender === username ? "message_send" : "message-receive"}`}
+          className={`message ${
+            message.sender === username ? "message_send" : "message-receive"
+          }`}
         >
           {message.message && <p>{message.message}</p>}
           {message.deal && (
             <div className="deal_message">
-              Thỏa thuận
-              <p>giá {message.deal} tỷ</p>
+              <p>Thỏa thuận</p>
+              <p>Giá {message.deal} tỷ</p>
               {role === "buyer" && (
                 <div>
-                  {message.status === "pending" && <div>đang chờ trả lời</div>}
-                  {message.status === "accepted" && <div>đã chấp nhận</div>}
-                  {message.status === "refused" && <div>đã từ chối</div>}
+                  {message.status === "pending" && (
+                    <div className="buyer-deal-message">
+                      <p>đang chờ trả lời</p>
+                      <button onClick={handleCancelDeal}>Hủy</button>
+                    </div>
+                  )}
+                  {message.status === "accepted" && (
+                    <div className="buyer-deal-message">
+                      <p>đã được chấp nhận</p>
+                      <button onClick={handleCancelDeal}>Hủy</button>
+                    </div>
+                  )}
+                  {message.status === "refused" && <div>đã bị từ chối</div>}
                   {message.status === "cancel" && <div>đã hủy</div>}
                 </div>
               )}
               {role === "seller" && (
-                <div>
+                <div className="seller-deal-message">
                   {message.status === "pending" && (
-                    <div>
+                    <div className="seller-deal-message-pending-button">
                       <button onClick={handleAccept}>đồng ý</button>
                       <button onClick={handleRefuse}>từ chối</button>
                     </div>
@@ -132,9 +180,13 @@ export const MessageContainer = ({ conversation }) => {
               {role === "buyer" && (
                 <div>
                   {message.status === "upcoming" && (
-                    <div>
+                    <div className="buyer-appointment-message-upcoming">
                       <p>Lịch hẹn sắp tới</p>
-                      {moment(message.appointment).locale("vi").format("LLLL")}
+                      <p>
+                        {moment(message.appointment)
+                          .locale("vi")
+                          .format("LLLL")}
+                      </p>
                       <button onClick={handelCancelAppointment}>Hủy</button>
                     </div>
                   )}
@@ -160,7 +212,9 @@ export const MessageContainer = ({ conversation }) => {
           )}
           <span
             className={`message_name ${
-              message.sender === username ? "message_name_send" : "message_name_receive"
+              message.sender === username
+                ? "message_name_send"
+                : "message_name_receive"
             }`}
           >
             {message.sender}

@@ -16,10 +16,9 @@ export const Login = () => {
     fb.auth
       .signInWithEmailAndPassword(email, password)
       .then((res) => {
-        console.log(res.user.uid);
         if (!res.user) {
           setServerError(
-            "We're having trouble logging you in. Please try again."
+            "Đã xảy ra lỗi trong lúc đăng nhập, xin vui lòng thử lại sau"
           );
         }
         // dispatch({
@@ -29,11 +28,11 @@ export const Login = () => {
       })
       .catch((err) => {
         if (err.code === "auth/wrong-password") {
-          setServerError("Invalid credentials");
+          setServerError("Sai mật khẩu");
         } else if (err.code === "auth/user-not-found") {
-          setServerError("No account for this email");
+          setServerError("Email chưa đăng ký tài khoản");
         } else {
-          setServerError("Something went wrong :(");
+          setServerError("Đã xảy ra lỗi :(");
         }
       })
       .finally(() => setSubmitting(false));
@@ -51,10 +50,18 @@ export const Login = () => {
         >
           {({ isValid, isSubmitting }) => (
             <Form>
-              <h2 className="label">Email</h2>  
-              <FormField name="email" type="email" placeholder="Nhập email của bạn..."/>
+              <h2 className="label">Email</h2>
+              <FormField
+                name="email"
+                type="email"
+                placeholder="Nhập email của bạn..."
+              />
               <h2 className="label">Mật Khẩu</h2>
-              <FormField name="password" type="password" placeholder="Nhập mật khẩu của bạn..." />
+              <FormField
+                name="password"
+                type="password"
+                placeholder="Nhập mật khẩu của bạn..."
+              />
 
               <div className="auth-link-container">
                 Bạn chưa có tài khoản?{" "}
@@ -66,7 +73,11 @@ export const Login = () => {
                 </span>
               </div>
 
-              <button className="login-btn" type="submit" disabled={!isValid || isSubmitting}>
+              <button
+                className="login-btn"
+                type="submit"
+                disabled={!isValid || isSubmitting}
+              >
                 Đăng Nhập
               </button>
             </Form>

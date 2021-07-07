@@ -9,6 +9,8 @@ import firebase from "firebase";
 
 function Appointment({ setTrigger, conversation }) {
   const username = fb.auth.currentUser.displayName;
+  const uuid = fb.auth.currentUser.uid;
+  const currentDate = new Date();
   const [bookId, setBookId] = useState();
   const [startDate, setStartDate] = useState(null);
   const [startTime, setStartTime] = useState("");
@@ -137,32 +139,70 @@ function Appointment({ setTrigger, conversation }) {
           },
           { merge: true }
         );
+
+        fb.firestore
+          .collection("users")
+          .doc(uuid)
+          .collection("appointments")
+          .doc(bookId)
+          .set(
+            {
+              buyerId: uuid,
+              sellerId: conversation.data.sellerId,
+              realId: conversation.data.realId,
+              status: "upcoming",
+              id: bookId,
+              date: date,
+            },
+            { merge: true }
+          );
+
+        fb.firestore
+          .collection("users")
+          .doc(conversation.data.sellerId)
+          .collection("appointments")
+          .doc(bookId)
+          .set(
+            {
+              buyerId: uuid,
+              sellerId: conversation.data.sellerId,
+              realId: conversation.data.realId,
+              status: "upcoming",
+              id: bookId,
+              date: date,
+            },
+            { merge: true }
+          );
+
         setTrigger((value) => !value);
+      })
+      .then(() => {
+        // fetch(
+        //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/appointments/create",
+        //   {
+        //     method: "POST",
+        //     headers: {
+        //       Accept: "application/json",
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       conversationId: conversation.id,
+        //       createAt: currentDate.toISOString(),
+        //       id: 0,
+        //       scheduleDate: startDate.toISOString(),
+        //       staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
+        //       status: "upcoming",
+        //     }),
+        //   }
+        // ).then((response) => {
+        //   console.log(response);
+        // });
       });
-    // fetch(
-    //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/appointments/create",
-    //   {
-    //     method: "POST",
-    //     headers: {
-    //       Accept: "application/json",
-    //       "Content-Type": "application/json",
-    //     },
-    //     body: JSON.stringify({
-    //       conversationId: conId.slice(3),
-    //       createAt: currentDate.toISOString(),
-    //       id: 0,
-    //       scheduleDate: startDate.toISOString(),
-    //       staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
-    //       status: "upcoming",
-    //     }),
-    //   }
-    // ).then(() => {
-    //   props.setTrigger((value) => !value);
-    // });
   };
   return (
     <div className="appointment">
       <form onSubmit={handleAppointmentSubmit} className="bookForm">
+        <p>Đặt lịch hẹn</p>
         <DatePicker
           renderCustomHeader={({
             date,
@@ -250,15 +290,15 @@ function Appointment({ setTrigger, conversation }) {
           </select>
         )}
 
-        <div>
-          <button type="submit">đặt</button>
+        <div className="deal-form-button">
+          <button type="submit">Đặt</button>
           <button
             type="button"
             onClick={() => {
               setTrigger((value) => !value);
             }}
           >
-            hủy
+            Hủy
           </button>
         </div>
       </form>

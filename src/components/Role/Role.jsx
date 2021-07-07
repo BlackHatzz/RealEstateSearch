@@ -1,27 +1,42 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../ChatContext";
+import "./role.css";
 export const Role = () => {
   const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
+  let history = useHistory();
   return (
-    <div>
-      select role
-      <Link
-        to={{
-          pathname: "/",
-        }}
-        onClick={updateBuyerRole}
-      >
-        <div>Buyer</div>
-      </Link>
-      <Link
-        to={{
-          pathname: "/sell",
-        }}
-        onClick={updateSellerRole}
-      >
-        <div>Seller</div>
-      </Link>
+    <div className="role">
+      <h2>Bạn muốn</h2>
+
+      <div className="role-selection">
+        <div
+          className="role-button"
+          onClick={() => {
+            history.push("/");
+            updateBuyerRole();
+          }}
+        >
+          <img
+            src="https://www.zillowstatic.com/s3/homepage/static/Buy_a_home.png"
+            alt=""
+          />
+          <p>Mua nhà</p>
+        </div>
+        <div
+          className="role-button"
+          onClick={() => {
+            history.push("/sell");
+            updateSellerRole();
+          }}
+        >
+          <img
+            src="https://www.zillowstatic.com/s3/homepage/static/Sell_a_home.png"
+            alt=""
+          />
+          <p>Bán nhà</p>
+        </div>
+      </div>
     </div>
   );
 };

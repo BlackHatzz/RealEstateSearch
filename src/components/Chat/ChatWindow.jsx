@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
+import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import TelegramIcon from "@material-ui/icons/Telegram";
@@ -12,7 +13,7 @@ import { FormField } from "../FormField";
 import { v4 as uuidv4 } from "uuid";
 import Appointment from "./Appointment";
 import "../global/shared.css";
-import { BsChevronDoubleLeft } from "react-icons/bs";
+
 // import SendIcon from '@material-ui/icons/Send';
 
 export const ChatWindow = ({ onClickChat, conversations }) => {
@@ -60,19 +61,6 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       .finally(() => setSubmitting(false));
   }
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    fb.firestore
-      .collection("conversations")
-      .doc(currentChat.id)
-      .collection("messages")
-      .add({
-        message: input,
-        sender: username,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      });
-    setInput("");
-  };
   const handleDeal = () => {
     setBooktrigger(false);
     setDealtrigger((value) => !value);
@@ -87,8 +75,18 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       <div className="chat_window_container">
         <div className="chat_window_container_right_box">
           {currentChat ? (
-            <div key={currentChat.id} className="chat_window_container_message_box">
-              {/* <div className="chat_window_container_message_box_display_realestate">
+            <div
+              key={currentChat.id}
+              className="chat_window_container_message_box"
+            >
+              <div className="chat_window_container_message_box_user">
+                <p>
+                  {role === "buyer"
+                    ? currentChat.data.seller
+                    : currentChat.data.buyer}
+                </p>
+              </div>
+              <div className="chat_window_container_message_box_display_realestate">
                 <div className="chat_window_container_message_box_display_realestate_image">
                   <img
                     src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
@@ -106,67 +104,8 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 </div>
               </div>
               <MessageContainer conversation={currentChat} />
-              <div className="chat_window_container_message_box_popup">
-                {dealtrigger && (
-                  <Formik
-                    onSubmit={submitDeal}
-                    validateOnMount={true}
-                    initialValues={defaultValues}
-                    validationSchema={validationSchema}
-                  >
-                    {({ isValid, isSubmitting }) => (
-                      <Form>
-                        <p>Giá gốc: {currentChat.data.price} tỷ</p>
-                        <FormField name="deal" />
-                        <button
-                          disabled={isSubmitting || !isValid}
-                          type="submit"
-                        >
-                          gửi
-                        </button>
-                      </Form>
-                    )}
-                  </Formik>
-                )}
-                {booktrigger && (
-                  <Appointment
-                    trigger={booktrigger}
-                    setTrigger={setBooktrigger}
-                    conversation={currentChat}
-                  />
-                )}
-              </div>
-              <div className="chat_window_container_message_box_input">
-                <div>
-                  {role === "buyer" && (
-                    <div>
-                      <button
-                        disabled={
-                          currentChat.data.deal === "refused" ||
-                          currentChat.data.deal === "none"
-                            ? false
-                            : true
-                        }
-                        onClick={handleDeal}
-                        type="button"
-                      >
-                        Thỏa thuận
-                      </button>
-                      <button
-                        disabled={
-                          currentChat.data.appointment === "upcoming"
-                            ? true
-                            : false
-                        }
-                        onClick={handleBook}
-                      >
-                        Đặt lịch
-                      </button>
-                    </div>
-              </div> */}
-              <MessageContainer conversation={currentChat} dealId={dealId} />
-              <div className="chat_window_container_message_box_input">
-                <div>
+              {(dealtrigger || booktrigger) && (
+                <div className="chat_window_container_message_box_popup">
                   {dealtrigger && (
                     <Formik
                       onSubmit={submitDeal}
@@ -174,77 +113,133 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                       initialValues={defaultValues}
                       validationSchema={validationSchema}
                     >
-                      {({ isValid, isSubmitting }) => (
-                        <Form>
+                      {({ isValid, isSubmitting, errors }) => (
+                        <Form className="deal-form">
                           <p>Giá gốc: {currentChat.data.price} tỷ</p>
-                          <FormField name="deal" />
-                          <button
-                            disabled={isSubmitting || !isValid}
-                            type="submit"
-                          >
-                            gửi
-                          </button>
+                          <FormField
+                            name="deal"
+                            placeholder={currentChat.data.price}
+                          />
+                          <div className="deal-form-button">
+                            <button
+                              disabled={isSubmitting || !isValid}
+                              type="submit"
+                            >
+                              Gửi
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setDealtrigger((value) => !value);
+                              }}
+                            >
+                              Hủy
+                            </button>
+                          </div>
                         </Form>
                       )}
                     </Formik>
                   )}
                   {booktrigger && (
-                  <Appointment
-                    trigger={booktrigger}
-                    setTrigger={setBooktrigger}
-                    conversation={currentChat}
-                  />
-                )}
-                </div>
 
-                <div>
-                  {role === "buyer" && (
-                    <div className="interact-box">
+                    <Appointment
+                      trigger={booktrigger}
+                      setTrigger={setBooktrigger}
+                      conversation={currentChat}
+                    />
+                  )}
+
+                </div>
+              )}
+
+              <div className="chat_window_container_message_box_input">
+                {role === "buyer" && (
+                  <div className="interact-box">
                     <button
                       className="primary-box deal-button"
                       disabled={
-                        currentChat.data.deal === "pending" ? true : false
+                        currentChat.data.deal === "refused" ||
+                        currentChat.data.deal === "none" ||
+                        currentChat.data.deal === "cancel"
+                          ? false
+                          : true
                       }
                       onClick={handleDeal}
                       type="button"
                     >
-                      {console.log(
-                        currentChat.data.deal === "pending" ? true : false
-                      )}
                       Thỏa thuận
                     </button>
                     <button
-                    className="primary-box deal-button"
-                        disabled={
-                          currentChat.data.appointment === "upcoming"
-                            ? true
-                            : false
-                        }
-                        onClick={handleBook}
-                      >
-                        Đặt lịch
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <form className="send-message-container" onSubmit={sendMessage}>
-                  <div className="chat-field-container">
-                    <input
-                      className="chat-field"
-                      value={input}
-                      onChange={(event) => {
-                        setInput(event.target.value);
-                      }}
-                      type="text"
-                      placeholder="Gửi tin nhắn..."
-                    />
+                      className="primary-box deal-button"
+                      disabled={
+                        currentChat.data.appointment === "upcoming"
+                          ? true
+                          : false
+                      }
+                      onClick={handleBook}
+                    >
+                      Đặt lịch
+                    </button>
                   </div>
+                )}
 
-                  <button className="button_send_message" type="submit">
-                    <TelegramIcon className="send-message-icon" />
-                  </button>
-                </form>
+                <Formik
+                  onSubmit={(values, { setSubmitting, resetForm }) => {
+                    fb.firestore
+                      .collection("conversations")
+                      .doc(currentChat.id)
+                      .collection("messages")
+                      .add({
+                        message: values.Input,
+                        sender: username,
+                        timestamp:
+                          firebase.firestore.FieldValue.serverTimestamp(),
+                      })
+                      .finally(() => {
+                        resetForm({ values: "" });
+                        setSubmitting(false);
+                      });
+                  }}
+                  // validateOnMount={true}
+                  initialValues={{ Input: "" }}
+                  validationSchema={Yup.object({
+                    Input: Yup.string().required().max(1000),
+                  })}
+                >
+                  {({
+                    isValid,
+                    isSubmitting,
+                    resetForm,
+                    handleSubmit,
+                    values,
+                    handleChange,
+                  }) => (
+                    <Form
+                      className="send-message-container"
+                      onSubmit={handleSubmit}
+                    >
+                      <div className="chat-field-container">
+                        <input
+                          maxlength="1000"
+                          className="chat-field"
+                          autocomplete="off"
+                          id="Input"
+                          value={values.Input}
+                          onChange={handleChange}
+                          type="text"
+                          placeholder="Gửi tin nhắn..."
+                        />
+                      </div>
+                      <button
+                        className="button_send_message"
+                        type="submit"
+                        disabled={isSubmitting || !isValid}
+                      >
+                        <TelegramIcon className="send-message-icon" />
+                      </button>
+                    </Form>
+                  )}
+                </Formik>
               </div>
             </div>
           ) : (
@@ -258,10 +253,14 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 key={conversation.id}
                 onClick={() => {
                   setCurrentChat(conversation);
+                  setBooktrigger(false);
+                  setDealtrigger(false);
                   // refesh item list
-                  const list = document.getElementsByClassName("right-content-container");
+                  const list = document.getElementsByClassName(
+                    "right-content-container"
+                  );
                   console.log("outtttt");
-                  for(var i = 0; i < list.length; i++) {
+                  for (var i = 0; i < list.length; i++) {
                     list[i].style.backgroundColor = "white";
                     console.log("yahooo");
                   }
