@@ -3,8 +3,12 @@ class Constants {
   // static host = "http://localhost:8080/";
   static host =
     "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
-  static getRealEstateRef =
-    Constants.host + "api/v1/realEstate/getRealEstateDetail";
+    static getRealEstateRef =
+    Constants.host + "api/v1/realEstate/getAllRealEstate";
+    static getRealEstateDetailRef =
+    Constants.host + "api/v1/realEstate/getRealEstateDetail/";
+  // static getRealEstateRef =
+  //   Constants.host + "api/v1/realEstate/getRealEstateDetail";
   static getRealEstateAssignStaffRef =
     Constants.host + "api/v1/realEstate/getRealEstateAssignStaff";
   static createTransactionRef =

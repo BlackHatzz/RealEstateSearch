@@ -9,11 +9,14 @@ import { FaBed, FaBath, FaBuilding, FaDoorOpen } from "react-icons/fa";
 import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { ChatButton } from "./ChatButton";
+import Constants from "../global/Constants";
 
 class ProductDetailPage extends Component {
   state = {
     isFullMode: false,
     desHeight: "96px",
+    product: null,
+    isLoaded: false,
   };
 
   switchToggle = () => {
@@ -33,7 +36,41 @@ class ProductDetailPage extends Component {
   componentDidMount() {
     console.log("detail");
     console.log(this.props.location.product);
+
+    const requestOptions = {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+      }),
+    };
+    console.log("zzzzzzzzzz");
+    console.log(this.props.location.product.id);
+
+    fetch(Constants.getRealEstateDetailRef + this.props.location.product.id.toString())
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("wwwwwwwwwwwwwww");
+
+          console.log(result);
+          this.setState({
+            product: result,
+            isLoaded: true,
+          });
+          console.log(this.state.product);
+        },
+        // Note: it's important to handle errors here
+        // instead of a catch() block so that we don't swallow
+        // exceptions from actual bugs in components.
+        (error) => {
+          // this.setState({
+          //   isLoaded: true,
+          //   error,
+          // });
+        }
+      );
   }
+
 
   render() {
     const product = this.props.location.product;
@@ -72,7 +109,7 @@ class ProductDetailPage extends Component {
                   {/*Hôm nay*/}
                 </div>
                 <div className="product-short-detail">
-                  Giá trung bình khu vực: {product.averagePrice} triệu/m²
+                  {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
                 </div>
 
                 <div className="divide"></div>
@@ -179,7 +216,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Hướng nhà:</span>
                         <span className="short-info-label2">
-                          {product.direction}
+                          {this.state.product == null ? null : this.state.product.direction}
                           {/*Đông Nam*/}
                         </span>
                       </div>
@@ -192,7 +229,8 @@ class ProductDetailPage extends Component {
                           Hướng ban công:
                         </span>
                         <span className="short-info-label2">
-                          {product.balconyDirection}
+                        {this.state.product == null ? null : this.state.product.balconyDirection}
+                          {/* {product.balconyDirection} */}
                           {/*Đông nam*/}
                         </span>
                       </div>
@@ -212,7 +250,7 @@ class ProductDetailPage extends Component {
                   streetName={product.streetName}
                   wardName={product.wardName}
                   disName={product.disName}
-                  facilities={product.facilities}
+                  facilities={this.state.product == null ? [] : this.state.product.facilities}
                 />
               </div>
 

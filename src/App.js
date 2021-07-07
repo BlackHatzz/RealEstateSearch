@@ -14,6 +14,8 @@ import ChatContext, { Context } from "./ChatContext";
 import { Role } from "./components/Role/Role";
 import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
+import ManagePost from "./components/Seller/ManagePost";
+
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -28,6 +30,7 @@ const App = () => {
   }, [authResolved, authUser, history]);
   return authResolved ? (
     <div className="app">
+      {/* <ManagePost /> */}
       {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/" component={HomePage} />
@@ -56,7 +59,7 @@ const App = () => {
           )}
         ></Route>
         <Route
-          path="/product-detail-page"
+          path="/product-detail-page/:id"
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>

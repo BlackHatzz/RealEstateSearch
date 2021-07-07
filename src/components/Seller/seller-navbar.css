@@ -1,0 +1,124 @@
+.seller-nav-bar-wrapper {
+    width: 100%;
+    height: 70px;
+    background-color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.seller-nav-bar-wrapper .seller-nav-bar-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: auto;
+    height: 100%;
+    background-color: inherit;
+}
+
+.seller-nav-bar-container .seller-nav-bar-item {
+    /* width: 300px; */
+    height: 100%;
+    background-color: inherit;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 12px;
+    padding-right: 12px;
+    cursor: pointer;
+}
+
+.seller-nav-bar-item .nav-bar-logo {
+    width: 200px;
+    height: 50px;
+    background-repeat: no-repeat;
+    object-fit: cover;
+    background-color: white;
+    /* background-image: url('https://i.ibb.co/MhLF1VS/abc.png'); */
+}
+.seller-nav-bar-logo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background-repeat: no-repeat;
+}
+
+
+.seller-nav-bar-item-horizontal {
+    height: 100%;
+    background-color: inherit;
+    /* display: flex;
+    flex-direction: columns;
+    align-items: center;
+    justify-content: flex-start; */
+}
+
+.seller-profile-pic {
+    width: 50px;
+    height: 50px;
+    background-color: gray;
+    object-fit: cover;
+    background-repeat: no-repeat;
+    border-radius: 25px;
+    margin-left: 10px;
+}
+.seller-profile-name-text {
+    font-size: 14px;
+    text-align: left;
+    padding-left: 8px;
+    width: 80px;
+}
+
+.seller-nav-bar-item .seller-nav-bar-item-text {
+    font-size: 14px;
+    text-align: center;
+}
+
+.seller-profile-menu-container {
+    width: 200px;
+    /* height: 80px; */
+    background-color: white;
+    position: relative;
+    border-radius: 6px;
+    border: 1px solid rgb(190, 190, 190);
+    left: -14px;
+    /* display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; */
+    padding: 0;
+}
+.seller-profile-menu-container > .seller-profile-menu-item {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.seller-profile-menu-container > .seller-profile-menu-item:hover {
+    background-color: #D8DADF;
+    cursor: pointer;
+}
+.seller-profile-menu-container > .seller-profile-menu-item > .icon {
+    color: black;
+    padding-left: 12px;
+}
+.seller-profile-menu-container > .seller-profile-menu-item .title {
+    padding-left: 12px;
+    font-size: 16px;
+    text-align: left;
+    color: black;
+}
+.seller-profile-menu-container > .divide {
+    width: 100%;
+    height: 1px;
+    background-color: rgb(190, 190, 190);
+    padding: 0;
+    margin: 0;
+}

@@ -5,8 +5,6 @@ import App from "./App";
 import "react-datepicker/dist/react-datepicker.css";
 import { BrowserRouter as Router } from "react-router-dom";
 import ChatContext from "./ChatContext";
-// import { StateProvider } from "./StateProvider";
-// import reducer, { initialState } from "./reducer";
 ReactDOM.render(
   <React.StrictMode>
     <ChatContext>

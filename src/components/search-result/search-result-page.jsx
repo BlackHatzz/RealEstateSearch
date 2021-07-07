@@ -138,10 +138,11 @@ class SearchResultPage extends Component {
       body: JSON.stringify({
         page: 0,
         search: this.props.match.params.searchtext,
-        fromPrice: fromPrice,
-        toPrice: toPrice,
-        fromArea: fromArea,
-        toArea: toArea,
+        disName: null,
+        minPrice: fromPrice,
+        maxPrice: toPrice,
+        minArea: fromArea,
+        maxArea: toArea,
         type:
           this.props.match.params.type == 0
             ? null
@@ -197,7 +198,7 @@ class SearchResultPage extends Component {
             key={item.id}
             className="link"
             to={{
-              pathname: "/product-detail-page",
+              pathname: "/product-detail-page/" + item.id,
               product: item,
             }}
           >
