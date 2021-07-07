@@ -253,6 +253,8 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 key={conversation.id}
                 onClick={() => {
                   setCurrentChat(conversation);
+                  setBooktrigger(false);
+                  setDealtrigger(false);
                   // refesh item list
                   const list = document.getElementsByClassName(
                     "right-content-container"
