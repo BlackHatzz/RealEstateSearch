@@ -14,13 +14,10 @@ import { Context } from "./ChatContext";
 import { Role } from "./components/Role/Role";
 import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
-<<<<<<< HEAD
 import ManagePost from "./components/Seller/ManagePost";
 
-=======
 import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
->>>>>>> 6930a528652eddc1f74ef7d5e2461d5300ecba66
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
