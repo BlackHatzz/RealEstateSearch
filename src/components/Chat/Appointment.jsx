@@ -199,6 +199,29 @@ function Appointment({ setTrigger, conversation }) {
         // });
       });
   };
+
+  const CustomTimeInput = ({ date, onChange }) => (
+    <div className="time-form">
+      {!!startDate &&
+        !!schedule &&
+        schedule[startDate.getDay()].map((e) => (
+          <div
+            onClick={() => {
+              setStartTime({ e });
+              console.log("h:" + startTime);
+            }}
+          >
+            <input
+              value={e}
+              name="time"
+              type="radio"
+              // onChange={(e) => startTime === e.target.value}
+            />
+            {e}
+          </div>
+        ))}
+    </div>
+  );
   return (
     <div className="appointment">
       <form onSubmit={handleAppointmentSubmit} className="bookForm">
@@ -270,9 +293,12 @@ function Appointment({ setTrigger, conversation }) {
             setStartDate(date);
             setStartTime("");
           }}
+          shouldCloseOnSelect={false}
+          showTimeInput
+          customTimeInput={<CustomTimeInput />}
         />
 
-        {!!startDate && (
+        {/* {!!startDate && (
           <select
             required={true}
             value={startTime}
@@ -288,7 +314,7 @@ function Appointment({ setTrigger, conversation }) {
                 <option value={e}>{e}</option>
               ))}
           </select>
-        )}
+        )} */}
 
         <div className="deal-form-button">
           <button type="submit">Đặt</button>

@@ -426,3 +426,6 @@ option {
   height: 20px;
   cursor: pointer;
 }
+.time-form {
+  display: flex;
+}
