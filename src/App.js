@@ -15,33 +15,34 @@ import { Role } from "./components/Role/Role";
 import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
 import ManagePost from "./components/Seller/ManagePost";
+import SellerDashboard from "./components/Seller/SellerDashboard"
 
-import { getToken, onMessageListener } from "./services";
+// import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
-  const [isTokenFound, setTokenFound] = useState(false);
-  getToken(setTokenFound);
+  // const [isTokenFound, setTokenFound] = useState(false);
+  // getToken(setTokenFound);
   const { role } = useContext(Context);
 
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/role" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/role" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
 
-  onMessageListener()
-    .then((payload) => {
-      console.log(payload);
-    })
-    .catch((err) => console.log("failed: ", err));
+  // onMessageListener()
+  //   .then((payload) => {
+  //     console.log(payload);
+  //   })
+  //   .catch((err) => console.log("failed: ", err));
 
   return authResolved ? (
     <div className="app">
-      {/* <ManagePost /> */}
-      {authUser && role && <ChatLauncher />}
+      <SellerDashboard />
+      {/* {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
@@ -75,7 +76,7 @@ const App = () => {
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
         <Route path="/chat-page" component={Chat} />
-      </Switch>
+      </Switch> */}
     </div>
   ) : (
     <div>Loading ...</div>
