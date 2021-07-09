@@ -44,6 +44,7 @@ const App = () => {
       <SellerDashboard />
       {/* {authUser && role && <ChatLauncher />}
       <Switch>
+      <Route exact path="/seller" component={SellerDashboard} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
         <Route exact path="/sell" component={Seller} />
