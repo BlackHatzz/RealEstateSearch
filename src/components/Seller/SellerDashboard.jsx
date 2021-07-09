@@ -13,6 +13,7 @@ import "../global/shared.css";
 import { fb } from "../../services/firebase";
 import Constants from "../global/Constants";
 import ManagePost from "./ManagePost";
+import SearchPost from "./SearchPost";
 import { useHistory } from "react-router-dom";
 import {
   BrowserRouter as Router,
@@ -35,6 +36,7 @@ const SellerDashboard = () => {
         />
       ),
       path: "/manage-post",
+      child: <div className="content-container"><ManagePost /></div>,
     },
     {
       key: 2,
@@ -46,6 +48,19 @@ const SellerDashboard = () => {
         />
       ),
       path: "/transaction-history",
+      child: <p>historyewew</p>,
+    },
+    {
+      key: 3,
+      title: "Search",
+      icon: (
+        <HistoryIcon
+          id={"seller-dashboard-icon3"}
+          className="seller-dashboard-el icon"
+        />
+      ),
+      path: "/search-post",
+      child: <SearchPost />,
     },
   ]);
 
@@ -103,28 +118,28 @@ const SellerDashboard = () => {
             </div>
 
             {items.map((item) => (
-             <Link
-             key={item.key}
-             onClick={() => handleSelectTab(item.key)}
-             className="link item"
-             to={item.path}
-           >
-             <div className="alone-selected-container">
-               <div
-                 id={"alone-selected" + item.key.toString()}
-                 className="alone-selected"
-               ></div>
-             </div>
-             <div id={"box" + item.key.toString()} className="link box">
-               {item.icon}
-               <span
-                 id={"seller-dashboard-title" + item.key.toString()}
-                 className="seller-dashboard-el"
-               >
-                 {item.title}
-               </span>
-             </div>
-           </Link>
+              <Link
+                key={item.key}
+                onClick={() => handleSelectTab(item.key)}
+                className="link item"
+                to={item.path}
+              >
+                <div className="alone-selected-container">
+                  <div
+                    id={"alone-selected" + item.key.toString()}
+                    className="alone-selected"
+                  ></div>
+                </div>
+                <div id={"box" + item.key.toString()} className="link box">
+                  {item.icon}
+                  <span
+                    id={"seller-dashboard-title" + item.key.toString()}
+                    className="seller-dashboard-el"
+                  >
+                    {item.title}
+                  </span>
+                </div>
+              </Link>
             ))}
 
             {/* <div onClick={this.handleSelectTab} className="item">
@@ -152,22 +167,25 @@ const SellerDashboard = () => {
             <SellerNavbar />
             <div className="divide"></div>
 
-            <div className="content-container">
+            {/* <div className="content-container"> */}
               {/* <ManagePost /> */}
 
               <Switch>
-                <Route
-                  key={1}
-                  path={"/manage-post"}
-                  children={() => <ManagePost />}
-                />
-                <Route
+                {items.map((item) => (
+                  <Route
+                    key={item.key}
+                    path={item.path}
+                    children={() => item.child}
+                  />
+                ))}
+
+                {/* <Route
                   key={2}
                   path={"/transaction-history"}
                   children={() => <p>history</p>}
-                />
+                /> */}
               </Switch>
-            </div>
+            {/* </div> */}
           </div>
         </Router>
       </div>

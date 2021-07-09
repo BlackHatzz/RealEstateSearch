@@ -1,5 +1,6 @@
 class Constants {
   static squareMeter = "m²";
+  static notFoundImageRef = "https://i.ibb.co/pfHbbcS/Screen-Shot-2021-06-27-at-09-06-47.png";
   // static host = "http://localhost:8080/";
   static host =
     "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
