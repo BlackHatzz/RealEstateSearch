@@ -11,7 +11,6 @@ export const ChatLauncher = () => {
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
-    console.log(role + "Id");
     const unsubscribe = fb.firestore
       .collection("conversations")
       .where(role + "Id", "==", uid)

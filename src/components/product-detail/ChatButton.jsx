@@ -11,7 +11,7 @@ export const ChatButton = (props) => {
     const buyername = fb.auth.currentUser.displayName;
     const address =
       props.product.streetName +
-      ", Phường " +
+      ", " +
       props.product.wardName +
       ", " +
       props.product.disName;

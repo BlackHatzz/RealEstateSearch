@@ -91,7 +91,7 @@ const BuyerNavbar = () => {
               <div className="notification-container">
                 <h3>Thông báo</h3>
                 <br></br>
-                {notifications.length &&
+                {notifications.length > 0 &&
                   notifications.map((notification) => (
                     <div
                       className="notification-item"

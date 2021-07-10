@@ -37,7 +37,7 @@ const Upcoming = () => {
                 <div className="schedule-list-item-date">
                   {moment(appointment.data.date).locale("vi").format("dddd") +
                     " " +
-                    moment(appointment.data.date).locale("vi").calendar()}
+                    moment(appointment.data.date).locale("vi").format("LL")}
                 </div>
                 <p className="schedule-list-item-fromnow">
                   {moment(appointment.data.date).fromNow()}
@@ -48,7 +48,10 @@ const Upcoming = () => {
                 <div className="schedule-time">
                   {"Lúc " + moment(appointment.data.date).format("LT")}
                 </div>
-                <div className="schedule-detail">Địa điểm</div>
+                <div className="schedule-detail">
+                  <p>Địa điểm: {appointment.data.address}</p>
+                  <p>Người mua : {appointment.data.buyer}</p>
+                </div>
               </div>
             </div>
           ))}

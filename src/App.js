@@ -2,7 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import AssignedPostPage from "./components/staff-assigned-post/assigned-post-page";
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
@@ -46,7 +46,9 @@ const App = () => {
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
         <Route exact path="/sell" component={Seller} />
-        <Route path="/login" component={Login} />
+        <Route path="/login">
+          {!!authUser ? <Redirect to="/role" /> : <Login />}
+        </Route>
         <Route path="/schedule" component={Schedule} />
         <Route path="/profile-page" component={ProfilePage} />
         <Route

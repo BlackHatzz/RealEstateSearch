@@ -29,6 +29,7 @@ export const fb = {
   firestore: firebase.firestore(),
   googleAuth: new firebase.auth.GoogleAuthProvider(),
   messaging: firebase.messaging(),
+  phoneProvider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
 };
 
 export const getToken = (setTokenFound) => {

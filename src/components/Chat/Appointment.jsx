@@ -16,6 +16,7 @@ function Appointment({ setTrigger, conversation }) {
   const [startTime, setStartTime] = useState("");
   const [weekdays, setWeekdays] = useState([7, 7, 7, 7, 7, 7, 7]); //0->6:sun->sat
   const [schedule, setSchedule] = useState([]);
+  const [myRef, setMyRef] = useState(false);
   const years = range(getYear(new Date()), getYear(new Date()) + 2, 1);
   const months = [
     "Tháng một",
@@ -41,7 +42,7 @@ function Appointment({ setTrigger, conversation }) {
     "18:00",
     "20:00",
   ];
-
+  const [dateformat, setDateformat] = useState("dd/MM/yyyy hh:mm aa");
   useEffect(() => {
     setBookId(uuidv4());
     if (conversation) {
@@ -126,6 +127,7 @@ function Appointment({ setTrigger, conversation }) {
       .collection("messages")
       .doc(bookId)
       .set({
+        type: "appointment",
         appointment: date,
         sender: username,
         status: "upcoming",
@@ -153,6 +155,11 @@ function Appointment({ setTrigger, conversation }) {
               status: "upcoming",
               id: bookId,
               date: date,
+              address: conversation.data.address,
+              seller: conversation.data.seller,
+              buyer: conversation.data.buyer,
+              dealprice: conversation.data.price,
+              title: conversation.data.title,
             },
             { merge: true }
           );
@@ -170,6 +177,11 @@ function Appointment({ setTrigger, conversation }) {
               status: "upcoming",
               id: bookId,
               date: date,
+              address: conversation.data.address,
+              seller: conversation.data.seller,
+              buyer: conversation.data.buyer,
+              dealprice: conversation.data.price,
+              title: conversation.data.title,
             },
             { merge: true }
           );
@@ -204,24 +216,29 @@ function Appointment({ setTrigger, conversation }) {
     <div className="time-form">
       {!!startDate &&
         !!schedule &&
-        schedule[startDate.getDay()].map((e) => (
-          <div
-            onClick={() => {
-              setStartTime({ e });
-              console.log("h:" + startTime);
-            }}
-          >
+        schedule[startDate.getDay()].map((time) => (
+          <div>
             <input
-              value={e}
+              value={time}
               name="time"
               type="radio"
-              // onChange={(e) => startTime === e.target.value}
+              onChange={(e) => {
+                onChange(e.target.value);
+                setStartTime(e.target.value);
+                setDateformat("dd/MM/yyyy hh:mm aa");
+              }}
+              checked={startTime === time}
             />
-            {e}
+            {time}
           </div>
         ))}
     </div>
   );
+
+  const closeCalendar = () => {
+    myRef.setOpen(false);
+  };
+
   return (
     <div className="appointment">
       <form onSubmit={handleAppointmentSubmit} className="bookForm">
@@ -283,7 +300,7 @@ function Appointment({ setTrigger, conversation }) {
           )}
           // excludeDates={[new Date(), subDays(new Date(), 1)]}
           required={true}
-          dateFormat="dd/MM/yyyy"
+          dateFormat={dateformat}
           placeholderText="Nhấn để chọn ngày"
           selected={startDate}
           minDate={addDays(new Date(), 1)}
@@ -292,12 +309,17 @@ function Appointment({ setTrigger, conversation }) {
           onChange={(date) => {
             setStartDate(date);
             setStartTime("");
+            setDateformat("dd/MM/yyyy");
           }}
           shouldCloseOnSelect={false}
           showTimeInput
           customTimeInput={<CustomTimeInput />}
-        />
-
+          ref={(r) => {
+            setMyRef(r);
+          }}
+        >
+          <button onClick={closeCalendar}>Đồng ý</button>
+        </DatePicker>
         {/* {!!startDate && (
           <select
             required={true}
@@ -317,7 +339,9 @@ function Appointment({ setTrigger, conversation }) {
         )} */}
 
         <div className="deal-form-button">
-          <button type="submit">Đặt</button>
+          <button type="submit" disabled={startTime === "" ? true : false}>
+            Đặt
+          </button>
           <button
             type="button"
             onClick={() => {
