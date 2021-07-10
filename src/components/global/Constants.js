@@ -17,6 +17,14 @@ class Constants {
   static getTransactionByUserId =
     Constants.host + "api/v1/transaction/getTransactionByUserId";
 
+    static getRealEstateRefBySellerId(sellerId, page) {
+      return Constants.host + "/api/v1/realEstate/getRealEstateBySellerId/" + sellerId.toString() + "/" + page.toString();
+    }
+
+    static getTheChosenBuyerByRealEstateRef(realEstateId) {
+      return Constants.host + "apis/v1/conversations/conversations?%20realEstateId=" + realEstateId.toString() + "&close%20sale=close%20sale";
+    }
+
   static googleAPIKey = "AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg";
   static geocodingRefWithSearchText(searchText) {
     return "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchText + "&key=" + Constants.googleAPIKey;

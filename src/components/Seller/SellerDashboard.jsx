@@ -69,7 +69,6 @@ const SellerDashboard = () => {
   }, []);
   useHistory().push("/manage-post");
   const handleSelectTab = (key) => {
-    console.log("handlllllle");
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");
     for (var i = 0; i < list.length; i++) {

@@ -11,7 +11,9 @@ import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
 import "../global/shared.css";
 import { fb } from "../../services/firebase";
+import Popup from "reactjs-popup";
 import Constants from "../global/Constants";
+import SuccessPopup from "./SuccessPopup";
 
 class ManagePost extends Component {
   state = {
@@ -121,7 +123,6 @@ class ManagePost extends Component {
     //     },
     //     (error) => {}
     //   );
-
     //https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=YOUR_API_KEY
     // fetch("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=1500&type=restaurant&keyword=cruise&key=" + Constants.googleAPIKey)
     //   .then((res) => res.json())
@@ -755,7 +756,7 @@ class ManagePost extends Component {
         <div className="row">
           <div className="col2">
             <h2 className="title">Địa chỉ</h2>
-            <div style={{display: "flex"}} className="input-container">
+            <div style={{ display: "flex" }} className="input-container">
               {/* <input
                       id="address-input"
                       onChange={this.handleChangeAddress}
@@ -840,449 +841,465 @@ class ManagePost extends Component {
           </div>
         </div>
 
-        <div className="row reverse-row">
-          <div
-            onClick={this.handleCreatePost}
-            className="noselect create-button"
-          >
-            &#65291;
-            <span>Tạo bài viết</span>
-          </div>
-        </div>
+        <Popup
+          ref={React.createRef()}
+          overlayStyle={{
+            backgroundColor: "rgba(10, 10, 10, 0.6)",
+          }}
+          modal
+          trigger={
+            <div className="row reverse-row">
+              <div
+                //   onClick={this.handleCreatePost}
+                className="noselect create-button"
+              >
+                &#65291;
+                <span>Tạo bài viết</span>
+              </div>
+            </div>
+          }
+        >
+          {(close) => (
+            <SuccessPopup
+              close={close}
+              title="Chúc Mừng! Bạn đã tạo bài viết thành công!"
+            />
+          )}
+        </Popup>
 
         <div style={{ height: "90px" }}></div>
       </React.Fragment>
     );
   }
-    // render() {
-    //   return (
-    //     <React.Fragment>
-    //       <div className="seller-wrapper">
-    //         <div className="left-container">
-    //           <div className="logo-container">
-    //             <div className="logo-box"></div>
-    //           </div>
+  // render() {
+  //   return (
+  //     <React.Fragment>
+  //       <div className="seller-wrapper">
+  //         <div className="left-container">
+  //           <div className="logo-container">
+  //             <div className="logo-box"></div>
+  //           </div>
 
-    //           <div className="item">
-    //             <div className="alone-selected-container">
-    //               <div className="alone-selected"></div>
-    //             </div>
-    //             <div className="box">
-    //               <PostAddIcon className="icon" />
-    //               <span>Manage Post</span>
-    //             </div>
-    //           </div>
+  //           <div className="item">
+  //             <div className="alone-selected-container">
+  //               <div className="alone-selected"></div>
+  //             </div>
+  //             <div className="box">
+  //               <PostAddIcon className="icon" />
+  //               <span>Manage Post</span>
+  //             </div>
+  //           </div>
 
-    //           <div className="item">
-    //             <div className="alone-selected-container">
-    //               <div className="alone-selected"></div>
-    //             </div>
-    //             <div className="box">
-    //               <HistoryIcon className="icon" />
-    //               <span>Trasaction History</span>
-    //             </div>
-    //           </div>
-    //         </div>
+  //           <div className="item">
+  //             <div className="alone-selected-container">
+  //               <div className="alone-selected"></div>
+  //             </div>
+  //             <div className="box">
+  //               <HistoryIcon className="icon" />
+  //               <span>Trasaction History</span>
+  //             </div>
+  //           </div>
+  //         </div>
 
-    //         <div className="right-container">
-    //           <SellerNavbar />
-    //           <div className="divide"></div>
+  //         <div className="right-container">
+  //           <SellerNavbar />
+  //           <div className="divide"></div>
 
-    //           <div className="content-container">
-    //             <div className="tab-title">Thông tin bài viết</div>
-    //             {/* kfqne;kf;qwej;gf
-    //               j;qewhjr;ogne;qorng;oq3bnro;g
-    //               ;kfqne;kf;qw
-    //               ej;gfj;qewhjr;ogne;qorng;
-    //               oq3bnro;g;kfqne;kf;qwej;gfj;qe
-    //               whjr;ogne;qorng;oq3bnro;g;kfqne;kf;qwe
-    //               j;gfj;qewhjr;ogne;qorng;oq3bnro;g;k
-    //               fqne;kf;qwej;gfj;qewhjr;ogne;qorng
-    //               ;oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;o
-    //               gne;qorng;oq3bnro;g;kfqne;kf;qwe
-    //               j;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
-    //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
-    //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;
-    //               kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;k
-    //               fqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kf
-    //               'qne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
-    //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqne;k
-    //               f;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfq
-    //               ;qewhjr;ogne;qorng;oq3b
-    //               nro;g;kfqne;kf;qwej;gfj;qew
-    //               hjr;ogne;qorng;
-    //               oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g; */}
+  //           <div className="content-container">
+  //             <div className="tab-title">Thông tin bài viết</div>
+  //             {/* kfqne;kf;qwej;gf
+  //               j;qewhjr;ogne;qorng;oq3bnro;g
+  //               ;kfqne;kf;qw
+  //               ej;gfj;qewhjr;ogne;qorng;
+  //               oq3bnro;g;kfqne;kf;qwej;gfj;qe
+  //               whjr;ogne;qorng;oq3bnro;g;kfqne;kf;qwe
+  //               j;gfj;qewhjr;ogne;qorng;oq3bnro;g;k
+  //               fqne;kf;qwej;gfj;qewhjr;ogne;qorng
+  //               ;oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;o
+  //               gne;qorng;oq3bnro;g;kfqne;kf;qwe
+  //               j;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
+  //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
+  //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;
+  //               kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;k
+  //               fqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kf
+  //               'qne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqn
+  //               e;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqne;k
+  //               f;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfq
+  //               ;qewhjr;ogne;qorng;oq3b
+  //               nro;g;kfqne;kf;qwej;gfj;qew
+  //               hjr;ogne;qorng;
+  //               oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g;kfqne;kf;qwej;gfj;qewhjr;ogne;qorng;oq3bnro;g; */}
 
-    //             {/* session 1 */}
-    //             <div style={{ height: "10px" }}></div>
-    //             <div className="row session-row">
-    //               <div className="manage-post-tag">
-    //                 <span>Thông tin cơ bản</span>
-    //               </div>
-    //               <div className="manage-post-right-arrow"></div>
-    //             </div>
+  //             {/* session 1 */}
+  //             <div style={{ height: "10px" }}></div>
+  //             <div className="row session-row">
+  //               <div className="manage-post-tag">
+  //                 <span>Thông tin cơ bản</span>
+  //               </div>
+  //               <div className="manage-post-right-arrow"></div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col1">
-    //                 <h2 className="title">Tiêu đề</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="title-input"
-    //                     placeholder="Nhập tiêu đề bài viết..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //             </div>
+  //             <div className="row">
+  //               <div className="col1">
+  //                 <h2 className="title">Tiêu đề</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="title-input"
+  //                     placeholder="Nhập tiêu đề bài viết..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col3">
-    //                 <h2 className="title">Giá tiền</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="price-input"
-    //                     placeholder="tỷ đồng"
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
+  //             <div className="row">
+  //               <div className="col3">
+  //                 <h2 className="title">Giá tiền</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="price-input"
+  //                     placeholder="tỷ đồng"
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
 
-    //               <div className="col3">
-    //                 <h2 className="title">Diện tích</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="area-input"
-    //                     placeholder="m2"
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //               <div className="col3">
-    //                 <h2 className="title">Chủ đầu tư</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="investor-input"
-    //                     placeholder="Tên chủ đầu tư"
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //             </div>
+  //               <div className="col3">
+  //                 <h2 className="title">Diện tích</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="area-input"
+  //                     placeholder="m2"
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //               <div className="col3">
+  //                 <h2 className="title">Chủ đầu tư</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="investor-input"
+  //                     placeholder="Tên chủ đầu tư"
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             {/* session 1 */}
-    //             <div style={{ height: "20px" }}></div>
-    //             <div className="row session-row">
-    //               <div className="manage-post-tag">
-    //                 <span>Thông tin bất động sản</span>
-    //               </div>
-    //               <div className="manage-post-right-arrow"></div>
-    //             </div>
+  //             {/* session 1 */}
+  //             <div style={{ height: "20px" }}></div>
+  //             <div className="row session-row">
+  //               <div className="manage-post-tag">
+  //                 <span>Thông tin bất động sản</span>
+  //               </div>
+  //               <div className="manage-post-right-arrow"></div>
+  //             </div>
 
-    //             <div className="row">
-    //               {/* <div className="col2">
-    //                 <h2 className="title">Loại bất động sản</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     placeholder="Loại bất động sản..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div> */}
-    //               <div className="col2">
-    //                 <h2 className="title">Loại bất động sản</h2>
-    //                 <div
-    //                   onClick={() => {
-    //                     this.setState({
-    //                       isRealEstateTypeMenuShow:
-    //                         !this.state.isRealEstateTypeMenuShow,
-    //                     });
-    //                   }}
-    //                   className="input-container read-only-field"
-    //                 >
-    //                   <input
-    //                     id="real-estate-type-input"
-    //                     readOnly
-    //                     placeholder="Chọn loại bất động sản..."
-    //                     type="text"
-    //                     className="input-field read-only-field"
-    //                   />
-    //                   {/* drop down when selected */}
-    //                   {this.renderMenu(
-    //                     this.state.isRealEstateTypeMenuShow,
-    //                     this.state.realEstateTypes,
-    //                     "real-estate-type-input"
-    //                   )}
-    //                 </div>
-    //               </div>
+  //             <div className="row">
+  //               {/* <div className="col2">
+  //                 <h2 className="title">Loại bất động sản</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     placeholder="Loại bất động sản..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div> */}
+  //               <div className="col2">
+  //                 <h2 className="title">Loại bất động sản</h2>
+  //                 <div
+  //                   onClick={() => {
+  //                     this.setState({
+  //                       isRealEstateTypeMenuShow:
+  //                         !this.state.isRealEstateTypeMenuShow,
+  //                     });
+  //                   }}
+  //                   className="input-container read-only-field"
+  //                 >
+  //                   <input
+  //                     id="real-estate-type-input"
+  //                     readOnly
+  //                     placeholder="Chọn loại bất động sản..."
+  //                     type="text"
+  //                     className="input-field read-only-field"
+  //                   />
+  //                   {/* drop down when selected */}
+  //                   {this.renderMenu(
+  //                     this.state.isRealEstateTypeMenuShow,
+  //                     this.state.realEstateTypes,
+  //                     "real-estate-type-input"
+  //                   )}
+  //                 </div>
+  //               </div>
 
-    //               <div className="col2">
-    //                 <h2 className="title">Dự án</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="project-input"
-    //                     placeholder="Nhập tên dự án..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //             </div>
+  //               <div className="col2">
+  //                 <h2 className="title">Dự án</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="project-input"
+  //                     placeholder="Nhập tên dự án..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col2">
-    //                 <h2 className="title">Hướng cửa chính</h2>
-    //                 <div
-    //                   onClick={() => {
-    //                     this.setState({
-    //                       isDoorDirectionMenuShown:
-    //                         !this.state.isDoorDirectionMenuShown,
-    //                     });
-    //                   }}
-    //                   className="input-container read-only-field"
-    //                 >
-    //                   <input
-    //                     id="door-direction-input"
-    //                     readOnly
-    //                     placeholder="Chọn hướng..."
-    //                     type="text"
-    //                     className="input-field read-only-field"
-    //                   />
-    //                   {/* drop down when selected */}
-    //                   {this.renderMenu(
-    //                     this.state.isDoorDirectionMenuShown,
-    //                     this.state.doorDirections,
-    //                     "door-direction-input"
-    //                   )}
-    //                 </div>
-    //               </div>
+  //             <div className="row">
+  //               <div className="col2">
+  //                 <h2 className="title">Hướng cửa chính</h2>
+  //                 <div
+  //                   onClick={() => {
+  //                     this.setState({
+  //                       isDoorDirectionMenuShown:
+  //                         !this.state.isDoorDirectionMenuShown,
+  //                     });
+  //                   }}
+  //                   className="input-container read-only-field"
+  //                 >
+  //                   <input
+  //                     id="door-direction-input"
+  //                     readOnly
+  //                     placeholder="Chọn hướng..."
+  //                     type="text"
+  //                     className="input-field read-only-field"
+  //                   />
+  //                   {/* drop down when selected */}
+  //                   {this.renderMenu(
+  //                     this.state.isDoorDirectionMenuShown,
+  //                     this.state.doorDirections,
+  //                     "door-direction-input"
+  //                   )}
+  //                 </div>
+  //               </div>
 
-    //               {/* <div className="col2">
-    //                 <h2 className="title">Hướng cửa chính</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     placeholder="Hướng cửa chính..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div> */}
+  //               {/* <div className="col2">
+  //                 <h2 className="title">Hướng cửa chính</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     placeholder="Hướng cửa chính..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div> */}
 
-    //               {/* <div className="col2">
-    //                 <h2 className="title">Hướng ban công</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     placeholder="Hướng ban công..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div> */}
-    //               <div className="col2">
-    //                 <h2 className="title">Hướng ban công</h2>
-    //                 <div
-    //                   onClick={() => {
-    //                     this.setState({
-    //                       isBalconyDirectionMenuShown:
-    //                         !this.state.isBalconyDirectionMenuShown,
-    //                     });
-    //                   }}
-    //                   className="input-container read-only-field"
-    //                 >
-    //                   <input
-    //                     id="balcony-direction-input"
-    //                     readOnly
-    //                     placeholder="Chọn hướng..."
-    //                     type="text"
-    //                     className="input-field read-only-field"
-    //                   />
-    //                   {/* drop down when selected */}
-    //                   {this.renderMenu(
-    //                     this.state.isBalconyDirectionMenuShown,
-    //                     this.state.balconyDirections,
-    //                     "balcony-direction-input"
-    //                   )}
-    //                 </div>
-    //               </div>
-    //             </div>
+  //               {/* <div className="col2">
+  //                 <h2 className="title">Hướng ban công</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     placeholder="Hướng ban công..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div> */}
+  //               <div className="col2">
+  //                 <h2 className="title">Hướng ban công</h2>
+  //                 <div
+  //                   onClick={() => {
+  //                     this.setState({
+  //                       isBalconyDirectionMenuShown:
+  //                         !this.state.isBalconyDirectionMenuShown,
+  //                     });
+  //                   }}
+  //                   className="input-container read-only-field"
+  //                 >
+  //                   <input
+  //                     id="balcony-direction-input"
+  //                     readOnly
+  //                     placeholder="Chọn hướng..."
+  //                     type="text"
+  //                     className="input-field read-only-field"
+  //                   />
+  //                   {/* drop down when selected */}
+  //                   {this.renderMenu(
+  //                     this.state.isBalconyDirectionMenuShown,
+  //                     this.state.balconyDirections,
+  //                     "balcony-direction-input"
+  //                   )}
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             {/* <div className="row">
-    //               <div className="col2">
-    //                 <h2 className="title">Số phòng ngủ</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     placeholder="Nhập số phòng ngủ..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //               <div className="col2">
-    //                 <h2 className="title">Số phòng tắm</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     placeholder="Nhập số phòng tắm..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //             </div> */}
+  //             {/* <div className="row">
+  //               <div className="col2">
+  //                 <h2 className="title">Số phòng ngủ</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     placeholder="Nhập số phòng ngủ..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //               <div className="col2">
+  //                 <h2 className="title">Số phòng tắm</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     placeholder="Nhập số phòng tắm..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //             </div> */}
 
-    //             <div className="row">
-    //               <div className="col2">
-    //                 <h2 className="title">Quận/Huyện</h2>
-    //                 <div
-    //                   onClick={() => {
-    //                     this.setState({
-    //                       isDistrictMenuShown: !this.state.isDistrictMenuShown,
-    //                     });
-    //                   }}
-    //                   className="input-container read-only-field"
-    //                 >
-    //                   <input
-    //                     id="dis-input"
-    //                     readOnly
-    //                     placeholder="Chọn tên quận/huyện..."
-    //                     type="text"
-    //                     className="input-field read-only-field"
-    //                   />
-    //                   {/* drop down when selected */}
-    //                   {this.renderDistrictMenu()}
-    //                 </div>
-    //               </div>
-    //               <div className="col2">
-    //                 <h2 className="title">Phường/Xã</h2>
-    //                 <div
-    //                   onClick={() => {
-    //                     this.setState({
-    //                       isWardMenuShown: !this.state.isWardMenuShown,
-    //                     });
-    //                   }}
-    //                   className="input-container read-only-field"
-    //                 >
-    //                   <input
-    //                     id="ward-input"
-    //                     readOnly
-    //                     placeholder="Chọn tên phường/xã..."
-    //                     type="text"
-    //                     className="input-field read-only-field"
-    //                   />
-    //                   {/* drop down when selected */}
-    //                   {this.renderWardMenu()}
-    //                 </div>
-    //               </div>
-    //             </div>
+  //             <div className="row">
+  //               <div className="col2">
+  //                 <h2 className="title">Quận/Huyện</h2>
+  //                 <div
+  //                   onClick={() => {
+  //                     this.setState({
+  //                       isDistrictMenuShown: !this.state.isDistrictMenuShown,
+  //                     });
+  //                   }}
+  //                   className="input-container read-only-field"
+  //                 >
+  //                   <input
+  //                     id="dis-input"
+  //                     readOnly
+  //                     placeholder="Chọn tên quận/huyện..."
+  //                     type="text"
+  //                     className="input-field read-only-field"
+  //                   />
+  //                   {/* drop down when selected */}
+  //                   {this.renderDistrictMenu()}
+  //                 </div>
+  //               </div>
+  //               <div className="col2">
+  //                 <h2 className="title">Phường/Xã</h2>
+  //                 <div
+  //                   onClick={() => {
+  //                     this.setState({
+  //                       isWardMenuShown: !this.state.isWardMenuShown,
+  //                     });
+  //                   }}
+  //                   className="input-container read-only-field"
+  //                 >
+  //                   <input
+  //                     id="ward-input"
+  //                     readOnly
+  //                     placeholder="Chọn tên phường/xã..."
+  //                     type="text"
+  //                     className="input-field read-only-field"
+  //                   />
+  //                   {/* drop down when selected */}
+  //                   {this.renderWardMenu()}
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col2">
-    //                 <h2 className="title">Địa chỉ</h2>
-    //                 <div style={{display: "flex"}} className="input-container">
-    //                   {/* <input
-    //                     id="address-input"
-    //                     onChange={this.handleChangeAddress}
-    //                     placeholder="Nhập tên và số địa chỉ..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   /> */}
-    //                   <input
-    //                     id="house-no-input"
-    //                     onChange={this.handleChangeAddress}
-    //                     placeholder="Số nhà"
-    //                     type="text"
-    //                     className="cou-input-field-left"
-    //                   />
-    //                   <div className="cou-line"></div>
-    //                   <input
-    //                     id="street-name-input"
-    //                     onChange={this.handleChangeAddress}
-    //                     placeholder="Tên đường"
-    //                     type="text"
-    //                     className="cou-input-field-right"
-    //                   />
-    //                 </div>
-    //               </div>
+  //             <div className="row">
+  //               <div className="col2">
+  //                 <h2 className="title">Địa chỉ</h2>
+  //                 <div style={{display: "flex"}} className="input-container">
+  //                   {/* <input
+  //                     id="address-input"
+  //                     onChange={this.handleChangeAddress}
+  //                     placeholder="Nhập tên và số địa chỉ..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   /> */}
+  //                   <input
+  //                     id="house-no-input"
+  //                     onChange={this.handleChangeAddress}
+  //                     placeholder="Số nhà"
+  //                     type="text"
+  //                     className="cou-input-field-left"
+  //                   />
+  //                   <div className="cou-line"></div>
+  //                   <input
+  //                     id="street-name-input"
+  //                     onChange={this.handleChangeAddress}
+  //                     placeholder="Tên đường"
+  //                     type="text"
+  //                     className="cou-input-field-right"
+  //                   />
+  //                 </div>
+  //               </div>
 
-    //               <div className="col4">
-    //                 <h2 className="title">Số phòng ngủ</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="bedroom-input"
-    //                     placeholder="..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //               <div className="col4">
-    //                 <h2 className="title">Số phòng tắm</h2>
-    //                 <div className="input-container">
-    //                   <input
-    //                     id="bathroom-input"
-    //                     placeholder="..."
-    //                     type="text"
-    //                     className="input-field"
-    //                   />
-    //                 </div>
-    //               </div>
-    //             </div>
+  //               <div className="col4">
+  //                 <h2 className="title">Số phòng ngủ</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="bedroom-input"
+  //                     placeholder="..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //               <div className="col4">
+  //                 <h2 className="title">Số phòng tắm</h2>
+  //                 <div className="input-container">
+  //                   <input
+  //                     id="bathroom-input"
+  //                     placeholder="..."
+  //                     type="text"
+  //                     className="input-field"
+  //                   />
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             {/* session 3 */}
-    //             <div style={{ height: "20px" }}></div>
-    //             <div className="row session-row">
-    //               <div className="manage-post-tag">
-    //                 <span>Mô tả bất động sản</span>
-    //               </div>
-    //               <div className="manage-post-right-arrow"></div>
-    //             </div>
+  //             {/* session 3 */}
+  //             <div style={{ height: "20px" }}></div>
+  //             <div className="row session-row">
+  //               <div className="manage-post-tag">
+  //                 <span>Mô tả bất động sản</span>
+  //               </div>
+  //               <div className="manage-post-right-arrow"></div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col0">
-    //                 <h2 className="row-title">Bài viết mô tả</h2>
-    //                 <textarea
-    //                   id="description-input"
-    //                   placeholder="Nhập bài viết mô tả của bất động sản..."
-    //                 ></textarea>
-    //               </div>
-    //             </div>
+  //             <div className="row">
+  //               <div className="col0">
+  //                 <h2 className="row-title">Bài viết mô tả</h2>
+  //                 <textarea
+  //                   id="description-input"
+  //                   placeholder="Nhập bài viết mô tả của bất động sản..."
+  //                 ></textarea>
+  //               </div>
+  //             </div>
 
-    //             <div className="row">
-    //               <div className="col0">
-    //                 <h2 className="row-title">Hình ảnh</h2>
-    //                 <div className="file-box">
-    //                   <input
-    //                     id="images-input"
-    //                     aria-label=""
-    //                     onChange={this.handleFileChange}
-    //                     type="file"
-    //                     className="file-input"
-    //                   />
-    //                   {this.renderSelectedImage()}
-    //                 </div>
-    //               </div>
-    //             </div>
+  //             <div className="row">
+  //               <div className="col0">
+  //                 <h2 className="row-title">Hình ảnh</h2>
+  //                 <div className="file-box">
+  //                   <input
+  //                     id="images-input"
+  //                     aria-label=""
+  //                     onChange={this.handleFileChange}
+  //                     type="file"
+  //                     className="file-input"
+  //                   />
+  //                   {this.renderSelectedImage()}
+  //                 </div>
+  //               </div>
+  //             </div>
 
-    //             <div className="row reverse-row">
-    //               <div
-    //                 onClick={this.handleCreatePost}
-    //                 className="noselect create-button"
-    //               >
-    //                 &#65291;
-    //                 <span>Tạo bài viết</span>
-    //               </div>
-    //             </div>
+  //             <div className="row reverse-row">
+  //               <div
+  //                 onClick={this.handleCreatePost}
+  //                 className="noselect create-button"
+  //               >
+  //                 &#65291;
+  //                 <span>Tạo bài viết</span>
+  //               </div>
+  //             </div>
 
-    //             <div style={{ height: "90px" }}></div>
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </React.Fragment>
-    //   );
-    // }
+  //             <div style={{ height: "90px" }}></div>
+  //           </div>
+  //         </div>
+  //       </div>
+  //     </React.Fragment>
+  //   );
+  // }
 }
 
 export default ManagePost;
