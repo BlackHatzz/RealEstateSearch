@@ -38,11 +38,35 @@ export const Login = () => {
                 phoneNumber: user.phoneNumber,
                 photoURL: user.photoURL + "",
                 role: "customer",
-              })
-              .then(() => {});
+              });
+
             fb.auth.currentUser.updateProfile({
               displayName: user.phoneNumber,
             });
+
+            // fetch(
+            //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/accounts/create",
+            //   {
+            //     method: "POST",
+            //     headers: {
+            //       Accept: "application/json",
+            //       "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify({
+            //       id: user.uid,
+            //       phone: user.phoneNumber,
+            //       username: user.phoneNumber,
+            //       status: "active",
+            //       roleId: 4,
+            //     }),
+            //   }
+            // )
+            //   .then((response) => {
+            //     console.log(response);
+            //   })
+            //   .catch((err) => {
+            //     console.log(err);
+            //   });
           }
 
           return true;
