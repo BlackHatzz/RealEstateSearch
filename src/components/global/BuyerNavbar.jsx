@@ -14,7 +14,7 @@ import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 
 const BuyerNavbar = () => {
-  const uuid = fb.auth.currentUser.uid;
+  const uuid = fb.auth.currentUser?.uid;
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [unseen, setUnseen] = useState(0);
@@ -32,25 +32,27 @@ const BuyerNavbar = () => {
   };
 
   useEffect(() => {
-    const unsubscribe = fb.firestore
-      .collection("users")
-      .doc(uuid)
-      .collection("notifications")
-      .orderBy("createAt", "desc")
-      .onSnapshot((snapshot) => {
-        setNotifications(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-        setUnseen(
-          snapshot.docs.filter((doc) => doc.data().seen === false).length
-        );
-      });
-    return () => {
-      unsubscribe();
-    };
+    if (uuid !== "null") {
+      const unsubscribe = fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("notifications")
+        .orderBy("createAt", "desc")
+        .onSnapshot((snapshot) => {
+          setNotifications(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+          setUnseen(
+            snapshot.docs.filter((doc) => doc.data().seen === false).length
+          );
+        });
+      return () => {
+        unsubscribe();
+      };
+    }
   }, [uuid]);
 
   return (
@@ -77,10 +79,10 @@ const BuyerNavbar = () => {
           <div className="nav-bar-item-horizontal">
             <div onClick={switchProfileMenu} className="nav-bar-item">
               <div className="profile-pic">
-                <img src={fb.auth.currentUser.photoURL} alt="" />
+                <img src={fb.auth.currentUser?.photoURL} alt="" />
               </div>
               <span className="profile-name-text">
-                {fb.auth.currentUser.displayName}
+                {fb.auth.currentUser?.displayName}
               </span>
               <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
             </div>
@@ -89,7 +91,7 @@ const BuyerNavbar = () => {
               <div className="notification-container">
                 <h3>Thông báo</h3>
                 <br></br>
-                {notifications.length &&
+                {notifications.length > 0 &&
                   notifications.map((notification) => (
                     <div
                       className="notification-item"

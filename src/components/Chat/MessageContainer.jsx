@@ -4,7 +4,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 
-export const MessageContainer = ({ conversation }) => {
+export const MessageContainer = ({ conversation, handleBook }) => {
   const uuid = fb.auth.currentUser.uid;
   const username = fb.auth.currentUser.displayName;
   const [messages, setMessages] = useState([]);
@@ -153,7 +153,16 @@ export const MessageContainer = ({ conversation }) => {
                   {message.status === "accepted" && (
                     <div className="buyer-deal-message">
                       <p>đã được chấp nhận</p>
-                      <button onClick={handleCancelDeal}>Hủy</button>
+                      <button
+                        disabled={
+                          conversation.data.appointment === "upcoming"
+                            ? true
+                            : false
+                        }
+                        onClick={handleBook}
+                      >
+                        Đặt lịch
+                      </button>
                     </div>
                   )}
                   {message.status === "refused" && <div>đã bị từ chối</div>}

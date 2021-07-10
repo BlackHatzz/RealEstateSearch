@@ -422,7 +422,10 @@ option {
   border: none;
   background-color: white;
   border-radius: 5px;
-  width: 55px;
+  width: 75px;
   height: 20px;
   cursor: pointer;
+}
+.time-form {
+  display: flex;
 }

@@ -21,6 +21,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState();
   const username = fb.auth.currentUser.displayName;
+  const uuid = fb.auth.currentUser.uid;
   const [dealId, setDealId] = useState();
   // const [appointments, setAppointments] = useState([]);
   const [dealtrigger, setDealtrigger] = useState(false);
@@ -39,6 +40,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
       .collection("messages")
       .doc(dealId)
       .set({
+        type: "deal",
         deal: deal,
         sender: username,
         status: "pending",
@@ -79,13 +81,6 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
               key={currentChat.id}
               className="chat_window_container_message_box"
             >
-              <div className="chat_window_container_message_box_user">
-                <p>
-                  {role === "buyer"
-                    ? currentChat.data.seller
-                    : currentChat.data.buyer}
-                </p>
-              </div>
               <div className="chat_window_container_message_box_display_realestate">
                 <div className="chat_window_container_message_box_display_realestate_image">
                   <img
@@ -97,13 +92,17 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   <div className="chat_window_container_message_box_display_realestate_info_title">
                     {currentChat.data.title}
                   </div>
+                  <p>{currentChat.data.address}</p>
                   <p>
                     {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
                     {currentChat.data.bath} WC
                   </p>
                 </div>
               </div>
-              <MessageContainer conversation={currentChat} />
+              <MessageContainer
+                conversation={currentChat}
+                handleBook={handleBook}
+              />
               {(dealtrigger || booktrigger) && (
                 <div className="chat_window_container_message_box_popup">
                   {dealtrigger && (
@@ -141,14 +140,12 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                     </Formik>
                   )}
                   {booktrigger && (
-
                     <Appointment
                       trigger={booktrigger}
                       setTrigger={setBooktrigger}
                       conversation={currentChat}
                     />
                   )}
-
                 </div>
               )}
 
@@ -169,17 +166,6 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                     >
                       Thỏa thuận
                     </button>
-                    <button
-                      className="primary-box deal-button"
-                      disabled={
-                        currentChat.data.appointment === "upcoming"
-                          ? true
-                          : false
-                      }
-                      onClick={handleBook}
-                    >
-                      Đặt lịch
-                    </button>
                   </div>
                 )}
 
@@ -190,10 +176,12 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                       .doc(currentChat.id)
                       .collection("messages")
                       .add({
+                        type: "text",
                         message: values.Input,
                         sender: username,
                         timestamp:
                           firebase.firestore.FieldValue.serverTimestamp(),
+                        senderId: uuid,
                       })
                       .finally(() => {
                         resetForm({ values: "" });
@@ -259,17 +247,15 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                   const list = document.getElementsByClassName(
                     "right-content-container"
                   );
-                  console.log("outtttt");
                   for (var i = 0; i < list.length; i++) {
                     list[i].style.backgroundColor = "white";
-                    console.log("yahooo");
                   }
                   const selectedItem = document.getElementById(conversation.id);
                   selectedItem.style.backgroundColor = "#dadde2";
                 }}
               >
                 <Contact
-                  // key={conversation.id}
+                  key={conversation.id}
                   id={conversation.id}
                   data={conversation.data}
                 />

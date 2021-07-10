@@ -5,10 +5,20 @@ const admin = require("firebase-admin");
 //
 admin.initializeApp(functions.config().firebase);
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-  response.send("Hello from Firebase!");
-});
-
+exports.messageCreated = functions.firestore
+  .document("conversations/{conversationId}/messages/{messageId}")
+  .onCreate((doc, context) => {
+    const message = doc.data();
+    const conversationId = context.params.conversationId;
+    const type = message.type;
+    if (type === "text") {
+      const notification = {
+        content: `${message.message}`,
+        chatId: conversationId,
+      };
+      return admin.firestore().collection("users").doc();
+    }
+  });
 exports.appointmentCreated = functions.firestore
   .document("users/{userId}/appointments/{appointmentId}")
   .onCreate((doc, context) => {
@@ -21,6 +31,11 @@ exports.appointmentCreated = functions.firestore
       seen: false,
       buyerId: `${appointment.buyerId}`,
       realId: `${appointment.realId}`,
+      address: `${appointment.address}`,
+      buyer: `${appointment.buyer}`,
+      seller: `${appointment.seller}`,
+      title: `${appointment.title}`,
+      price: `${appointment.dealprice}`,
     };
     return admin
       .firestore()

@@ -9,13 +9,11 @@ export const Seller = () => {
   const routes = [
     {
       path: "/schedule",
-      sidebar: () => <div>Lịch hẹn</div>,
-      main: () => <h2>Lịch hẹn</h2>,
+      main: () => <h2>f1</h2>,
     },
     {
       path: "/shoelaces",
-      sidebar: () => <div>shoelaces!</div>,
-      main: () => <h2>Shoelaces</h2>,
+      main: () => <h2>f2</h2>,
     },
   ];
 
@@ -35,10 +33,10 @@ export const Seller = () => {
             >
               <ul style={{ listStyleType: "none", padding: 0 }}>
                 <li>
-                  <Link to="/schedule">Lịch hẹn</Link>
+                  <Link to="/schedule">f1</Link>
                 </li>
                 <li>
-                  <Link to="/shoelaces">Shoelaces11</Link>
+                  <Link to="/shoelaces">f2</Link>
                 </li>
               </ul>
             </div>

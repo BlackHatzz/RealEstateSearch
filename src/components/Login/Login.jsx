@@ -1,9 +1,12 @@
 import { fb } from "../../services";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Form, Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { FormField } from "../FormField";
 import { validationSchema, defaultValues } from "./formikConfig";
+import * as firebaseui from "firebaseui";
+import "firebaseui/dist/firebaseui.css";
+
 // import { useStateValue } from "../../StateProvider";
 // import { actionTypes } from "../../reducer";
 
@@ -11,6 +14,91 @@ export const Login = () => {
   const history = useHistory();
   // const [{}, dispatch] = useStateValue();
   const [serverError, setServerError] = useState("");
+  useEffect(() => {
+    const uiConfig = {
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+          var user = authResult.user;
+          var credential = authResult.credential;
+          var isNewUser = authResult.additionalUserInfo.isNewUser;
+          var providerId = authResult.additionalUserInfo.providerId;
+          var operationType = authResult.operationType;
+          console.log("credential:" + credential);
+          console.log("provider id:" + providerId);
+          console.log("operationType:" + operationType);
+          if (true) {
+            fb.firestore
+              .collection("users")
+              .doc(user.uid)
+              .set({
+                uuid: user.uid,
+                userName: "user" + user.phoneNumber,
+                phoneNumber: user.phoneNumber,
+                photoURL: user.photoURL + "",
+                role: "customer",
+              });
+
+            fb.auth.currentUser.updateProfile({
+              displayName: user.phoneNumber,
+            });
+
+            // createUser(user);
+          }
+
+          return true;
+        },
+      },
+      signInOptions: [
+        {
+          provider: fb.phoneProvider,
+          recaptchaParameters: {
+            type: "image",
+            size: "compact",
+            badge: "bottomleft",
+          },
+          defaultCountry: "VN",
+        },
+      ],
+
+      // signInSuccessUrl: "https://youtube.com",
+      // Terms of service url.
+      // tosUrl: '<your-tos-url>',
+      // Privacy policy url.
+      // privacyPolicyUrl: '<your-privacy-policy-url>'
+    };
+    var ui =
+      firebaseui.auth.AuthUI.getInstance() ||
+      new firebaseui.auth.AuthUI(fb.auth);
+    ui.start("#firebaseui-auth-container", uiConfig);
+    return () => {
+      console.log("use effect run finished");
+    };
+  }, []);
+
+  async function createUser(user) {
+    const res = await fetch(
+      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/accounts/create",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user.uid,
+          phone: user.phoneNumber,
+          username: user.phoneNumber,
+          status: "active",
+          roleId: 4,
+        }),
+      }
+    );
+
+    res
+      .json()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
 
   const login = ({ email, password }, { setSubmitting }) => {
     fb.auth
@@ -40,7 +128,8 @@ export const Login = () => {
 
   return (
     <div className="auth-form-container">
-      <div className="auth-form">
+      <div id="firebaseui-auth-container"></div>
+      {/* <div className="auth-form">
         <h1 className="title">Đăng Nhập</h1>
         <Formik
           onSubmit={login}
@@ -85,7 +174,7 @@ export const Login = () => {
         </Formik>
 
         {!!serverError && <div className="error">{serverError}</div>}
-      </div>
+      </div> */}
     </div>
   );
 };
