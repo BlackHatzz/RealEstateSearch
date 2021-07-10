@@ -23,9 +23,7 @@ export const Login = () => {
           var isNewUser = authResult.additionalUserInfo.isNewUser;
           var providerId = authResult.additionalUserInfo.providerId;
           var operationType = authResult.operationType;
-          console.log(user);
           console.log("credential:" + credential);
-          console.log("is new user:" + isNewUser);
           console.log("provider id:" + providerId);
           console.log("operationType:" + operationType);
           if (true) {
@@ -44,29 +42,7 @@ export const Login = () => {
               displayName: user.phoneNumber,
             });
 
-            // fetch(
-            //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/accounts/create",
-            //   {
-            //     method: "POST",
-            //     headers: {
-            //       Accept: "application/json",
-            //       "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify({
-            //       id: user.uid,
-            //       phone: user.phoneNumber,
-            //       username: user.phoneNumber,
-            //       status: "active",
-            //       roleId: 4,
-            //     }),
-            //   }
-            // )
-            //   .then((response) => {
-            //     console.log(response);
-            //   })
-            //   .catch((err) => {
-            //     console.log(err);
-            //   });
+            // createUser(user);
           }
 
           return true;
@@ -98,6 +74,31 @@ export const Login = () => {
       console.log("use effect run finished");
     };
   }, []);
+
+  async function createUser(user) {
+    const res = await fetch(
+      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/accounts/create",
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: user.uid,
+          phone: user.phoneNumber,
+          username: user.phoneNumber,
+          status: "active",
+          roleId: 4,
+        }),
+      }
+    );
+
+    res
+      .json()
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
+  }
 
   const login = ({ email, password }, { setSubmitting }) => {
     fb.auth
