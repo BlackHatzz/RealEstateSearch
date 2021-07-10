@@ -37,6 +37,7 @@ export const Login = () => {
                 userName: "user" + user.phoneNumber,
                 phoneNumber: user.phoneNumber,
                 photoURL: user.photoURL + "",
+                role: "customer",
               })
               .then(() => {});
             fb.auth.currentUser.updateProfile({
