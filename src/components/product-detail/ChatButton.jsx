@@ -6,6 +6,7 @@ export const ChatButton = (props) => {
   const currentDate = new Date();
   const { updateChat } = useContext(Context);
   const { updateOpen } = useContext(Context);
+
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
     const buyername = fb.auth.currentUser.displayName;
@@ -25,27 +26,45 @@ export const ChatButton = (props) => {
         throw response;
       })
       .then((data) => {
+        // fb.firestore
+        //   .collection("realestates")
+        //   .doc(props.product.id + "")
+        //   .set({
+        //     id: props.product.id,
+        //     address: address,
+        //     title: props.product.title,
+        //     seller: props.product.sellerName,
+        //     sellerId: props.product.sellerId,
+        //     area: props.product.area,
+        //     bed: props.product.numberOfBedroom,
+        //     bath: props.product.numberOfBathroom,
+        //     price: props.product.price,
+        //   });
+
         fb.firestore
           .collection("conversations")
           .doc("" + data.id)
-          .set({
-            lastvisit: currentDate.toUTCString(),
-            title: props.product.title,
-            realId: props.product.id,
-            address: address,
-            seller: props.product.sellerName,
-            sellerId: props.product.sellerId,
-            buyerId: uuid,
-            buyer: buyername,
-            price: props.product.price,
-            area: props.product.area,
-            bed: props.product.numberOfBedroom,
-            bath: props.product.numberOfBathroom,
-            deal: "none",
-            dealId: "",
-            appointment: "none",
-            appointmentId: "",
-          });
+          .set(
+            {
+              lastvisit: currentDate.toUTCString(),
+              title: props.product.title,
+              realId: props.product.id,
+              address: address,
+              seller: props.product.sellerName,
+              sellerId: props.product.sellerId,
+              buyerId: uuid,
+              buyer: buyername,
+              price: props.product.price,
+              area: props.product.area,
+              bed: props.product.numberOfBedroom,
+              bath: props.product.numberOfBathroom,
+              // deal: "none",
+              // dealId: "",
+              // appointment: "none",
+              // appointmentId: "",
+            },
+            { merge: true }
+          );
 
         updateOpen();
         updateChat(data.id + "");

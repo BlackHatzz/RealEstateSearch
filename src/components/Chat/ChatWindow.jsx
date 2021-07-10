@@ -16,8 +16,8 @@ import "../global/shared.css";
 
 // import SendIcon from '@material-ui/icons/Send';
 
-export const ChatWindow = ({ onClickChat, conversations }) => {
-  const { role, chatId } = useContext(Context);
+export const ChatWindow = ({ onClickChat, conversations, reals }) => {
+  const { role, chatId, updateChat } = useContext(Context);
   const [input, setInput] = useState("");
   const [currentChat, setCurrentChat] = useState();
   const username = fb.auth.currentUser.displayName;
@@ -26,13 +26,17 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
   // const [appointments, setAppointments] = useState([]);
   const [dealtrigger, setDealtrigger] = useState(false);
   const [booktrigger, setBooktrigger] = useState(false);
+
   useEffect(() => {
-    const index = conversations.findIndex((e) => e.id === chatId);
-    if (index > -1) {
-      setCurrentChat(conversations[index]);
+    if (role === "buyer") {
+      const index = conversations.findIndex((e) => e.id === chatId);
+      if (index > -1) {
+        setCurrentChat(conversations[index]);
+      }
+      setDealId(uuidv4());
     }
-    setDealId(uuidv4());
-  }, [chatId, conversations]);
+  }, [chatId, conversations, role]);
+
   function submitDeal({ deal }, { setSubmitting }) {
     fb.firestore
       .collection("conversations")
@@ -54,6 +58,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
             {
               deal: "pending",
               dealId: dealId + "",
+              dealPrice: deal,
             }
             // { merge: true }
           );
@@ -118,7 +123,11 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                           <FormField
                             name="deal"
                             placeholder={currentChat.data.price}
+                            maxlength="4"
+                            size="1"
+                            label="Thỏa thuận (tỷ VNĐ): "
                           />
+
                           <div className="deal-form-button">
                             <button
                               disabled={isSubmitting || !isValid}
@@ -153,11 +162,12 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                 {role === "buyer" && (
                   <div className="interact-box">
                     <button
-                      className="primary-box deal-button"
+                      className="deal-button"
                       disabled={
                         currentChat.data.deal === "refused" ||
                         currentChat.data.deal === "none" ||
-                        currentChat.data.deal === "cancel"
+                        currentChat.data.deal === "cancel" ||
+                        currentChat.data.deal === undefined
                           ? false
                           : true
                       }
@@ -210,7 +220,7 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
                         <input
                           maxlength="1000"
                           className="chat-field"
-                          autocomplete="off"
+                          autoComplete="off"
                           id="Input"
                           value={values.Input}
                           onChange={handleChange}
@@ -235,33 +245,37 @@ export const ChatWindow = ({ onClickChat, conversations }) => {
           )}
         </div>
         <div className="chat_window_container_contact_box">
-          <div className="chat_window_container_contact_list">
-            {conversations.map((conversation) => (
-              <div
-                key={conversation.id}
-                onClick={() => {
-                  setCurrentChat(conversation);
-                  setBooktrigger(false);
-                  setDealtrigger(false);
-                  // refesh item list
-                  const list = document.getElementsByClassName(
-                    "right-content-container"
-                  );
-                  for (var i = 0; i < list.length; i++) {
-                    list[i].style.backgroundColor = "white";
-                  }
-                  const selectedItem = document.getElementById(conversation.id);
-                  selectedItem.style.backgroundColor = "#dadde2";
-                }}
-              >
-                <Contact
+          {role === "buyer" && (
+            <div className="chat_window_container_contact_list">
+              {conversations.map((conversation) => (
+                <div
                   key={conversation.id}
-                  id={conversation.id}
-                  data={conversation.data}
-                />
-              </div>
-            ))}
-          </div>
+                  onClick={() => {
+                    updateChat(conversation.id);
+                    setCurrentChat(conversation);
+                    setBooktrigger(false);
+                    setDealtrigger(false);
+                  }}
+                >
+                  <Contact
+                    currentChat={currentChat}
+                    key={conversation.id}
+                    id={conversation.id}
+                    data={conversation.data}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+          {role === "seller" && (
+            <div className="chat_window_container_contact_list">
+              {reals.map((real) => (
+                <div key={real.id} onClick={() => {}}>
+                  <div>{real.data.title}</div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
     </div>
