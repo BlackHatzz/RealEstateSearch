@@ -81,10 +81,10 @@
   display: flex;
   border-bottom: 1px solid rgb(219, 217, 217);
 }
-.chat_window_container_right_box {
+.chat_window_container_left_box {
   display: flex;
   flex-direction: column;
-  width: 60%;
+  width: 70%;
   height: 100%;
   border-right: 1px solid gray;
 }
@@ -92,22 +92,22 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: auto;
   height: 100%;
 }
 .chat_window_container_contact_box {
-  width: 39%;
+  width: 29%;
 }
 
 .chat_window_container_message_box_display {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  /* flex: 1; */
   width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 32px;
   padding-bottom: 12px;
+  height: 100%;
 }
 .chat_window_container_message_box_display_realestate {
   margin: 5px 5px 5px 5px;
@@ -450,5 +450,62 @@ option {
 }
 .deal-button:disabled {
   background-color: gray;
-  cursor: default;
+  cursor: not-allowed;
+}
+
+.real-item {
+  background-color: white;
+  padding: 5px;
+  height: 60px;
+  margin: 5px 8px 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.real-item:hover {
+  background-color: #c0c0c0;
+}
+.seller-chat-box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.real-title {
+  border-bottom: 1px solid #c0c0c0;
+}
+
+.buyer-select-box {
+  border-bottom: 1px solid #c0c0c0;
+  display: flex;
+  flex-direction: row;
+}
+
+.buyer-info-selected,
+.buyer-info-notselected {
+  height: 60px;
+  border-radius: 5px;
+  margin: 2px 0px 2px 5px;
+  cursor: pointer;
+}
+.buyer-info-selected {
+  background-color: gray;
+}
+.buyer-info-notselected {
+  background-color: rgb(230, 230, 230);
+}
+.seller-chat-box-body {
+  display: flex;
+  height: 100%;
+  overflow: auto;
+}
+.seller-chat-box-body-left {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  border-right: 1px solid #c0c0c0;
+}
+
+.seller-chat-box-body-right {
+  display: flex;
+  background-color: #fcba03;
+  width: 30%;
 }

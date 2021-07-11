@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
+import firebase from "firebase/app";
 
 export const ChatButton = (props) => {
   const currentDate = new Date();
@@ -39,8 +40,16 @@ export const ChatButton = (props) => {
         //     bed: props.product.numberOfBedroom,
         //     bath: props.product.numberOfBathroom,
         //     price: props.product.price,
+        //     chats: [],
         //   });
 
+        fb.firestore
+          .collection("realestates")
+          .doc(props.product.id + "")
+          .update(
+            { chats: firebase.firestore.FieldValue.arrayUnion("" + data.id) },
+            { merge: true }
+          );
         fb.firestore
           .collection("conversations")
           .doc("" + data.id)

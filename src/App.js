@@ -22,8 +22,8 @@ const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
   const authResolved = useResolved(authUser);
-  const [isTokenFound, setTokenFound] = useState(false);
-  getToken(setTokenFound);
+  // const [isTokenFound, setTokenFound] = useState(false);
+  // getToken(setTokenFound);
   const { role } = useContext(Context);
 
   useEffect(() => {
@@ -32,11 +32,11 @@ const App = () => {
     }
   }, [authResolved, authUser, history]);
 
-  onMessageListener()
-    .then((payload) => {
-      console.log(payload);
-    })
-    .catch((err) => console.log("failed: ", err));
+  // onMessageListener()
+  //   .then((payload) => {
+  //     console.log(payload);
+  //   })
+  //   .catch((err) => console.log("failed: ", err));
 
   return authResolved ? (
     <div className="app">

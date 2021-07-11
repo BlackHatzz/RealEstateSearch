@@ -21,42 +21,42 @@ try {
   }
 }
 
-const messaging = firebase.messaging();
+// const messaging = firebase.messaging();
 
 export const fb = {
   auth: firebase.auth(),
   storage: firebase.storage(),
   firestore: firebase.firestore(),
   googleAuth: new firebase.auth.GoogleAuthProvider(),
-  messaging: firebase.messaging(),
+  // messaging: firebase.messaging(),
   phoneProvider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
 };
 
-export const getToken = (setTokenFound) => {
-  return messaging
-    .getToken({
-      vapidKey:
-        "BLJINxH_ZrHfiPYaPnJza3ULLB2_Irpmt2F7EnZg4ifFWnxYuaPD1nbS2rW8bv01bAWTXYXru9ULDJTZAutSbyI",
-    })
-    .then((currentToken) => {
-      if (currentToken) {
-        console.log("current token for client: ", currentToken);
-        setTokenFound(true);
-      } else {
-        console.log(
-          "No registration token available. Request permission to generate one."
-        );
-        setTokenFound(false);
-      }
-    })
-    .catch((err) => {
-      console.log("An error occurred while retrieving token. ", err);
-    });
-};
+// export const getToken = (setTokenFound) => {
+//   return messaging
+//     .getToken({
+//       vapidKey:
+//         "BLJINxH_ZrHfiPYaPnJza3ULLB2_Irpmt2F7EnZg4ifFWnxYuaPD1nbS2rW8bv01bAWTXYXru9ULDJTZAutSbyI",
+//     })
+//     .then((currentToken) => {
+//       if (currentToken) {
+//         console.log("current token for client: ", currentToken);
+//         setTokenFound(true);
+//       } else {
+//         console.log(
+//           "No registration token available. Request permission to generate one."
+//         );
+//         setTokenFound(false);
+//       }
+//     })
+//     .catch((err) => {
+//       console.log("An error occurred while retrieving token. ", err);
+//     });
+// };
 
-export const onMessageListener = () =>
-  new Promise((resolve) => {
-    messaging.onMessage((payload) => {
-      resolve(payload);
-    });
-  });
+// export const onMessageListener = () =>
+//   new Promise((resolve) => {
+//     messaging.onMessage((payload) => {
+//       resolve(payload);
+//     });
+//   });

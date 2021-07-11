@@ -171,6 +171,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
                   {message.status === "cancel" && <div>Thỏa thuận đã hủy</div>}
                 </div>
               )}
+
               {role === "seller" && (
                 <div className="seller-deal-message">
                   {message.status === "pending" && (

@@ -13,13 +13,16 @@ import { FormField } from "../FormField";
 import { v4 as uuidv4 } from "uuid";
 import Appointment from "./Appointment";
 import "../global/shared.css";
+import { SellerChatItem } from "./SellerChatItem";
+import { SellerChatContainer } from "./SellerChatContainer";
 
 // import SendIcon from '@material-ui/icons/Send';
 
 export const ChatWindow = ({ onClickChat, conversations, reals }) => {
-  const { role, chatId, updateChat } = useContext(Context);
-  const [input, setInput] = useState("");
+  const { role, chatId, updateChat, chatRealId, updateChatRealId } =
+    useContext(Context);
   const [currentChat, setCurrentChat] = useState();
+  const [currentReal, setCurrentReal] = useState();
   const username = fb.auth.currentUser.displayName;
   const uuid = fb.auth.currentUser.uid;
   const [dealId, setDealId] = useState();
@@ -35,7 +38,13 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
       }
       setDealId(uuidv4());
     }
-  }, [chatId, conversations, role]);
+    if (role === "seller") {
+      const index = reals.findIndex((e) => e.id === chatRealId);
+      if (index > -1) {
+        setCurrentReal(reals[index]);
+      }
+    }
+  }, [chatId, chatRealId, conversations, reals, role]);
 
   function submitDeal({ deal }, { setSubmitting }) {
     fb.firestore
@@ -80,8 +89,8 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
     <div className="chat_window">
       <ChatWindowHeader onClickChat={onClickChat} />
       <div className="chat_window_container">
-        <div className="chat_window_container_right_box">
-          {currentChat ? (
+        <div className="chat_window_container_left_box">
+          {currentChat && (
             <div
               key={currentChat.id}
               className="chat_window_container_message_box"
@@ -240,9 +249,8 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                 </Formik>
               </div>
             </div>
-          ) : (
-            <div> Xin chào </div>
           )}
+          {currentReal && <SellerChatContainer real={currentReal} />}
         </div>
         <div className="chat_window_container_contact_box">
           {role === "buyer" && (
@@ -259,7 +267,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                 >
                   <Contact
                     currentChat={currentChat}
-                    key={conversation.id}
+                    // key={conversation.id}
                     id={conversation.id}
                     data={conversation.data}
                   />
@@ -270,8 +278,18 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
           {role === "seller" && (
             <div className="chat_window_container_contact_list">
               {reals.map((real) => (
-                <div key={real.id} onClick={() => {}}>
-                  <div>{real.data.title}</div>
+                <div
+                  key={real.id}
+                  onClick={() => {
+                    updateChatRealId(real.id);
+                    setCurrentReal(real);
+                  }}
+                >
+                  <SellerChatItem
+                    currentReal={currentReal}
+                    // id={real.id}
+                    data={real.data}
+                  />
                 </div>
               ))}
             </div>

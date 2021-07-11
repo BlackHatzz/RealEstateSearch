@@ -33,7 +33,9 @@ export const ChatLauncher = () => {
       const unsubscribe = fb.firestore
         .collection("realestates")
         .where(role + "Id", "==", uid)
+        .where("chats", "!=", [])
         .onSnapshot((snapshot) => {
+          console.log(snapshot);
           setReals(
             snapshot.docs.map((doc) => ({
               id: doc.id,
