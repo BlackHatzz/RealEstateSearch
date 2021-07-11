@@ -11,7 +11,6 @@ export const SellerChatContainer = ({ real }) => {
   const username = fb.auth.currentUser.displayName;
   const [conversations, setConversations] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
-  const dealText = selectedChat.data?.dealPrice + " tỷ (" + "deal" + ")";
 
   const getConversations = () => {
     fb.firestore
@@ -61,11 +60,14 @@ export const SellerChatContainer = ({ real }) => {
           <div className="chat_window_container_message_box_input">
             <Formik
               onSubmit={(values, { setSubmitting, resetForm }) => {
-                fb.firestore
+                let docref = fb.firestore
                   .collection("conversations")
                   .doc(selectedChat.id)
                   .collection("messages")
-                  .add({
+                  .doc();
+                docref
+                  .set({
+                    id: docref.id,
                     type: "text",
                     message: values.Input,
                     sender: username,
@@ -97,7 +99,7 @@ export const SellerChatContainer = ({ real }) => {
                 >
                   <div className="chat-field-container">
                     <input
-                      maxlength="1000"
+                      maxLength="1000"
                       className="chat-field"
                       autoComplete="off"
                       id="Input"
@@ -120,7 +122,7 @@ export const SellerChatContainer = ({ real }) => {
           </div>
         </div>
         <div className="seller-chat-box-body-right">
-          {selectedChat.data?.dealPrice === undefined && <p>khong co deal</p>}
+          {selectedChat?.data?.dealPrice === undefined && <p>khong co deal</p>}
         </div>
       </div>
     </div>

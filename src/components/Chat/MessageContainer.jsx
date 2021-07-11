@@ -39,6 +39,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
           setBookId(doc.data().appointmentId);
         });
     }
+    return () => {};
   }, [conversation, uuid]);
 
   const handleAccept = () => {
@@ -133,6 +134,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
     <div className="chat_window_container_message_box_display" ref={messageEl}>
       {messages.map((message) => (
         <div
+          key={message.id}
           className={`message ${
             message.sender === username ? "message_send" : "message-receive"
           }`}

@@ -4,6 +4,7 @@ import { fb } from "../../services";
 import BuyerNavbar from "../global/BuyerNavbar";
 import Schedule from "../Schedule/Schedule";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import SellerDashboard from "./SellerDashboard";
 
 export const Seller = () => {
   const routes = [
@@ -20,7 +21,8 @@ export const Seller = () => {
   return (
     <div style={{ background: "#f0f0f0" }}>
       <BuyerNavbar />
-      <div>
+      {/* <SellerDashboard /> */}
+      {/* <div>
         <Router>
           <div style={{ display: "flex" }}>
             <div
@@ -55,7 +57,7 @@ export const Seller = () => {
             </div>
           </div>
         </Router>
-      </div>
+      </div> */}
     </div>
   );
 };

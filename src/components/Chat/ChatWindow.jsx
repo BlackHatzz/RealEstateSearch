@@ -190,11 +190,14 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
 
                 <Formik
                   onSubmit={(values, { setSubmitting, resetForm }) => {
-                    fb.firestore
+                    let docref = fb.firestore
                       .collection("conversations")
                       .doc(currentChat.id)
                       .collection("messages")
-                      .add({
+                      .doc();
+                    docref
+                      .set({
+                        id: docref.id,
                         type: "text",
                         message: values.Input,
                         sender: username,

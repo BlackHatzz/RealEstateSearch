@@ -15,7 +15,7 @@ import { Role } from "./components/Role/Role";
 import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
 import ManagePost from "./components/Seller/ManagePost";
-import SellerDashboard from "./components/Seller/SellerDashboard"
+import SellerDashboard from "./components/Seller/SellerDashboard";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
@@ -44,7 +44,7 @@ const App = () => {
       {/* <SellerDashboard /> */}
       {authUser && role && <ChatLauncher />}
       <Switch>
-      <Route exact path="/seller" component={SellerDashboard} />
+        <Route exact path="/seller" component={SellerDashboard} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
         <Route exact path="/sell" component={Seller} />
