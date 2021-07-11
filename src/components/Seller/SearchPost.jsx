@@ -62,7 +62,7 @@ const SearchPost = () => {
                 user: null,
                 realEstate: result.content[i],
               };
-              setRealEstateList(realEstateList);
+              setRealEstateList([...realEstateList]);
             }
 
             //   realEstateList = result.content;

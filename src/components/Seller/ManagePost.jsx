@@ -169,6 +169,7 @@ class ManagePost extends Component {
   };
 
   handleSelectDistrict = (selectedDistrict) => {
+    // this.state.selectedDistrictId = selectedDistrict.id;
     this.setState({
       selectedDistrictId: selectedDistrict.id,
     });
@@ -214,7 +215,7 @@ class ManagePost extends Component {
 
   handleSelectWard = (selectedWard) => {
     this.setState({
-      selectedWardId: selectedWard.id,
+      selectedWardId: selectedWard.wardId,
     });
     document.getElementById("ward-input").value =
       selectedWard.wardName.toString();
@@ -225,19 +226,16 @@ class ManagePost extends Component {
     if (this.state.isWardMenuShown && this.state.selectedDistrictId != null) {
       return (
         <div className="manage-post-drop-down-menu">
-          {this.state.districtWardList[this.state.selectedDistrictId].wards.map(
-            (ward) => (
-              <React.Fragment key={ward.wardId}>
-                <div
-                  onClick={() => this.handleSelectWard(ward)}
-                  className="item"
-                >
-                  <span>{ward.wardName}</span>
-                </div>
-                <div className="line"></div>
-              </React.Fragment>
-            )
-          )}
+          {this.state.districtWardList[
+            this.state.selectedDistrictId - 1
+          ].wards.map((ward) => (
+            <React.Fragment key={ward.wardId}>
+              <div onClick={() => this.handleSelectWard(ward)} className="item">
+                <span>{ward.wardName}</span>
+              </div>
+              <div className="line"></div>
+            </React.Fragment>
+          ))}
         </div>
       );
     }
@@ -299,39 +297,6 @@ class ManagePost extends Component {
   };
 
   handleCreatePost = () => {
-    const addressText = document
-      .getElementById("address-input")
-      .value.toString();
-    const districtText = document.getElementById("dis-input").value.toString();
-
-    console.log(addressText);
-    console.log(districtText);
-
-    // const searchText = "200%20S%20Mathilda%20Sunnyvale%20CA";
-    // const searchText = addressText.toString() + "Quan 1, Ho Chi Minh, Viet Nam";
-    const searchText =
-      addressText + ", " + districtText + ", Hồ Chí Minh, Việt Nam";
-    fetch(
-      "https://geocoder.ls.hereapi.com/6.2/geocode.json?searchtext=" +
-        searchText +
-        "&gen=9&apiKey=" +
-        this.state.apiKey
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          console.log("on create");
-          console.log(result.Response.View[0].Result[0]);
-          console.log(
-            result.Response.View[0].Result[0].Location.DisplayPosition.Latitude
-          );
-          console.log(
-            result.Response.View[0].Result[0].Location.DisplayPosition.Longitude
-          );
-        },
-        (error) => {}
-      );
-
     // get all value to crate a post
     const title = document.getElementById("title-input").value.toString();
     const price = parseFloat(
@@ -381,8 +346,9 @@ class ManagePost extends Component {
     console.log(project);
     console.log(doorDirection);
     console.log(balconyDirection);
-    console.log(dis);
-    console.log(ward);
+    console.log("dis ward id");
+    console.log(this.state.selectedDistrictId);
+    console.log(this.state.selectedWardId);
     // console.log(address);
     console.log(numberOfBedroom);
     console.log(numberOfBathroom);
@@ -392,7 +358,37 @@ class ManagePost extends Component {
 
     console.log(this.state.file);
 
-    let imageName = this.uuidv4();
+    const searchText =
+      houseNo.toString() +
+      " " +
+      streetName +
+      ", phuong " +
+      ward +
+      ", " +
+      dis +
+      ", ho chi minh, viet nam";
+
+    async function fetchLocationData(searchText) {
+      var data = null;
+      await fetch(
+        "https://maps.googleapis.com/maps/api/geocode/json?address=" +
+          searchText +
+          "&key=AIzaSyAk_HxKWrfBT1g9WkfL0gqRIa9HD0d7Q0I"
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log("lat long");
+            console.log(result);
+            data = result;
+          },
+          (error) => {}
+        );
+      await console.log("done 1");
+      return data;
+    }
+
+    const imageName = this.uuidv4();
 
     fb.storage
       .ref()
@@ -401,22 +397,35 @@ class ManagePost extends Component {
       .then((snapshot) => {
         console.log("uploaddddddd");
         // console.log(snapshot);
-        console.log(
-          snapshot.ref.getDownloadURL().then((downloadURL) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log(downloadURL);
+          //   const locationData = fetchLocationData(searchText);
+          //   const locationRealEstate = locationData.results[0].geometry.location;
+          //   console.log("looooooooo");
+          //   console.log(locationData);
+          fetchLocationData(searchText).then((locationData) => {
+            console.log("mememeemememem");
+            console.log(locationData);
+            const realEstateLocation =
+              locationData.results[0].geometry.location;
+            console.log(realEstateLocation);
+            console.log("innn");
             console.log(downloadURL);
 
             const requestOptions = {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
-                sellerId: "fSUJL0Vjoraru92zOuLbp0Rcff32",
+                sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
                 title: title,
                 view: 0,
                 districtId: this.state.selectedDistrictId,
                 wardId: this.state.selectedWardId,
                 streetName: streetName,
                 realEstateNo: houseNo,
-                typeId: realEstateType,
+                latitude: realEstateLocation.lat.toString(),
+                longitude: realEstateLocation.lng.toString(),
+                typeId: 2,
                 description: description,
                 area: area,
                 price: price,
@@ -424,11 +433,29 @@ class ManagePost extends Component {
                 balconyDirection: balconyDirection,
                 project: project,
                 investor: investor,
+                juridical: "Đã có sổ đỏ",
+                furniture: "Nội thất cao cấp",
                 numberOfBedroom: numberOfBedroom,
                 numberOfBathroom: numberOfBathroom,
                 images: [
                   {
                     imgUrl: downloadURL,
+                  },
+                ],
+                facilities: [
+                  {
+                    facilityTypeId: 2,
+                    facilityName: "Bệnh Viện 105",
+                    latitude: 11.2367,
+                    longitude: 102.8123678,
+                    distance: 3.0,
+                  },
+                  {
+                    facilityTypeId: 3,
+                    facilityName: "Trường FPT",
+                    latitude: 13.1234,
+                    longitude: 101.1234,
+                    distance: 5.0,
                   },
                 ],
               }),
@@ -442,21 +469,122 @@ class ManagePost extends Component {
               .then(
                 (result) => {
                   // console.log(result.content);
-                  console.log("this is cre");
+                  console.log("a new realestate is created");
                   console.log(result);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
-                (error) => {
-                  // this.setState({
-                  //   isLoaded: true,
-                  //   error,
-                  // });
-                }
+                (error) => {}
               );
-          })
-        );
+          });
+        });
+      });
+
+    return;
+
+    // let imageName = this.uuidv4();
+
+    fb.storage
+      .ref()
+      .child("images/" + imageName + ".png")
+      .put(this.state.fileImage)
+      .then((snapshot) => {
+        console.log("uploaddddddd");
+        // console.log(snapshot);
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          console.log(downloadURL);
+
+          //   {
+          //     sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+          //     title: title,
+          //     view: 0,
+          //     districtId: this.state.selectedDistrictId,
+          //     wardId: this.state.selectedWardId,
+          //     streetName: streetName,
+          //     realEstateNo: houseNo,
+          //     typeId: realEstateType,
+          //     description: description,
+          //     area: area,
+          //     price: price,
+          //     direction: doorDirection,
+          //     balconyDirection: balconyDirection,
+          //     project: project,
+          //     investor: investor,
+          //     numberOfBedroom: numberOfBedroom,
+          //     numberOfBathroom: numberOfBathroom,
+          //     images: [
+          //       {
+          //         imgUrl: downloadURL,
+          //       },
+          //     ],
+          //   }
+
+          const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+              title: title,
+              view: 34,
+              districtId: this.selectedDistrictId,
+              wardId: this.selectedWardId,
+              streetName: streetName,
+              realEstateNo: houseNo,
+              latitude: "10.8090066",
+              longitude: "106.6966305",
+              typeId: 2,
+              description: "Chung cư Vip",
+              area: 230,
+              price: 2.3,
+              direction: "Đông Bắc",
+              balconyDirection: "Nam",
+              project: "vinhome",
+              investor: "CamLD",
+              juridical: "Đã có sổ đỏ",
+              furniture: "Nội thất cao cấp",
+              numberOfBedroom: 4,
+              numberOfBathroom: 4,
+              images: [
+                {
+                  imgUrl:
+                    "https://thuthuatnhanh.com/wp-content/uploads/2020/01/hinh-anh-nha-ong-3-tang-dep-3d-o-pho.jpg",
+                },
+                {
+                  imgUrl:
+                    "https://thuthuatnhanh.com/wp-content/uploads/2020/01/mau-anh-nha-biet-thu-3-tang-dep-mai-xanh-tuong-trang.jpg",
+                },
+              ],
+              facilities: [
+                {
+                  facilityTypeId: 2,
+                  facilityName: "Bệnh Viện 105",
+                  latitude: 11.2367,
+                  longitude: 102.8123678,
+                  distance: 3.0,
+                },
+                {
+                  facilityTypeId: 3,
+                  facilityName: "Trường FPT",
+                  latitude: 13.1234,
+                  longitude: 101.1234,
+                  distance: 5.0,
+                },
+              ],
+            }),
+          };
+
+          fetch(
+            "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/createRealEstate",
+            requestOptions
+          )
+            .then((res) => res.json())
+            .then(
+              (result) => {
+                // console.log(result.content);
+                console.log("a new realestate is created");
+                console.log(result);
+              },
+              (error) => {}
+            );
+        });
       });
   };
 
@@ -468,6 +596,13 @@ class ManagePost extends Component {
       ).toString(16)
     );
   }
+
+  handleFileChange = (event) => {
+    this.setState({
+      file: URL.createObjectURL(event.target.files[0]),
+      fileImage: event.target.files[0],
+    });
+  };
 
   renderContent = (title) => {
     console.log("load");
@@ -892,7 +1027,7 @@ class ManagePost extends Component {
           trigger={
             <div className="row reverse-row">
               <div
-                //   onClick={this.handleCreatePost}
+                onClick={this.handleCreatePost}
                 // onClick={() => {
                 //   this.state.isPopupOpen = true;
                 // }}
@@ -909,7 +1044,7 @@ class ManagePost extends Component {
               {this.renderContent("thisis")}
               <div
                 onClick={() => {
-                  if(this.state.isLoaded) {
+                  if (this.state.isLoaded) {
                     this.state.isLoaded = false;
                   }
                   this.isIndicatorAnimating = false;
