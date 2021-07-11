@@ -14,6 +14,9 @@ import { fb } from "../../services/firebase";
 import Popup from "reactjs-popup";
 import Constants from "../global/Constants";
 import SuccessPopup from "./SuccessPopup";
+import "./success-popup.css";
+import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
+import { TailSpin } from "@agney/react-loading";
 
 class ManagePost extends Component {
   state = {
@@ -22,7 +25,6 @@ class ManagePost extends Component {
     file: null,
     fileImage: null,
     districtWardList: [],
-
     isRealEstateTypeMenuShow: false,
     realEstateTypes: [
       { key: 1, title: "Chung cư" },
@@ -80,7 +82,13 @@ class ManagePost extends Component {
     address: "",
     latitude: null,
     longitude: null,
+
+    newRealEstate: null,
+    // isLoading: true,
+    // isPopupOpen: false,
+    isLoaded: false,
   };
+  isIndicatorAnimating = false;
 
   componentWillMount() {
     console.log("will mount");
@@ -460,6 +468,40 @@ class ManagePost extends Component {
       ).toString(16)
     );
   }
+
+  renderContent = (title) => {
+    console.log("load");
+    console.log(this.state.isLoaded);
+    console.log(this.isIndicatorAnimating);
+    if (!this.state.isLoaded) {
+      console.log("not again");
+      setTimeout(() => {
+        // this.isIndicatorAnimating = false;
+        // this.state.isLoaded = true;
+        this.setState({
+          isLoaded: true,
+        });
+      }, 3500);
+      return (
+        <React.Fragment>
+          <div className="success-popup-icon-container">
+            <div className="loading-indicator-container">
+              <TailSpin className="loading-indicator" />
+            </div>
+          </div>
+          <span>Xin vui lòng đợi. Hệ thống đang xử lý...</span>
+        </React.Fragment>
+      );
+    }
+    return (
+      <React.Fragment>
+        <div className="success-popup-icon-container">
+          <CheckCircleOutlineOutlinedIcon className="icon" />
+        </div>
+        <span>Chúc Mừng! Bạn đã tạo bài viết thành công!</span>
+      </React.Fragment>
+    );
+  };
 
   render() {
     return (
@@ -851,6 +893,9 @@ class ManagePost extends Component {
             <div className="row reverse-row">
               <div
                 //   onClick={this.handleCreatePost}
+                // onClick={() => {
+                //   this.state.isPopupOpen = true;
+                // }}
                 className="noselect create-button"
               >
                 &#65291;
@@ -860,10 +905,25 @@ class ManagePost extends Component {
           }
         >
           {(close) => (
-            <SuccessPopup
-              close={close}
-              title="Chúc Mừng! Bạn đã tạo bài viết thành công!"
-            />
+            <div className="success-popup-container">
+              {this.renderContent("thisis")}
+              <div
+                onClick={() => {
+                  if(this.state.isLoaded) {
+                    this.state.isLoaded = false;
+                  }
+                  this.isIndicatorAnimating = false;
+                  close();
+                }}
+                className="noselect confirm"
+              >
+                <span>OK</span>
+              </div>
+            </div>
+            // <SuccessPopup
+            //   close={close}
+            //   title="Chúc Mừng! Bạn đã tạo bài viết thành công!"
+            // />
           )}
         </Popup>
 
