@@ -1,26 +1,20 @@
 import React, { useState, useEffect } from "react";
 
-export const Contact = ({ id, data }) => {
-  var [selectedItem, setSelectedItem] = useState(false);
-  // selectedItem = false;
+export const Contact = ({ id, data, currentChat }) => {
+  const deal = data?.deal;
+
+  const dealText = data?.dealPrice + " tỷ (" + deal + ")";
+  console.log("current:" + id);
+  console.log("id:" + currentChat?.id);
   return (
-    <div
-      className={"contact_item"}
-      onClick={() => {
-        console.log(data);
-        setSelectedItem(true);
-        //+ (selectedItem ? "selected-contact-item" : "")
-        // console.log(selectedContactItem(conversations, conversation));
-      }}
-      tabIndex="0"
-    >
-      {/* <div className="presentation-pic-container">
-        <img src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg" alt="" />
-      </div> */}
-      <div id={id} className={"right-content-container"}>
-        {/* <h4>Bất Động Sản: Vinhome</h4>
-        <span>Seller: Hello</span> */}
-        <h4>{data.title}</h4>
+    <div className={"contact_item"}>
+      <div
+        id={id}
+        className={currentChat?.id === id ? "item_selected" : "item_unselect"}
+      >
+        <p className="contact-title">{data.title}</p>
+        {deal && deal === "pending" && dealText === "đang chờ"}
+        <p className="contact-info">Thỏa thuận: {deal ? dealText : "không"}</p>
       </div>
     </div>
   );

@@ -32,7 +32,7 @@ export const Login = () => {
               .doc(user.uid)
               .set({
                 uuid: user.uid,
-                userName: "user" + user.phoneNumber,
+                userName: user.phoneNumber,
                 phoneNumber: user.phoneNumber,
                 photoURL: user.photoURL + "",
                 role: "customer",

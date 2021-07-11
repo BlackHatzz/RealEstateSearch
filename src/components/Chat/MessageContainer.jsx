@@ -140,18 +140,20 @@ export const MessageContainer = ({ conversation, handleBook }) => {
           {message.message && <p>{message.message}</p>}
           {message.deal && (
             <div className="deal_message">
-              <p>Thỏa thuận</p>
-              <p>Giá {message.deal} tỷ</p>
               {role === "buyer" && (
                 <div>
                   {message.status === "pending" && (
                     <div className="buyer-deal-message">
+                      <p>Thỏa thuận</p>
+                      <p>Giá {message.deal} tỷ</p>
                       <p>đang chờ trả lời</p>
                       <button onClick={handleCancelDeal}>Hủy</button>
                     </div>
                   )}
                   {message.status === "accepted" && (
                     <div className="buyer-deal-message">
+                      <p>Thỏa thuận</p>
+                      <p>Giá {message.deal} tỷ</p>
                       <p>đã được chấp nhận</p>
                       <button
                         disabled={
@@ -165,10 +167,11 @@ export const MessageContainer = ({ conversation, handleBook }) => {
                       </button>
                     </div>
                   )}
-                  {message.status === "refused" && <div>đã bị từ chối</div>}
-                  {message.status === "cancel" && <div>đã hủy</div>}
+                  {message.status === "refused" && <div>Đã bị từ chối</div>}
+                  {message.status === "cancel" && <div>Thỏa thuận đã hủy</div>}
                 </div>
               )}
+
               {role === "seller" && (
                 <div className="seller-deal-message">
                   {message.status === "pending" && (

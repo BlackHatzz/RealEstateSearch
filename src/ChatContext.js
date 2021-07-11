@@ -3,9 +3,10 @@ import React, { useState } from "react";
 export const Context = React.createContext();
 
 const ChatContext = (props) => {
-  const aCallback = () => {};
+  // const aCallback = () => {};
 
   const [chatId, setChatId] = useState("0");
+  const [chatRealId, setChatRealId] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useState();
   return (
@@ -14,7 +15,9 @@ const ChatContext = (props) => {
         chatId,
         isOpen,
         role,
+        chatRealId,
         updateChat: (id) => setChatId(id),
+        updateChatRealId: (id) => setChatRealId(id),
         updateOpen: () => setIsOpen(true),
         updateClose: () => setIsOpen(false),
         updateSellerRole: () => setRole("seller"),

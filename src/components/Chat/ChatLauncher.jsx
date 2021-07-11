@@ -9,29 +9,56 @@ export const ChatLauncher = () => {
   const classList = ["launcher", isOpen ? "_opened" : ""];
   const uid = fb.auth.currentUser.uid;
   const [conversations, setConversations] = useState([]);
+  const [reals, setReals] = useState([]);
 
   useEffect(() => {
-    const unsubscribe = fb.firestore
-      .collection("conversations")
-      .where(role + "Id", "==", uid)
-      .onSnapshot((snapshot) => {
-        setConversations(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
-      });
-    return () => {
-      unsubscribe();
-    };
+    if (role === "buyer") {
+      const unsubscribe = fb.firestore
+        .collection("conversations")
+        .where(role + "Id", "==", uid)
+        .onSnapshot((snapshot) => {
+          setConversations(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+
+      return () => {
+        unsubscribe();
+      };
+    }
+    if (role === "seller") {
+      const unsubscribe = fb.firestore
+        .collection("realestates")
+        .where(role + "Id", "==", uid)
+        .where("chats", "!=", [])
+        .onSnapshot((snapshot) => {
+          console.log(snapshot);
+          setReals(
+            snapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
+        });
+
+      return () => {
+        unsubscribe();
+      };
+    }
   }, [role, uid]);
 
   return (
     <div id="launcher">
       <div className={classList.join("")}>
         {isOpen ? (
-          <ChatWindow onClickChat={updateClose} conversations={conversations} />
+          <ChatWindow
+            onClickChat={updateClose}
+            conversations={conversations}
+            reals={reals}
+          />
         ) : (
           <ChatWindowButton onClickChat={updateOpen} />
         )}
