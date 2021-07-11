@@ -67,6 +67,7 @@ export const ChatButton = (props) => {
               area: props.product.area,
               bed: props.product.numberOfBedroom,
               bath: props.product.numberOfBathroom,
+              lastMessage: "",
               // deal: "none",
               // dealId: "",
               // appointment: "none",

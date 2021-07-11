@@ -1,3 +1,4 @@
+import { LensTwoTone } from "@material-ui/icons";
 import moment from "moment";
 import "moment/locale/vi";
 import React, { useEffect, useState, useRef, useContext } from "react";
@@ -24,14 +25,16 @@ export const MessageContainer = ({ conversation, handleBook }) => {
     }
   }, []);
   useEffect(() => {
+    let getMessages = () => {};
+    let setInfo = () => {};
     if (conversation) {
-      fb.firestore
+      getMessages = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
         .collection("messages")
         .orderBy("timestamp", "asc")
         .onSnapshot((snap) => setMessages(snap.docs.map((doc) => doc.data())));
-      fb.firestore
+      setInfo = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
         .onSnapshot((doc) => {
@@ -39,7 +42,10 @@ export const MessageContainer = ({ conversation, handleBook }) => {
           setBookId(doc.data().appointmentId);
         });
     }
-    return () => {};
+    return () => {
+      getMessages();
+      setInfo();
+    };
   }, [conversation, uuid]);
 
   const handleAccept = () => {
