@@ -141,46 +141,46 @@ class HomePage extends Component {
 
   componentDidMount() {
     // console.log(fb.auth.currentUser.uid);
-    const { searchText } = this.state;
-    console.log("search ");
-    console.log(searchText);
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        page: 0,
-        address: "phu",
-        title: "phu",
-        project: null,
-        fromPrice: null,
-        toPrice: null,
-        fromArea: null,
-        toArea: null,
-        type: null,
-      }),
-    };
+    // const { searchText } = this.state;
+    // console.log("search ");
+    // console.log(searchText);
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     page: 0,
+    //     address: "phu",
+    //     title: "phu",
+    //     project: null,
+    //     fromPrice: null,
+    //     toPrice: null,
+    //     fromArea: null,
+    //     toArea: null,
+    //     type: null,
+    //   }),
+    // };
 
-    fetch(
-      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/getRealEstateDetail",
-      requestOptions
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          // console.log(result.content);
-          console.log("cloud");
-          console.log(result);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
-        }
-      );
+    // fetch(
+    //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/getRealEstateDetail",
+    //   requestOptions
+    // )
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       // console.log(result.content);
+    //       console.log("cloud");
+    //       console.log(result);
+    //     },
+    //     // Note: it's important to handle errors here
+    //     // instead of a catch() block so that we don't swallow
+    //     // exceptions from actual bugs in components.
+    //     (error) => {
+    //       // this.setState({
+    //       //   isLoaded: true,
+    //       //   error,
+    //       // });
+    //     }
+    //   );
   }
 
   handleFilter = (filterKey, filterTypeKey, itemKey, title) => {

@@ -21,6 +21,14 @@
   background-color: rgb(80, 80, 80);
 }
 
+.plastic-white {
+  background-color: #dadde2;
+}
+
+.confirm-green {
+  background-color: #00c896;
+}
+
 .vertical {
   display: flex;
   flex-direction: column;
