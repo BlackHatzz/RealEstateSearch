@@ -11,6 +11,7 @@ export const SellerChatContainer = ({ real }) => {
   const username = fb.auth.currentUser.displayName;
   const [conversations, setConversations] = useState([]);
   const [selectedChat, setSelectedChat] = useState();
+  const dealText = selectedChat.data?.dealPrice + " tỷ (" + "deal" + ")";
 
   const getConversations = () => {
     fb.firestore
@@ -118,7 +119,9 @@ export const SellerChatContainer = ({ real }) => {
             </Formik>
           </div>
         </div>
-        <div className="seller-chat-box-body-right"></div>
+        <div className="seller-chat-box-body-right">
+          {selectedChat.data?.dealPrice === undefined && <p>khong co deal</p>}
+        </div>
       </div>
     </div>
   );
