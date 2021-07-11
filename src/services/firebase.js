@@ -28,7 +28,7 @@ export const fb = {
   storage: firebase.storage(),
   firestore: firebase.firestore(),
   googleAuth: new firebase.auth.GoogleAuthProvider(),
-  messaging: firebase.messaging(),
+  // messaging: firebase.messaging(),
   phoneProvider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
 };
 
