@@ -1,0 +1,44 @@
+.seller-menu {
+  background-color: rgb(238, 238, 238);
+  border-right: 1px solid black;
+  padding: 20px 10px 10px 10px;
+}
+
+.seller-menu-button {
+  background-color: white;
+  height: 60px;
+  width: 150px;
+  margin-bottom: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.seller-menu-button-active {
+  background-color: black;
+  height: 60px;
+  width: 150px;
+  margin-bottom: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.seller-menu-button-active:hover {
+  box-shadow: 5px 10px gray;
+}
+
+.seller-menu-button:hover {
+  box-shadow: 5px 10px gray;
+}
+.seller-menu-link {
+  text-decoration: none;
+  text-decoration-color: none;
+  color: black;
+  font-weight: 200;
+}
+.seller-menu-link-active {
+  text-decoration: none;
+  text-decoration-color: none;
+  color: white;
+  font-weight: 200;
+}

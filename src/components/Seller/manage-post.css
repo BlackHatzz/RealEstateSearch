@@ -74,7 +74,6 @@
   flex-direction: row;
   align-items: center;
   justify-content: center;
-
 }
 
 .seller-wrapper > .left-container > .item .icon {
@@ -435,4 +434,10 @@
   border-bottom: 20px solid transparent;
 
   border-left: 20px solid black;
+}
+
+.manage-container {
+  flex-direction: column;
+  display: flex;
+  width: 100%;
 }
