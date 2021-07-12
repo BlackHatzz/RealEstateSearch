@@ -2,8 +2,6 @@ import React, { Component } from 'react';
 import "./shared.css";
 import "./search-suggestion.css";
 import Constants from "../global/Constants";
-import { RiArrowDropDownLine } from "react-icons/ri";
-import FilterItemListMenu from "./FilterItemListMenu";
 
 class FromToFilterMenu extends Component {
     handleSelectItem = (option) => {

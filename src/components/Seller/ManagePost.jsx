@@ -17,6 +17,8 @@ import SuccessPopup from "./SuccessPopup";
 import "./success-popup.css";
 import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
 import { TailSpin } from "@agney/react-loading";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
 
 class ManagePost extends Component {
   state = {
@@ -423,8 +425,8 @@ class ManagePost extends Component {
                 wardId: this.state.selectedWardId,
                 streetName: streetName,
                 realEstateNo: houseNo,
-                latitude: realEstateLocation.lat.toString(),
-                longitude: realEstateLocation.lng.toString(),
+                latitude: realEstateLocation.lat,
+                longitude: realEstateLocation.lng,
                 typeId: 2,
                 description: description,
                 area: area,
@@ -462,7 +464,7 @@ class ManagePost extends Component {
             };
 
             fetch(
-              "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/createRealEstate",
+              Constants.createRealEstateRef,
               requestOptions
             )
               .then((res) => res.json())
@@ -769,6 +771,10 @@ class ManagePost extends Component {
                 this.state.realEstateTypes,
                 "real-estate-type-input"
               )}
+              {/* <RiArrowDropDownLine className="drop-down-icon" /> */}
+            </div>
+            <div className="drop-down-icon-container">
+              <ArrowDropDownIcon className="drop-down-icon" />
             </div>
           </div>
 
@@ -810,6 +816,9 @@ class ManagePost extends Component {
                 this.state.doorDirections,
                 "door-direction-input"
               )}
+            </div>
+            <div className="drop-down-icon-container">
+              <ArrowDropDownIcon className="drop-down-icon" />
             </div>
           </div>
 
@@ -859,6 +868,9 @@ class ManagePost extends Component {
                 "balcony-direction-input"
               )}
             </div>
+            <div className="drop-down-icon-container">
+              <ArrowDropDownIcon className="drop-down-icon" />
+            </div>
           </div>
         </div>
 
@@ -906,6 +918,9 @@ class ManagePost extends Component {
               {/* drop down when selected */}
               {this.renderDistrictMenu()}
             </div>
+            <div className="drop-down-icon-container">
+              <ArrowDropDownIcon className="drop-down-icon" />
+            </div>
           </div>
           <div className="col2">
             <h2 className="title">Phường/Xã</h2>
@@ -926,6 +941,9 @@ class ManagePost extends Component {
               />
               {/* drop down when selected */}
               {this.renderWardMenu()}
+            </div>
+            <div className="drop-down-icon-container">
+              <ArrowDropDownIcon className="drop-down-icon" />
             </div>
           </div>
         </div>

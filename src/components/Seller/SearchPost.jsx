@@ -10,12 +10,12 @@ import {
 import Realestate from "../Chat/Realestate";
 import { useHistory } from "react-router";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-  } from "react-router-dom";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
 
 const SearchPost = () => {
   var [realEstateList, setRealEstateList] = useState([]);
@@ -133,12 +133,12 @@ const SearchPost = () => {
     // useHistory().push("/manage-post");
     // useNavigate().navigate("/manage-post");
     // useHistory().push("/manage-post");
-  }
+  };
 
   return (
     <React.Fragment>
       <div className="seller-search-post-wrapper">
-        <div style={{ height: "50px" }}></div>
+        <div style={{ height: "30px" }}></div>
         <div className="plastic-white seller-search-post-search-bar-container">
           <SearchIcon className="icon" />
           <input
@@ -147,7 +147,10 @@ const SearchPost = () => {
           />
         </div>
 
-        <Link to={"/manage-post"} className="confirm-green noselect seller-search-post-create-post">
+        <Link
+          to={"/manage-post"}
+          className="confirm-green noselect seller-search-post-create-post"
+        >
           <span>Create Post</span>
         </Link>
 
@@ -169,7 +172,7 @@ const SearchPost = () => {
                 status = "sold-out";
                 title = "Đã bán";
               } else {
-                if (realEstate.staffId == null) {
+                if (realEstate.status === "inactive") {
                   status = "non-censored";
                   title = "Chưa kiểm duyệt";
                 } else {
@@ -219,8 +222,7 @@ const SearchPost = () => {
 
                   {/* address */}
                   <span className="address">
-                    Đường {realEstate.streetName}, Phường {realEstate.wardName},
-                    Quận {realEstate.disName}
+                    Đường {realEstate.streetName}, {realEstate.wardName}, {realEstate.disName}
                   </span>
 
                   {/* description */}
