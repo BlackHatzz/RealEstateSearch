@@ -35,7 +35,6 @@ export const ChatLauncher = () => {
         .where(role + "Id", "==", uid)
         .where("chats", "!=", [])
         .onSnapshot((snapshot) => {
-          console.log(snapshot);
           setReals(
             snapshot.docs.map((doc) => ({
               id: doc.id,

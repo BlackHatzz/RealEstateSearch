@@ -413,14 +413,14 @@ option {
 }
 .seller-deal-message {
   display: flex;
-  width: 120px;
+  width: auto;
 }
-
 .seller-deal-message-pending-button {
   padding-top: 5px;
   display: flex;
   flex: 1;
   justify-content: space-evenly;
+  width: 150px;
 }
 
 .seller-deal-message-pending-button > button {
@@ -483,6 +483,9 @@ option {
   border-bottom: 1px solid #c0c0c0;
   display: flex;
   flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 80px;
 }
 
 .buyer-info-selected,
@@ -491,16 +494,17 @@ option {
   border-radius: 5px;
   margin: 2px 0px 2px 5px;
   cursor: pointer;
+  width: 120px;
 }
 .buyer-info-selected {
-  background-color: gray;
+  border: 1px solid #c0c0c0;
 }
 .buyer-info-notselected {
-  background-color: rgb(230, 230, 230);
+  background-color: white;
 }
 .seller-chat-box-body {
   display: flex;
-  /* height: 100%; */
+  height: 100%;
   overflow: auto;
 }
 .seller-chat-box-body-left {
@@ -512,8 +516,8 @@ option {
 
 .seller-chat-box-body-right {
   display: flex;
-  background-color: #fcba03;
   width: 30%;
+  flex-direction: column;
 }
 
 .textarea-input {
@@ -545,4 +549,22 @@ option {
   flex-direction: column;
   height: 100%;
   overflow: auto;
+}
+.buyer-info-name {
+  padding-left: 5px;
+  font-weight: 600;
+}
+.buyer-info-lastmessage {
+  color: #0352fc;
+  padding-left: 10px;
+}
+.buyer-info-deal {
+  padding-left: 5px;
+  font-size: 12px;
+  color: #afafaf;
+}
+.buyer-info-lastmessage {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }

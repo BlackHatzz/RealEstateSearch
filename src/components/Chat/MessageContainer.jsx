@@ -13,6 +13,8 @@ export const MessageContainer = ({ conversation, handleBook }) => {
   const [dealId, setDealId] = useState();
   const [bookId, setBookId] = useState();
 
+  const [refuseInput, setRefuseInput] = useState("");
+  const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   // const [deals, setDeals] = useState([]);
   // const [appointments, setAppointments] = useState([]);
   const messageEl = useRef(null);
@@ -34,6 +36,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
         .collection("messages")
         .orderBy("timestamp", "asc")
         .onSnapshot((snap) => setMessages(snap.docs.map((doc) => doc.data())));
+
       setInfo = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
@@ -62,11 +65,16 @@ export const MessageContainer = ({ conversation, handleBook }) => {
           fb.firestore.collection("conversations").doc(conversation.id).update({
             deal: "accepted",
           });
+
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            lastMessage: "chấp nhận thỏa thuận",
+          });
         });
     }
   };
-  const handleRefuse = () => {
-    if (dealId) {
+  const handleRefuse = (e) => {
+    e.preventDefault();
+    if (dealId !== undefined) {
       fb.firestore
         .collection("conversations")
         .doc(conversation.id)
@@ -74,11 +82,19 @@ export const MessageContainer = ({ conversation, handleBook }) => {
         .doc(dealId)
         .update({
           status: "refused",
+          reason: refuseInput,
         })
         .then(() => {
           fb.firestore.collection("conversations").doc(conversation.id).update({
             deal: "refused",
+            dealReason: refuseInput,
           });
+
+          fb.firestore.collection("conversations").doc(conversation.id).update({
+            lastMessage: refuseInput,
+          });
+          setRefuseInputTrigger(false);
+          setRefuseInput("");
         });
     }
   };
@@ -175,7 +191,12 @@ export const MessageContainer = ({ conversation, handleBook }) => {
                       </button>
                     </div>
                   )}
-                  {message.status === "refused" && <div>Đã bị từ chối</div>}
+                  {message.status === "refused" && (
+                    <div>
+                      thỏa thuận bị từ chối
+                      <p>Lý do: {message?.reason}</p>
+                    </div>
+                  )}
                   {message.status === "cancel" && <div>Thỏa thuận đã hủy</div>}
                 </div>
               )}
@@ -183,13 +204,60 @@ export const MessageContainer = ({ conversation, handleBook }) => {
               {role === "seller" && (
                 <div className="seller-deal-message">
                   {message.status === "pending" && (
-                    <div className="seller-deal-message-pending-button">
-                      <button onClick={handleAccept}>đồng ý</button>
-                      <button onClick={handleRefuse}>từ chối</button>
+                    <div className="seller-deal-message-pending">
+                      <p>Thỏa thuận</p>
+                      <p>Giá {message.deal} tỷ</p>
+                      {refuseInputTrigger ? (
+                        <form onSubmit={(e) => handleRefuse(e)}>
+                          <input
+                            onChange={(e) => {
+                              setRefuseInput(e.target.value);
+                            }}
+                            value={refuseInput}
+                            type="text"
+                            maxLength="30"
+                            size="22"
+                            placeholder="lý do từ chối ( tối đa 30 ký tự )"
+                            required
+                          />
+                          <button
+                            type="submit"
+                            disabled={refuseInput === "" ? true : false}
+                          >
+                            chấp nhận
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setRefuseInputTrigger(false);
+                            }}
+                          >
+                            hủy
+                          </button>
+                        </form>
+                      ) : (
+                        <div className="seller-deal-message-pending-button">
+                          <button onClick={handleAccept}>đồng ý</button>
+                          <button
+                            onClick={() => {
+                              setRefuseInputTrigger(true);
+                            }}
+                          >
+                            từ chối
+                          </button>
+                        </div>
+                      )}
                     </div>
                   )}
-                  {message.status === "accepted" && <div>đã chấp nhận</div>}
-                  {message.status === "refused" && <div>đã từ chối</div>}
+                  {message.status === "accepted" && (
+                    <div>Bạn đã chấp nhận thỏa thuận giá {message.deal} tỷ</div>
+                  )}
+                  {message.status === "refused" && (
+                    <div>
+                      đã từ chối thỏa thuận
+                      <p>Lý do: {message?.reason}</p>
+                    </div>
+                  )}
                   {message.status === "cancel" && <div>đã hủy</div>}
                 </div>
               )}

@@ -5,6 +5,11 @@ import TelegramIcon from "@material-ui/icons/Telegram";
 import { fb } from "../../services";
 import firebase from "firebase/app";
 import { MessageContainer } from "./MessageContainer";
+import { SortByAlpha } from "@material-ui/icons";
+import { BuyerInfoBox } from "./BuyerInfoBox";
+import moment from "moment";
+import "moment/locale/vi";
+
 export const SellerChatContainer = ({ real }) => {
   const chats = real.data.chats;
   const uuid = fb.auth.currentUser.uid;
@@ -13,10 +18,11 @@ export const SellerChatContainer = ({ real }) => {
   const [selectedChat, setSelectedChat] = useState();
   const [currentInput, setCurrentInput] = useState("");
 
-  const getConversations = () => {
-    fb.firestore
+  useEffect(() => {
+    const unsubscribe = fb.firestore
       .collection("conversations")
-      .where(firebase.firestore.FieldPath.documentId(), "in", chats)
+      // .where(firebase.firestore.FieldPath.documentId(), "in", chats)
+      .where("realId", "==", real.data.id)
       .onSnapshot((snap) => {
         setConversations(
           snap.docs
@@ -24,14 +30,17 @@ export const SellerChatContainer = ({ real }) => {
               id: doc.id,
               data: doc.data(),
             }))
-            .filter((e) => e.data.lastMessage !== "")
+            .filter(
+              (e) =>
+                e.data.lastMessage !== "" && e.data.lastMessage !== undefined
+            )
         );
       });
-  };
 
-  useEffect(() => {
-    getConversations();
-  }, [chats]);
+    return () => {
+      unsubscribe();
+    };
+  }, [real]);
 
   return (
     <div className="seller-chat-box">
@@ -43,18 +52,40 @@ export const SellerChatContainer = ({ real }) => {
         <div className="seller-left-chat-box">
           <div className="buyer-select-box">
             {conversations.map((chat) => (
-              <div
-                key={chat.id}
-                onClick={() => {
-                  setSelectedChat(chat);
-                }}
-                className={
-                  chat.id === selectedChat?.id
-                    ? "buyer-info-selected"
-                    : "buyer-info-notselected"
-                }
-              >
-                {chat.data.buyer}
+              <div key={chat.id}>
+                <div
+                  onClick={() => {
+                    setSelectedChat(chat);
+                  }}
+                  className={
+                    chat.id === selectedChat?.id
+                      ? "buyer-info-selected"
+                      : "buyer-info-notselected"
+                  }
+                >
+                  <p className="buyer-info-name">{chat.data.buyer}</p>
+                  {chat.data?.deal === undefined && (
+                    <p className="buyer-info-deal">Chưa có thỏa thuận</p>
+                  )}
+                  {chat.data?.deal === "pending" && (
+                    <p className="buyer-info-deal">
+                      {chat.data?.dealPrice} tỷ (đang chờ)
+                    </p>
+                  )}
+                  {chat.data?.deal === "refused" && (
+                    <p className="buyer-info-deal">
+                      {chat.data?.dealPrice} tỷ (từ chối)
+                    </p>
+                  )}
+                  {chat.data?.deal === "accepted" && (
+                    <p className="buyer-info-deal">
+                      {chat.data?.dealPrice} tỷ (chấp nhận)
+                    </p>
+                  )}
+                  <p className="buyer-info-lastmessage">
+                    {chat.data.lastMessage}
+                  </p>
+                </div>
               </div>
             ))}
           </div>
@@ -88,6 +119,12 @@ export const SellerChatContainer = ({ real }) => {
                       .finally(() => {
                         setCurrentInput("");
                       });
+                    fb.firestore
+                      .collection("conversations")
+                      .doc(selectedChat.id)
+                      .update({
+                        lastMessage: currentInput,
+                      });
                   }}
                 >
                   <textarea
@@ -118,11 +155,8 @@ export const SellerChatContainer = ({ real }) => {
                 </form>
               </div>
             </div>
-            <div className="seller-chat-box-body-right">
-              {selectedChat?.data?.dealPrice === undefined && (
-                <p>khong co deal</p>
-              )}
-            </div>
+
+            <BuyerInfoBox selectedChat={selectedChat} />
           </div>
         </div>
       )}

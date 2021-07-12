@@ -74,7 +74,9 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
             }
             // { merge: true }
           );
-
+        fb.firestore.collection("conversations").doc(currentChat.id).update({
+          lastMessage: "thỏa thuận",
+        });
         setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
@@ -287,8 +289,8 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                   }}
                 >
                   <SellerChatItem
-                    id={real.id}
                     currentReal={currentReal}
+                    id={real.id}
                     data={real.data}
                   />
                 </div>

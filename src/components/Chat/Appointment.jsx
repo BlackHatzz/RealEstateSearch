@@ -138,9 +138,13 @@ function Appointment({ setTrigger, conversation }) {
           {
             appointment: "upcoming",
             appointmentId: bookId,
+            appointmentDate: date,
           },
           { merge: true }
         );
+        fb.firestore.collection("conversations").doc(conversation.id).update({
+          lastMessage: "lịch hẹn",
+        });
 
         fb.firestore
           .collection("users")
