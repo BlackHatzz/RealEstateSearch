@@ -4,8 +4,7 @@ export const Contact = ({ id, data, currentChat }) => {
   const deal = data?.deal;
 
   const dealText = data?.dealPrice + " tỷ (" + deal + ")";
-  console.log("current:" + id);
-  console.log("id:" + currentChat?.id);
+
   return (
     <div className={"contact_item"}>
       <div

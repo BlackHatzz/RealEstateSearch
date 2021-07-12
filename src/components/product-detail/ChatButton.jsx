@@ -11,6 +11,8 @@ export const ChatButton = (props) => {
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
     const buyername = fb.auth.currentUser.displayName;
+    const buyerPhone = fb.auth.currentUser.phoneNumber;
+    const buyerAvatar = fb.auth.currentUser.photoURL;
     const address =
       props.product.streetName +
       ", " +
@@ -67,6 +69,8 @@ export const ChatButton = (props) => {
               area: props.product.area,
               bed: props.product.numberOfBedroom,
               bath: props.product.numberOfBathroom,
+              buyerPhone: buyerPhone,
+              buyerAvatar: buyerAvatar,
               // deal: "none",
               // dealId: "",
               // appointment: "none",

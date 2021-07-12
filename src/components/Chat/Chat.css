@@ -210,15 +210,16 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
-  border-radius: 4px;
+  border-radius: 20px;
   padding: 0 8px;
   margin-left: 4px;
   height: 40px;
   width: 40px;
 }
-.button_send_message:hover {
-  background-color: rgb(219, 217, 217);
+.button_send_message:disabled {
+  cursor: not-allowed;
 }
+
 .contact_item:hover .item_unselect {
   background-color: rgb(225, 225, 225);
 }
@@ -334,6 +335,7 @@ option {
   justify-content: center;
   padding: 8px 12px;
   border-radius: 25px;
+  word-wrap: break-word;
 }
 .chat-field {
   background-color: transparent;
@@ -411,14 +413,14 @@ option {
 }
 .seller-deal-message {
   display: flex;
-  width: 120px;
+  width: auto;
 }
-
 .seller-deal-message-pending-button {
   padding-top: 5px;
   display: flex;
   flex: 1;
   justify-content: space-evenly;
+  width: 150px;
 }
 
 .seller-deal-message-pending-button > button {
@@ -453,15 +455,19 @@ option {
   cursor: not-allowed;
 }
 
-.real-item {
-  background-color: white;
+.real-item,
+.real-item-selected {
   padding: 5px;
   height: 60px;
   margin: 5px 8px 5px 8px;
   border-radius: 5px;
   cursor: pointer;
 }
-.real-item:hover {
+.real-item-selected {
+  background-color: #c0c0c0;
+}
+.real-item:hover,
+.real-item-selected:hover {
   background-color: #c0c0c0;
 }
 .seller-chat-box {
@@ -477,6 +483,9 @@ option {
   border-bottom: 1px solid #c0c0c0;
   display: flex;
   flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  height: 80px;
 }
 
 .buyer-info-selected,
@@ -485,12 +494,13 @@ option {
   border-radius: 5px;
   margin: 2px 0px 2px 5px;
   cursor: pointer;
+  width: 120px;
 }
 .buyer-info-selected {
-  background-color: gray;
+  border: 1px solid #c0c0c0;
 }
 .buyer-info-notselected {
-  background-color: rgb(230, 230, 230);
+  background-color: white;
 }
 .seller-chat-box-body {
   display: flex;
@@ -506,6 +516,64 @@ option {
 
 .seller-chat-box-body-right {
   display: flex;
-  background-color: #fcba03;
   width: 30%;
+  flex-direction: column;
+}
+
+.textarea-input {
+  resize: none;
+  overflow: hidden;
+  /* min-height: 10px; */
+  overflow-y: auto;
+  font-size: 14px;
+  height: 20px;
+  border-radius: 5px;
+  border: none;
+  background-color: #ebebeb;
+  width: 100%;
+  padding-left: 10px;
+  padding-top: 5px;
+}
+.textarea-input:focus {
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  text-decoration: none;
+}
+.message-input-form {
+  display: flex;
+  align-items: center;
+}
+.seller-left-chat-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+.buyer-info-name {
+  padding-left: 5px;
+  font-weight: 600;
+}
+.buyer-info-lastmessage {
+  color: #0352fc;
+  padding-left: 10px;
+}
+.buyer-info-deal {
+  padding-left: 5px;
+  font-size: 12px;
+  color: #afafaf;
+}
+.buyer-info-lastmessage {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.info-title {
+  background-color: #f0f0f0;
+  padding: 5px 0px 5px 10px;
+  font-weight: 600;
+}
+.info-text {
+  padding-left: 10px;
+  padding-top: 10px;
 }

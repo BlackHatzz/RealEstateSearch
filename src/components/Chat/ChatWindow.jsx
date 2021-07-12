@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { defaultValues, validationSchema } from "./formikDealConfig";
@@ -21,29 +21,32 @@ import { SellerChatContainer } from "./SellerChatContainer";
 export const ChatWindow = ({ onClickChat, conversations, reals }) => {
   const { role, chatId, updateChat, chatRealId, updateChatRealId } =
     useContext(Context);
+
   const [currentChat, setCurrentChat] = useState();
   const [currentReal, setCurrentReal] = useState();
   const username = fb.auth.currentUser.displayName;
   const uuid = fb.auth.currentUser.uid;
   const [dealId, setDealId] = useState();
-  // const [appointments, setAppointments] = useState([]);
   const [dealtrigger, setDealtrigger] = useState(false);
   const [booktrigger, setBooktrigger] = useState(false);
+  const [currentInput, setCurrentInput] = useState("");
 
   useEffect(() => {
-    if (role === "buyer") {
-      const index = conversations.findIndex((e) => e.id === chatId);
-      if (index > -1) {
-        setCurrentChat(conversations[index]);
+    return () => {
+      if (role === "buyer") {
+        const index = conversations.findIndex((e) => e.id === chatId);
+        if (index > -1) {
+          setCurrentChat(conversations[index]);
+        }
+        setDealId(uuidv4());
       }
-      setDealId(uuidv4());
-    }
-    if (role === "seller") {
-      const index = reals.findIndex((e) => e.id === chatRealId);
-      if (index > -1) {
-        setCurrentReal(reals[index]);
+      if (role === "seller") {
+        const index = reals.findIndex((e) => e.id === chatRealId);
+        if (index > -1) {
+          setCurrentReal(reals[index]);
+        }
       }
-    }
+    };
   }, [chatId, chatRealId, conversations, reals, role]);
 
   function submitDeal({ deal }, { setSubmitting }) {
@@ -71,7 +74,9 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
             }
             // { merge: true }
           );
-
+        fb.firestore.collection("conversations").doc(currentChat.id).update({
+          lastMessage: "thỏa thuận",
+        });
         setDealtrigger((value) => !value);
       })
       .finally(() => setSubmitting(false));
@@ -85,6 +90,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
     setDealtrigger(false);
     setBooktrigger((value) => !value);
   };
+
   return (
     <div className="chat_window">
       <ChatWindowHeader onClickChat={onClickChat} />
@@ -188,65 +194,62 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                   </div>
                 )}
 
-                <Formik
-                  onSubmit={(values, { setSubmitting, resetForm }) => {
-                    fb.firestore
+                <form
+                  className="message-input-form"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    let docref = fb.firestore
                       .collection("conversations")
                       .doc(currentChat.id)
                       .collection("messages")
-                      .add({
+                      .doc();
+                    docref
+                      .set({
+                        id: docref.id,
                         type: "text",
-                        message: values.Input,
+                        message: currentInput,
                         sender: username,
                         timestamp:
                           firebase.firestore.FieldValue.serverTimestamp(),
                         senderId: uuid,
                       })
                       .finally(() => {
-                        resetForm({ values: "" });
-                        setSubmitting(false);
+                        setCurrentInput("");
+                      });
+                    fb.firestore
+                      .collection("conversations")
+                      .doc(currentChat.id)
+                      .update({
+                        lastMessage: currentInput,
                       });
                   }}
-                  // validateOnMount={true}
-                  initialValues={{ Input: "" }}
-                  validationSchema={Yup.object({
-                    Input: Yup.string().required().max(1000),
-                  })}
                 >
-                  {({
-                    isValid,
-                    isSubmitting,
-                    resetForm,
-                    handleSubmit,
-                    values,
-                    handleChange,
-                  }) => (
-                    <Form
-                      className="send-message-container"
-                      onSubmit={handleSubmit}
-                    >
-                      <div className="chat-field-container">
-                        <input
-                          maxlength="1000"
-                          className="chat-field"
-                          autoComplete="off"
-                          id="Input"
-                          value={values.Input}
-                          onChange={handleChange}
-                          type="text"
-                          placeholder="Gửi tin nhắn..."
-                        />
-                      </div>
-                      <button
-                        className="button_send_message"
-                        type="submit"
-                        disabled={isSubmitting || !isValid}
-                      >
-                        <TelegramIcon className="send-message-icon" />
-                      </button>
-                    </Form>
-                  )}
-                </Formik>
+                  <textarea
+                    maxLength="2000"
+                    className="textarea-input"
+                    autoComplete="off"
+                    value={currentInput}
+                    onChange={(e) => {
+                      setCurrentInput(e.target.value);
+                      const target = e.target;
+                      target.style.height = "20px";
+                      // target.style.height = `${target.scrollHeight}px`;
+                      target.style.height = `${Math.min(
+                        target.scrollHeight,
+                        80
+                      )}px`;
+                    }}
+                    placeholder="Gửi tin nhắn ..."
+                  />
+
+                  <button
+                    className="button_send_message"
+                    type="submit"
+                    disabled={currentInput === "" ? true : false}
+                  >
+                    <TelegramIcon className="send-message-icon" />
+                  </button>
+                </form>
               </div>
             </div>
           )}
@@ -259,8 +262,8 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                 <div
                   key={conversation.id}
                   onClick={() => {
-                    updateChat(conversation.id);
                     setCurrentChat(conversation);
+                    // updateChat(conversation.id);
                     setBooktrigger(false);
                     setDealtrigger(false);
                   }}
@@ -281,13 +284,13 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                 <div
                   key={real.id}
                   onClick={() => {
-                    updateChatRealId(real.id);
+                    // updateChatRealId(real.id);
                     setCurrentReal(real);
                   }}
                 >
                   <SellerChatItem
                     currentReal={currentReal}
-                    // id={real.id}
+                    id={real.id}
                     data={real.data}
                   />
                 </div>
