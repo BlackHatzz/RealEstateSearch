@@ -30,6 +30,10 @@ export const Seller = () => {
       path: "/search-post",
       main: () => <SearchPost />,
     },
+    // {
+    //   path: "/schedule",
+    //   main: () => <Schedule />,
+    // },
   ];
 
   return (
