@@ -25,6 +25,16 @@ import {
 
 const SellerDashboard = () => {
   var [selectedItem, setSelectedItem] = useState(1);
+  const otherRoutes = [
+    {
+      path: "/manage-post",
+      child: 
+        <div className="content-container">
+          <ManagePost />
+        </div>
+      ,
+    },
+  ];
   var [items, setItems] = useState([
     {
       key: 1,
@@ -35,8 +45,10 @@ const SellerDashboard = () => {
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/manage-post",
-      child: <div className="content-container"><ManagePost /></div>,
+      path: "/search-post",
+      child: <SearchPost />,
+      //   path: "/manage-post",
+      //   child: <div className="content-container"><ManagePost /></div>,
     },
     {
       key: 2,
@@ -50,24 +62,24 @@ const SellerDashboard = () => {
       path: "/transaction-history",
       child: <p>historyewew</p>,
     },
-    {
-      key: 3,
-      title: "Search",
-      icon: (
-        <HistoryIcon
-          id={"seller-dashboard-icon3"}
-          className="seller-dashboard-el icon"
-        />
-      ),
-      path: "/search-post",
-      child: <SearchPost />,
-    },
+    // {
+    //   key: 3,
+    //   title: "Search",
+    //   icon: (
+    //     <HistoryIcon
+    //       id={"seller-dashboard-icon3"}
+    //       className="seller-dashboard-el icon"
+    //     />
+    //   ),
+    //   path: "/search-post",
+    //   child: <SearchPost />,
+    // },
   ]);
 
   useEffect(() => {
     handleStyleForSelectedItem();
   }, []);
-  useHistory().push("/manage-post");
+  useHistory().push("/search-post");
   const handleSelectTab = (key) => {
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");
@@ -167,23 +179,27 @@ const SellerDashboard = () => {
             <div className="divide"></div>
 
             {/* <div className="content-container"> */}
-              {/* <ManagePost /> */}
+            {/* <ManagePost /> */}
 
-              <Switch>
-                {items.map((item) => (
-                  <Route
-                    key={item.key}
-                    path={item.path}
-                    children={() => item.child}
-                  />
-                ))}
+            <Switch>
+              {items.map((item) => (
+                <Route
+                  key={item.key}
+                  path={item.path}
+                  children={() => item.child}
+                />
+              ))}
 
-                {/* <Route
+              {/* <Route
                   key={2}
                   path={"/transaction-history"}
                   children={() => <p>history</p>}
                 /> */}
-              </Switch>
+
+                {otherRoutes.map((route) => (
+                    <Route key={route.path} path={route.path}  children={() => route.child} />
+                ))}
+            </Switch>
             {/* </div> */}
           </div>
         </Router>
