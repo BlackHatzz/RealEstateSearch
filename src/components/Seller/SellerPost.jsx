@@ -87,6 +87,11 @@ const PostItem = ({ real }) => {
       },
       { merge: true }
     );
+
+    fb.firestore.collection("conversations").doc(e.id).set({
+      status: "sold",
+    });
+
     handleClose();
   };
 
