@@ -65,30 +65,33 @@ export const SellerPost = () => {
 
 const PostItem = ({ real }) => {
   const [conversations, setConversations] = useState([]);
+  const [modalData, setModalData] = useState();
+
   const [open, setOpen] = useState(false);
   let status = real.data.status;
-  const handleOpen = () => {
+
+  const handleOpen = (conversation) => {
     setOpen(true);
+    setModalData(conversation);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleSold = (e) => {
-    console.log(real.data.id);
+  const handleSold = (conversation) => {
     let id = real.data.id + "";
     fb.firestore.collection("realestates").doc(id).set(
       {
         status: "closed",
-        finalBuyer: e.data.buyer,
-        finalBuyerId: e.data.buyerId,
-        finalPrice: e.data.dealPrice,
+        finalBuyer: conversation.data.buyer,
+        finalBuyerId: conversation.data.buyerId,
+        finalPrice: conversation.data.dealPrice,
       },
       { merge: true }
     );
 
-    fb.firestore.collection("conversations").doc(e.id).set({
+    fb.firestore.collection("conversations").doc(conversation.id).set({
       status: "sold",
     });
 
@@ -131,45 +134,50 @@ const PostItem = ({ real }) => {
           {conversations.length > 0 && (
             <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
           )}
-          {conversations.map((e) => (
+          {conversations.map((conversation) => (
             <div className="real-post-item-buyer">
               <div className="real-post-item-buyer-info">
-                <p>{e.data.buyer}</p>
+                <p>{conversation.data.buyer}</p>
                 <p className="real-post-item-buyer-deal">
-                  Thỏa thuận: {e.data.dealPrice} tỷ
+                  Thỏa thuận: {conversation.data.dealPrice} tỷ
                 </p>
                 <div className="real-post-item-buyer-book">
-                  <p>Lịch hẹn: {moment(e.data.appointmentDate).calendar()}</p>
-                  {/* {e.data.appointment === 'upcoming' && <p>()</p>} */}
+                  <p>
+                    Lịch hẹn:{" "}
+                    {moment(conversation.data.appointmentDate).calendar()}
+                  </p>
                 </div>
               </div>
 
               <button
                 className="close-sale-button"
                 type="button"
-                onClick={handleOpen}
+                onClick={() => handleOpen(conversation)}
               >
                 bán
               </button>
-
-              <Modal
-                open={open}
-                //   onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-              >
-                <div className="modal-confirm">
-                  <h2 id="simple-modal-title">Xác nhận bán</h2>
-                  <div id="simple-modal-description">
-                    <p>Người mua {e.data.buyer}</p>
-                    <p className="">Thỏa thuận: {e.data.dealPrice} tỷ</p>
+              {modalData ? (
+                <Modal
+                  open={open}
+                  //   onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div className="modal-confirm">
+                    <h2 id="simple-modal-title">Xác nhận bán</h2>
+                    <div id="simple-modal-description">
+                      <p>Người mua {modalData.data.buyer}</p>
+                      <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                    </div>
+                    <div>
+                      <button onClick={() => handleSold(modalData)}>
+                        Xác nhận
+                      </button>
+                      <button onClick={handleClose}>Hủy</button>
+                    </div>
                   </div>
-                  <div>
-                    <button onClick={() => handleSold(e)}>Xác nhận</button>
-                    <button onClick={handleClose}>Hủy</button>
-                  </div>
-                </div>
-              </Modal>
+                </Modal>
+              ) : null}
             </div>
           ))}
         </div>
