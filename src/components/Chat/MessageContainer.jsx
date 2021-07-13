@@ -132,6 +132,10 @@ export const MessageContainer = ({ conversation, handleBook }) => {
         .update({
           status: "cancel",
         });
+
+      fb.firestore.collection("conversations").doc(conversation.id).update({
+        lastMessage: "lịch hẹn đã hủy",
+      });
     }
   };
   const handleCancelDeal = () => {

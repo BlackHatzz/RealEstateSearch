@@ -1,10 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../ChatContext";
 import "./role.css";
 export const Role = () => {
   const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
   let history = useHistory();
+  useEffect(() => {
+    console.log("role" + role);
+    if (role) {
+      history.push(role === "buyer" ? "/" : "/sell");
+    }
+  }, [history, role]);
   return (
     <div className="role">
       <h2>Bạn muốn</h2>

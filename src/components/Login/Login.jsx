@@ -26,7 +26,7 @@ export const Login = () => {
           console.log("credential:" + credential);
           console.log("provider id:" + providerId);
           console.log("operationType:" + operationType);
-          if (true) {
+          if (isNewUser) {
             fb.firestore
               .collection("users")
               .doc(user.uid)
@@ -42,7 +42,7 @@ export const Login = () => {
               displayName: user.phoneNumber,
             });
 
-            // createUser(user);
+            createUser(user);
           }
 
           return true;
@@ -77,7 +77,7 @@ export const Login = () => {
 
   async function createUser(user) {
     const res = await fetch(
-      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/accounts/create",
+      "https://api-realestate.top/apis/v1/accounts/create",
       {
         method: "POST",
         headers: {

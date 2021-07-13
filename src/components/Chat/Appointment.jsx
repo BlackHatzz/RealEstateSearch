@@ -193,26 +193,23 @@ function Appointment({ setTrigger, conversation }) {
         setTrigger((value) => !value);
       })
       .then(() => {
-        // fetch(
-        //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/appointments/create",
-        //   {
-        //     method: "POST",
-        //     headers: {
-        //       Accept: "application/json",
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //       conversationId: conversation.id,
-        //       createAt: currentDate.toISOString(),
-        //       id: 0,
-        //       scheduleDate: startDate.toISOString(),
-        //       staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
-        //       status: "upcoming",
-        //     }),
-        //   }
-        // ).then((response) => {
-        //   console.log(response);
-        // });
+        fetch("https://api-realestate.top/apis/v1/appointments/create", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            conversationId: conversation.id,
+            createAt: currentDate.toISOString(),
+            id: 0,
+            scheduleDate: startDate.toISOString(),
+            staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
+            status: "upcoming",
+          }),
+        }).then((response) => {
+          console.log(response);
+        });
       });
   };
 

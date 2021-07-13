@@ -20,7 +20,7 @@ export const ChatButton = (props) => {
       ", " +
       props.product.disName;
 
-    const reqUrl = `http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/conversations/messages?%20realEstateId=${props.product.id}&buyerId=${uuid}&sellerId=${props.product.sellerId}`;
+    const reqUrl = `https://api-realestate.top/apis/v1/conversations/messages?%20realEstateId=${props.product.id}&buyerId=${uuid}&sellerId=${props.product.sellerId}`;
     fetch(reqUrl)
       .then((response) => {
         if (response.ok) {
