@@ -59,6 +59,14 @@ export const BuyerInfoBox = ({ selectedChat }) => {
           </p>
         </div>
       )}
+      {chat?.data?.appointment === "cancel" && (
+        <div>
+          <p className="info-text">
+            {moment(chat?.data?.appointmentDate).locale("vi").format("LLL")}
+          </p>
+          <p className="info-text">( đã hủy )</p>
+        </div>
+      )}
     </div>
   );
 };

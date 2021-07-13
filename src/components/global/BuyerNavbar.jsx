@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./buyer-nav-bar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
@@ -12,9 +12,11 @@ import { fb } from "../../services";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
+import { Context } from "../../ChatContext";
 
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
+  const { role } = useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [unseen, setUnseen] = useState(0);
@@ -61,7 +63,7 @@ const BuyerNavbar = () => {
         {/* left content */}
         <div className="nav-bar-container">
           <div className="nav-bar-item">
-            <Link to="/">
+            <Link to={role === "buyer" ? "/" : "/sell"}>
               <div className="nav-bar-logo">
                 <img src="https://i.ibb.co/MhLF1VS/abc.png" alt="" />
               </div>

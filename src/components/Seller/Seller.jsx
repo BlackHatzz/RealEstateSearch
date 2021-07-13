@@ -15,20 +15,25 @@ import SearchPost from "./SearchPost";
 import ManagePost from "./ManagePost";
 import "./manage-post.css";
 import "./seller.css";
+import { SellerPost } from "./SellerPost";
 export const Seller = () => {
   const routes = [
     {
       path: "/sell",
       exact: true,
+      main: () => <SellerPost />,
+    },
+    {
+      path: "/search-post",
+      main: () => <SearchPost />,
+    },
+    {
+      path: "/manage-post",
       main: () => (
         <div className="content-container">
           <ManagePost />
         </div>
       ),
-    },
-    {
-      path: "/search-post",
-      main: () => <SearchPost />,
     },
   ];
 
@@ -44,9 +49,13 @@ export const Seller = () => {
                 <CustomMenuLink
                   activeOnlyWhenExact={true}
                   to="/sell"
-                  label="Đăng bài viết"
+                  label="Quản lý tin đăng"
                 />
               </li>
+              <li>
+                <CustomMenuLink to="/manage-post" label="Đăng bài viết" />
+              </li>
+
               <li>
                 <CustomMenuLink to="/search-post" label="Search" />
               </li>
