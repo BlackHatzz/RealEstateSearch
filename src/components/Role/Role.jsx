@@ -5,12 +5,7 @@ import "./role.css";
 export const Role = () => {
   const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
   let history = useHistory();
-  useEffect(() => {
-    console.log("role" + role);
-    if (role) {
-      history.push(role === "buyer" ? "/" : "/sell");
-    }
-  }, [history, role]);
+
   return (
     <div className="role">
       <h2>Bạn muốn</h2>
@@ -19,8 +14,8 @@ export const Role = () => {
         <div
           className="role-button"
           onClick={() => {
-            history.push("/");
             updateBuyerRole();
+            history.push("/");
           }}
         >
           <img
@@ -32,8 +27,8 @@ export const Role = () => {
         <div
           className="role-button"
           onClick={() => {
-            history.push("/sell");
             updateSellerRole();
+            history.push("/sell");
           }}
         >
           <img

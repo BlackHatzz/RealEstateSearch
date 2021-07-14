@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocalStorage } from "./hooks/useLocalStorage";
+import useLocalStorage from "./hooks/useLocalStorage";
 export const Context = React.createContext();
 
 const ChatContext = (props) => {
@@ -8,7 +8,8 @@ const ChatContext = (props) => {
   const [chatId, setChatId] = useState("0");
   const [chatRealId, setChatRealId] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
-  const [role, setRole] = useState();
+  const [role, setRole] = useLocalStorage("role", "");
+  // const [role, setRole] = useState();
   return (
     <Context.Provider
       value={{
