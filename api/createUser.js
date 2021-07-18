@@ -8,6 +8,7 @@ const createUser = async (req, res) => {
       {
         username: userName,
         secret: userId,
+        
       },
       {
         headers: {
