@@ -18,9 +18,36 @@ import {
 } from "react-router-dom";
 
 const SearchPost = () => {
+  var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
   var [isBuyersLoaded, setIsBuyersLoaded] = useState(false);
+  const [tabItemList, setTabItemList] = useState([
+    {
+      key: "tab-item-1",
+      title: "chưa kiểm duyệt",
+      status: "inactive",
+      hexColorCode: "#919191",
+    },
+    {
+      key: "tab-item-2",
+      title: "không hợp lệ",
+      status: "rejected",
+      hexColorCode: "#EA6863",
+    },
+    {
+      key: "tab-item-3",
+      title: "đã kiểm duyệt",
+      status: "active",
+      hexColorCode: "#05c19c",
+    },
+    {
+      key: "tab-item-4",
+      title: "đã bán",
+      status: "sold",
+      hexColorCode: "#249cd7",
+    },
+  ]);
 
   useEffect(async () => {
     async function fetchMyAPI(realEstate, index) {
@@ -46,7 +73,7 @@ const SearchPost = () => {
 
     if (!isRealEstateLoaded) {
       fetch(
-        Constants.getRealEstateRefBySellerId("JvY1p2IyXTSxeKXmF4XeE5lOHkw2", 0)
+        "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
       )
         .then((res) => {
           return res.json();
@@ -128,11 +155,96 @@ const SearchPost = () => {
     //   getTheChosenBuyerByRealEstateRef
   }, [realEstateList]);
 
-  const handleClickCreatePost = () => {
-    //   useHistory().push("/manage-post");
-    // useHistory().push("/manage-post");
-    // useNavigate().navigate("/manage-post");
-    // useHistory().push("/manage-post");
+  const renderRealEstateItem = (item, index) => {
+    if (item.realEstate == null) {
+      return null;
+    }
+    const realEstate = item.realEstate;
+
+    function renderStatus(user, realEstate) {
+      // status: censored, non-censored, sold-out
+      var status = "";
+      var title = "";
+
+      if (user != null) {
+        status = "sold-out";
+        title = "Đã bán";
+      } else {
+        if (realEstate.status === "inactive") {
+          status = "non-censored";
+          title = "Chưa kiểm duyệt";
+        } else {
+          status = "censored";
+          title = "Đã kiểm duyệt";
+        }
+      }
+
+      return (
+        <div className={"status-container " + status}>
+          <span>{title}</span>
+        </div>
+      );
+    }
+
+    return (
+      <div key={index} className="box">
+        <div
+          style={{
+            backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+          }}
+          className="seller-search-image-container"
+        >
+          {/* <img src={realEstate.images[0]} alt="" /> */}
+        </div>
+        <div className="content-product-container">
+          {/* title of product */}
+          <span className="product-title">
+            {realEstate.title}
+            {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+            ĐẸP, GIÁ TỐT */}
+          </span>
+
+          {/* price and area */}
+          <div className="price-box">
+            <span className="price">
+              Giá trị ~
+              {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+                100}{" "}
+              triệu/m²
+            </span>
+            <span className="price">&#8226;</span>
+            <span className="area">Diện tích {realEstate.area} m²</span>
+          </div>
+
+          {/* address */}
+          <span className="address">
+            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName}, {realEstate.wardName},{" "}
+            {realEstate.disName}
+          </span>
+
+          {/* description */}
+          <div className="description">
+            Mô tả: {realEstate.description}
+            {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+            liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
+            tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
+            TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
+            400Triệu - Khi Thanh Toán Sớm . */}
+          </div>
+
+          <div className="other-info">
+            <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+            {/* {renderStatus(item.user, realEstate)} */}
+            {/* <div className="owner">Người đăng: </div> */}
+            {/* <div className="product-phone-contact horizontal">
+          <BsFillChatDotsFill />
+          <div style={{ width: "12px" }}></div>
+          <span>&#32;Trò chuyện</span>
+        </div> */}
+          </div>
+        </div>
+      </div>
+    );
   };
 
   return (
@@ -151,106 +263,135 @@ const SearchPost = () => {
           to={"/manage-post"}
           className="confirm-green noselect seller-search-post-create-post"
         >
-          <span>Create Post</span>
+          <span>Tạo bài viết</span>
         </Link>
 
-        <div className="seller-search-list-search-container">
-          {realEstateList.map((item, index) => {
-            console.log("item");
-            console.log(item);
-            if (item.realEstate == null) {
-              return null;
-            }
-            const realEstate = item.realEstate;
+        <div className="seller-title-tab-list">Danh sách bài viết</div>
 
-            function renderStatus(user, realEstate) {
-              // status: censored, non-censored, sold-out
-              var status = "";
-              var title = "";
+        <div className="seller-tab-container">
+          {
+            // first reload auto select "new" post
+          }
+          {tabItemList.map((item) => (
+            <div
+              onClick={() => {
+                // re-render ui
+                tabItemList.map((reRenderItem) => {
+                  if (reRenderItem.key !== item.key) {
+                    // not selected item
+                    const tabItemElement = document.getElementById(
+                      reRenderItem.key
+                    );
+                    tabItemElement.style.backgroundColor = "transparent";
+                    tabItemElement.style.border =
+                      "3px solid " + reRenderItem.hexColorCode;
 
-              if (user != null) {
-                status = "sold-out";
-                title = "Đã bán";
-              } else {
-                if (realEstate.status === "inactive") {
-                  status = "non-censored";
-                  title = "Chưa kiểm duyệt";
-                } else {
-                  status = "censored";
-                  title = "Đã kiểm duyệt";
-                }
+                    const titleTabItemElement = document.getElementById(
+                      "span-" + reRenderItem.key
+                    );
+                    titleTabItemElement.style.color = reRenderItem.hexColorCode;
+                  } else {
+                    // selected item
+                    const tabItemElement = document.getElementById(
+                      reRenderItem.key
+                    );
+                    tabItemElement.style.backgroundColor =
+                      reRenderItem.hexColorCode;
+                    tabItemElement.style.border =
+                      "3px solid " + reRenderItem.hexColorCode;
+
+                    const titleTabItemElement = document.getElementById(
+                      "span-" + reRenderItem.key
+                    );
+                    titleTabItemElement.style.color = "white";
+                  }
+                });
+
+                // get data from database
+                fetch(
+                  Constants.getRealEstateRefBySellerId(
+                    "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+                    item.status,
+                    0
+                  )
+                )
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      console.log(result);
+                      if (result.content.length > 0) {
+                        for (var i = 0; i < result.content.length; i++) {
+                          realEstateList[i] = {
+                            realEstate: result.content[i],
+                            user: null,
+                          };
+                        }
+                        setRealEstateList([...realEstateList]);
+                      } else {
+                        setRealEstateList([]);
+                      }
+                    },
+                    (error) => {}
+                  );
+              }}
+              key={item.key}
+              id={item.key}
+              className={"seller-tab-item " + item.status}
+            >
+              <span id={"span-" + item.key}>{item.title}</span>
+            </div>
+          ))}
+
+          {(() => {
+            if (firstLoad) {
+              // first reload auto select "new" tab (chưa kiểm duyệt)
+              // render with different style
+
+              const selectedItem = tabItemList[0];
+              console.log(selectedItem);
+              const tabItemElement = document.getElementById(selectedItem.key);
+              console.log(tabItemElement);
+              if (tabItemElement != null) {
+                tabItemElement.style.backgroundColor =
+                  selectedItem.hexColorCode;
+                tabItemElement.style.border =
+                  "3px solid " + selectedItem.hexColorCode;
+
+                const titleTabItemElement = document.getElementById(
+                  "span-" + selectedItem.key
+                );
+                titleTabItemElement.style.color = "white";
+
+                setFirstLoad(false);
               }
-
-              return (
-                <div className={"status-container " + status}>
-                  <span>{title}</span>
-                </div>
-              );
             }
+          })()}
 
-            return (
-              <div key={index} className="box">
-                <div
-                  style={{
-                    backgroundImage:
-                      "url(' " + realEstate.images[0].imgUrl + " ')",
-                  }}
-                  className="seller-search-image-container"
-                >
-                  {/* <img src={realEstate.images[0]} alt="" /> */}
-                </div>
-                <div className="content-product-container">
-                  {/* title of product */}
-                  <span className="product-title">
-                    {realEstate.title}
-                    {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
-                    ĐẸP, GIÁ TỐT */}
-                  </span>
+          {(() => {})()}
+          {/* <div className="seller-tab-item new"><span>Chưa kiểm duyệt</span></div>
+            <div className="seller-tab-item rejected"><span>Không hợp lệ</span></div>
+            <div className="seller-tab-item accepted"><span>Đã Kiểm duyệt</span></div>
+            <div className="seller-tab-item inactive"><span></span></div>
+            <div className="seller-tab-item sold-out"><span>Đã bán</span></div> */}
+        </div>
 
-                  {/* price and area */}
-                  <div className="price-box">
-                    <span className="price">
-                      Giá trị ~
-                      {Math.round(
-                        (realEstate.price / realEstate.area) * 1000 * 100
-                      ) / 100}{" "}
-                      triệu/m²
-                    </span>
-                    <span className="price">&#8226;</span>
-                    <span className="area">Diện tích {realEstate.area} m²</span>
-                  </div>
-
-                  {/* address */}
-                  <span className="address">
-                    Đường {realEstate.streetName}, {realEstate.wardName}, {realEstate.disName}
-                  </span>
-
-                  {/* description */}
-                  <div className="description">
-                    Mô tả: {realEstate.description}
-                    {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
-                    liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
-                    tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
-                    TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
-                    400Triệu - Khi Thanh Toán Sớm . */}
-                  </div>
-
-                  <div className="other-info">
-                    <div className="uptime">
-                      Ngày đăng: {realEstate.createAt}
-                    </div>
-                    {renderStatus(item.user, realEstate)}
-                    {/* <div className="owner">Người đăng: </div> */}
-                    {/* <div className="product-phone-contact horizontal">
-                  <BsFillChatDotsFill />
-                  <div style={{ width: "12px" }}></div>
-                  <span>&#32;Trò chuyện</span>
-                </div> */}
-                  </div>
-                </div>
+        <div className="seller-search-list-search-container">
+          {realEstateList.length > 0 ? (
+            realEstateList.map((item, index) => {
+              return renderRealEstateItem(item, index);
+            })
+          ) : (
+            <React.Fragment>
+              <div className="not-found-container">
+                <div className="not-found"></div>
+                <span>
+                  Hiện chưa có thông tin nào cho mục bài viết mà bạn yêu cầu
+                </span>
+                <br />
+                <span>Vui lòng kiểm tra lại thông tin của bạn</span>
               </div>
-            );
-          })}
+            </React.Fragment>
+          )}
         </div>
       </div>
     </React.Fragment>

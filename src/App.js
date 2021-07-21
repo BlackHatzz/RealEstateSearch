@@ -16,6 +16,7 @@ import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
 import ManagePost from "./components/Seller/ManagePost";
 import SellerDashboard from "./components/Seller/SellerDashboard";
+import Autocomplete from "react-google-autocomplete";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
@@ -27,11 +28,11 @@ const App = () => {
   // getToken(setTokenFound);
   const { role } = useContext(Context);
 
-  useEffect(() => {
-    if (authResolved) {
-      history.push(!!authUser ? "/role" : "/login");
-    }
-  }, [authResolved, authUser, history]);
+  // useEffect(() => {
+  //   if (authResolved) {
+  //     history.push(!!authUser ? "/role" : "/login");
+  //   }
+  // }, [authResolved, authUser, history]);
 
   // onMessageListener()
   //   .then((payload) => {
@@ -41,8 +42,9 @@ const App = () => {
 
   return authResolved ? (
     <div className="app">
-      {/* <SellerDashboard /> */}
-      {authUser && role && <ChatLauncher />}
+      
+      <SellerDashboard />
+      {/* {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/seller" component={SellerDashboard} />
         <Route exact path="/" component={HomePage} />
@@ -79,7 +81,7 @@ const App = () => {
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
         <Route path="/chat-page" component={Chat} />
-      </Switch>
+      </Switch> */}
     </div>
   ) : (
     <div>Loading ...</div>

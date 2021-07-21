@@ -19,8 +19,13 @@ import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlin
 import { TailSpin } from "@agney/react-loading";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { ControlPointSharp } from "@material-ui/icons";
+import { Editor } from "react-draft-wysiwyg";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import Autocomplete from "react-google-autocomplete";
 
 class ManagePost extends Component {
+  placeInfo = null;
   state = {
     //apiKey: "u5upZp6pDlFDxcV9fiknYyjk0hAboyQUngPRB-zJe1A", // here api
     address: "",
@@ -28,6 +33,7 @@ class ManagePost extends Component {
     fileImage: null,
     districtWardList: [],
     isRealEstateTypeMenuShow: false,
+    selectedRealEstateType: null,
     realEstateTypes: [
       { key: 1, title: "Chung cư" },
       { key: 2, title: "Nhà" },
@@ -94,8 +100,13 @@ class ManagePost extends Component {
 
   componentWillMount() {
     console.log("will mount");
+  }
+
+  componentDidMount() {
+    // get districts and wards data
     fetch(
-      "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress"
+      Constants.getDistrictsAndWards
+      //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress"
     )
       .then((res) => res.json())
       .then(
@@ -107,19 +118,33 @@ class ManagePost extends Component {
           });
           console.log(this.state.districtWardList);
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
-        }
+        (error) => {}
       );
-  }
+    // set key event
+    document
+      .getElementById("title-textarea")
+      .addEventListener("keypress", (evt) => {
+        // this.updateCount();
+        console.log("heriwjeorw");
+        console.log(evt);
+        if (evt.which === 13) {
+          evt.preventDefault();
+        }
+        // else {
+        //   if (
+        //     document.getElementById("title-input").textContent.length >= 100
+        //   ) {
+        //     evt.preventDefault();
+        //   }
+        // }
+      });
 
-  componentDidMount() {
+    // document
+    //   .getElementById("title-input")
+    //   .addEventListener("keydown", (evt) => {
+    //     this.updateCount();
+    //   });
+
     // AIzaSyDgghZscRwOlPg2pAvCD64CqXeJMwhNZUs
     // let searchText = "1600+Amphitheatre+Parkway,+Mountain+View,+CA";
     // let searchText =
@@ -266,41 +291,48 @@ class ManagePost extends Component {
   };
 
   handleChangeAddress = (event) => {
-    // const addressText = event.target.value;
-    // console.log("address");
-    // // console.log(ad);
-    // // const searchText = "200%20S%20Mathilda%20Sunnyvale%20CA";
-    // // const searchText = addressText.toString() + "Quan 1, Ho Chi Minh, Viet Nam";
-    // const searchText = addressText + ", Quan 1, Ho Chi Minh, Viet Nam";
-    // fetch(
-    //   //   "https://api.mapbox.com/geocoding/v5/mapbox.places/230 Tran Hung Dao Quan 1 Ho Chi Minh (VN).json?proximity=10,11&access_token=pk.eyJ1IjoidGhpc2lzdGVzdG1haWwwMDMiLCJhIjoiY2txcWZhbHhmMWdoNjJ2bzg3azl2N3RpZCJ9.w-Tgtdosib0NTgoyWBg7Jg"
-    //   // "https://geocoder.ls.hereapi.com/6.2/geocode.json?searchtext=200%20S%20Mathilda%20Sunnyvale%20CA&gen=9&apiKey=H6XyiCT0w1t9GgTjqhRXxDMrVj9h78ya3NuxlwM7XUs"
-    //   "https://geocoder.ls.hereapi.com/6.2/geocode.json?searchtext=" +
-    //     searchText +
-    //     "&gen=9&apiKey=DqIPQFyQWeHJX3rRuVDij40cAvLczkwnzUjGS0DlzxI"
-    // )
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       // console.log(result.content);
-    //       console.log("on here");
-    //       console.log(result.Response.View[0].Result[0]);
-    //     },
-    //     // Note: it's important to handle errors here
-    //     // instead of a catch() block so that we don't swallow
-    //     // exceptions from actual bugs in components.
-    //     (error) => {
-    //       // this.setState({
-    //       //   isLoaded: true,
-    //       //   error,
-    //       // });
-    //     }
-    //   );
+    const address = event.target.value.toString();
+
+    const dis = document.getElementById("dis-input").value.toString();
+    const ward = document.getElementById("ward-input").value.toString();
+    const houseNo = document.getElementById("house-no-input").value.toString();
+
+    console.log("handle change address");
+    console.log(address);
+
+    console.log(dis);
+    console.log(ward);
+    console.log(houseNo);
+
+    const searchText =
+      "Việt Nam, Hồ Chí Minh, " +
+      dis +
+      ", " +
+      ward +
+      ", " +
+      houseNo +
+      " " +
+      address;
+
+    fetch(
+      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Việt Nam, Hồ Chí Minh, Quận 1, phường Nguyễn Cư Trinh,  T&key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&language=vi"
+      //   "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" +
+      //     searchText +
+      //     "&key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&sessiontoken=1234567890&language=vi"
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("google autocomplete");
+          console.log(result);
+        },
+        (error) => {}
+      );
   };
 
   handleCreatePost = () => {
     // get all value to crate a post
-    const title = document.getElementById("title-input").value.toString();
+    const title = document.getElementById("title-textarea").value.toString();
     const price = parseFloat(
       document.getElementById("price-input").value.toString()
     );
@@ -333,9 +365,12 @@ class ManagePost extends Component {
       document.getElementById("bathroom-input").value.toString()
     );
 
-    const description = document
-      .getElementById("description-input")
-      .value.toString();
+    // const description = document
+    //   .getElementById("description-input")
+    //   .value.toString();
+    const description = document.getElementsByClassName(
+      "public-DraftEditor-content"
+    )[0].textContent;
     const images = document.getElementById("images-input").value;
 
     console.log("get all");
@@ -401,18 +436,11 @@ class ManagePost extends Component {
         // console.log(snapshot);
         snapshot.ref.getDownloadURL().then((downloadURL) => {
           console.log(downloadURL);
-          //   const locationData = fetchLocationData(searchText);
-          //   const locationRealEstate = locationData.results[0].geometry.location;
-          //   console.log("looooooooo");
-          //   console.log(locationData);
           fetchLocationData(searchText).then((locationData) => {
-            console.log("mememeemememem");
-            console.log(locationData);
-            const realEstateLocation =
+            console.log("yup");
+            const locationRealEstate =
               locationData.results[0].geometry.location;
-            console.log(realEstateLocation);
-            console.log("innn");
-            console.log(downloadURL);
+            console.log(locationRealEstate);
 
             const requestOptions = {
               method: "POST",
@@ -425,8 +453,8 @@ class ManagePost extends Component {
                 wardId: this.state.selectedWardId,
                 streetName: streetName,
                 realEstateNo: houseNo,
-                latitude: realEstateLocation.lat,
-                longitude: realEstateLocation.lng,
+                latitude: locationRealEstate.lat,
+                longitude: locationRealEstate.lng,
                 typeId: 2,
                 description: description,
                 area: area,
@@ -463,10 +491,7 @@ class ManagePost extends Component {
               }),
             };
 
-            fetch(
-              Constants.createRealEstateRef,
-              requestOptions
-            )
+            fetch(Constants.createRealEstateRef, requestOptions)
               .then((res) => res.json())
               .then(
                 (result) => {
@@ -477,8 +502,98 @@ class ManagePost extends Component {
                 (error) => {}
               );
           });
+          //   console.log("looooooooo");
+          //   console.log(locationData);
+
+          //   const lat = this.placeInfo.geometry.location.lat();
+          //   const lng = this.placeInfo.geometry.location.lng();
         });
       });
+
+    // fb.storage
+    //   .ref()
+    //   .child("images/" + imageName + ".png")
+    //   .put(this.state.fileImage)
+    //   .then((snapshot) => {
+    //     console.log("uploaddddddd");
+    //     // console.log(snapshot);
+    //     snapshot.ref.getDownloadURL().then((downloadURL) => {
+    //       console.log(downloadURL);
+    //       //   const locationData = fetchLocationData(searchText);
+    //       //   const locationRealEstate = locationData.results[0].geometry.location;
+    //       //   console.log("looooooooo");
+    //       //   console.log(locationData);
+    //       fetchLocationData(searchText).then((locationData) => {
+    //         console.log("mememeemememem");
+    //         console.log(locationData);
+    //         const realEstateLocation =
+    //           locationData.results[0].geometry.location;
+    //         console.log(realEstateLocation);
+    //         console.log("innn");
+    //         console.log(downloadURL);
+
+    //         const requestOptions = {
+    //           method: "POST",
+    //           headers: { "Content-Type": "application/json" },
+    //           body: JSON.stringify({
+    //             sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+    //             title: title,
+    //             view: 0,
+    //             districtId: this.state.selectedDistrictId,
+    //             wardId: this.state.selectedWardId,
+    //             streetName: streetName,
+    //             realEstateNo: houseNo,
+    //             latitude: realEstateLocation.lat,
+    //             longitude: realEstateLocation.lng,
+    //             typeId: 2,
+    //             description: description,
+    //             area: area,
+    //             price: price,
+    //             direction: doorDirection,
+    //             balconyDirection: balconyDirection,
+    //             project: project,
+    //             investor: investor,
+    //             juridical: "Đã có sổ đỏ",
+    //             furniture: "Nội thất cao cấp",
+    //             numberOfBedroom: numberOfBedroom,
+    //             numberOfBathroom: numberOfBathroom,
+    //             images: [
+    //               {
+    //                 imgUrl: downloadURL,
+    //               },
+    //             ],
+    //             facilities: [
+    //               {
+    //                 facilityTypeId: 2,
+    //                 facilityName: "Bệnh Viện 105",
+    //                 latitude: 11.2367,
+    //                 longitude: 102.8123678,
+    //                 distance: 3.0,
+    //               },
+    //               {
+    //                 facilityTypeId: 3,
+    //                 facilityName: "Trường FPT",
+    //                 latitude: 13.1234,
+    //                 longitude: 101.1234,
+    //                 distance: 5.0,
+    //               },
+    //             ],
+    //           }),
+    //         };
+
+    //         fetch(Constants.createRealEstateRef, requestOptions)
+    //           .then((res) => res.json())
+    //           .then(
+    //             (result) => {
+    //               // console.log(result.content);
+    //               console.log("a new realestate is created");
+    //               console.log(result);
+    //             },
+    //             (error) => {}
+    //           );
+    //       });
+    //     });
+    //   });
 
     return;
 
@@ -606,6 +721,12 @@ class ManagePost extends Component {
     });
   };
 
+  handleAutoResizeTextArea = (id) => {
+    const element = document.getElementById(id);
+    element.style.height = "1px";
+    element.style.height = element.scrollHeight - 16 + "px";
+  };
+
   renderContent = (title) => {
     console.log("load");
     console.log(this.state.isLoaded);
@@ -638,6 +759,21 @@ class ManagePost extends Component {
         <span>Chúc Mừng! Bạn đã tạo bài viết thành công!</span>
       </React.Fragment>
     );
+  };
+
+  updateCount = () => {
+    console.log("ecec");
+    if (document.getElementById("title-textarea") == null) {
+      return;
+    }
+
+    console.log("yeyeyyerwerrewerwoiu");
+    const text = document.getElementById("title-textarea").value.toString();
+    console.log(text);
+    document.getElementById("title-input-count").textContent =
+      text.length.toString() + "/100";
+
+    return text.length;
   };
 
   render() {
@@ -678,21 +814,55 @@ class ManagePost extends Component {
 
         <div className="row">
           <div className="col1">
-            <h2 className="title">Tiêu đề</h2>
-            <div className="input-container">
-              <input
+            <h2 className="title">Tiêu đề*</h2>
+            <div
+              style={{ display: "flex", alignItems: "center" }}
+              className="input-container"
+            >
+              {/* <input
                 id="title-input"
                 placeholder="Nhập tiêu đề bài viết..."
                 type="text"
                 className="input-field"
-              />
+                onChange={this.updateCount}
+                maxLength="100"
+              /> */}
+              {/* <div className="div-field-container">
+                <div
+                  id="title-input"
+                  placeholder="Nhập tiêu đề bài viết..."
+                  type="text"
+                  slot="input"
+                  contentEditable="true"
+                  className="div-field"
+                  maxLength="100"
+                ></div>
+              </div> */}
+              <textarea
+                id="title-textarea"
+                onKeyUp={() => {
+                  this.handleAutoResizeTextArea("title-textarea");
+                  this.updateCount();
+                }}
+                placeholder="Nhập tiêu đề bài viết..."
+                className="area-field"
+                maxLength="100"
+              ></textarea>
+
+              <span id="title-input-count" className="count">
+                0/100
+              </span>
             </div>
           </div>
         </div>
 
         <div className="row">
           <div className="col3">
-            <h2 className="title">Giá tiền</h2>
+            <h2 className="title">
+              Giá tiền*
+              <br />
+              tỷ đồng
+            </h2>
             <div className="input-container">
               <input
                 id="price-input"
@@ -704,7 +874,11 @@ class ManagePost extends Component {
           </div>
 
           <div className="col3">
-            <h2 className="title">Diện tích</h2>
+            <h2 className="title">
+              Diện tích*
+              <br />
+              m2
+            </h2>
             <div className="input-container">
               <input
                 id="area-input"
@@ -748,7 +922,7 @@ class ManagePost extends Component {
                   </div>
                 </div> */}
           <div className="col2">
-            <h2 className="title">Loại bất động sản</h2>
+            <h2 className="title">Loại bất động sản*</h2>
             <div
               onClick={() => {
                 this.setState({
@@ -793,7 +967,7 @@ class ManagePost extends Component {
 
         <div className="row">
           <div className="col2">
-            <h2 className="title">Hướng cửa chính</h2>
+            <h2 className="title">Hướng cửa chính*</h2>
             <div
               onClick={() => {
                 this.setState({
@@ -899,7 +1073,7 @@ class ManagePost extends Component {
 
         <div className="row">
           <div className="col2">
-            <h2 className="title">Quận/Huyện</h2>
+            <h2 className="title">Quận/Huyện*</h2>
             <div
               onClick={() => {
                 this.setState({
@@ -915,7 +1089,6 @@ class ManagePost extends Component {
                 type="text"
                 className="input-field read-only-field"
               />
-              {/* drop down when selected */}
               {this.renderDistrictMenu()}
             </div>
             <div className="drop-down-icon-container">
@@ -923,7 +1096,7 @@ class ManagePost extends Component {
             </div>
           </div>
           <div className="col2">
-            <h2 className="title">Phường/Xã</h2>
+            <h2 className="title">Phường/Xã*</h2>
             <div
               onClick={() => {
                 this.setState({
@@ -939,7 +1112,6 @@ class ManagePost extends Component {
                 type="text"
                 className="input-field read-only-field"
               />
-              {/* drop down when selected */}
               {this.renderWardMenu()}
             </div>
             <div className="drop-down-icon-container">
@@ -948,20 +1120,54 @@ class ManagePost extends Component {
           </div>
         </div>
 
+        {/* <div className="row">
+          <div className="col1">
+            <h2 className="title">Địa chỉ</h2>
+            <div className="input-container">
+              <Autocomplete
+                id="full-address-input"
+                className="input-field"
+                apiKey={"AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg"}
+                language="vi"
+                options={{
+                  types: ["address"],
+                  fields: [
+                    "address_components",
+                    "geometry",
+                    "formatted_address",
+                  ],
+                  // placeIdOnly: "ChIJ0T2NLikpdTERKxE8d61aX_E",
+                  componentRestrictions: { country: "vn" },
+                }}
+                onPlaceSelected={(place) => {
+                  this.placeInfo = place;
+                  console.log("find lan");
+                  console.log(place.geometry.location.lat());
+                  console.log(place);
+                  console.log("full text");
+                  console.log(
+                    document.getElementById("full-address-input").value
+                  );
+                  //   geocodingRefWithSearchText(place)
+                }}
+                placeholder="Nhập địa chỉ..."
+              />
+            </div>
+          </div>
+        </div> */}
+
         <div className="row">
           <div className="col2">
-            <h2 className="title">Địa chỉ</h2>
+            <h2 className="title">Địa chỉ*</h2>
             <div style={{ display: "flex" }} className="input-container">
               {/* <input
                       id="address-input"
-                      onChange={this.handleChangeAddress}
                       placeholder="Nhập tên và số địa chỉ..."
                       type="text"
                       className="input-field"
-                    /> */}
+                    />  */}
               <input
                 id="house-no-input"
-                onChange={this.handleChangeAddress}
                 placeholder="Số nhà"
                 type="text"
                 className="cou-input-field-left"
@@ -969,7 +1175,7 @@ class ManagePost extends Component {
               <div className="cou-line"></div>
               <input
                 id="street-name-input"
-                onChange={this.handleChangeAddress}
+                // onChange={this.handleChangeAddress}
                 placeholder="Tên đường"
                 type="text"
                 className="cou-input-field-right"
@@ -978,7 +1184,7 @@ class ManagePost extends Component {
           </div>
 
           <div className="col4">
-            <h2 className="title">Số phòng ngủ</h2>
+            <h2 className="title">Số phòng ngủ*</h2>
             <div className="input-container">
               <input
                 id="bedroom-input"
@@ -988,8 +1194,11 @@ class ManagePost extends Component {
               />
             </div>
           </div>
+
+          {/* <div style={{ width: "50px" }}></div> */}
+
           <div className="col4">
-            <h2 className="title">Số phòng tắm</h2>
+            <h2 className="title">Số phòng vệ sinh*</h2>
             <div className="input-container">
               <input
                 id="bathroom-input"
@@ -1013,10 +1222,19 @@ class ManagePost extends Component {
         <div className="row">
           <div className="col0">
             <h2 className="row-title">Bài viết mô tả</h2>
-            <textarea
+            <Editor
+              id="editor"
+              // editorState={editorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="custom-wrapper-editor"
+              editorClassName="custom-editor"
+
+              // onEditorStateChange={this.onEditorStateChange}
+            />
+            {/* <textarea
               id="description-input"
               placeholder="Nhập bài viết mô tả của bất động sản..."
-            ></textarea>
+            ></textarea> */}
           </div>
         </div>
 
@@ -1414,14 +1632,12 @@ class ManagePost extends Component {
   //                 <div style={{display: "flex"}} className="input-container">
   //                   {/* <input
   //                     id="address-input"
-  //                     onChange={this.handleChangeAddress}
   //                     placeholder="Nhập tên và số địa chỉ..."
   //                     type="text"
   //                     className="input-field"
   //                   /> */}
   //                   <input
   //                     id="house-no-input"
-  //                     onChange={this.handleChangeAddress}
   //                     placeholder="Số nhà"
   //                     type="text"
   //                     className="cou-input-field-left"
@@ -1429,7 +1645,6 @@ class ManagePost extends Component {
   //                   <div className="cou-line"></div>
   //                   <input
   //                     id="street-name-input"
-  //                     onChange={this.handleChangeAddress}
   //                     placeholder="Tên đường"
   //                     type="text"
   //                     className="cou-input-field-right"
