@@ -28,11 +28,12 @@ const App = () => {
   // getToken(setTokenFound);
   const { role } = useContext(Context);
 
-  // useEffect(() => {
-  //   if (authResolved) {
-  //     history.push(!!authUser ? "/role" : "/login");
-  //   }
-  // }, [authResolved, authUser, history]);
+  useEffect(() => {
+    if (authResolved) {
+      // history.push(!!authUser ? "/role" : "/login");
+      history.push(!authUser && "/login");
+    }
+  }, [authResolved, authUser, history]);
 
   // onMessageListener()
   //   .then((payload) => {

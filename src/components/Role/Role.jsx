@@ -19,8 +19,8 @@ export const Role = () => {
         <div
           className="role-button"
           onClick={() => {
-            history.push("/");
             updateBuyerRole();
+            history.push("/");
           }}
         >
           <img
@@ -32,8 +32,8 @@ export const Role = () => {
         <div
           className="role-button"
           onClick={() => {
-            history.push("/seller-search-post");
             updateSellerRole();
+            history.push("/seller-search-post");
           }}
         >
           <img
