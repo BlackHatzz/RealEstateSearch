@@ -43,10 +43,10 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       
-      <SellerDashboard />
-      {/* {authUser && role && <ChatLauncher />}
+      {/* <SellerDashboard /> */}
+      {authUser && role && <ChatLauncher />}
       <Switch>
-        <Route exact path="/seller" component={SellerDashboard} />
+        <Route exact path="/seller-search-post" component={SellerDashboard} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
         <Route exact path="/sell" component={Seller} />
@@ -81,7 +81,7 @@ const App = () => {
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
         <Route path="/chat-page" component={Chat} />
-      </Switch> */}
+      </Switch>
     </div>
   ) : (
     <div>Loading ...</div>

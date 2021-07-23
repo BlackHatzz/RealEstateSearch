@@ -45,7 +45,7 @@ const SellerDashboard = () => {
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/search-post",
+      path: "/seller-search-post",
       child: <SearchPost />,
       //   path: "/manage-post",
       //   child: <div className="content-container"><ManagePost /></div>,
@@ -79,7 +79,7 @@ const SellerDashboard = () => {
   useEffect(() => {
     handleStyleForSelectedItem();
   }, []);
-  useHistory().push("/search-post");
+//   useHistory().push("/search-post");
   const handleSelectTab = (key) => {
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");

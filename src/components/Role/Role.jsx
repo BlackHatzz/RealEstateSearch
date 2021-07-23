@@ -8,7 +8,7 @@ export const Role = () => {
   useEffect(() => {
     console.log("role" + role);
     if (role) {
-      history.push(role === "buyer" ? "/" : "/sell");
+      history.push(role === "buyer" ? "/" : "/seller-search-post");
     }
   }, [history, role]);
   return (
@@ -32,7 +32,7 @@ export const Role = () => {
         <div
           className="role-button"
           onClick={() => {
-            history.push("/sell");
+            history.push("/seller-search-post");
             updateSellerRole();
           }}
         >
