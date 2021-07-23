@@ -23,6 +23,14 @@ import { ControlPointSharp } from "@material-ui/icons";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
+import { useHistory } from "react-router";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    useRouteMatch,
+  } from "react-router-dom";
 
 class ManagePost extends Component {
   placeInfo = null;
@@ -1278,7 +1286,7 @@ class ManagePost extends Component {
           {(close) => (
             <div className="success-popup-container">
               {this.renderContent("thisis")}
-              <div
+              <Link
                 onClick={() => {
                   if (this.state.isLoaded) {
                     this.state.isLoaded = false;
@@ -1286,10 +1294,12 @@ class ManagePost extends Component {
                   this.isIndicatorAnimating = false;
                   close();
                 }}
-                className="noselect confirm"
+                style={{color: "black"}}
+                className="noselect confirm link"
+                to="/search-post"
               >
                 <span>OK</span>
-              </div>
+              </Link>
             </div>
             // <SuccessPopup
             //   close={close}
