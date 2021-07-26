@@ -100,3 +100,37 @@
   left: 40%;
   /* transform: translate(-50%, -50%); */
 }
+.set-schedule-form {
+  padding: 30px;
+  display: flex;
+  border: 1px solid black;
+  width: fit-content;
+  flex-direction: column;
+}
+.set-schedule-form-item {
+  display: flex;
+  border: 1px solid black;
+  margin-bottom: 10px;
+  flex-direction: column;
+}
+.set-schedule-form-item-day {
+  background-color: #e0e0e0;
+}
+
+.periods {
+  display: flex;
+  flex-direction: row;
+}
+.period-item {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+  background-color: gray;
+  cursor: pointer;
+}
+.period-item-active {
+  border: 1px solid black;
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+}

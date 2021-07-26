@@ -22,17 +22,18 @@ import {
   Link,
   useRouteMatch,
 } from "react-router-dom";
+import { SellerScheduler } from "./SellerScheduler";
 
 const SellerDashboard = () => {
   var [selectedItem, setSelectedItem] = useState(1);
   const otherRoutes = [
     {
       path: "/manage-post",
-      child: 
+      child: (
         <div className="content-container">
           <ManagePost />
         </div>
-      ,
+      ),
     },
   ];
   var [items, setItems] = useState([
@@ -62,6 +63,18 @@ const SellerDashboard = () => {
       path: "/transaction-history",
       child: <p>historyewew</p>,
     },
+    {
+      key: 3,
+      title: "Tạo thời khóa biểu",
+      icon: (
+        <HistoryIcon
+          id={"seller-dashboard-icon3"}
+          className="seller-dashboard-el icon"
+        />
+      ),
+      path: "/seller-scheduler",
+      child: <SellerScheduler />,
+    },
     // {
     //   key: 3,
     //   title: "Search",
@@ -79,7 +92,7 @@ const SellerDashboard = () => {
   useEffect(() => {
     handleStyleForSelectedItem();
   }, []);
-//   useHistory().push("/search-post");
+  //   useHistory().push("/search-post");
   const handleSelectTab = (key) => {
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");
@@ -196,9 +209,13 @@ const SellerDashboard = () => {
                   children={() => <p>history</p>}
                 /> */}
 
-                {otherRoutes.map((route) => (
-                    <Route key={route.path} path={route.path}  children={() => route.child} />
-                ))}
+              {otherRoutes.map((route) => (
+                <Route
+                  key={route.path}
+                  path={route.path}
+                  children={() => route.child}
+                />
+              ))}
             </Switch>
             {/* </div> */}
           </div>
