@@ -49,7 +49,7 @@ const SearchPost = () => {
     },
   ]);
 
-  useEffect(async () => {
+  useEffect(() => {
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
       let response = await fetch(
@@ -153,7 +153,7 @@ const SearchPost = () => {
     // }
 
     //   getTheChosenBuyerByRealEstateRef
-  }, [realEstateList]);
+  }, [isRealEstateLoaded, realEstateList]);
 
   const renderRealEstateItem = (item, index) => {
     if (item.realEstate == null) {
@@ -218,8 +218,8 @@ const SearchPost = () => {
 
           {/* address */}
           <span className="address">
-            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName}, {realEstate.wardName},{" "}
-            {realEstate.disName}
+            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
+            {realEstate.wardName}, {realEstate.disName}
           </span>
 
           {/* description */}

@@ -25,12 +25,12 @@ import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
 import { useHistory } from "react-router";
 import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
-    useRouteMatch,
-  } from "react-router-dom";
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
 
 class ManagePost extends Component {
   placeInfo = null;
@@ -1294,7 +1294,7 @@ class ManagePost extends Component {
                   this.isIndicatorAnimating = false;
                   close();
                 }}
-                style={{color: "black"}}
+                style={{ color: "black" }}
                 className="noselect confirm link"
                 to="/search-post"
               >
