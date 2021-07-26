@@ -16,6 +16,7 @@ import ManagePost from "./ManagePost";
 import "./manage-post.css";
 import "./seller.css";
 import { SellerPost } from "./SellerPost";
+import { SellerScheduler } from "./SellerScheduler";
 export const Seller = () => {
   const routes = [
     {
@@ -34,6 +35,10 @@ export const Seller = () => {
           <ManagePost />
         </div>
       ),
+    },
+    {
+      path: "/set-schedule",
+      main: () => <SellerScheduler />,
     },
   ];
 
@@ -58,6 +63,12 @@ export const Seller = () => {
 
               <li>
                 <CustomMenuLink to="/search-post" label="Search" />
+              </li>
+              <li>
+                <CustomMenuLink
+                  to="/set-schedule"
+                  label="Quản lý thời gian rảnh"
+                />
               </li>
             </ul>
           </div>
