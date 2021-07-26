@@ -47,7 +47,7 @@ function Appointment({ setTrigger, conversation }) {
     setBookId(uuidv4());
     if (conversation) {
       fetch(
-        `http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/apis/v1/schedules/all?sellerId=${conversation.data.sellerId}`
+        `https://api-realestate.top/apis/v1/schedules/all?sellerId=${conversation.data.sellerId}`
       )
         .then((response) => {
           if (response.ok) {
@@ -57,30 +57,30 @@ function Appointment({ setTrigger, conversation }) {
         })
         .then((data) => {
           const active = data.filter((e) => e.status === "Not booked yet");
-          const freeDays = active.map((e) => e.weekDay.id - 1);
+          const freeDays = active.map((e) => e.weekDay.id);
           const busyDays = defaultWeekday.filter((e) => !freeDays.includes(e));
           const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];
           setWeekdays(filterDays);
           const sun = active
-            .filter((e) => e.weekDay.id === 1)
+            .filter((e) => e.weekDay.id === 0)
             .map((e) => periods[e.timeFrame.id - 1]);
           const mon = active
-            .filter((e) => e.weekDay.id === 2)
+            .filter((e) => e.weekDay.id === 1)
             .map((e) => periods[e.timeFrame.id - 1]);
           const tue = active
-            .filter((e) => e.weekDay.id === 3)
+            .filter((e) => e.weekDay.id === 2)
             .map((e) => periods[e.timeFrame.id - 1]);
           const wed = active
-            .filter((e) => e.weekDay.id === 4)
+            .filter((e) => e.weekDay.id === 3)
             .map((e) => periods[e.timeFrame.id - 1]);
           const thu = active
-            .filter((e) => e.weekDay.id === 5)
+            .filter((e) => e.weekDay.id === 4)
             .map((e) => periods[e.timeFrame.id - 1]);
           const fri = active
-            .filter((e) => e.weekDay.id === 6)
+            .filter((e) => e.weekDay.id === 5)
             .map((e) => periods[e.timeFrame.id - 1]);
           const sat = active
-            .filter((e) => e.weekDay.id === 7)
+            .filter((e) => e.weekDay.id === 6)
             .map((e) => periods[e.timeFrame.id - 1]);
           const scheduleTable = [];
           scheduleTable.push(sun);
