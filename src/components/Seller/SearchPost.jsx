@@ -69,7 +69,7 @@ const SearchPost = () => {
           realEstate,
           user: json,
         };
-        await setRealEstateList([...realEstateList]);
+        setRealEstateList([...realEstateList]);
         console.log("affeter");
         console.log(realEstateList);
       }

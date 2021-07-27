@@ -16,7 +16,7 @@ import { Context } from "../../ChatContext";
 
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
-  const { role } = useContext(Context);
+  const { role, resetRole } = useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [unseen, setUnseen] = useState(0);
@@ -158,6 +158,7 @@ const BuyerNavbar = () => {
                 <div
                   className="profile-menu-item bottom-item"
                   onClick={() => {
+                    resetRole();
                     fb.auth.signOut();
                   }}
                 >

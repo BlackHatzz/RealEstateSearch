@@ -23,6 +23,7 @@ const ChatContext = (props) => {
         updateClose: () => setIsOpen(false),
         updateSellerRole: () => setRole("seller"),
         updateBuyerRole: () => setRole("buyer"),
+        resetRole: () => setRole(""),
         // aCallback: aCallback,
       }}
     >
