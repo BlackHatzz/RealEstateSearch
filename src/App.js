@@ -82,7 +82,6 @@ const App = () => {
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
-        <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
   ) : (

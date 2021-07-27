@@ -4,7 +4,9 @@ import { fb } from "../../services";
 export const SellerScheduler = () => {
   const uuid = fb.auth.currentUser.uid;
   const [schedule, setSchedule] = useState([]);
+  const [buttonDisable, setButtonDisable] = useState(true);
   const [trigger, setTrigger] = useState(false);
+  const [error, setError] = useState("");
 
   const defaultWeekdays = [
     "Chủ nhật",
@@ -22,7 +24,6 @@ export const SellerScheduler = () => {
     "14:00-16:00",
     "16:00-18:00",
     "18:00-20:00",
-    "20:00-22:00",
   ];
   useEffect(() => {
     fetch(`https://api-realestate.top/apis/v1/schedules/all?sellerId=${uuid}`)
@@ -34,7 +35,7 @@ export const SellerScheduler = () => {
       })
       .then((data) => {
         console.log(data);
-        const active = data.filter((e) => e.status === "Not booked yet");
+        const active = data.filter((e) => e);
         const sun = active
           .filter((e) => e.weekDay.id === 0)
           .map((e) => periods[e.timeFrame.id - 1]);
@@ -65,17 +66,62 @@ export const SellerScheduler = () => {
         scheduleTable.push(fri);
         scheduleTable.push(sat);
         setSchedule(scheduleTable);
+
         console.log(scheduleTable);
       });
     return () => {};
   }, [uuid]);
+
+  const handleSubmit = () => {
+    let arr = [];
+    for (let i = 0; i < schedule.length; i++) {
+      if (schedule[i].length > 0) {
+        for (let j = 0; j < schedule[i].length; j++) {
+          let timeframeId = periods.indexOf(schedule[i][j]) + 1;
+
+          let bodyItem = {
+            sellerId: uuid,
+            timeFrame: { id: timeframeId },
+            weekDay: { id: i },
+          };
+          arr.push(bodyItem);
+        }
+      }
+    }
+
+    console.log(JSON.stringify(arr));
+
+    fetch("https://api-realestate.top/apis/v1/schedules/create/all", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(arr),
+    }).then((response) => {
+      console.log(response.status);
+      if (response.status === 200) {
+        console.log("create schedule success");
+        setButtonDisable(true);
+      } else {
+        setError("Error");
+        console.log(error);
+      }
+    });
+  };
   return (
     <div className="set-schedule-form">
       <h3>Khung giờ rảnh lặp lại hàng tuần</h3>
+
+      <div className="set-schedule-form-note">
+        <div className="set-schedule-form-note-bluebox"></div>
+        <p>Thời gian rảnh</p>
+      </div>
+      <br />
       {defaultWeekdays.map((e, index) => (
         <div id={index} className="set-schedule-form-item">
           <p className="set-schedule-form-item-day">{e}</p>
-          <p>Khung giờ</p>
+
           <div className="periods">
             {periods.map((period, i) => (
               <div
@@ -91,6 +137,7 @@ export const SellerScheduler = () => {
                     : schedule[index].push(period);
                   setSchedule(schedule);
                   setTrigger((e) => !e);
+                  setButtonDisable(false);
                 }}
               >
                 {period}
@@ -101,7 +148,13 @@ export const SellerScheduler = () => {
       ))}
       <br />
 
-      <button>Lưu</button>
+      <button
+        className="save-button"
+        onClick={() => handleSubmit()}
+        disabled={buttonDisable}
+      >
+        Lưu
+      </button>
     </div>
   );
 };
