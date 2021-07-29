@@ -100,3 +100,81 @@
   left: 40%;
   /* transform: translate(-50%, -50%); */
 }
+.set-schedule-form {
+  padding: 30px;
+  display: flex;
+
+  width: fit-content;
+  flex-direction: column;
+}
+.set-schedule-form-item {
+  display: flex;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  padding: 0px 0px 10px 0px;
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+  flex-direction: column;
+}
+.set-schedule-form-item-day {
+  background-color: #4b8aff;
+  color: white;
+  padding-left: 10px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.periods {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+.period-item {
+  border-radius: 5px;
+  padding: 5px 5px 0px 5px;
+  margin: 5px 5px 0px 5px;
+  background-color: white;
+  cursor: pointer;
+}
+.period-item:hover {
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+}
+.period-item-active:hover {
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+}
+.period-item-active {
+  padding: 5px;
+  margin: 5px;
+  cursor: pointer;
+  background-color: #89b2ff;
+  border-radius: 5px;
+}
+.set-schedule-form-note {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.set-schedule-form-note-bluebox {
+  background-color: #89b2ff;
+  width: 20px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+.save-button {
+  width: 60px;
+  height: 30px;
+  color: white;
+  background-color: #4b8aff;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+.save-button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}

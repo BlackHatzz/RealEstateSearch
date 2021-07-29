@@ -116,3 +116,46 @@ div.collapse-box {
 .link:focus {
   text-decoration: none;
 }
+
+.not-found-container {
+  margin: 0 auto;
+  margin-top: 24px;
+  width: 500px;
+  height: 500px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-size: 330px 330px;
+  background-color: inherit;
+}
+
+.not-found {
+  margin: 0 auto;
+  width: 330px;
+  height: 330px;
+  object-fit: cover;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-color: inherit;
+  background-image: url('https://i.ibb.co/pfHbbcS/Screen-Shot-2021-06-27-at-09-06-47.png');
+}
+
+.not-found-container span {
+  color: #747c87;
+  font-size: 15px;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  display: inline-block;
+}
+.whole-screen {
+  width: 100vw;
+  height: 100vh;
+  background-color: rgb(10, 10, 10, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
