@@ -6,6 +6,7 @@ import Constants from "../global/Constants";
 import {
   ControlPointTwoTone,
   LocalConvenienceStoreOutlined,
+  SignalCellularNull,
 } from "@material-ui/icons";
 import Realestate from "../Chat/Realestate";
 import { useHistory } from "react-router";
@@ -187,7 +188,7 @@ const SearchPost = () => {
     }
 
     return (
-      <div key={index} className="box">
+      <Link key={index} className="box link">
         <div
           style={{
             backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
@@ -243,7 +244,7 @@ const SearchPost = () => {
         </div> */}
           </div>
         </div>
-      </div>
+      </Link>
     );
   };
 

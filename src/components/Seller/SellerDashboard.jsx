@@ -30,7 +30,7 @@ const SellerDashboard = () => {
       path: "/manage-post",
       child: 
         <div className="content-container">
-          <ManagePost />
+          <ManagePost history={useHistory()} />
         </div>
       ,
     },

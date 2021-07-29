@@ -98,6 +98,7 @@
   box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18);
   display: flex;
   margin: 12px auto;
+  align-items: center;
 }
 
 div.seller-search-image-container {
