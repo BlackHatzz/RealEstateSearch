@@ -20,6 +20,7 @@ import Autocomplete from "react-google-autocomplete";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
+import { SellerScheduler } from "./components/Seller/SellerScheduler";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -43,11 +44,11 @@ const App = () => {
 
   return authResolved ? (
     <div className="app">
-      
       {/* <SellerDashboard /> */}
       {authUser && role && <ChatLauncher />}
       <Switch>
         <Route exact path="/seller-search-post" component={SellerDashboard} />
+        <Route exact path="/seller-scheduler" component={SellerScheduler} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />
         <Route exact path="/sell" component={Seller} />
@@ -81,7 +82,6 @@ const App = () => {
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
-        <Route path="/chat-page" component={Chat} />
       </Switch>
     </div>
   ) : (

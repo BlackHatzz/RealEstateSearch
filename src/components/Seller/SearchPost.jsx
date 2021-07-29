@@ -17,12 +17,16 @@ import {
   Link,
   useRouteMatch,
 } from "react-router-dom";
+import moment from "moment";
+import Modal from "@material-ui/core/Modal";
+import { fb } from "../../services";
 
 const SearchPost = () => {
   var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
   var [isBuyersLoaded, setIsBuyersLoaded] = useState(false);
+
   const [tabItemList, setTabItemList] = useState([
     {
       key: "tab-item-1",
@@ -50,7 +54,7 @@ const SearchPost = () => {
     },
   ]);
 
-  useEffect(async () => {
+  useEffect(() => {
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
       let response = await fetch(
@@ -66,7 +70,7 @@ const SearchPost = () => {
           realEstate,
           user: json,
         };
-        await setRealEstateList([...realEstateList]);
+        setRealEstateList([...realEstateList]);
         console.log("affeter");
         console.log(realEstateList);
       }
@@ -154,13 +158,16 @@ const SearchPost = () => {
     // }
 
     //   getTheChosenBuyerByRealEstateRef
-  }, [realEstateList]);
+  }, [isRealEstateLoaded, realEstateList]);
 
   const renderRealEstateItem = (item, index) => {
     if (item.realEstate == null) {
       return null;
     }
     const realEstate = item.realEstate;
+
+    if (realEstate.status === "active") {
+    }
 
     function renderStatus(user, realEstate) {
       // status: censored, non-censored, sold-out
@@ -188,63 +195,69 @@ const SearchPost = () => {
     }
 
     return (
-      <Link key={index} className="box link">
-        <div
-          style={{
-            backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
-          }}
-          className="seller-search-image-container"
-        >
-          {/* <img src={realEstate.images[0]} alt="" /> */}
-        </div>
-        <div className="content-product-container">
-          {/* title of product */}
-          <span className="product-title">
-            {realEstate.title}
-            {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
-            ĐẸP, GIÁ TỐT */}
-          </span>
+      
+      <div key={index}>
+        <RealItem realEstate={realEstate} />
+      </div>
+      // <div key={index} className="box">
+      //   <div
+      //     style={{
+      //       backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+      //     }}
+      //     className="seller-search-image-container"
+      //   >
+      //     {/* <img src={realEstate.images[0]} alt="" /> */}
+      //   </div>
+      //   <div className="content-product-container">
+      //     {/* title of product */}
+      //     <span className="product-title">
+      //       {realEstate.title}
+      //       {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+      //       ĐẸP, GIÁ TỐT */}
+      //     </span>
 
-          {/* price and area */}
-          <div className="price-box">
-            <span className="price">
-              Giá trị ~
-              {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
-                100}{" "}
-              triệu/m²
-            </span>
-            <span className="price">&#8226;</span>
-            <span className="area">Diện tích {realEstate.area} m²</span>
-          </div>
+      //     {/* price and area */}
+      //     <div className="price-box">
+      //       <span className="price">
+      //         Giá trị ~
+      //         {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+      //           100}{" "}
+      //         triệu/m²
+      //       </span>
+      //       <span className="price">&#8226;</span>
+      //       <span className="area">Diện tích {realEstate.area} m²</span>
+      //     </div>
 
-          {/* address */}
-          <span className="address">
-            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName}, {realEstate.wardName},{" "}
-            {realEstate.disName}
-          </span>
+      //     {/* address */}
+      //     <span className="address">
+      //       Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
+      //       {realEstate.wardName}, {realEstate.disName}
+      //     </span>
 
-          {/* description */}
-          <div className="description">
-            Mô tả: {realEstate.description}
-            {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
-            liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
-            tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
-            TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
-            400Triệu - Khi Thanh Toán Sớm . */}
-          </div>
+      //     {/* description */}
+      //     {/* <div className="description"> */}
+      //     {/* Mô tả: {realEstate.description} */}
+      //     {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+      //       liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
+      //       tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
+      //       TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
+      //       400Triệu - Khi Thanh Toán Sớm . */}
+      //     {/* </div> */}
 
-          <div className="other-info">
-            <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
-            {/* {renderStatus(item.user, realEstate)} */}
-            {/* <div className="owner">Người đăng: </div> */}
-            {/* <div className="product-phone-contact horizontal">
-          <BsFillChatDotsFill />
-          <div style={{ width: "12px" }}></div>
-          <span>&#32;Trò chuyện</span>
-        </div> */}
-          </div>
-        </div>
-      </Link>
+      //     {realEstate.status === "active" && <div>active</div>}
+
+      //     <div className="other-info">
+      //       <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+      //       {/* {renderStatus(item.user, realEstate)} */}
+      //       {/* <div className="owner">Người đăng: </div> */}
+      //       {/* <div className="product-phone-contact horizontal">
+      //     <BsFillChatDotsFill />
+      //     <div style={{ width: "12px" }}></div>
+      //     <span>&#32;Trò chuyện</span>
+      //   </div> */}
+      //     </div>
+      //   </div>
+      // </div>
     );
   };
 
@@ -400,3 +413,225 @@ const SearchPost = () => {
 };
 
 export default SearchPost;
+
+const RealItem = ({ realEstate }) => {
+  const [conversations, setConversations] = useState([]);
+  const [modalData, setModalData] = useState();
+  const [open, setOpen] = useState(false);
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = (conversation) => {
+    setOpen(true);
+    setModalData(conversation);
+  };
+  const handleSold = (conversation) => {
+    let id = realEstate.id + "";
+    fb.firestore.collection("realestates").doc(id).set(
+      {
+        status: "closed",
+        finalBuyer: conversation.data.buyer,
+        finalBuyerId: conversation.data.buyerId,
+        finalPrice: conversation.data.dealPrice,
+      },
+      { merge: true }
+    );
+
+    fb.firestore.collection("conversations").doc(conversation.id).set({
+      status: "sold",
+    });
+
+    handleClose();
+  };
+  useEffect(() => {
+    const unsubscribe = fb.firestore
+      .collection("conversations")
+      .where("realId", "==", realEstate.id)
+      .onSnapshot((snap) => {
+        setConversations(
+          snap.docs
+            .map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+            .filter((e) => e.data.deal === "accepted")
+        );
+      });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [realEstate.id]);
+  return (
+  //   <div className="box">
+  //     <div
+  //       style={{
+  //         backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+  //       }}
+  //       className="seller-search-image-container"
+  //     >
+  //       {/* <img src={realEstate.images[0]} alt="" /> */}
+  //     </div>
+  //     <div className="content-product-container">
+  //       {/* title of product */}
+  //       <span className="product-title">
+  //         {realEstate.title}
+  //         {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+  //     ĐẸP, GIÁ TỐT */}
+  //       </span>
+
+  //       {/* price and area */}
+  //       <div className="price-box">
+  //         <span className="price">
+  //           Giá trị ~
+  //           {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+  //             100}{" "}
+  //           triệu/m²
+  //         </span>
+  //         <span className="price">&#8226;</span>
+  //         <span className="area">Diện tích {realEstate.area} m²</span>
+  //       </div>
+
+  //       {/* address */}
+  //       <span className="address">
+  //         Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
+  //         {realEstate.wardName}, {realEstate.disName}
+  //       </span>
+
+  //       {/* description */}
+  //       {/* <div className="description"> */}
+  //       {/* Mô tả: {realEstate.description} */}
+  //       {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+  //     liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
+  //     tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
+  //     TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
+  //     400Triệu - Khi Thanh Toán Sớm . */}
+  //       {/* </div> */}
+
+  //       {realEstate.status === "active" && (
+  //         <div className="real-post-item-buyer-list">
+  //           {conversations.length > 0 && (
+  //             <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
+  //           )}
+  //           {conversations.map((conversation) => (
+  //             <div className="real-post-item-buyer">
+  //               <div className="real-post-item-buyer-info">
+  //                 <p>{conversation.data.buyer}</p>
+  //                 <p className="real-post-item-buyer-deal">
+  //                   Thỏa thuận: {conversation.data.dealPrice} tỷ
+  //                 </p>
+  //                 <div className="real-post-item-buyer-book">
+  //                   <p>
+  //                     Lịch hẹn:{" "}
+  //                     {conversation.data.appointmentDate
+  //                       ? moment(conversation.data.appointmentDate).calendar()
+  //                       : "Chưa có"}
+  //                   </p>
+  //                 </div>
+  //               </div>
+
+  //               <button
+  //                 className="close-sale-button"
+  //                 type="button"
+  //                 onClick={() => handleOpen(conversation)}
+  //               >
+  //                 bán
+  //               </button>
+  //               {modalData ? (
+  //                 <Modal
+  //                   open={open}
+  //                   //   onClose={handleClose}
+  //                   aria-labelledby="simple-modal-title"
+  //                   aria-describedby="simple-modal-description"
+  //                 >
+  //                   <div className="modal-confirm">
+  //                     <h2 id="simple-modal-title">Xác nhận bán</h2>
+  //                     <div id="simple-modal-description">
+  //                       <p>Người mua {modalData.data.buyer}</p>
+  //                       <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+  //                     </div>
+  //                     <div>
+  //                       <button onClick={() => handleSold(modalData)}>
+  //                         Xác nhận
+  //                       </button>
+  //                       <button onClick={handleClose}>Hủy</button>
+  //                     </div>
+  //                   </div>
+  //                 </Modal>
+  //               ) : null}
+  //             </div>
+  //           ))}
+  //         </div>
+  //       )}
+
+  //       <div className="other-info">
+  //         <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+  //         {/* {renderStatus(item.user, realEstate)} */}
+  //         {/* <div className="owner">Người đăng: </div> */}
+  //         {/* <div className="product-phone-contact horizontal">
+  //   <BsFillChatDotsFill />
+  //   <div style={{ width: "12px" }}></div>
+  //   <span>&#32;Trò chuyện</span>
+  // </div> */}
+  //       </div>
+  //     </div>
+  //   </div>
+  <Link className="box link">
+        <div
+          style={{
+            backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+          }}
+          className="seller-search-image-container"
+        >
+          {/* <img src={realEstate.images[0]} alt="" /> */}
+        </div>
+        <div className="content-product-container">
+          {/* title of product */}
+          <span className="product-title">
+            {realEstate.title}
+            {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+            ĐẸP, GIÁ TỐT */}
+          </span>
+
+          {/* price and area */}
+          <div className="price-box">
+            <span className="price">
+              Giá trị ~
+              {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+                100}{" "}
+              triệu/m²
+            </span>
+            <span className="price">&#8226;</span>
+            <span className="area">Diện tích {realEstate.area} m²</span>
+          </div>
+
+          {/* address */}
+          <span className="address">
+            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName}, {realEstate.wardName},{" "}
+            {realEstate.disName}
+          </span>
+
+          {/* description */}
+          <div className="description">
+            Mô tả: {realEstate.description}
+            {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+            liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
+            tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
+            TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
+            400Triệu - Khi Thanh Toán Sớm . */}
+          </div>
+
+          <div className="other-info">
+            <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+            {/* {renderStatus(item.user, realEstate)} */}
+            {/* <div className="owner">Người đăng: </div> */}
+            {/* <div className="product-phone-contact horizontal">
+          <BsFillChatDotsFill />
+          <div style={{ width: "12px" }}></div>
+          <span>&#32;Trò chuyện</span>
+        </div> */}
+          </div>
+        </div>
+      </Link>
+  );
+};
