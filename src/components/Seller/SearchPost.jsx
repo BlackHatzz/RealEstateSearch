@@ -26,6 +26,7 @@ const SearchPost = () => {
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
   var [isBuyersLoaded, setIsBuyersLoaded] = useState(false);
+  var [selectedTabItemKey, setSelectedTabItemKey] = useState("tab-item-1"); // first key in tabItemList
 
   const [tabItemList, setTabItemList] = useState([
     {
@@ -160,7 +161,7 @@ const SearchPost = () => {
     //   getTheChosenBuyerByRealEstateRef
   }, [isRealEstateLoaded, realEstateList]);
 
-  const renderRealEstateItem = (item, index) => {
+  const renderRealEstateItem = (item, index, link = null) => {
     if (item.realEstate == null) {
       return null;
     }
@@ -197,7 +198,7 @@ const SearchPost = () => {
     return (
       
       <div key={index}>
-        <RealItem realEstate={realEstate} />
+        <RealItem link={link} realEstate={realEstate} />
       </div>
       // <div key={index} className="box">
       //   <div
@@ -306,6 +307,7 @@ const SearchPost = () => {
                     titleTabItemElement.style.color = reRenderItem.hexColorCode;
                   } else {
                     // selected item
+                    setSelectedTabItemKey(reRenderItem.key);
                     const tabItemElement = document.getElementById(
                       reRenderItem.key
                     );
@@ -392,7 +394,13 @@ const SearchPost = () => {
         <div className="seller-search-list-search-container">
           {realEstateList.length > 0 ? (
             realEstateList.map((item, index) => {
-              return renderRealEstateItem(item, index);
+              var link = null;
+              console.log("annn");
+              console.log(item);
+              if(selectedTabItemKey === tabItemList[1].key) {
+                link = "/seller-update-post/" + item.realEstate.id;
+              }
+              return renderRealEstateItem(item, index, link);
             })
           ) : (
             <React.Fragment>
@@ -414,7 +422,7 @@ const SearchPost = () => {
 
 export default SearchPost;
 
-const RealItem = ({ realEstate }) => {
+const RealItem = ({ realEstate, link = null }) => {
   const [conversations, setConversations] = useState([]);
   const [modalData, setModalData] = useState();
   const [open, setOpen] = useState(false);
@@ -576,7 +584,7 @@ const RealItem = ({ realEstate }) => {
   //       </div>
   //     </div>
   //   </div>
-  <Link className="box link">
+  <Link to={link == null ? "#" : link} className="box link">
         <div
           style={{
             backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
