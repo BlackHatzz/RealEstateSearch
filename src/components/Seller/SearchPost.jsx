@@ -26,6 +26,7 @@ const SearchPost = () => {
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
   var [isBuyersLoaded, setIsBuyersLoaded] = useState(false);
+  var [selectedTabItemKey, setSelectedTabItemKey] = useState("tab-item-1"); // first key in tabItemList
 
   const [tabItemList, setTabItemList] = useState([
     {
@@ -160,7 +161,7 @@ const SearchPost = () => {
     //   getTheChosenBuyerByRealEstateRef
   }, [isRealEstateLoaded, realEstateList]);
 
-  const renderRealEstateItem = (item, index) => {
+  const renderRealEstateItem = (item, index, link = null) => {
     if (item.realEstate == null) {
       return null;
     }
@@ -196,7 +197,7 @@ const SearchPost = () => {
 
     return (
       <div key={index}>
-        <RealItem realEstate={realEstate} />
+        <RealItem link={link} realEstate={realEstate} />
       </div>
       // <div key={index} className="box">
       //   <div
@@ -305,6 +306,7 @@ const SearchPost = () => {
                     titleTabItemElement.style.color = reRenderItem.hexColorCode;
                   } else {
                     // selected item
+                    setSelectedTabItemKey(reRenderItem.key);
                     const tabItemElement = document.getElementById(
                       reRenderItem.key
                     );
@@ -391,7 +393,13 @@ const SearchPost = () => {
         <div className="seller-search-list-search-container">
           {realEstateList.length > 0 ? (
             realEstateList.map((item, index) => {
-              return renderRealEstateItem(item, index);
+              var link = null;
+              console.log("annn");
+              console.log(item);
+              if(selectedTabItemKey === tabItemList[1].key) {
+                link = "/seller-update-post/" + item.realEstate.id;
+              }
+              return renderRealEstateItem(item, index, link);
             })
           ) : (
             <React.Fragment>
@@ -413,7 +421,7 @@ const SearchPost = () => {
 
 export default SearchPost;
 
-const RealItem = ({ realEstate }) => {
+const RealItem = ({ realEstate, link = null }) => {
   const [conversations, setConversations] = useState([]);
   const [modalData, setModalData] = useState();
   const [open, setOpen] = useState(false);
@@ -477,77 +485,135 @@ const RealItem = ({ realEstate }) => {
     };
   }, [realEstate.id]);
   return (
-    //   <div className="box">
-    //     <div
-    //       style={{
-    //         backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
-    //       }}
-    //       className="seller-search-image-container"
-    //     >
-    //       {/* <img src={realEstate.images[0]} alt="" /> */}
-    //     </div>
-    //     <div className="content-product-container">
-    //       {/* title of product */}
-    //       <span className="product-title">
-    //         {realEstate.title}
-    //         {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
-    //     ĐẸP, GIÁ TỐT */}
-    //       </span>
 
-    //       {/* price and area */}
-    //       <div className="price-box">
-    //         <span className="price">
-    //           Giá trị ~
-    //           {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
-    //             100}{" "}
-    //           triệu/m²
-    //         </span>
-    //         <span className="price">&#8226;</span>
-    //         <span className="area">Diện tích {realEstate.area} m²</span>
-    //       </div>
+  //   <div className="box">
+  //     <div
+  //       style={{
+  //         backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+  //       }}
+  //       className="seller-search-image-container"
+  //     >
+  //       {/* <img src={realEstate.images[0]} alt="" /> */}
+  //     </div>
+  //     <div className="content-product-container">
+  //       {/* title of product */}
+  //       <span className="product-title">
+  //         {realEstate.title}
+  //         {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+  //     ĐẸP, GIÁ TỐT */}
+  //       </span>
 
-    //       {/* address */}
-    //       <span className="address">
-    //         Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
-    //         {realEstate.wardName}, {realEstate.disName}
-    //       </span>
+  //       {/* price and area */}
+  //       <div className="price-box">
+  //         <span className="price">
+  //           Giá trị ~
+  //           {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+  //             100}{" "}
+  //           triệu/m²
+  //         </span>
+  //         <span className="price">&#8226;</span>
+  //         <span className="area">Diện tích {realEstate.area} m²</span>
+  //       </div>
 
-    //       {/* description */}
-    //       {/* <div className="description"> */}
-    //       {/* Mô tả: {realEstate.description} */}
-    //       {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
-    //     liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
-    //     tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
-    //     TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
-    //     400Triệu - Khi Thanh Toán Sớm . */}
-    //       {/* </div> */}
+  //       {/* address */}
+  //       <span className="address">
+  //         Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
+  //         {realEstate.wardName}, {realEstate.disName}
+  //       </span>
 
-    //       <div className="other-info">
-    //         <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
-    //         {/* {renderStatus(item.user, realEstate)} */}
-    //         {/* <div className="owner">Người đăng: </div> */}
-    //         {/* <div className="product-phone-contact horizontal">
-    //   <BsFillChatDotsFill />
-    //   <div style={{ width: "12px" }}></div>
-    //   <span>&#32;Trò chuyện</span>
-    // </div> */}
-    //       </div>
-    //     </div>
-    //   </div>
-    <Link className="box link">
-      <div
-        style={{
-          backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
-        }}
-        className="seller-search-image-container"
-      >
-        {/* <img src={realEstate.images[0]} alt="" /> */}
-      </div>
-      <div className="content-product-container">
-        {/* title of product */}
-        <span className="product-title">
-          {realEstate.title}
-          {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+  //       {/* description */}
+  //       {/* <div className="description"> */}
+  //       {/* Mô tả: {realEstate.description} */}
+  //       {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+  //     liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
+  //     tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
+  //     TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
+  //     400Triệu - Khi Thanh Toán Sớm . */}
+  //       {/* </div> */}
+
+  //       {realEstate.status === "active" && (
+  //         <div className="real-post-item-buyer-list">
+  //           {conversations.length > 0 && (
+  //             <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
+  //           )}
+  //           {conversations.map((conversation) => (
+  //             <div className="real-post-item-buyer">
+  //               <div className="real-post-item-buyer-info">
+  //                 <p>{conversation.data.buyer}</p>
+  //                 <p className="real-post-item-buyer-deal">
+  //                   Thỏa thuận: {conversation.data.dealPrice} tỷ
+  //                 </p>
+  //                 <div className="real-post-item-buyer-book">
+  //                   <p>
+  //                     Lịch hẹn:{" "}
+  //                     {conversation.data.appointmentDate
+  //                       ? moment(conversation.data.appointmentDate).calendar()
+  //                       : "Chưa có"}
+  //                   </p>
+  //                 </div>
+  //               </div>
+
+  //               <button
+  //                 className="close-sale-button"
+  //                 type="button"
+  //                 onClick={() => handleOpen(conversation)}
+  //               >
+  //                 bán
+  //               </button>
+  //               {modalData ? (
+  //                 <Modal
+  //                   open={open}
+  //                   //   onClose={handleClose}
+  //                   aria-labelledby="simple-modal-title"
+  //                   aria-describedby="simple-modal-description"
+  //                 >
+  //                   <div className="modal-confirm">
+  //                     <h2 id="simple-modal-title">Xác nhận bán</h2>
+  //                     <div id="simple-modal-description">
+  //                       <p>Người mua {modalData.data.buyer}</p>
+  //                       <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+  //                     </div>
+  //                     <div>
+  //                       <button onClick={() => handleSold(modalData)}>
+  //                         Xác nhận
+  //                       </button>
+  //                       <button onClick={handleClose}>Hủy</button>
+  //                     </div>
+  //                   </div>
+  //                 </Modal>
+  //               ) : null}
+  //             </div>
+  //           ))}
+  //         </div>
+  //       )}
+
+  //       <div className="other-info">
+  //         <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+  //         {/* {renderStatus(item.user, realEstate)} */}
+  //         {/* <div className="owner">Người đăng: </div> */}
+  //         {/* <div className="product-phone-contact horizontal">
+  //   <BsFillChatDotsFill />
+  //   <div style={{ width: "12px" }}></div>
+  //   <span>&#32;Trò chuyện</span>
+  // </div> */}
+  //       </div>
+  //     </div>
+  //   </div>
+  <Link to={link == null ? "#" : link} className="box link">
+        <div
+          style={{
+            backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
+          }}
+          className="seller-search-image-container"
+        >
+          {/* <img src={realEstate.images[0]} alt="" /> */}
+        </div>
+        <div className="content-product-container">
+          {/* title of product */}
+          <span className="product-title">
+            {realEstate.title}
+            {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+
             ĐẸP, GIÁ TỐT */}
         </span>
 
@@ -569,10 +635,67 @@ const RealItem = ({ realEstate }) => {
           {realEstate.wardName}, {realEstate.disName}
         </span>
 
-        {/* description */}
-        <div className="description">
-          Mô tả: {realEstate.description}
-          {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+
+          {/* description */}
+          <div className="description">
+            {/* Mô tả: {realEstate.description} */}
+            {realEstate.status === "active" && (
+          <div className="real-post-item-buyer-list">
+            {conversations.length > 0 && (
+              <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
+            )}
+            {conversations.map((conversation) => (
+              <div className="real-post-item-buyer">
+                <div className="real-post-item-buyer-info">
+                  <p>{conversation.data.buyer}</p>
+                  <p className="real-post-item-buyer-deal">
+                    Thỏa thuận: {conversation.data.dealPrice} tỷ
+                  </p>
+                  <div className="real-post-item-buyer-book">
+                    <p>
+                      Lịch hẹn:{" "}
+                      {conversation.data.appointmentDate
+                        ? moment(conversation.data.appointmentDate).calendar()
+                        : "Chưa có"}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  className="close-sale-button"
+                  type="button"
+                  onClick={() => handleOpen(conversation)}
+                >
+                  bán
+                </button>
+                {modalData ? (
+                  <Modal
+                    open={open}
+                    //   onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <div className="modal-confirm">
+                      <h2 id="simple-modal-title">Xác nhận bán</h2>
+                      <div id="simple-modal-description">
+                        <p>Người mua {modalData.data.buyer}</p>
+                        <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                      </div>
+                      <div>
+                        <button onClick={() => handleSold(modalData)}>
+                          Xác nhận
+                        </button>
+                        <button onClick={handleClose}>Hủy</button>
+                      </div>
+                    </div>
+                  </Modal>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        )}
+            {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+
             liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
             tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
             TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
