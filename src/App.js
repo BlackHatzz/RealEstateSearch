@@ -50,6 +50,7 @@ const App = () => {
       <div className="menu-bar">
         <BuyerNavbar />
       </div>
+      <div className="invisible"></div>
       <Switch>
         <Route exact path="/seller-search-post" component={SellerDashboard} />
         <Route exact path="/seller-scheduler" component={SellerScheduler} />

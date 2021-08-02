@@ -121,4 +121,9 @@ code {
 
 .menu-bar {
   position: fixed;
+  width: 100%;
+  top: 0;
+}
+.invisible {
+  height: 70px;
 }
