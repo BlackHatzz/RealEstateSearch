@@ -316,20 +316,20 @@
 }
 
 .seller-wrapper > .right-container .area-field {
-    width: calc(100% - 48px);
-    height: 18px;
-    padding: 0;
-    margin: 0;
-    background-color: transparent;
-    font-size: 14px;
-    line-height: 18px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    overflow: hidden;
-    resize: none;
+  width: calc(100% - 48px);
+  height: 18px;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  overflow: hidden;
+  resize: none;
 }
 .seller-wrapper > .right-container .area-field:focus {
-    outline: none;
+  outline: none;
 }
 
 .div-field-container {
@@ -461,7 +461,6 @@ div.div-field {
   padding-left: 12px;
 }
 
-
 .seller-wrapper > .right-container .selected-file {
   background-color: #dadde2;
   max-width: 192px;
@@ -512,10 +511,17 @@ div.div-field {
   justify-content: center;
   cursor: pointer;
 }
-.seller-wrapper > .right-container .selected-file > .delete-file-container:hover {
+.seller-wrapper
+  > .right-container
+  .selected-file
+  > .delete-file-container:hover {
   background-color: rgb(220, 220, 220);
 }
-.seller-wrapper > .right-container .selected-file > .delete-file-container > .icon {
+.seller-wrapper
+  > .right-container
+  .selected-file
+  > .delete-file-container
+  > .icon {
   width: 15px;
   height: 15px;
   color: gray;
@@ -549,9 +555,6 @@ div.div-field {
   text-align: center;
   /* position: absolute; */
 }
-
-
-
 
 .create-button {
   background-color: #00c896;
@@ -657,9 +660,6 @@ div.div-field {
   width: 100%;
 }
 
-
-
-
 .seller-manage-post-tooltip {
   position: relative;
   /* display: inline-block; */
@@ -675,7 +675,7 @@ div.div-field {
   /* visibility: hidden; */
   visibility: visible;
   width: 175px;
-  background-color: #EA6863;
+  background-color: #ea6863;
   color: #fff;
   text-align: center;
   border-radius: 6px;
@@ -687,7 +687,6 @@ div.div-field {
   font-size: 14px;
 }
 
-
 .seller-manage-post-tooltip > .tooltiptext::after {
   content: "";
   position: absolute;
@@ -696,5 +695,5 @@ div.div-field {
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
-  border-color: #EA6863 transparent transparent transparent;
+  border-color: #ea6863 transparent transparent transparent;
 }

@@ -23,13 +23,7 @@
   cursor: pointer;
   border-radius: 5px;
 }
-.seller-menu-button-active:hover {
-  box-shadow: 5px 10px gray;
-}
 
-.seller-menu-button:hover {
-  box-shadow: 5px 10px gray;
-}
 .seller-menu-link {
   text-decoration: none;
   text-decoration-color: none;
