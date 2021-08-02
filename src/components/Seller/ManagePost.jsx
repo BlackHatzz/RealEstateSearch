@@ -350,8 +350,8 @@ class ManagePost extends Component {
       dis +
       ", " +
       ward +
-      ", " +
-      houseNo +
+      // ", " +
+      // houseNo +
       " " +
       address;
 

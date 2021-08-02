@@ -621,7 +621,62 @@ const RealItem = ({ realEstate, link = null }) => {
 
           {/* description */}
           <div className="description">
-            Mô tả: {realEstate.description}
+            {/* Mô tả: {realEstate.description} */}
+            {realEstate.status === "active" && (
+          <div className="real-post-item-buyer-list">
+            {conversations.length > 0 && (
+              <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
+            )}
+            {conversations.map((conversation) => (
+              <div className="real-post-item-buyer">
+                <div className="real-post-item-buyer-info">
+                  <p>{conversation.data.buyer}</p>
+                  <p className="real-post-item-buyer-deal">
+                    Thỏa thuận: {conversation.data.dealPrice} tỷ
+                  </p>
+                  <div className="real-post-item-buyer-book">
+                    <p>
+                      Lịch hẹn:{" "}
+                      {conversation.data.appointmentDate
+                        ? moment(conversation.data.appointmentDate).calendar()
+                        : "Chưa có"}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  className="close-sale-button"
+                  type="button"
+                  onClick={() => handleOpen(conversation)}
+                >
+                  bán
+                </button>
+                {modalData ? (
+                  <Modal
+                    open={open}
+                    //   onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <div className="modal-confirm">
+                      <h2 id="simple-modal-title">Xác nhận bán</h2>
+                      <div id="simple-modal-description">
+                        <p>Người mua {modalData.data.buyer}</p>
+                        <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                      </div>
+                      <div>
+                        <button onClick={() => handleSold(modalData)}>
+                          Xác nhận
+                        </button>
+                        <button onClick={handleClose}>Hủy</button>
+                      </div>
+                    </div>
+                  </Modal>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        )}
             {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
             liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
             tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
