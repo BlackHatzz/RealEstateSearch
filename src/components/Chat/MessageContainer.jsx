@@ -82,7 +82,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
               createAt: currentDate.toISOString(),
               id: message.id,
               offeredPrice: message.deal,
-              status: "final",
+              status: "accepted",
             }),
           }).then((response) => {
             console.log(response);

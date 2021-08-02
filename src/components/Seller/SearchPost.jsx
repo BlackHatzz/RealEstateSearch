@@ -439,6 +439,21 @@ const RealItem = ({ realEstate }) => {
     fb.firestore.collection("realestates").doc(id).update({
       status: "sold",
     });
+    console.log(parseInt(realEstate.id));
+    console.log(conversation.data.buyerId);
+    fetch("https://api-realestate.top/api/v1/realEstate/updateBuyerId", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        buyerId: conversation.data.buyerId,
+        id: parseInt(realEstate.id),
+      }),
+    }).then((response) => {
+      console.log(response);
+    });
 
     handleClose();
   };
