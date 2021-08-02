@@ -196,7 +196,6 @@ const SearchPost = () => {
     }
 
     return (
-      
       <div key={index}>
         <RealItem link={link} realEstate={realEstate} />
       </div>
@@ -445,8 +444,23 @@ const RealItem = ({ realEstate, link = null }) => {
       { merge: true }
     );
 
-    fb.firestore.collection("conversations").doc(conversation.id).set({
+    fb.firestore.collection("realestates").doc(id).update({
       status: "sold",
+    });
+    console.log(parseInt(realEstate.id));
+    console.log(conversation.data.buyerId);
+    fetch("https://api-realestate.top/api/v1/realEstate/updateBuyerId", {
+      method: "PUT",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        buyerId: conversation.data.buyerId,
+        id: parseInt(realEstate.id),
+      }),
+    }).then((response) => {
+      console.log(response);
     });
 
     handleClose();
@@ -471,6 +485,7 @@ const RealItem = ({ realEstate, link = null }) => {
     };
   }, [realEstate.id]);
   return (
+
   //   <div className="box">
   //     <div
   //       style={{
@@ -598,26 +613,28 @@ const RealItem = ({ realEstate, link = null }) => {
           <span className="product-title">
             {realEstate.title}
             {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+
             ĐẸP, GIÁ TỐT */}
-          </span>
+        </span>
 
-          {/* price and area */}
-          <div className="price-box">
-            <span className="price">
-              Giá trị ~
-              {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
-                100}{" "}
-              triệu/m²
-            </span>
-            <span className="price">&#8226;</span>
-            <span className="area">Diện tích {realEstate.area} m²</span>
-          </div>
-
-          {/* address */}
-          <span className="address">
-            Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName}, {realEstate.wardName},{" "}
-            {realEstate.disName}
+        {/* price and area */}
+        <div className="price-box">
+          <span className="price">
+            Giá trị ~
+            {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
+              100}{" "}
+            triệu/m²
           </span>
+          <span className="price">&#8226;</span>
+          <span className="area">Diện tích {realEstate.area} m²</span>
+        </div>
+
+        {/* address */}
+        <span className="address">
+          Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
+          {realEstate.wardName}, {realEstate.disName}
+        </span>
+
 
           {/* description */}
           <div className="description">
@@ -678,23 +695,80 @@ const RealItem = ({ realEstate, link = null }) => {
           </div>
         )}
             {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+
             liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
             tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
             TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
             400Triệu - Khi Thanh Toán Sớm . */}
-          </div>
+        </div>
 
-          <div className="other-info">
-            <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
-            {/* {renderStatus(item.user, realEstate)} */}
-            {/* <div className="owner">Người đăng: </div> */}
-            {/* <div className="product-phone-contact horizontal">
+        {realEstate.status === "active" && (
+          <div className="real-post-item-buyer-list">
+            {conversations.length > 0 && (
+              <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
+            )}
+            {conversations.map((conversation) => (
+              <div className="real-post-item-buyer">
+                <div className="real-post-item-buyer-info">
+                  <p>{conversation.data.buyer}</p>
+                  <p className="real-post-item-buyer-deal">
+                    Thỏa thuận: {conversation.data.dealPrice} tỷ
+                  </p>
+                  <div className="real-post-item-buyer-book">
+                    <p>
+                      Lịch hẹn:{" "}
+                      {conversation.data.appointmentDate
+                        ? moment(conversation.data.appointmentDate).calendar()
+                        : "Chưa có"}
+                    </p>
+                  </div>
+                </div>
+
+                <button
+                  className="close-sale-button"
+                  type="button"
+                  onClick={() => handleOpen(conversation)}
+                >
+                  bán
+                </button>
+                {modalData ? (
+                  <Modal
+                    open={open}
+                    //   onClose={handleClose}
+                    aria-labelledby="simple-modal-title"
+                    aria-describedby="simple-modal-description"
+                  >
+                    <div className="modal-confirm">
+                      <h2 id="simple-modal-title">Xác nhận bán</h2>
+                      <div id="simple-modal-description">
+                        <p>Người mua {modalData.data.buyer}</p>
+                        <p>Thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                      </div>
+                      <div>
+                        <button onClick={() => handleSold(modalData)}>
+                          Xác nhận
+                        </button>
+                        <button onClick={handleClose}>Hủy</button>
+                      </div>
+                    </div>
+                  </Modal>
+                ) : null}
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div className="other-info">
+          <div className="uptime">Ngày đăng: {realEstate.createAt}</div>
+          {/* {renderStatus(item.user, realEstate)} */}
+          {/* <div className="owner">Người đăng: </div> */}
+          {/* <div className="product-phone-contact horizontal">
           <BsFillChatDotsFill />
           <div style={{ width: "12px" }}></div>
           <span>&#32;Trò chuyện</span>
         </div> */}
-          </div>
         </div>
-      </Link>
+      </div>
+    </Link>
   );
 };

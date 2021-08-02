@@ -65,22 +65,22 @@ class SearchResultPage extends Component {
       default:
         // 2 elements is max
         const split = this.props.match.params.area.toString().split("-");
-        
-        if(split[0] !== "null" && split[1] !== "null") {
-          for(var i = 0; i < split.length; i++) {
+
+        if (split[0] !== "null" && split[1] !== "null") {
+          for (var i = 0; i < split.length; i++) {
             const numberString = split[i].match(/\d+/)[0];
-            if(i == 0) {
+            if (i == 0) {
               fromArea = parseInt(numberString);
-            } else if(i == 1) {
+            } else if (i == 1) {
               toArea = parseInt(numberString);
             }
           }
-        } else if(split[0] !== "null" && split[1] === "null") {
+        } else if (split[0] !== "null" && split[1] === "null") {
           fromArea = parseInt(split[1]);
-        } else if(split[0] === "null" && split[1] !== "null") {
+        } else if (split[0] === "null" && split[1] !== "null") {
           toArea = parseInt(split[1]);
         }
-        
+
         // fromArea = null;
         // toArea = null;
         break;
@@ -219,7 +219,7 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <BuyerNavbar />
+        {/* <BuyerNavbar /> */}
         <div
           style={{
             backgroundColor: "silver",

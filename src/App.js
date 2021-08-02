@@ -28,6 +28,7 @@ import SearchPost from "./components/Seller/SearchPost";
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
+import BuyerNavbar from "./components/global/BuyerNavbar";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -53,6 +54,10 @@ const App = () => {
     <div className="app">
       {/* <SellerDashboard /> */}
       {authUser && role && <ChatLauncher />}
+      <div className="menu-bar">
+        <BuyerNavbar />
+      </div>
+      <div className="invisible"></div>
       <Switch>
         {/* <Route path="/seller/e" children={<p>123</p>} /> */}
         <Route path="/seller-search-post/" component={SellerDashboard} />

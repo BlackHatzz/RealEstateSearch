@@ -118,3 +118,12 @@ code {
   font-size: 12px;
   /* height: 10px; */
 }
+
+.menu-bar {
+  position: fixed;
+  width: 100%;
+  top: 0;
+}
+.invisible {
+  height: 70px;
+}

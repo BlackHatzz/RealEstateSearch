@@ -159,7 +159,6 @@ class HomePage extends Component {
     //     type: null,
     //   }),
     // };
-
     // fetch(
     //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/realEstate/getRealEstateDetail",
     //   requestOptions
@@ -203,7 +202,7 @@ class HomePage extends Component {
         console.log("first split");
         console.log(split);
         for (var i = 0; i < split.length; i++) {
-          if(split[i].match(/\d+/) != null) {
+          if (split[i].match(/\d+/) != null) {
             if (split[i].match(/\d+/).length > 0) {
               const number = split[i].match(/\d+/)[0];
               // console.log(number);
@@ -214,10 +213,9 @@ class HomePage extends Component {
               }
             }
           }
-          
         }
-        this.state.fromAreaText = (from == null) ? "null" : from.toString();
-        this.state.toAreaText = (to == null ) ? "null" : to.toString();
+        this.state.fromAreaText = from == null ? "null" : from.toString();
+        this.state.toAreaText = to == null ? "null" : to.toString();
         console.log("afterrr");
         // console.log(this.state.fromAreaText);
         // console.log(this.state.toAreaText);
@@ -378,7 +376,7 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
-        <BuyerNavbar />
+        {/* <BuyerNavbar /> */}
         <div className="home-show">
           <div className="black-glass">
             <div style={{ height: "120px" }}></div>
