@@ -436,7 +436,7 @@ const RealItem = ({ realEstate }) => {
       { merge: true }
     );
 
-    fb.firestore.collection("conversations").doc(conversation.id).set({
+    fb.firestore.collection("realestates").doc(id).update({
       status: "sold",
     });
 

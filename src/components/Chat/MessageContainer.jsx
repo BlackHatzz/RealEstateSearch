@@ -15,6 +15,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
 
   const [refuseInput, setRefuseInput] = useState("");
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
+  const currentDate = new Date();
   // const [deals, setDeals] = useState([]);
   // const [appointments, setAppointments] = useState([]);
   const messageEl = useRef(null);
@@ -51,7 +52,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
     };
   }, [conversation, uuid]);
 
-  const handleAccept = () => {
+  const handleAccept = (message) => {
     if (dealId) {
       fb.firestore
         .collection("conversations")
@@ -68,6 +69,23 @@ export const MessageContainer = ({ conversation, handleBook }) => {
 
           fb.firestore.collection("conversations").doc(conversation.id).update({
             lastMessage: "chấp nhận thỏa thuận",
+          });
+
+          fetch("https://api-realestate.top/apis/apis/deals/create", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              conversationId: conversation.id,
+              createAt: currentDate.toISOString(),
+              id: message.id,
+              offeredPrice: message.deal,
+              status: "final",
+            }),
+          }).then((response) => {
+            console.log(response);
           });
         });
     }
@@ -241,7 +259,9 @@ export const MessageContainer = ({ conversation, handleBook }) => {
                         </form>
                       ) : (
                         <div className="seller-deal-message-pending-button">
-                          <button onClick={handleAccept}>đồng ý</button>
+                          <button onClick={() => handleAccept(message)}>
+                            đồng ý
+                          </button>
                           <button
                             onClick={() => {
                               setRefuseInputTrigger(true);

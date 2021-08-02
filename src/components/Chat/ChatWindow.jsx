@@ -56,6 +56,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
       .collection("messages")
       .doc(dealId)
       .set({
+        id: dealId,
         type: "deal",
         deal: deal,
         sender: username,
@@ -203,6 +204,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                       .doc(currentChat.id)
                       .collection("messages")
                       .doc();
+
                     docref
                       .set({
                         id: docref.id,
