@@ -55,8 +55,8 @@ const App = () => {
       {authUser && role && <ChatLauncher />}
       <Switch>
         {/* <Route path="/seller/e" children={<p>123</p>} /> */}
-        {/* <Route path="/seller/" component={SellerDashboard} /> */}
         <Route path="/seller-search-post/" component={SellerDashboard} />
+        {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />

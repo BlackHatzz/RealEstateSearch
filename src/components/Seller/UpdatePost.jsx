@@ -30,11 +30,11 @@ const UpdatePost = () => {
     }, []);
     console.log("annoying");
     console.log(useParams());
-
-    return (<UpdatePostClass />);
+    let { id } = useParams();
+    return (<UpdatePostComponent />);
 }
 
-class UpdatePostClass extends Component {
+class UpdatePostComponent extends Component {
   placeInfo = null;
   state = {
     //apiKey: "u5upZp6pDlFDxcV9fiknYyjk0hAboyQUngPRB-zJe1A", // here api
