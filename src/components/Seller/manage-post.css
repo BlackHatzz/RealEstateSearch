@@ -587,9 +587,10 @@ div.div-field {
 
 .manage-post-drop-down-menu {
   width: calc(100% + 24px);
+  max-width: calc(100% + 24px);
   height: auto;
   max-height: 200px;
-  background-color: inherit;
+  background-color: #dadde2;
   position: relative;
   /* padding: 0 12px; */
   left: -12px;
@@ -605,7 +606,8 @@ div.div-field {
 
 .manage-post-drop-down-menu > .item {
   width: 100%;
-  height: 40px;
+  height: auto;
+  min-height: 40px;
   background-color: transparent;
   display: flex;
   flex-direction: row;
@@ -621,6 +623,7 @@ div.div-field {
   text-align: center;
   font-size: 15px;
   color: black;
+  max-width: 90%;
 }
 .manage-post-drop-down-menu > .line {
   width: 100%;

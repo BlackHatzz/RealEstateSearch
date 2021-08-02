@@ -243,10 +243,13 @@ class ProductDetailPage extends Component {
                 <span className="description-title">
                   Thông tin bất động sản
                 </span>
-
+                {(() => {
+                  console.log("shiet");
+                  console.log(product);
+                })()}
                 <DetailBox
                   project={product.project}
-                  investor={product.investor}
+                  investor={this.state.product == null ? "" : this.state.product.investor}
                   streetName={product.streetName}
                   wardName={product.wardName}
                   disName={product.disName}
@@ -257,7 +260,7 @@ class ProductDetailPage extends Component {
               {/* right content */}
               <div className="linear-gray-border contact-wrapper">
                 <div
-                  style={{ background: "url('" + product.avatar + "')" }}
+                  style={{ backgroundImage: "url('" + product.sellerAvatar + "')" }}
                   className="contact-pic"
                 ></div>
                 <div className="contact-name">

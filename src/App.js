@@ -2,7 +2,13 @@ import React, { useEffect, useContext, useState } from "react";
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";
-import { Route, Switch, useHistory, Redirect } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import AssignedPostPage from "./components/staff-assigned-post/assigned-post-page";
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
@@ -17,6 +23,7 @@ import TransactionHistoryPage from "./components/transaction-history/Transaction
 import ManagePost from "./components/Seller/ManagePost";
 import SellerDashboard from "./components/Seller/SellerDashboard";
 import Autocomplete from "react-google-autocomplete";
+import SearchPost from "./components/Seller/SearchPost";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
@@ -52,7 +59,9 @@ const App = () => {
       </div>
       <div className="invisible"></div>
       <Switch>
-        <Route exact path="/seller-search-post" component={SellerDashboard} />
+        {/* <Route path="/seller/e" children={<p>123</p>} /> */}
+        <Route path="/seller-search-post/" component={SellerDashboard} />
+        {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/role" component={Role} />

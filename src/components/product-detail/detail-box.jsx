@@ -5,6 +5,8 @@ import "./product-detail.css";
 class DetailBox extends Component {
   state = {};
   render() {
+    console.log("fuuuuuu");
+    console.log(this.props);
     return (
       <React.Fragment>
         <div className="detail-box">
