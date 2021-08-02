@@ -376,7 +376,7 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <BuyerNavbar /> */}
+        <BuyerNavbar />
         <div className="home-show">
           <div className="black-glass">
             <div style={{ height: "120px" }}></div>
