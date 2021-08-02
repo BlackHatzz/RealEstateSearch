@@ -54,10 +54,10 @@ const App = () => {
     <div className="app">
       {/* <SellerDashboard /> */}
       {authUser && role && <ChatLauncher />}
-      <div className="menu-bar">
+      {/* <div className="menu-bar">
         <BuyerNavbar />
       </div>
-      <div className="invisible"></div>
+      <div className="invisible"></div> */}
       <Switch>
         {/* <Route path="/seller/e" children={<p>123</p>} /> */}
         <Route path="/seller-search-post/" component={SellerDashboard} />

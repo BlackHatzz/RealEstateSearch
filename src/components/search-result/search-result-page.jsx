@@ -219,7 +219,7 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <BuyerNavbar /> */}
+        <BuyerNavbar />
         <div
           style={{
             backgroundColor: "silver",
