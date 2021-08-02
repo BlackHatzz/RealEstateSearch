@@ -21,6 +21,7 @@ import Autocomplete from "react-google-autocomplete";
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
+import BuyerNavbar from "./components/global/BuyerNavbar";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -46,6 +47,9 @@ const App = () => {
     <div className="app">
       {/* <SellerDashboard /> */}
       {authUser && role && <ChatLauncher />}
+      <div className="menu-bar">
+        <BuyerNavbar />
+      </div>
       <Switch>
         <Route exact path="/seller-search-post" component={SellerDashboard} />
         <Route exact path="/seller-scheduler" component={SellerScheduler} />

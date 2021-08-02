@@ -118,3 +118,7 @@ code {
   font-size: 12px;
   /* height: 10px; */
 }
+
+.menu-bar {
+  position: fixed;
+}
