@@ -66,6 +66,10 @@ class Constants {
       Constants.googleAPIKey
     );
   }
+
+  static getRealEstateDetailById(id) {
+    return Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString();
+  }
 }
 
 export default Constants;

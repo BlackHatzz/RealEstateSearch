@@ -14,13 +14,15 @@ import { fb } from "../../services/firebase";
 import Constants from "../global/Constants";
 import ManagePost from "./ManagePost";
 import SearchPost from "./SearchPost";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import UpdatePost from "./UpdatePost";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
+  useParams,
 } from "react-router-dom";
 import { SellerScheduler } from "./SellerScheduler";
 
@@ -31,7 +33,15 @@ const SellerDashboard = () => {
       path: "/manage-post",
       child: (
         <div className="content-container">
-          <ManagePost history={useHistory()} />
+          <ManagePost />
+        </div>
+      ),
+    },
+    {
+      path: "/seller-update-post/:id",
+      child: (
+        <div className="content-container">
+          <UpdatePost />
         </div>
       ),
     },
@@ -131,7 +141,7 @@ const SellerDashboard = () => {
       "seller-dashboard-icon" + key.toString()
     ).style.color = "white";
   };
-
+  let { id } = useParams();
   return (
     <React.Fragment>
       <div className="seller-wrapper">
@@ -193,6 +203,14 @@ const SellerDashboard = () => {
 
             {/* <div className="content-container"> */}
             {/* <ManagePost /> */}
+            {/* <Switch>
+              <Route path="/seller/:id" children={<Child />} />
+              {(() => {
+                if (id == null || id === "") {
+                  return <Redirect to="/seller/search-post" />;
+                }
+              })()}
+            </Switch> */}
 
             <Switch>
               {items.map((item) => (
@@ -202,12 +220,6 @@ const SellerDashboard = () => {
                   children={() => item.child}
                 />
               ))}
-
-              {/* <Route
-                  key={2}
-                  path={"/transaction-history"}
-                  children={() => <p>history</p>}
-                /> */}
 
               {otherRoutes.map((route) => (
                 <Route
@@ -411,3 +423,15 @@ export default SellerDashboard;
 // }
 
 // export default SellerDashboard;
+
+function Child() {
+  // We can use the `useParams` hook here to access
+  // the dynamic pieces of the URL.
+  let { id } = useParams();
+
+  return (
+    <div>
+      <h3>ID: {id}</h3>
+    </div>
+  );
+}
