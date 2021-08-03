@@ -221,17 +221,19 @@ class SearchResultPage extends Component {
       <React.Fragment>
         <div style={{
           display: "flex",
-          width: "100vw",
-          height: "100vh",
+          width: "100%",
+          height: "100%",
           flexDirection: "column"
         }}>
           <BuyerNavbar />
-          <div style={{ width: "100%", border: "1px solid rgba(0,0,0,0.15)" }} />
+          <div style={{ width: "100%", 
+          borderBottom: "1px solid rgba(0,0,0,0.15)" }} />
           <SearchSuggestion history={this.props.history} />
 
           {/* search result list */}
           <div style={{
             overflowY: "auto",
+            overflowX: "hidden",
             flex: 1,
           }}>
             <div className="horizontal">{this.renderSearchResult()}</div>

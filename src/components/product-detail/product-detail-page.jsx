@@ -87,7 +87,7 @@ class ProductDetailPage extends Component {
         }}>
           
           <BuyerNavbar />
-          <div style={{ width: "100%", border: "1px solid rgba(0,0,0,0.15)" }} />
+          <div style={{ width: "100%", borderBottom: "1px solid rgba(0,0,0,0.15)" }} />
         <SearchSuggestion />
 
         {/* product detail */}
