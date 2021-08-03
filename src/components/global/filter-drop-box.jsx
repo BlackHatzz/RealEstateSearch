@@ -91,7 +91,7 @@ class FilterDropBox extends Component {
           <div style={{ alignItems: "flex-start" }} className="vertical">
             <div onClick={this.switchMenuStatus} className="filter-drop-box-label horizontal">
               {this.state.filter.filterName}
-              <RiArrowDropDownLine style={{ width: "20px", height: "20px" }} />
+              <RiArrowDropDownLine style={{ width: "30px", height: "25px" }} />
             </div>
             <div className="filter-drop-box-value">
               {this.state.filter.title}

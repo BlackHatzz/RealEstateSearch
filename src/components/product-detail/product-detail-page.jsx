@@ -10,6 +10,7 @@ import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { ChatButton } from "./ChatButton";
 import Constants from "../global/Constants";
+import BuyerNavbar from "../global/BuyerNavbar";
 
 class ProductDetailPage extends Component {
   state = {
@@ -77,10 +78,24 @@ class ProductDetailPage extends Component {
 
     return (
       <React.Fragment>
+        
+        <div style={{
+          display: "flex",
+          width: "100vw",
+          height: "100vh",
+          flexDirection: "column"
+        }}>
+          
+          <BuyerNavbar />
+          <div style={{ width: "100%", border: "1px solid rgba(0,0,0,0.15)" }} />
         <SearchSuggestion />
 
         {/* product detail */}
-        <div style={{ width: "100%" }}>
+        
+        <div style={{
+            overflowY: "auto",
+            flex: 1,
+          }}>
           <div className="horizontal">
             <div className="product-info-dislayed-wrapper">
               {/* left content */}
@@ -297,6 +312,7 @@ class ProductDetailPage extends Component {
               </div>
             </div>
           </div>
+        </div>
         </div>
       </React.Fragment>
     );

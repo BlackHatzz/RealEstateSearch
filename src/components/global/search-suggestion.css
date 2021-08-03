@@ -41,17 +41,17 @@ input.search-bar:focus {
 }
 .filter-drop-box-label {
   background-color: transparent;
-  font-size: 11px;
+  font-size: 0.8em;
   color: #2c2f36;
 }
 
 .filter-drop-box-value {
   background-color: transparent;
-  font-size: 14px;
+  font-size: 1em;
 }
 
 .search-button {
-  background-color: black;
+  background-color: #FFA114;
   border-radius: 4px;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
@@ -64,9 +64,9 @@ input.search-bar:focus {
   cursor: pointer;
 }
 
-:hover.search-button {
+/* :hover.search-button {
   background-color: rgb(80, 80, 80);
-}
+} */
 
 .search-suggestion-tooltip {
   position: relative;
