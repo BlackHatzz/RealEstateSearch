@@ -376,6 +376,13 @@ option {
   flex-direction: column;
   display: flex;
 }
+.deal-form p {
+  font-size: 14px;
+}
+.deal-form label {
+  font-size: 14px;
+}
+
 .deal-form-button {
   margin-top: 10px;
   display: flex;
