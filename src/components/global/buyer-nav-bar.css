@@ -8,35 +8,52 @@
   justify-content: space-between;
 }
 
-.nav-bar-wrapper .nav-bar-container {
+.nav-bar-wrapper>.nav-bar-container {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: auto;
-  height: 100%;
-  background-color: inherit;
+  flex: 1;
 }
 
-.nav-bar-container .nav-bar-item {
-  /* width: 300px; */
-  height: 100%;
-  background-color: inherit;
-  display: flex;
-  flex-direction: row;
+.nav-bar-container>.nav-bar-item {
   align-items: center;
   justify-content: flex-start;
-  padding-left: 12px;
-  padding-right: 12px;
-  cursor: pointer;
+  flex: 1;
 }
 
+
+.nav-bar-container>.nav-bar-item:first-child {
+  margin-left: 10%;
+}
+.nav-bar-container>.nav-bar-item:last-child {
+  margin-right: 10%;
+}
+
+.nav-bar-item>.nav-bar-item-hidden{
+
+   position: absolute;
+  right: 10%;
+  margin-top: 10px;
+}
+.nav-bar-item>.nav-bar-item-info {
+    display: flex;
+  height: 100%;
+
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+}
+
+.nav-bar-item-info>div{
+  margin-left: 20px;
+  cursor: pointer;
+}
 .nav-bar-item .nav-bar-logo {
   width: 200px;
   height: 50px;
   background-repeat: no-repeat;
   object-fit: cover;
   background-color: white;
+  cursor: pointer;
   /* background-image: url('https://i.ibb.co/MhLF1VS/abc.png'); */
 }
 .nav-bar-logo img {
@@ -47,12 +64,14 @@
 }
 
 .nav-bar-item-horizontal {
-  height: 100%;
-  background-color: inherit;
-  /* display: flex;
-    flex-direction: columns;
+    cursor: pointer;
+}
+
+.nav-bar-item-horizontal>.nav-bar-item {
+ display: flex;
     align-items: center;
-    justify-content: flex-start; */
+    flex-direction: row;
+     justify-content: flex-start;
 }
 
 .profile-pic {
@@ -66,9 +85,7 @@
 }
 .profile-name-text {
   font-size: 14px;
-  text-align: left;
   padding-left: 8px;
-  width: 80px;
 }
 
 .nav-bar-item .nav-bar-item-text {
@@ -78,16 +95,10 @@
 
 .profile-menu-container {
   width: 200px;
-  /* height: 80px; */
   background-color: white;
   position: relative;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
-  left: -14px;
-  /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; */
   padding: 0;
 }
 .profile-menu-container > .profile-menu-item {
@@ -123,31 +134,25 @@
 }
 
 .notification-container {
-  width: 180px;
+  width: 100%;
   max-height: 80vh;
   background-color: white;
   position: relative;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
-  left: -50px;
-  /* display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-start; */
+  right: 160px;
   padding: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
   padding-left: 5px;
   padding-right: 5px;
 }
 
 .notification-item {
   width: 95%;
-  height: 90px;
   background-color: transparent;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  /* align-items: center; */
   border-radius: 10px;
   padding-left: 10px;
 }

@@ -219,20 +219,25 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <BuyerNavbar />
-        <div
-          style={{
-            backgroundColor: "silver",
-            width: "100%",
-            height: "1px",
-            padding: "0",
-          }}
-        ></div>
-        <SearchSuggestion history={this.props.history} />
+        <div style={{
+          display: "flex",
+          width: "100%",
+          height: "100%",
+          flexDirection: "column"
+        }}>
+          <BuyerNavbar />
+          <div style={{ width: "100%", 
+          borderBottom: "1px solid rgba(0,0,0,0.15)" }} />
+          <SearchSuggestion history={this.props.history} />
 
-        {/* search result list */}
-        <div style={{ width: "100%" }}>
-          <div className="horizontal">{this.renderSearchResult()}</div>
+          {/* search result list */}
+          <div style={{
+            overflowY: "auto",
+            overflowX: "hidden",
+            flex: 1,
+          }}>
+            <div className="horizontal">{this.renderSearchResult()}</div>
+          </div>
         </div>
       </React.Fragment>
     );

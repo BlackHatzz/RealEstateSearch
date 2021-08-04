@@ -1,13 +1,20 @@
+/* *{
+  border: 1px solid red;
+} */
+
+
+
+
 .primary-background-color {
   background-color: black;
 }
 .home-show {
-  background-color: black;
+  /* background-color: black; */
   width: 100%;
-  height: 580px;
+  height: 721px;
   margin: 0px;
   padding: 0px;
-  background: url("https://www.zillowstatic.com/s3/homepage/static/_Desktop_Overlay_ChangeStartsHere_HC.jpg");
+  background: url("https://lh3.googleusercontent.com/11Em-DFzsXxhcPAuVOQ3F2SQQ2QRUx5cUH5UkKv5qgECt7BRaqC2FjbJjAUpwO9w0ZYLeMKPA41NiWmzZaexQjRuHhH5_V6B2d98uVR5A-pfgOmSUELbO9ARfMbrHSXoN5nesFFme1xINdpYE-uLEyRkWl4ebW5lIMmuqUgAtxasH05j_jai73PXY7HPxpLr7jktAbagWvFOVciKAy9UMZogMkNO-vyibfc4ilHIun0fxnFLafD60-Ru5BKqsa-YM1HeTQojjSnz8dC-A2dAi81p0hjpnbmnLffWAOCzQwCeXJD-wAQ6TK-XS0a0cTpKyDG2dMAPNOZxlQr50Rx2AZExrweb_iHGKsisnScamcw7_rxKdu5klzXJBJX4J8dq6jdCvkFPdQ_JI1QxYGv-Co0cT4iPPWAYKy81_KFB_D5MHiYbFat4J9XmeIR4TA-VJ_PpI0xR-CqfJQm_ZZ1qWdTxnM2jEA6GDtSmknoGb94dv1OaXukRiulamwo5qzL8VhgWUMmb-xJpx9uTXvW5tTINRJuRm_a7RKjvYIGZdVfrv24Dyg6ODPJM0eAPIGNAF1ROuhU0PBcPCSvmRMAYTyJG30I2YByQ6Wj_Do8M8B9Ue1ivSIqFuRsb7rnIQKasCm67Bo5IFS4zmlBBp4jOV9UONMDJ93zxUfo8jhS8L6zGnDslcU0jYiC8a8atPvkPImmQL7dbiEdmCBL7t7z0E-c=w1677-h943-no?authuser=1");
 }
 
 img.intro-image {
@@ -19,13 +26,14 @@ img.intro-image {
 
 .important-title {
   /* background-color: red; */
-  color: white;
+  color: #ffffff;
   font-size: 36px;
   line-height: 40px;
   text-align: center;
   max-width: 550px;
   margin: 0 auto;
-  font-family: "Ivar Headline", "Ivar Headline Subset", "Times New Roman", serif;
+  /* font-family: "Ivar Headline", "Ivar Headline Subset", "Times New Roman", serif; */
+  font-family: 'Roboto', sans-serif;
 }
 
 .home-search-wrapper {
@@ -33,10 +41,10 @@ img.intro-image {
   margin: 24px auto;
   width: 720px;
   padding: 24px 16px;
-  /* background-color: #474554; */
-  background-color: #303030;
+  background-color: #FFFFFF;
+  /* background-color: #303030; */
   border-radius: 4px;
-  box-shadow: 0px 2px 6px 2px rgba(20, 20, 20, 0.5);
+  box-shadow: 0px 2px 6px 2px rgba(212, 212, 212, 0.384);
 }
 
 .home-search-bar {
@@ -76,7 +84,7 @@ img.intro-image {
 }
 
 .home-search-icon {
-  color: black;
+  color: #0C67CE;
   margin: 0px;
   width: 32px;
   height: 32px;
@@ -97,8 +105,8 @@ div.home-filter-wrapper {
 }
 
 div.home-filter-box {
-    background-color: #303030;
-    border: 1px solid white;
+    background-color: white; 
+    border: 1px solid #b3b3b3;
     border-radius: 4px;
     width: 160px;
     height: 46px;
@@ -120,13 +128,14 @@ div.home-filter-box {
 
 .home-filter-title {
     font-size: 14px;
-    color: white;
+    font-weight: bold;
+    color: #0C67CE;
     padding-left: 10px;
     /* float: left; */
 }
 .home-filter-title2 {
   font-size: 16px;
-  color: white;
+  color: #000000;
   padding-left: 16px;
   text-align: right;
   /* float: left; */
@@ -137,12 +146,12 @@ div.home-filter-box {
 .home-filter-icon {
     width: 32px;
     height: 32px;
-    color: white;
+    color: #0C67CE;
     padding: 0px;
 }
 
 div.home-filter-menu {
-  background-color: #303030;
+  background-color: #ffffff;
   width: 162px;
   height: 164px;
   overflow: auto;
@@ -152,7 +161,7 @@ div.home-filter-menu {
   box-shadow: 0px 2px 6px 2px rgba(20, 20, 20, 0.5);
 }
 div.home-filter-menu-height-auto {
-  background-color: #303030;
+  background-color: #ffffff;
   width: 162px;
   height: auto;
   overflow: hidden;
@@ -185,7 +194,7 @@ div.home-filter-from-to-option {
   background-color: inherit;
 }
 .home-filter-from-to-container > .title {
-  color: rgb(220, 220, 220);
+  color: rgb(0, 0, 0);
   font-size: 14px;
   text-align: left;
   margin-bottom: 12px;
@@ -200,7 +209,7 @@ div.home-filter-input-container {
   margin-top: 8px;
 }
 div.home-filter-input-container > input {
-  color: white;
+  color: rgb(0, 0, 0);
   background-color: inherit;
   width: 90%;
   font-size: 15px;
@@ -223,7 +232,7 @@ div.home-filter-input-container > input {
   text-align: center;
   font-size: 15px;
   color: white;
-  background-color: #494b50;
+  background-color: #0C67CE;
   margin: 0 auto;
   margin-top: 8px;
   padding-top: 8px;
@@ -236,7 +245,7 @@ div.home-filter-input-container > input {
   text-align: center;
   /* width: 100%;
   height: 100%; */
-  color: white;
+  color: rgb(0, 0, 0);
   display: block;
   background-color: inherit;
   font-size: 16px;
