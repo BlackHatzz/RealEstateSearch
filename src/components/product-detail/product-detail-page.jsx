@@ -10,6 +10,9 @@ import { GrDirections } from "react-icons/gr";
 import CollapseBox from "../global/collapse-box";
 import { ChatButton } from "./ChatButton";
 import Constants from "../global/Constants";
+import Map from "../global/Map";
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import { IndeterminateCheckBox } from "@material-ui/icons";
 
 class ProductDetailPage extends Component {
   state = {
@@ -17,6 +20,14 @@ class ProductDetailPage extends Component {
     desHeight: "96px",
     product: null,
     isLoaded: false,
+    selectedAmenityTypeId: "amenityTypes-1",
+    amenityTypes: [
+      { id: "amenityTypes-1", title: "Trường học" },
+      { id: "amenityTypes-2", title: "Bệnh viện" },
+      { id: "amenityTypes-3", title: "Siêu thị" },
+      { id: "amenityTypes-4", title: "Ngân hàng" },
+      { id: "amenityTypes-5", title: "Trung tâm mua sắm" },
+    ],
   };
 
   switchToggle = () => {
@@ -40,13 +51,15 @@ class ProductDetailPage extends Component {
     const requestOptions = {
       method: "GET",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-      }),
+      body: JSON.stringify({}),
     };
     console.log("zzzzzzzzzz");
     console.log(this.props.location.product.id);
 
-    fetch(Constants.getRealEstateDetailRef + this.props.location.product.id.toString())
+    fetch(
+      Constants.getRealEstateDetailRef +
+        this.props.location.product.id.toString()
+    )
       .then((res) => res.json())
       .then(
         (result) => {
@@ -59,18 +72,34 @@ class ProductDetailPage extends Component {
           });
           console.log(this.state.product);
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
-        (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
-        }
+        (error) => {}
       );
+      
+    if (document.getElementById(this.state.selectedAmenityTypeId) != null) {
+      document.getElementById(
+        this.state.selectedAmenityTypeId
+      ).style.borderBottom = "2px solid blue";
+    }
   }
 
+  componentDidUpdate() {
+    console.log(document.getElementById(this.state.selectedAmenityTypeId));
+    if (document.getElementById(this.state.selectedAmenityTypeId) != null) {
+      for (var i = 0; i < this.state.amenityTypes.length; i++) {
+        if (
+          this.state.amenityTypes[i].id === this.state.selectedAmenityTypeId
+        ) {
+          document.getElementById(
+            this.state.amenityTypes[i].id
+          ).style.borderBottom = "2px solid blue";
+        } else {
+          document.getElementById(
+            this.state.amenityTypes[i].id
+          ).style.borderBottom = "2px solid transparent";
+        }
+      }
+    }
+  }
 
   render() {
     const product = this.props.location.product;
@@ -216,7 +245,9 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Hướng nhà:</span>
                         <span className="short-info-label2">
-                          {this.state.product == null ? null : this.state.product.direction}
+                          {this.state.product == null
+                            ? null
+                            : this.state.product.direction}
                           {/*Đông Nam*/}
                         </span>
                       </div>
@@ -229,7 +260,9 @@ class ProductDetailPage extends Component {
                           Hướng ban công:
                         </span>
                         <span className="short-info-label2">
-                        {this.state.product == null ? null : this.state.product.balconyDirection}
+                          {this.state.product == null
+                            ? null
+                            : this.state.product.balconyDirection}
                           {/* {product.balconyDirection} */}
                           {/*Đông nam*/}
                         </span>
@@ -249,18 +282,94 @@ class ProductDetailPage extends Component {
                 })()}
                 <DetailBox
                   project={product.project}
-                  investor={this.state.product == null ? "" : this.state.product.investor}
+                  investor={
+                    this.state.product == null
+                      ? ""
+                      : this.state.product.investor
+                  }
                   streetName={product.streetName}
                   wardName={product.wardName}
                   disName={product.disName}
-                  facilities={this.state.product == null ? [] : this.state.product.facilities}
+                  facilities={
+                    this.state.product == null
+                      ? []
+                      : this.state.product.facilities
+                  }
                 />
+
+                <div className="divide"></div>
+
+                <span className="description-title">Bản Đồ</span>
+                <Map
+                  markerPosition={{ lat: -34.397, lng: 150.644 }}
+                  defaultCenter={{ lat: -34.397, lng: 150.644 }}
+                  defaultZoom={10}
+                  googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&callback=initMap`}
+                  loadingElement={<div style={{ height: `100%` }} />}
+                  containerElement={
+                    <div
+                      style={{
+                        height: `400px`,
+                        margin: `auto`,
+                        // border: "1px solid black",
+                      }}
+                    />
+                  }
+                  mapElement={<div style={{ height: `100%` }} />}
+                />
+
+                <div className="divide"></div>
+
+                <span className="description-title">Tiện Ích Xung Quanh</span>
+                <div className="amenities-wrapper">
+                  <div className="amenities-wrapper-tab-container">
+                    {this.state.amenityTypes.map((item, index) => (
+                      <div
+                        key={index}
+                        id={item.id}
+                        onClick={() => {
+                          this.setState({
+                            selectedAmenityTypeId: item.id,
+                          });
+                        }}
+                        style={{
+                          width:
+                            (100 / this.state.amenityTypes.length).toString() +
+                            "%",
+                        }}
+                        className="tab-item"
+                      >
+                        <span>{item.title}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "1px",
+                      backgroundColor: "rgb(200, 200, 200)",
+                    }}
+                  ></div>
+
+                  <div className="info-container">
+                    <div className="info-item">
+                      <span className="amenities-name">Truong FPT</span>
+                      <div className="right-box">
+                        <LocationOnIcon />
+                        2.3 km
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
               {/* right content */}
               <div className="linear-gray-border contact-wrapper">
                 <div
-                  style={{ backgroundImage: "url('" + product.sellerAvatar + "')" }}
+                  style={{
+                    backgroundImage: "url('" + product.sellerAvatar + "')",
+                  }}
                   className="contact-pic"
                 ></div>
                 <div className="contact-name">

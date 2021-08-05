@@ -109,7 +109,7 @@
     color: black;
     padding-left: 12px;
 }
-.seller-profile-menu-container > .seller-profile-menu-item .title {
+.seller-profile-menu-container > .seller-profile-menu-item .seller-profile-menu-item-title {
     padding-left: 12px;
     font-size: 16px;
     text-align: left;

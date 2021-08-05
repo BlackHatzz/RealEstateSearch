@@ -760,22 +760,7 @@ class ManagePost extends Component {
             numberOfBedroom: numberOfBedroom,
             numberOfBathroom: numberOfBathroom,
             images: downloadURLsJSON,
-            facilities: [
-              {
-                facilityTypeId: 2,
-                facilityName: "Bệnh Viện 105",
-                latitude: 11.2367,
-                longitude: 102.8123678,
-                distance: 3.0,
-              },
-              {
-                facilityTypeId: 3,
-                facilityName: "Trường FPT",
-                latitude: 13.1234,
-                longitude: 101.1234,
-                distance: 5.0,
-              },
-            ],
+            address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
           }),
         };
 

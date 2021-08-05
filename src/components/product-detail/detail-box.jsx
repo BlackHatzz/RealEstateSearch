@@ -39,8 +39,8 @@ class DetailBox extends Component {
           <span className="detail-box-title">Tiện ích xung quanh:</span>
           <br />
           <div className="detail-box-row">
-            {this.props.facilities.map((fac) => (
-              <div key={fac.id}>
+            {this.props.facilities.map((fac, index) => (
+              <div key={index}>
                 <span className="detail-box-value">
                   {fac.facilityName} - {fac.distance}km
                 </span>
