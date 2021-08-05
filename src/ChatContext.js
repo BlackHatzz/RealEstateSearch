@@ -9,10 +9,26 @@ const ChatContext = (props) => {
   const [chatRealId, setChatRealId] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useLocalStorage("role", "");
+  const [chats, setChats] = useLocalStorage("chats", []);
+
   // const [role, setRole] = useState();
+
+  function addItem(item) {
+    if (chats.some((e) => e.id === item.id)) {
+      console.log("item exist");
+      let index = chats.findIndex((e) => e.id === item.id);
+      chats.splice(index, 1);
+      chats.unshift(item);
+      setChats(chats);
+    } else {
+      setChats((prevItems) => [item, ...prevItems]);
+    }
+  }
+
   return (
     <Context.Provider
       value={{
+        chats,
         chatId,
         isOpen,
         role,
@@ -24,6 +40,7 @@ const ChatContext = (props) => {
         updateSellerRole: () => setRole("seller"),
         updateBuyerRole: () => setRole("buyer"),
         resetRole: () => setRole(""),
+        addItem,
         // aCallback: aCallback,
       }}
     >

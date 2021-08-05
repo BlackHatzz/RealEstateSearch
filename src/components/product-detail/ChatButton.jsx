@@ -60,6 +60,7 @@ export const ChatButton = (props) => {
               lastvisit: currentDate.toUTCString(),
               title: props.product.title,
               realId: props.product.id,
+              realImage: props.product.images[0].imgUrl,
               address: address,
               seller: props.product.sellerName,
               sellerId: props.product.sellerId,

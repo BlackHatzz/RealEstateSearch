@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import "./buyer-nav-bar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
@@ -13,24 +13,35 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
+import MessageIcon from "@material-ui/icons/Message";
 
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
-  const { role, resetRole } = useContext(Context);
+  const { role, resetRole, addItem, chats } = useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
+  const [chatTrigger, setChatTrigger] = useState(false);
   const [unseen, setUnseen] = useState(0);
   const [notifications, setNotifications] = useState([]);
+  const [conversations, setConversations] = useState([]);
   let history = useHistory();
 
   const switchProfileMenu = () => {
     setIsProfileMenuShown((value) => !value);
     setNotificationTrigger(false);
+    setChatTrigger(false);
   };
 
   const switchNotification = () => {
     setNotificationTrigger((value) => !value);
     setIsProfileMenuShown(false);
+    setChatTrigger(false);
+  };
+
+  const switchChat = () => {
+    setChatTrigger((value) => !value);
+    setIsProfileMenuShown(false);
+    setNotificationTrigger(false);
   };
 
   useEffect(() => {
@@ -51,11 +62,28 @@ const BuyerNavbar = () => {
             snapshot.docs.filter((doc) => doc.data().seen === false).length
           );
         });
-      return () => {
-        unsubscribe();
-      };
+
+      if (role === "buyer") {
+        const getChatData = fb.firestore
+          .collection("conversations")
+          .where(role + "Id", "==", uuid)
+          .onSnapshot((snapshot) => {
+            setConversations(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+            );
+          });
+        return () => {
+          getChatData();
+          unsubscribe();
+        };
+      }
+
+      return () => {};
     }
-  }, [uuid]);
+  }, [role, uuid]);
 
   return (
     <React.Fragment>
@@ -73,6 +101,11 @@ const BuyerNavbar = () => {
 
         {/* right content */}
         <div className="nav-bar-container">
+          <div className="nav-bar-item" onClick={switchChat}>
+            <Badge color="secondary" badgeContent={unseen}>
+              <MessageIcon />
+            </Badge>
+          </div>
           <div className="nav-bar-item" onClick={switchNotification}>
             <Badge color="secondary" badgeContent={unseen}>
               <NotificationsIcon />
@@ -93,41 +126,81 @@ const BuyerNavbar = () => {
               <div className="notification-container">
                 <h3>Thông báo</h3>
                 <br></br>
-                {notifications.length > 0 &&
-                  notifications.map((notification) => (
-                    <div
-                      className="notification-item"
-                      key={notification.id}
-                      onClick={() => {
-                        history.push("/schedule");
-                        setNotificationTrigger(false);
-                        fb.firestore
-                          .collection("users")
-                          .doc(uuid)
-                          .collection("notifications")
-                          .doc(notification.id)
-                          .update({
-                            seen: true,
-                          });
-                      }}
-                    >
-                      <div className="notification-item-left">
-                        <p className="notification-title-text">Buổi hẹn mới</p>
-                        <p>{moment(notification.data.date).format("L")}</p>
-                        <p>{moment(notification.data.date).format("LT")}</p>
-                        <p className="notification-time-text">
-                          {moment(
-                            notification.data.createAt.toDate()
-                          ).fromNow()}
-                        </p>
+                <div className="conversation-list">
+                  {notifications.length > 0 &&
+                    notifications.map((notification) => (
+                      <div
+                        className="notification-item"
+                        key={notification.id}
+                        onClick={() => {
+                          history.push("/schedule");
+                          setNotificationTrigger(false);
+                          fb.firestore
+                            .collection("users")
+                            .doc(uuid)
+                            .collection("notifications")
+                            .doc(notification.id)
+                            .update({
+                              seen: true,
+                            });
+                        }}
+                      >
+                        <div className="notification-item-left">
+                          <p className="notification-title-text">
+                            Buổi hẹn mới
+                          </p>
+                          <p>{moment(notification.data.date).format("L")}</p>
+                          <p>{moment(notification.data.date).format("LT")}</p>
+                          <p className="notification-time-text">
+                            {moment(
+                              notification.data.createAt.toDate()
+                            ).fromNow()}
+                          </p>
+                        </div>
+                        <div className="notification-item-right">
+                          {notification.data.seen === false && (
+                            <div className="seen-dot"></div>
+                          )}
+                        </div>
                       </div>
-                      <div className="notification-item-right">
-                        {notification.data.seen === false && (
-                          <div className="seen-dot"></div>
-                        )}
+                    ))}
+                </div>
+              </div>
+            ) : null}
+
+            {chatTrigger ? (
+              <div className="notification-container">
+                <h3>Message</h3>
+                <br></br>
+                <div className="conversation-list">
+                  {conversations.length > 0 &&
+                    conversations.map((conversation) => (
+                      <div
+                        className="conversation-item"
+                        key={conversation.id}
+                        onClick={() => {
+                          addItem(conversation);
+                        }}
+                      >
+                        <div className="conversation-item-image">
+                          <img
+                            src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div className="conversation-item-info">
+                          <p className="conversation-item-info-title">
+                            {conversation.data.title}
+                          </p>
+                          <p className="conversation-item-info-lastmessage">
+                            {conversation.data.lastMessage}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                </div>
+                {conversations.length === 0 && <div>chua co tin nhan</div>}
+                <div className="conversation-bottom"></div>
               </div>
             ) : null}
 
