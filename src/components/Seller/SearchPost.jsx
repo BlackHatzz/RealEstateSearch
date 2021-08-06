@@ -23,6 +23,7 @@ import Modal from "@material-ui/core/Modal";
 import { fb } from "../../services";
 
 const SearchPost = () => {
+  var userId = fb.auth.currentUser?.id;
   var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
@@ -64,6 +65,7 @@ const SearchPost = () => {
   ]);
 
   useEffect(() => {
+    userId = fb.auth.currentUser?.uid;
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
       let response = await fetch(
@@ -84,12 +86,92 @@ const SearchPost = () => {
         console.log("affeter");
         console.log(realEstateList);
       }
-    }
+    } 
 
     if (!isRealEstateLoaded) {
-      callAPIGetAllByPaging(0)
+      fetch(
+        Constants.getRealEstateRefBySellerId(userId, "inactive", 0),
+        // "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
+      )
+        .then((res) => {
+          return res.json();
+        })
+        .then(
+          (result) => {
+            console.log("step 1");
+            console.log(result);
+            setIsRealEstateLoaded(true);
+            // setRealEstateList(result.content);
+            for (var i = 0; i < result.content.length; i++) {
+              realEstateList[i] = {
+                user: null,
+                realEstate: result.content[i],
+              };
+              setRealEstateList([...realEstateList]);
+            }
+
+            //   realEstateList = result.content;
+            console.log(" step 2 - " + realEstateList.length);
+            for (var i = 0; i < realEstateList.length; i++) {
+              console.log(realEstateList[i].realEstate);
+              console.log("loop");
+
+              fetchMyAPI(realEstateList[i].realEstate, i);
+              //   fetch(
+              //     Constants.getTheChosenBuyerByRealEstateRef(realEstateList[i].id)
+              //   )
+              //     .then((res) => {
+              //         console.log("heheh " + i);
+              //       if (res.ok) {
+              //         return res.json();
+              //       }
+              //       throw new Error("error getTheChosenBuyerByRealEstateRef API");
+              //     })
+              //     .then(
+              //       (result) => {
+              //         console.log("step 3 ");
+              //         setIsBuyersLoaded(true);
+              //         console.log(i);
+              //         console.log(realEstateList[i])
+              //       },
+              //       (error) => {
+              //         console.log(error.message);
+              //       }
+              //     );
+            }
+
+            //     fetch(Constants.getTheChosenBuyerByRealEstateRef(realEstateList[i].id))
+            //   .then((res) => res.json())
+            //   .then(
+            //     (result) => {
+            //       console.log("step 3");
+            //       setIsBuyersLoaded(true);
+            //       console.log(result);
+            //     },
+            //     (error) => {}
+            //   );
+          },
+          (error) => {}
+        );
     }
 
+
+    // if (!isBuyersLoaded) {
+    //   for (var i = 0; realEstateList.length; i++) {
+    // fetch(Constants.getTheChosenBuyerByRealEstateRef("1"))
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       console.log("step 3");
+    //       setIsBuyersLoaded(true);
+    //       console.log(result);
+    //     },
+    //     (error) => {}
+    //   );
+    //   }
+    // }
+
+    //   getTheChosenBuyerByRealEstateRef
   }, [isRealEstateLoaded, realEstateList]);
 
   const callAPIGetAllByPaging = (pageIndex) => {
@@ -350,7 +432,7 @@ const SearchPost = () => {
                 // get data from database
                 fetch(
                   Constants.getRealEstateRefBySellerId(
-                    "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+                    userId,
                     item.status,
                     0
                   )

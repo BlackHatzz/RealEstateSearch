@@ -24,6 +24,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
 import { useHistory } from "react-router";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -175,6 +176,8 @@ class ManagePost extends Component {
   };
 
   componentDidMount() {
+    console.log("fb.auth.currentUser?.uid");
+    console.log(fb.auth.currentUser?.uid);
     // get districts and wards data
     fetch(
       Constants.getDistrictsAndWards
@@ -736,7 +739,8 @@ class ManagePost extends Component {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+            sellerId: fb.auth.currentUser?.uid,
+            // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
             title: title,
             view: 0,
             districtId: this.state.selectedDistrictId,
@@ -760,22 +764,7 @@ class ManagePost extends Component {
             numberOfBedroom: numberOfBedroom,
             numberOfBathroom: numberOfBathroom,
             images: downloadURLsJSON,
-            facilities: [
-              {
-                facilityTypeId: 2,
-                facilityName: "Bệnh Viện 105",
-                latitude: 11.2367,
-                longitude: 102.8123678,
-                distance: 3.0,
-              },
-              {
-                facilityTypeId: 3,
-                facilityName: "Trường FPT",
-                latitude: 13.1234,
-                longitude: 101.1234,
-                distance: 5.0,
-              },
-            ],
+            address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
           }),
         };
 

@@ -1,5 +1,6 @@
 import "./seller-navbar.css";
 import React, { Component, useState, useEffect, useContext } from "react";
+import "./seller-navbar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import ChatIcon from "@material-ui/icons/Chat";
