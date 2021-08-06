@@ -30,31 +30,16 @@ class DetailBox extends Component {
           <div className="detail-box-row">
             <span className="detail-box-title">Địa chỉ:</span>
             <span className="detail-box-value">
-              {this.props.streetName}, phường {this.props.wardName}, quận{" "}
+              {this.props.realEstateNo} {this.props.streetName}, {this.props.wardName},{" "}
               {this.props.disName}
               {/* Phạm Văn Đồng, phường Tân Chánh Hiệp, quận Thủ Đức  */}
             </span>
           </div>
 
-          <span className="detail-box-title">Tiện ích xung quanh:</span>
+          {/* <span className="detail-box-title">Tiện ích xung quanh:</span>
           <br />
           <div className="detail-box-row">
-            {this.props.facilities.map((fac, index) => (
-              <div key={index}>
-                <span className="detail-box-value">
-                  {fac.facilityName} - {fac.distance}km
-                </span>
-                <br />
-              </div>
-            ))}
-
-            {/* <span className="detail-box-value">Chợ Bà Chiểu - 3km</span>
-            <br />
-            <span className="detail-box-value">Bệnh viện răng hàm mặt - 2km</span>
-            <br />
-            <span className="detail-box-value">Siêu thị Big C - 2km</span>
-            <br /> */}
-          </div>
+          </div> */}
         </div>
       </React.Fragment>
     );

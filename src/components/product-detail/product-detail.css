@@ -66,7 +66,9 @@ img.product-selected-image {
 }
 
 .short-info-item {
-  padding-right: 8px;
+  /* padding-right: 8px; */
+  display: flex;
+  width: 25%;
   /* float: left;
     padding-right: 12px;
     margin-right: 42px;
@@ -80,7 +82,7 @@ img.product-selected-image {
   margin-right: 8px;
 }
 div.short-info-content-box {
-  float: right;
+  /* float: right; */
 }
 
 .short-info-label1 {
@@ -276,6 +278,7 @@ div.detail-box-row {
   margin-left: 24px;
   font-size: 15px;
   background-color: transparent;
+  max-width: 75%;
 }
 .amenities-wrapper .info-container .info-item .right-box {
   margin-right: 24px;
@@ -285,7 +288,10 @@ div.detail-box-row {
   align-items: center;
 }
 .amenities-wrapper .distance-icon {
-  width: 40px;
-  height: 40px;
-  /* color: blue; */
+  width: 30px;
+  height: 30px;
+  color: #0C67CE;
+}
+.amenities-wrapper .distance-text {
+  width: 60px;
 }

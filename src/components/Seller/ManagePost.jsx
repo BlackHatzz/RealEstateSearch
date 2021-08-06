@@ -24,6 +24,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
 import { useHistory } from "react-router";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -175,6 +176,8 @@ class ManagePost extends Component {
   };
 
   componentDidMount() {
+    console.log("fb.auth.currentUser?.uid");
+    console.log(fb.auth.currentUser?.uid);
     // get districts and wards data
     fetch(
       Constants.getDistrictsAndWards
@@ -736,7 +739,8 @@ class ManagePost extends Component {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+            sellerId: fb.auth.currentUser?.uid,
+            // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
             title: title,
             view: 0,
             districtId: this.state.selectedDistrictId,
