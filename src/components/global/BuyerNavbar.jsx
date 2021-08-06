@@ -181,9 +181,11 @@ const BuyerNavbar = () => {
           <div className="nav-bar-item">
             <div className="nav-bar-logo">
               <Link to={role === "buyer" ? "/" : "/sell"}>
-                <img src="https://lh3.googleusercontent.com/E2JbcetnAv-pC4ABbv3scT2JgQXJW7OpZIZhoYE-Q7JtPPqWY6ZL3KsgpIhMRZLKeb0U-_aW8TdLRCSSakKEVowDtYxOKaIqu5XHzgJvMrF9xmVftj9Dtwnt1if5LvX54KFcLk-kan_XpkKEJcq3B3ghqfArvg5fa8WHsoM84TJJ6ltCPIpfNuFDC_BbuZoTdeSyNQBb0j8YLT9XsULKxDaMUYxDuasOTBnfzYQwLfzla72jzUuogvBPznZFC-bx91xyACfo9IIwhXJPNiDF6vCLcUSWhw4c8P9DndVHFH8DxC3kvFpG_F9uQWqe-J_mYtHUoAvv8ptUPp4BsOXZU99-8fBgbRSZ2yugg7JvzrjEc8vjfzKijGkjn1fzccUF2HZGzgjDj9hc3yi7XoP2X7kkrmL6w6qfJhSZn_OqHAqTzM5rh8eBt1E9Z2MFlSVB0AYl-I3j3fr5EzuXzFXy2zFJnR6HiBC3GMJP8Y9cL3ztyEfTQ4YGZLQLEhFtg5-VJHVJBjkhHYXec5MmVldo0Us5ACqu2GsChfXeqc2DgNyiGzPaKWJ3rrI9DoOv5EObTfUuk5UmKHi4lvF_aU9kuHO4Bg9NPPF-YnuGq_02Dfvqz7Qi_kdyAYzY-rB6EkSXSOvlkWNhxmA3On6wDJJO4XHn-QedQ0LB8a1mFlyXt3ciF7k9nSSymIjPy0KJB-bF83PQP2C1lk4JSXNAgCEp96s=w1222-h574-no?authuser=1" alt="" />
+                <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
 
               </Link>
+              
+
             </div>
           </div>
           {/* </div> */}
@@ -196,7 +198,7 @@ const BuyerNavbar = () => {
               {/* more header item*/}
               <div onClick={switchNotification}>
                 <Badge color="secondary" badgeContent={unseen}>
-                  <NotificationsNoneIcon />
+                  <NotificationsNoneIcon style={{ width: "30px", height: "30px" }}/>
                 </Badge>
               </div>
 

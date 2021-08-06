@@ -1,3 +1,6 @@
+
+
+
 .seller-wrapper {
   background-color: rgb(220, 220, 220);
   width: 100%;
@@ -8,30 +11,39 @@
 }
 
 .seller-wrapper > .left-container {
+  /* position: absolute; */
   background-color: white;
   width: 350px;
   height: 100vh;
   border-right: 1px solid rgb(200, 200, 200);
   /* box-shadow: 4px 4px 2px 4px rgba(3, 44, 71, 0.18); */
   /* box-shadow: 10px 10px 10px rgba(3, 44, 71, 0.18); */
+  /* box-shadow: 0px 0px 0px 10px rgba(97, 97, 97, 0.384); */
 }
-
-.seller-wrapper > .left-container > .logo-container {
+.left-container-show-menu{
+  margin-left: -350px;
+}
+ .logo-container {
   width: 100%;
   height: auto;
   background-color: transparent;
-  padding-top: 12px;
-  padding-bottom: 12px;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding-top: 12px; */
+  /* padding-bottom: 12px; */
 }
-.seller-wrapper > .left-container > .logo-container > .logo-box {
-  width: 200px;
-  height: 50px;
+ .logo-box {
+  width: 150px;
+  height: auto;
   margin: 0 auto;
-  background-size: 200px 50px;
+  /* background-size: 200px 90px; */
   background-color: red;
-  object-fit: cover;
+  /* object-fit: cover;
   background-repeat: no-repeat;
-  background-image: url("https://i.ibb.co/MhLF1VS/abc.png");
+  background-image: url("logo.png");
+  background-size: 100% 100%; */
 }
 
 .seller-wrapper > .left-container > .item {
@@ -58,17 +70,17 @@
 .seller-wrapper > .left-container > .item .alone-selected {
   position: absolute;
   background-color: transparent;
-  width: 10px;
-  height: 50px;
-  border-top-right-radius: 6px;
-  border-bottom-right-radius: 6px;
+  width: 5px;
+  height: 35px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
 }
 
 .seller-wrapper > .left-container > .item > .box {
   width: 70%;
-  height: 50px;
+  height: 35px;
   background-color: transparent;
-  border-radius: 10px;
+  border-radius: 5px;
   margin: 0 auto;
   display: flex;
   flex-direction: row;

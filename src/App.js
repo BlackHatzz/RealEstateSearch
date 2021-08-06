@@ -1,7 +1,5 @@
+import "moment/locale/vi";
 import React, { useEffect, useContext, useState } from "react";
-import SearchResultPage from "./components/search-result/search-result-page";
-import HomePage from "./components/home/home-page";
-import ProductDetailPage from "./components/product-detail/product-detail-page";
 import {
   BrowserRouter as Router,
   Route,
@@ -9,6 +7,11 @@ import {
   useHistory,
   Redirect,
 } from "react-router-dom";
+import moment from "moment";
+
+import SearchResultPage from "./components/search-result/search-result-page";
+import HomePage from "./components/home/home-page";
+import ProductDetailPage from "./components/product-detail/product-detail-page";
 import AssignedPostPage from "./components/staff-assigned-post/assigned-post-page";
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
@@ -29,6 +32,9 @@ import SearchPost from "./components/Seller/SearchPost";
 import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
 import BuyerNavbar from "./components/global/BuyerNavbar";
+
+moment.locale("vi");
+
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();

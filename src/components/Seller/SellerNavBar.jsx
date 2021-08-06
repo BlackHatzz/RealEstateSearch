@@ -1,10 +1,11 @@
+import "./seller-navbar.css";
 import React, { Component, useState, useEffect, useContext } from "react";
-import "../global/buyer-nav-bar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import ChatIcon from "@material-ui/icons/Chat";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
 import "../global/shared.css";
@@ -18,7 +19,8 @@ import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
 
-const SellerNavbar = () => {
+const SellerNavbar = (props) => {
+  const {isShowMenu, setShowMenu} = props;
   const uuid = fb.auth.currentUser?.uid;
   const { role, resetRole } = useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
@@ -63,31 +65,39 @@ const SellerNavbar = () => {
 
   return (
     <React.Fragment>
-      <div className="nav-bar-wrapper">
+      <div className="seller-nav-bar-wrapper">
         {/* left content */}
-        <div className="nav-bar-container">
-          {/* <div className="nav-bar-item">
+        <div className="seller-nav-bar-container">
+          {/* <div className="seller-nav-bar-item">
             <Link to={role === "buyer" ? "/" : "/sell"}>
               <div className="nav-bar-logo">
                 <img src="https://i.ibb.co/MhLF1VS/abc.png" alt="" />
               </div>
             </Link>
           </div> */}
+          {!isShowMenu &&<div className="logo-container">
+            <div style={{ width: 30, height: 30, marginRight: 10 }}  onClick={() => {setShowMenu(!isShowMenu) }}>
+                <MenuIcon style={{ width: 30, height: 30 }} />
+              </div>
+              <img src="logo.png" className="logo-box" />
+              
+            </div> }
+          
         </div>
 
         {/* right content */}
-        <div className="nav-bar-container">
-          <div className="nav-bar-item" onClick={switchNotification}>
+        <div className="seller-nav-bar-container">
+          <div className="seller-nav-bar-item" onClick={switchNotification}>
             <Badge color="secondary" badgeContent={unseen}>
               <NotificationsIcon />
             </Badge>
           </div>
-          <div className="nav-bar-item-horizontal">
-            <div onClick={switchProfileMenu} className="nav-bar-item">
-              <div className="profile-pic">
+          <div className="seller-nav-bar-item-horizontal">
+            <div onClick={switchProfileMenu} className="seller-nav-bar-item">
+              <div className="seller-profile-pic">
                 <img src={fb.auth.currentUser?.photoURL} alt="" />
               </div>
-              <span className="profile-name-text">
+              <span className="seller-profile-name-text">
                 {fb.auth.currentUser?.displayName}
               </span>
               <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
@@ -137,37 +147,37 @@ const SellerNavbar = () => {
 
             {/* profile menu */}
             {isProfileMenuShown ? (
-              <div className="profile-menu-container">
+              <div className="seller-profile-menu-container">
                 <Link
-                  className="link profile-menu-item top-item"
+                  className="link seller-profile-menu-item top-item"
                   to="/profile-page"
                 >
                   <AccountCircleIcon className="icon" />
-                  <span className="title">Xem Hồ Sơ</span>
+                  <span className="seller-profile-menu-item-title">Xem Hồ Sơ</span>
                 </Link>
                 <div className="divide"></div>
-                <Link className="link profile-menu-item" to="/schedule">
+                <Link className="link seller-profile-menu-item" to="/schedule">
                   <EventNoteOutlinedIcon className="icon" />
-                  <span className="title">Lịch hẹn</span>
+                  <span className="seller-profile-menu-item-title">Lịch hẹn</span>
                 </Link>
                 <div className="divide"></div>
                 <Link
-                  className="link profile-menu-item"
+                  className="link seller-profile-menu-item"
                   to="/transaction-history-page"
                 >
                   <HistoryIcon className="icon" />
-                  <span className="title">Lịch Sử Giao Dịch</span>
+                  <span className="seller-profile-menu-item-title">Lịch Sử Giao Dịch</span>
                 </Link>
                 <div className="divide"></div>
                 <div
-                  className="profile-menu-item bottom-item"
+                  className="seller-profile-menu-item bottom-item"
                   onClick={() => {
                     resetRole();
                     fb.auth.signOut();
                   }}
                 >
                   <ExitToAppIcon className="icon" />
-                  <span className="title">Đăng Xuất</span>
+                  <span className="seller-profile-menu-item-title">Đăng Xuất</span>
                 </div>
               </div>
             ) : null}

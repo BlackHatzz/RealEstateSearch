@@ -95,9 +95,9 @@
   /* transform: translate(-50%, -50%); */
 }
 .set-schedule-form {
+  margin-left: 10%;
   padding: 30px;
   display: flex;
-
   width: fit-content;
   flex-direction: column;
 }

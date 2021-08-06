@@ -45,9 +45,9 @@ class ProductDetailPage extends Component {
       }),
     };
     console.log("zzzzzzzzzz");
-    console.log(this.props.location.product.id);
+    console.log(this.props.location.product?.id);
 
-    fetch(Constants.getRealEstateDetailRef + this.props.location.product.id.toString())
+    fetch(Constants.getRealEstateDetailRef + this.props.location.product?.id.toString())
       .then((res) => res.json())
       .then(
         (result) => {
@@ -85,11 +85,11 @@ class ProductDetailPage extends Component {
           height: "100vh",
           flexDirection: "column"
         }}>
-          
+          <div  style={{zIndex: 2}}>
           <BuyerNavbar />
           <div style={{ width: "100%", borderBottom: "1px solid rgba(0,0,0,0.15)" }} />
         <SearchSuggestion />
-
+</div>
         {/* product detail */}
         
         <div style={{
@@ -104,7 +104,7 @@ class ProductDetailPage extends Component {
                 <div className="product-image-wrapper">
                   <img
                     className="product-selected-image"
-                    src={product.images[0].imgUrl}
+                    src={product!=undefined?product.images[0].imgUrl:""}
                     // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
                     alt=""
                   />
@@ -113,14 +113,14 @@ class ProductDetailPage extends Component {
                 <div style={{ height: "30px", width: "100%" }}></div>
                 {/* product title */}
                 <span className="product-info-title">
-                  {product.title}
+                  {product?.title}
                   {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
                   ĐẸP, GIÁ TỐT */}
                 </span>
                 <div style={{ height: "10px", width: "100%" }}></div>
 
                 <div className="product-short-detail">
-                  Ngày đăng: {product.createAt}
+                  Ngày đăng: {product?.createAt}
                   {/*Hôm nay*/}
                 </div>
                 <div className="product-short-detail">
@@ -136,7 +136,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Mức giá:</span>
                         <span className="short-info-label2">
-                          {product.price} tỷ{/*2.15 tỷ*/}
+                          {product?.price} tỷ{/*2.15 tỷ*/}
                         </span>
                       </div>
                     </li>
@@ -146,7 +146,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Diện tích:</span>
                         <span className="short-info-label2">
-                          {product.area} m²{/*68 m²*/}
+                          {product?.area} m²{/*68 m²*/}
                         </span>
                       </div>
                     </li>
@@ -156,7 +156,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Phòng ngủ:</span>
                         <span className="short-info-label2">
-                          {product.numberOfBedroom}
+                          {product?.numberOfBedroom}
                         </span>
                       </div>
                     </li>
@@ -166,7 +166,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Phòng tắm:</span>
                         <span className="short-info-label2">
-                          {product.numberOfBathroom}
+                          {product?.numberOfBathroom}
                         </span>
                       </div>
                     </li>
@@ -181,7 +181,7 @@ class ProductDetailPage extends Component {
                     style={{ height: this.state.desHeight }}
                     className="description-content"
                   >
-                    {product.description}
+                    {product?.description}
                     {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
                     ĐẸP, GIÁ TỐT, TRẢ TRƯỚC 1 TỶ.NHÀ CHƯA Ở ảnh 1 PHÚ ĐÔNG
                     PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG ĐẸP, GIÁ
@@ -220,7 +220,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Loại:</span>
                         <span className="short-info-label2">
-                          {product.typeName}
+                          {product?.typeName}
                           {/*Chung Cư*/}
                         </span>
                       </div>
@@ -231,7 +231,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Hướng nhà:</span>
                         <span className="short-info-label2">
-                          {this.state.product == null ? null : this.state.product.direction}
+                          {this.state.product == null ? null : this.state.product?.direction}
                           {/*Đông Nam*/}
                         </span>
                       </div>
@@ -244,7 +244,7 @@ class ProductDetailPage extends Component {
                           Hướng ban công:
                         </span>
                         <span className="short-info-label2">
-                        {this.state.product == null ? null : this.state.product.balconyDirection}
+                        {this.state.product == null ? null : this.state.product?.balconyDirection}
                           {/* {product.balconyDirection} */}
                           {/*Đông nam*/}
                         </span>
@@ -263,23 +263,23 @@ class ProductDetailPage extends Component {
                   console.log(product);
                 })()}
                 <DetailBox
-                  project={product.project}
-                  investor={this.state.product == null ? "" : this.state.product.investor}
-                  streetName={product.streetName}
-                  wardName={product.wardName}
-                  disName={product.disName}
-                  facilities={this.state.product == null ? [] : this.state.product.facilities}
+                  project={product?.project}
+                  investor={this.state.product == null ? "" : this.state.product?.investor}
+                  streetName={product?.streetName}
+                  wardName={product?.wardName}
+                  disName={product?.disName}
+                  facilities={this.state.product == null ? [] : this.state.product?.facilities}
                 />
               </div>
 
               {/* right content */}
               <div className="linear-gray-border contact-wrapper">
                 <div
-                  style={{ backgroundImage: "url('" + product.sellerAvatar + "')" }}
+                  style={{ backgroundImage: "url('" + product?.sellerAvatar + "')" }}
                   className="contact-pic"
                 ></div>
                 <div className="contact-name">
-                  {product.sellerName}
+                  {product?.sellerName}
                   {/*Nguyen Duc Huy*/}
                 </div>
                 <div className="contact-button">
