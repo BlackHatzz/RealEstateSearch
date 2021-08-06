@@ -22,8 +22,8 @@ import { useHistory } from "react-router";
 import Modal from "@material-ui/core/Modal";
 import { fb } from "../../services";
 
-const SearchPost = () => {
   var userId = fb.auth.currentUser?.id;
+const SearchPost = () => {
   var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
@@ -65,6 +65,7 @@ const SearchPost = () => {
   ]);
 
   useEffect(() => {
+    console.log("userId old", userId, fb.auth.currentUser)
     userId = fb.auth.currentUser?.uid;
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
@@ -89,6 +90,7 @@ const SearchPost = () => {
     } 
 
     if (!isRealEstateLoaded) {
+      console.log("userId", userId, fb.auth.currentUser)
       fetch(
         Constants.getRealEstateRefBySellerId(userId, "inactive", 0),
         // "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
@@ -102,81 +104,44 @@ const SearchPost = () => {
             console.log(result);
             setIsRealEstateLoaded(true);
             // setRealEstateList(result.content);
-            for (var i = 0; i < result.content.length; i++) {
-              realEstateList[i] = {
-                user: null,
-                realEstate: result.content[i],
-              };
-              setRealEstateList([...realEstateList]);
-            }
+            let myRealEstateList = [];
+          for (var i = 0; i < result.content.length; i++) {
+            myRealEstateList.push({
+              user: null,
+              realEstate: result.content[i],
+            });
+            setRealEstateList(myRealEstateList);
+          };
 
+            let myPaging = {
+              totalRecord: result.totalRecord,
+              totalPage: result.totalPage,
+              contentSize: result.contentSize,
+              pageIndex: result.pageIndex,
+            }
+  
+            setPaging(myPaging)
             //   realEstateList = result.content;
             console.log(" step 2 - " + realEstateList.length);
             for (var i = 0; i < realEstateList.length; i++) {
-              console.log(realEstateList[i].realEstate);
-              console.log("loop");
 
               fetchMyAPI(realEstateList[i].realEstate, i);
-              //   fetch(
-              //     Constants.getTheChosenBuyerByRealEstateRef(realEstateList[i].id)
-              //   )
-              //     .then((res) => {
-              //         console.log("heheh " + i);
-              //       if (res.ok) {
-              //         return res.json();
-              //       }
-              //       throw new Error("error getTheChosenBuyerByRealEstateRef API");
-              //     })
-              //     .then(
-              //       (result) => {
-              //         console.log("step 3 ");
-              //         setIsBuyersLoaded(true);
-              //         console.log(i);
-              //         console.log(realEstateList[i])
-              //       },
-              //       (error) => {
-              //         console.log(error.message);
-              //       }
-              //     );
+             
             }
 
-            //     fetch(Constants.getTheChosenBuyerByRealEstateRef(realEstateList[i].id))
-            //   .then((res) => res.json())
-            //   .then(
-            //     (result) => {
-            //       console.log("step 3");
-            //       setIsBuyersLoaded(true);
-            //       console.log(result);
-            //     },
-            //     (error) => {}
-            //   );
           },
           (error) => {}
         );
     }
 
 
-    // if (!isBuyersLoaded) {
-    //   for (var i = 0; realEstateList.length; i++) {
-    // fetch(Constants.getTheChosenBuyerByRealEstateRef("1"))
-    //   .then((res) => res.json())
-    //   .then(
-    //     (result) => {
-    //       console.log("step 3");
-    //       setIsBuyersLoaded(true);
-    //       console.log(result);
-    //     },
-    //     (error) => {}
-    //   );
-    //   }
-    // }
 
     //   getTheChosenBuyerByRealEstateRef
-  }, [isRealEstateLoaded, realEstateList]);
+  }, [isRealEstateLoaded]);
 
   const callAPIGetAllByPaging = (pageIndex) => {
     fetch(
-      "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/" + pageIndex
+      Constants.getRealEstateRefBySellerId(userId, "inactive", pageIndex)
     )
       .then((res) => res.json())
       .then(
@@ -513,8 +478,6 @@ const SearchPost = () => {
             {realEstateList.length > 0 ? (
               realEstateList.map((item, index) => {
                 var link = null;
-                console.log("annn");
-                console.log(item);
                 if (selectedTabItemKey === tabItemList[1].key) {
                   link = "/seller-update-post/" + item.realEstate.id;
                 }
@@ -833,7 +796,8 @@ const RealItem = ({ realEstate, link = null }) => {
 
         <div className="other-info">
 
-          <div className="uptime"> {/* Ngày đăng:  */}{moment(realEstate.createAt).fromNow()}</div>
+          <div className="uptime"> {/* Ngày đăng:  */}{
+moment(realEstate.createAt).calendar()}</div>
           {/* {renderStatus(item.user, realEstate)} */}
           {/* <div className="owner">Người đăng: </div> */}
           {/* <div className="product-phone-contact horizontal">

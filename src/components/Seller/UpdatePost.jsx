@@ -712,15 +712,12 @@ class UpdatePostComponent extends Component {
     };
 
     putFileToStorage().then((downloadURLs) => {
-      console.log("then loop image");
-      console.log(downloadURLs);
 
       fetchLocationData(searchText).then((locationData) => {
         console.log("after fetch location data");
         const locationRealEstate = locationData.results[0].geometry.location;
         console.log(locationRealEstate);
         var downloadURLsJSON = [];
-        console.log("oopopo");
         for (var i = 0; i < downloadURLs.length; i++) {
           downloadURLsJSON.push({
             imgUrl: downloadURLs[i],

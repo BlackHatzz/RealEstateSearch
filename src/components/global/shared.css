@@ -106,16 +106,14 @@ div.collapse-box {
 }
 
 .link {
-  text-decoration: none;
-  background-color: transparent;
   cursor: pointer;
-  text-decoration-color: none;
-  color: white;
 }
 
-.link:focus {
+
+.link:hover {
   text-decoration: none;
 }
+
 
 .not-found-container {
   margin: 0 auto;
