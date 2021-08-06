@@ -22,6 +22,7 @@ import Modal from "@material-ui/core/Modal";
 import { fb } from "../../services";
 
 const SearchPost = () => {
+  var userId = fb.auth.currentUser?.id;
   var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
   var [isRealEstateLoaded, setIsRealEstateLoaded] = useState(false);
@@ -56,6 +57,7 @@ const SearchPost = () => {
   ]);
 
   useEffect(() => {
+    userId = fb.auth.currentUser?.uid;
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
       let response = await fetch(
@@ -75,11 +77,12 @@ const SearchPost = () => {
         console.log("affeter");
         console.log(realEstateList);
       }
-    }
+    } 
 
     if (!isRealEstateLoaded) {
       fetch(
-        "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
+        Constants.getRealEstateRefBySellerId(userId, "inactive", 0),
+        // "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
       )
         .then((res) => {
           return res.json();
@@ -142,6 +145,7 @@ const SearchPost = () => {
           (error) => {}
         );
     }
+
 
     // if (!isBuyersLoaded) {
     //   for (var i = 0; realEstateList.length; i++) {
@@ -325,7 +329,7 @@ const SearchPost = () => {
                 // get data from database
                 fetch(
                   Constants.getRealEstateRefBySellerId(
-                    "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+                    userId,
                     item.status,
                     0
                   )
