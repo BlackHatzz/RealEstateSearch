@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import "./manage-post.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
+import ScheduleIcon from '@material-ui/icons/Schedule';
 import MenuIcon from '@material-ui/icons/Menu';
 import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
@@ -79,7 +80,7 @@ const SellerDashboard = () => {
       key: 3,
       title: "Thời biểu lịch hẹn",
       icon: (
-        <HistoryIcon
+        <ScheduleIcon
           id={"seller-dashboard-icon3"}
           className="seller-dashboard-el icon"
         />
@@ -170,7 +171,7 @@ const SellerDashboard = () => {
                     className="alone-selected"
                   ></div>
                 </div>
-                <div id={"box" + item.key.toString()} className="link box">
+                <div id={"box" + item.key.toString()} className="link box" style={{marginTop:"43px"}}>
                   {item.icon}
                   <span
                     id={"seller-dashboard-title" + item.key.toString()}
