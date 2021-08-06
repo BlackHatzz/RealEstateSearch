@@ -429,6 +429,7 @@ const SearchPost = () => {
                   }
                 });
 
+                realEstateList = [];
                 // get data from database
                 fetch(
                   Constants.getRealEstateRefBySellerId(
