@@ -13,10 +13,10 @@ import { defaultValues, validationSchema } from "./formikDealConfig";
 import { v4 as uuidv4 } from "uuid";
 
 export const ChatContent = ({ currentChat }) => {
-  const { role, chatId, updateChat, chatRealId, updateChatRealId } =
-    useContext(Context);
+  const { role, removeItem } = useContext(Context);
 
   const [dealId, setDealId] = useState();
+  const [minimize, setMinimize] = useState(false);
   const [dealtrigger, setDealtrigger] = useState(false);
   const [booktrigger, setBooktrigger] = useState(false);
   const [currentInput, setCurrentInput] = useState("");
@@ -72,11 +72,22 @@ export const ChatContent = ({ currentChat }) => {
       <div className="small-chat-window-title-box">
         <p className="small-chat-window-title">{currentChat.data.title}</p>
         <div className="small-chat-window-buttons">
-          <div className="small-chat-window-buttons-minimize">
+          {/* <div
+            className="small-chat-window-buttons-minimize"
+            onClick={() => {
+              setMinimize(true);
+            }}
+          >
             <MinimizeIcon />
+          </div> */}
+          <div
+            className="small-chat-window-buttons-close"
+            onClick={() => {
+              removeItem(currentChat);
+            }}
+          >
+            <CloseIcon />
           </div>
-
-          <CloseIcon />
         </div>
       </div>
       <div className="chat_window_container_message_box">
@@ -196,6 +207,7 @@ export const ChatContent = ({ currentChat }) => {
                 .doc(currentChat.id)
                 .update({
                   lastMessage: currentInput,
+                  lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
                 });
             }}
           >

@@ -71,6 +71,7 @@ const BuyerNavbar = () => {
         const getChatData = fb.firestore
           .collection("conversations")
           .where(role + "Id", "==", uuid)
+          .orderBy("lastvisit", "desc")
           .onSnapshot((snapshot) => {
             setConversations(
               snapshot.docs.map((doc) => ({

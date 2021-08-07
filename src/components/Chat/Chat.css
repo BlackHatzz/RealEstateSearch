@@ -657,3 +657,6 @@ option {
   box-shadow: 0 0 10px #ccc;
   padding-right: 1px;
 }
+.small-chat-window-buttons-close {
+  cursor: pointer;
+}

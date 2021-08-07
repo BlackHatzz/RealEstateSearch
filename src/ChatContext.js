@@ -23,6 +23,13 @@ const ChatContext = (props) => {
       setChats((prevItems) => [item, ...prevItems]);
     }
   }
+  function removeItem(item) {
+    if (chats.some((e) => e.id === item.id)) {
+      let index = chats.findIndex((e) => e.id === item.id);
+      chats.splice(index, 1);
+      setChats(chats);
+    }
+  }
 
   return (
     <Context.Provider
@@ -40,6 +47,7 @@ const ChatContext = (props) => {
         updateBuyerRole: () => setRole("buyer"),
         resetRole: () => setRole(""),
         addItem,
+        removeItem,
         // aCallback: aCallback,
       }}
     >
