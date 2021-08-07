@@ -70,7 +70,10 @@
   padding-left: 15px;
   padding-right: 5px;
   flex: 1;
+  color: #FFA114;
+
 }
+
 .chat_window_container {
   width: 100%;
   height: 48vh;
