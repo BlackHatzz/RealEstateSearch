@@ -8,7 +8,7 @@ import { BiMoney } from "react-icons/bi";
 import {
   FaBed,
   FaBath,
-  FaBuilding,
+  FaRegBuilding,
   FaDoorOpen,
   FaToilet,
 } from "react-icons/fa";
@@ -23,6 +23,8 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { IndeterminateCheckBox } from "@material-ui/icons";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import WeekendIcon from "@material-ui/icons/Weekend";
+import WeekendOutlinedIcon from '@material-ui/icons/WeekendOutlined';
+import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
 
 class ProductDetailPage extends Component {
 constructor(props){
@@ -260,7 +262,7 @@ constructor(props){
                       </li>
 
                       <li className="short-info-item">
-                        <FaBed className="short-info-icon" />
+                        <HotelOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Số phòng ngủ:</span>
                           <span className="short-info-label2">
@@ -270,7 +272,7 @@ constructor(props){
                       </li>
 
                       <li className="short-info-item">
-                        <FaToilet className="short-info-icon" />
+                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
                             Số nhà vệ sinh:
@@ -282,7 +284,7 @@ constructor(props){
                       </li>
 
                       <li className="short-info-item">
-                        <WeekendIcon className="short-info-icon" />
+                        <WeekendOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Nội thất:</span>
                           <span
@@ -328,7 +330,7 @@ constructor(props){
                   <div className="short-detail-container">
                     <ul className="short-info-list">
                       <li className="short-info-item">
-                        <FaBuilding className="short-info-icon" />
+                        <FaRegBuilding className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Loại:</span>
                           <span className="short-info-label2">
