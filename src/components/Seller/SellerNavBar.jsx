@@ -4,7 +4,7 @@ import "./seller-navbar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import ChatIcon from "@material-ui/icons/Chat";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MenuIcon from '@material-ui/icons/Menu';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -90,7 +90,7 @@ const SellerNavbar = (props) => {
         <div className="seller-nav-bar-container">
           <div className="seller-nav-bar-item" onClick={switchNotification}>
             <Badge color="secondary" badgeContent={unseen}>
-              <NotificationsIcon />
+              <NotificationsNoneIcon style={{ width: "30px", height: "30px" }}/>
             </Badge>
           </div>
           <div className="seller-nav-bar-item-horizontal">
@@ -153,12 +153,12 @@ const SellerNavbar = (props) => {
                   className="link seller-profile-menu-item top-item"
                   to="/profile-page"
                 >
-                  <AccountCircleIcon className="icon" />
+                  <AccountCircleIcon className="icon" style={{ width: "25px", height: "25px" }} />
                   <span className="seller-profile-menu-item-title">Xem Hồ Sơ</span>
                 </Link>
                 <div className="divide"></div>
                 <Link className="link seller-profile-menu-item" to="/schedule">
-                  <EventNoteOutlinedIcon className="icon" />
+                  <EventNoteOutlinedIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                   <span className="seller-profile-menu-item-title">Lịch hẹn</span>
                 </Link>
                 <div className="divide"></div>
@@ -166,7 +166,7 @@ const SellerNavbar = (props) => {
                   className="link seller-profile-menu-item"
                   to="/transaction-history-page"
                 >
-                  <HistoryIcon className="icon" />
+                  <HistoryIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                   <span className="seller-profile-menu-item-title">Lịch Sử Giao Dịch</span>
                 </Link>
                 <div className="divide"></div>
@@ -177,7 +177,7 @@ const SellerNavbar = (props) => {
                     fb.auth.signOut();
                   }}
                 >
-                  <ExitToAppIcon className="icon" />
+                  <ExitToAppIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                   <span className="seller-profile-menu-item-title">Đăng Xuất</span>
                 </div>
               </div>

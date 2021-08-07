@@ -77,8 +77,8 @@ img.product-selected-image {
 }
 
 .short-info-icon {
-  width: 35px;
-  height: 35px;
+  width: 35px !important;
+  height: 35px !important;
   margin-right: 8px;
 }
 div.short-info-content-box {
@@ -252,6 +252,9 @@ div.detail-box-row {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+}
+.amenities-wrapper .amenities-wrapper-tab-container > .tab-item:hover {
+  border-bottom: 2px solid #0C67CE !important;
 }
 
 .amenities-wrapper .amenities-wrapper-tab-container > .tab-item span {

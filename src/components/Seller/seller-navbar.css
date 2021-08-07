@@ -1,7 +1,7 @@
 /* *{
   border: 1px solid red;
-} */
-
+}
+ */
 
 
 .seller-nav-bar-wrapper {
@@ -74,10 +74,11 @@
     margin-left: 10px;
 }
 .seller-profile-name-text {
+    width: auto;
     font-size: 14px;
     text-align: left;
     padding-left: 8px;
-    width: 80px;
+    width: 110px;
     padding-right: 8px;
 }
 
@@ -116,7 +117,7 @@
 }
 .seller-profile-menu-container > .seller-profile-menu-item > .icon {
     color: black;
-    padding-left: 12px;
+    margin-left: 12px;
 }
 .seller-profile-menu-container > .seller-profile-menu-item .seller-profile-menu-item-title {
     padding-left: 12px;

@@ -23,11 +23,11 @@ class Constants {
     return (
       Constants.host +
       "api/v1/realEstate/getRealEstateBySeller/" +
-      sellerId.toString() +
+      sellerId +
       "/" +
-      status.toString() +
+      status +
       "/" +
-      page.toString()
+      page
     );
   }
 
