@@ -11,6 +11,7 @@ import "../global/shared.css";
 import HistoryIcon from "@material-ui/icons/History";
 import "../global/shared.css";
 import { Link, useHistory } from "react-router-dom";
+import MessageIcon from "@material-ui/icons/Message";
 
 import { fb } from "../../services";
 
@@ -19,27 +20,42 @@ import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
 
 const SellerNavbar = () => {
+  const { role, resetRole, addItem, chats, viewchats, addViewChat } =
+    useContext(Context);
   const uuid = fb.auth.currentUser?.uid;
-  const { role, resetRole } = useContext(Context);
+
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
+  const [chatTrigger, setChatTrigger] = useState(false);
+
   const [unseen, setUnseen] = useState(0);
   const [notifications, setNotifications] = useState([]);
+  const [conversations, setConversations] = useState([]);
+  const [reals, setReals] = useState([]);
+
   let history = useHistory();
 
   const switchProfileMenu = () => {
     setIsProfileMenuShown((value) => !value);
     setNotificationTrigger(false);
+    setChatTrigger(false);
   };
 
   const switchNotification = () => {
     setNotificationTrigger((value) => !value);
     setIsProfileMenuShown(false);
+    setChatTrigger(false);
+  };
+
+  const switchChat = () => {
+    setChatTrigger((value) => !value);
+    setIsProfileMenuShown(false);
+    setNotificationTrigger(false);
   };
 
   useEffect(() => {
     if (uuid !== "null") {
-      const unsubscribe = fb.firestore
+      const getNotifications = fb.firestore
         .collection("users")
         .doc(uuid)
         .collection("notifications")
@@ -55,11 +71,29 @@ const SellerNavbar = () => {
             snapshot.docs.filter((doc) => doc.data().seen === false).length
           );
         });
-      return () => {
-        unsubscribe();
-      };
+
+      if (role === "seller") {
+        const getChatData = fb.firestore
+          .collection("realestates")
+          .where(role + "Id", "==", uuid)
+          .where("chats", "!=", [])
+          .onSnapshot((snapshot) => {
+            setReals(
+              snapshot.docs.map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+            );
+          });
+        return () => {
+          getChatData();
+          getNotifications();
+        };
+      }
+
+      return () => {};
     }
-  }, [uuid]);
+  }, [role, uuid]);
 
   return (
     <React.Fragment>
@@ -77,6 +111,11 @@ const SellerNavbar = () => {
 
         {/* right content */}
         <div className="nav-bar-container">
+          <div className="nav-bar-item" onClick={switchChat}>
+            <Badge color="secondary" badgeContent={unseen}>
+              <MessageIcon />
+            </Badge>
+          </div>
           <div className="nav-bar-item" onClick={switchNotification}>
             <Badge color="secondary" badgeContent={unseen}>
               <NotificationsIcon />
@@ -132,6 +171,56 @@ const SellerNavbar = () => {
                       </div>
                     </div>
                   ))}
+              </div>
+            ) : null}
+
+            {chatTrigger ? (
+              <div className="notification-container">
+                <h3>Message</h3>
+                <br></br>
+                <div className="conversation-list">
+                  {reals.length > 0 &&
+                    reals.map((real) => (
+                      <div
+                        className="conversation-item"
+                        key={real.id}
+                        onClick={() => {
+                          // addItem(real);
+                          // addViewChat(real);
+                          // setChatTrigger(false);
+                          // fb.firestore
+                          //   .collection("conversations")
+                          //   .doc(conversation.id)
+                          //   .update({
+                          //     lastMessageRead: true,
+                          //   });
+                        }}
+                      >
+                        <div className="conversation-item-image">
+                          <img
+                            src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+                            alt=""
+                          />
+                        </div>
+                        <div className="conversation-item-info">
+                          <p className="conversation-item-info-title">
+                            {real.data.title}
+                          </p>
+                          {/* <p
+                            className={
+                              conversation.data.lastMessageRead === true
+                                ? "conversation-item-info-lastmessage-seen"
+                                : "conversation-item-info-lastmessage"
+                            }
+                          >
+                            {conversation.data.lastMessage}
+                          </p> */}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+                {conversations.length === 0 && <div>chua co tin nhan</div>}
+                <div className="conversation-bottom"></div>
               </div>
             ) : null}
 
