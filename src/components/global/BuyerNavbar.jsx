@@ -204,10 +204,7 @@ const BuyerNavbar = () => {
 
               <div className="nav-bar-item-horizontal">
                 <div onClick={switchProfileMenu} className="nav-bar-item">
-                  <div className="profile-pic">
-
-                    {console.log("avatar", fb.auth.currentUser)}
-                    <img src={fb.auth.currentUser?.photoURL} alt="" />
+                  <div style={{backgroundImage: "url('" + fb.auth.currentUser?.photoURL + "')"}} className="profile-pic">
                   </div>
                   <span className="profile-name-text">
                     {fb.auth.currentUser?.displayName}

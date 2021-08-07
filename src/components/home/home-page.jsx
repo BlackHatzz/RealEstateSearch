@@ -140,6 +140,12 @@ class HomePage extends Component {
   };
 
   componentDidMount() {
+    // const update = {
+    //   displayName: 'David',
+    //   photoURL: 'https://i.ibb.co/NjFGvWn/David-Beckham.jpg',
+    // };
+
+    // fb.auth.currentUser.updateProfile(update);
     // console.log(fb.auth.currentUser.uid);
     // const { searchText } = this.state;
     // console.log("search ");

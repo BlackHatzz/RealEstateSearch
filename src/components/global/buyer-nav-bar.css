@@ -83,6 +83,7 @@
   background-repeat: no-repeat;
   border-radius: 25px;
   margin-left: 10px;
+  background-size: 50px 50px;
 }
 .profile-name-text {
   font-size: 14px;
