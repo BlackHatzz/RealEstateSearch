@@ -33,7 +33,13 @@ import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
 import BuyerNavbar from "./components/global/BuyerNavbar";
 
+import ChatBubble from "./components/Chat/ChatBubble";
+import SmallChatWindow from "./components/Chat/SmallChatWindow";
+
+
+
 moment.locale("vi");
+
 
 const App = () => {
   const history = useHistory();
@@ -59,7 +65,8 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {authUser && role && <ChatLauncher />}
+      {/* {authUser && role && <ChatLauncherNew />} */}
+
       {/* <div className="menu-bar">
         <BuyerNavbar />
       </div>

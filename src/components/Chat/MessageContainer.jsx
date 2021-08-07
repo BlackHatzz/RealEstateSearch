@@ -6,8 +6,8 @@ import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 
 export const MessageContainer = ({ conversation, handleBook }) => {
-  const uuid = fb.auth.currentUser.uid;
-  const username = fb.auth.currentUser.displayName;
+  const uuid = fb.auth.currentUser?.uid;
+  const username = fb.auth.currentUser?.displayName;
   const [messages, setMessages] = useState([]);
   const { role } = useContext(Context);
   const [dealId, setDealId] = useState();
