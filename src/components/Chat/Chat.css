@@ -580,8 +580,8 @@ option {
 
 .chat-bubble {
   position: fixed;
-  bottom: 20px;
-  right: 40px;
+  bottom: 15px;
+  right: 20px;
 }
 .chat-bubble-item {
   height: 48px;
@@ -627,12 +627,27 @@ option {
   cursor: pointer;
   padding-right: 5px;
 }
-.small-chat-window {
+.small-chat-window-2 {
   display: flex;
   flex-direction: column;
   position: fixed;
   bottom: 0px;
-  right: 100px;
+  right: 90px;
+  background-color: white;
+  height: 450px;
+  width: 320px;
+  border-radius: 10px 10px 0px 0px;
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+  padding-right: 1px;
+}
+.small-chat-window-1 {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0px;
+  right: 420px;
   background-color: white;
   height: 450px;
   width: 320px;

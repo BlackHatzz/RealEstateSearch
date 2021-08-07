@@ -92,7 +92,11 @@ const BuyerNavbar = () => {
   return (
     <React.Fragment>
       <ChatBubble />
-      <SmallChatWindow currentChat={chats[0]} />
+      <SmallChatWindow
+        currentChat={chats[0]}
+        oldChat1={chats[1]}
+        oldChat2={chats[2]}
+      />
       <div className="nav-bar-wrapper">
         {/* left content */}
         <div className="nav-bar-container">
