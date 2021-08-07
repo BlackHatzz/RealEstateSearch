@@ -24,7 +24,7 @@ class CollapseBox extends Component {
 
   render() {
     return (
-      <div onClick={this.switchMode} className="noselect collapse-box">
+      <div id={this.props.id} onClick={this.switchMode} className="noselect collapse-box">
         <div className="horizontal">
           <RiArrowDropDownLine
             style={{

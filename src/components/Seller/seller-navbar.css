@@ -1,3 +1,9 @@
+/* *{
+  border: 1px solid red;
+}
+ */
+
+
 .seller-nav-bar-wrapper {
     width: 100%;
     height: 70px;
@@ -6,6 +12,7 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    box-shadow: 0px 3px 6px 2px rgba(182, 182, 182, 0.384);
 }
 
 .seller-nav-bar-wrapper .seller-nav-bar-container {
@@ -16,6 +23,7 @@
     width: auto;
     height: 100%;
     background-color: inherit;
+    padding-left: 30px;
 }
 
 .seller-nav-bar-container .seller-nav-bar-item {
@@ -66,10 +74,12 @@
     margin-left: 10px;
 }
 .seller-profile-name-text {
+    width: auto;
     font-size: 14px;
     text-align: left;
     padding-left: 8px;
-    width: 80px;
+    width: 110px;
+    padding-right: 8px;
 }
 
 .seller-nav-bar-item .seller-nav-bar-item-text {
@@ -107,9 +117,9 @@
 }
 .seller-profile-menu-container > .seller-profile-menu-item > .icon {
     color: black;
-    padding-left: 12px;
+    margin-left: 12px;
 }
-.seller-profile-menu-container > .seller-profile-menu-item .title {
+.seller-profile-menu-container > .seller-profile-menu-item .seller-profile-menu-item-title {
     padding-left: 12px;
     font-size: 16px;
     text-align: left;

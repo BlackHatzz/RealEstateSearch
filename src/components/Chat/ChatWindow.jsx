@@ -140,7 +140,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                             name="deal"
                             placeholder={currentChat.data.price}
                             maxlength="4"
-                            size="1"
+                            size="4"
                             label="Thỏa thuận (tỷ VNĐ): "
                           />
 

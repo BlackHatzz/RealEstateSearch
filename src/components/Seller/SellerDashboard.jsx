@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import "./manage-post.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import MenuIcon from '@material-ui/icons/Menu';
 import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
 import "../global/shared.css";
@@ -28,6 +30,7 @@ import { SellerScheduler } from "./SellerScheduler";
 
 const SellerDashboard = () => {
   var [selectedItem, setSelectedItem] = useState(1);
+  var [isShowMenu, setShowMenu] = useState(false);
   const otherRoutes = [
     {
       path: "/manage-post",
@@ -75,9 +78,9 @@ const SellerDashboard = () => {
     },
     {
       key: 3,
-      title: "Tạo thời khóa biểu",
+      title: "Thời biểu lịch hẹn",
       icon: (
-        <HistoryIcon
+        <ScheduleIcon
           id={"seller-dashboard-icon3"}
           className="seller-dashboard-el icon"
         />
@@ -128,29 +131,33 @@ const SellerDashboard = () => {
 
     document.getElementById(
       "alone-selected" + key.toString()
-    ).style.backgroundColor = "black";
+    ).style.backgroundColor = "#0C67CE";
+    // box-shadow: 0px 2px 6px 2px rgba(20, 20, 20, 0.5);
+    // #0C67CE
 
     document.getElementById("box" + key.toString()).style.backgroundColor =
-      "black";
+      "rgba(199, 251, 255, 0.4)";
 
     document.getElementById(
       "seller-dashboard-title" + key.toString()
-    ).style.color = "white";
+    ).style.color = "#0C67CE";
 
     document.getElementById(
       "seller-dashboard-icon" + key.toString()
-    ).style.color = "white";
+    ).style.color = "#0C67CE";
   };
   let { id } = useParams();
   return (
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
-          <div className="left-container">
+          <div className={"left-container " + (!isShowMenu ? "left-container-show-menu" : "")}>
             <div className="logo-container">
-              <div className="logo-box"></div>
+              <img src="logo.png" className="logo-box" />
+              <div style={{ width: 30, height: 30, marginRight: 10 }}  onClick={() => {setShowMenu(!isShowMenu) }}>
+                <MenuIcon style={{ width: 30, height: 30 }} />
+              </div>
             </div>
-
             {items.map((item) => (
               <Link
                 key={item.key}
@@ -164,7 +171,7 @@ const SellerDashboard = () => {
                     className="alone-selected"
                   ></div>
                 </div>
-                <div id={"box" + item.key.toString()} className="link box">
+                <div id={"box" + item.key.toString()} className="link box" style={{marginTop:"43px"}}>
                   {item.icon}
                   <span
                     id={"seller-dashboard-title" + item.key.toString()}
@@ -198,7 +205,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className="right-container">
-            <SellerNavbar />
+            <SellerNavbar isShowMenu={isShowMenu} setShowMenu={setShowMenu}/>
             <div className="divide"></div>
 
             {/* <div className="content-container"> */}

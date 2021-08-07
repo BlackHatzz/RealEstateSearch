@@ -1,10 +1,14 @@
+import moment from "moment";
 import React, { Component } from "react";
 // import { FaPhoneAlt } from "react-icons/fa";
 import { BsFillChatDotsFill } from "react-icons/bs";
 
+import { maxString } from "../../utils/moreStringUtil";
+
+
 class ProductItem extends Component {
   state = {
-    
+
   };
   render() {
     console.log("search result item:");
@@ -27,13 +31,11 @@ class ProductItem extends Component {
             {/* title of product */}
             <span className="product-title">
               {this.props.item.title}
-              {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG ĐẸP,
-              GIÁ TỐT */}
             </span>
 
             {/* price and area */}
             <div className="product-price-box">
-              <span className="product-price">Giá trị ~{Math.round( ((this.props.item.price / this.props.item.area) * 1000) * 100 ) / 100} triệu/m²</span>
+              <span className="product-price">Giá trị ~{Math.round(((this.props.item.price / this.props.item.area) * 1000) * 100) / 100} triệu/m²</span>
               <span className="product-price">&#8226;</span>
               <span className="product-area">Diện tích {this.props.item.area} m²</span>
             </div>
@@ -43,16 +45,12 @@ class ProductItem extends Component {
 
             {/* description */}
             <div className="product-description">
-              {this.props.item.description}
-              {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất liền
-              tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24 tháng. -
-              NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng - TẶNG gói nội
-              thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU 400Triệu - Khi
-              Thanh Toán Sớm . */}
+
+              {maxString(this.props.item.description, 150, "(xem thêm)")}
             </div>
 
             <div className="product-other-info">
-              <div className="product-uptime">Ngày đăng: {this.props.item.createAt}</div>
+              <div className="product-uptime">Ngày đăng: {moment(this.props.item.createAt).calendar()}</div>
               <div className="product-owner">Người đăng: {this.props.item.sellerName}</div>
               {/* <div className="product-phone-contact horizontal">
                 <BsFillChatDotsFill />

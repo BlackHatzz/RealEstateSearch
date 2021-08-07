@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   box-sizing: border-box;
   border-right: 1px solid rgb(0, 0, 0);
   border-top: 1px solid rgb(0, 0, 0);
@@ -36,7 +36,8 @@
 
 .chat_window_header {
   width: 100%;
-  padding-top: 8px;
+  height: 50px;
+  /* padding-top: 8px; */
   padding-bottom: 8px;
   display: flex;
   flex-direction: row;
@@ -69,7 +70,10 @@
   padding-left: 15px;
   padding-right: 5px;
   flex: 1;
+  color: #FFA114;
+
 }
+
 .chat_window_container {
   width: 100%;
   height: 48vh;
@@ -145,6 +149,7 @@
 }
 .chat_window_container_message_box_display_realestate_info > p {
   font-size: 10px;
+  margin: 0 0 5px;
 }
 
 .message {
@@ -376,6 +381,13 @@ option {
   flex-direction: column;
   display: flex;
 }
+.deal-form p {
+  font-size: 14px;
+}
+.deal-form label {
+  font-size: 14px;
+}
+
 .deal-form-button {
   margin-top: 10px;
   display: flex;
