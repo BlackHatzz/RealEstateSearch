@@ -34,6 +34,7 @@ const Schedule = () => {
               activeOnlyWhenExact={true}
               to="/schedule"
               label="Sắp tới"
+              style={{TextDecoder}}
             />
             <CustomMenuLink to="/schedule/passed" label="Đã qua" />
           </div>
@@ -64,7 +65,7 @@ function CustomMenuLink({ label, to, activeOnlyWhenExact }) {
 
   return (
     <button className={match ? "schedule-button-active" : "schedule-button"}>
-      <Link to={to} className="schedule-list-menu-link">
+      <Link to={to} className="schedule-list-menu-link" >
         {label}
       </Link>
     </button>

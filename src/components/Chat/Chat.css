@@ -116,7 +116,7 @@
 .chat_window_container_message_box_display_realestate {
   margin: 5px 5px 5px 5px;
   border-radius: 2px;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
   flex-direction: row;
   display: flex;
   /* width: 100%; */
@@ -154,9 +154,9 @@
 
 .message {
   position: relative;
-  font-size: 16px;
+  font-size: 15px;
   padding: 7px 12px 8px 12px;
-  border-radius: 18px;
+  border-radius: 8px;
   width: fit-content;
   margin-bottom: 20px;
   color: black;
@@ -169,11 +169,16 @@
   margin-left: auto;
   /* display: flex;
   flex-direction: column; */
-  background-color: black;
+  background-color: #0C67CE;
   color: white;
   margin-right: 14px;
   font-size: 15px;
 }
+
+.message_send p {
+  margin-bottom: 0px;
+}
+
 .message_name {
   position: absolute;
   top: -20px;
@@ -187,7 +192,7 @@
 }
 .message_name_send {
   position: absolute;
-  top: -20px;
+  top: -14px;
   right: 0px;
   font-size: x-small;
   font-weight: 800;
@@ -195,7 +200,7 @@
 }
 .message_name_receive {
   position: absolute;
-  top: -20px;
+  top: -14px;
   left: 0px;
   font-size: x-small;
   font-weight: 800;
@@ -204,8 +209,8 @@
 }
 
 .chat_window_container_message_box_input {
-  padding: 12px 8px;
-  border-top: 1px solid gray;
+  padding: 0px 8px;
+  /* border-top: 1px solid gray; */
   height: auto;
   display: flex;
   flex-direction: column;
@@ -305,9 +310,7 @@ option {
   text-align: center;
 }
 
-.deal-button {
-  margin-bottom: 12px;
-}
+
 
 .presentation-pic-container {
   width: 75px;
@@ -371,10 +374,11 @@ option {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  margin-top: 4px;
 }
 
 .message-receive {
-  background-color: rgb(220, 220, 220);
+  background-color: #E4E6EB;
 }
 
 .deal-form {
@@ -417,11 +421,13 @@ option {
 
 .buyer-appointment-message-upcoming > button {
   border: none;
+  color: black;
   background-color: white;
   border-radius: 5px;
   width: 55px;
-  height: 20px;
+  height: 30px;
   cursor: pointer;
+  margin: 0 auto;
 }
 .seller-deal-message {
   display: flex;
@@ -445,23 +451,32 @@ option {
 }
 .buyer-deal-message > button {
   border: none;
+  color: black;
   background-color: white;
   border-radius: 5px;
   width: 75px;
-  height: 20px;
+  height: 30px;
   cursor: pointer;
+  /* margin: 0 auto; */
+  position:relative;
+    /* top:50%;  */
+    left:24%;
 }
 .time-form {
   display: flex;
 }
 
 .deal-button {
-  height: 20px;
+  height: 30px;
   background-color: #fcba03;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 8px;
 }
+
+
+
 .deal-button:disabled {
   background-color: gray;
   cursor: not-allowed;
@@ -538,7 +553,7 @@ option {
   /* min-height: 10px; */
   overflow-y: auto;
   font-size: 14px;
-  height: 20px;
+  height: 30px;
   border-radius: 5px;
   border: none;
   background-color: #ebebeb;
@@ -615,7 +630,7 @@ option {
 
 .small-chat-window-title-box {
   height: auto;
-  box-shadow: 0 0 10px #ccc;
+  /* box-shadow: 0 0 10px #ccc; */
   padding: 5px 0px 0px 10px;
   display: flex;
 }
@@ -626,7 +641,13 @@ option {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+  color: #FFA114;
 }
+
+p {
+  margin: 0 0 0px;
+}
+
 .small-chat-window-buttons {
   display: flex;
   flex-direction: row;
@@ -645,13 +666,13 @@ option {
   position: fixed;
   bottom: 0px;
   right: 90px;
-  background-color: #f0f2f5;
-  height: 450px;
+  background-color: #ffffff;
+  height: auto;
   width: 320px;
   border-radius: 10px 10px 0px 0px;
-  -moz-box-shadow: 0 0 10px #ccc;
+  /* -moz-box-shadow: 0 0 10px #ccc;
   -webkit-box-shadow: 0 0 10px #ccc;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc; */
   padding-right: 1px;
 }
 .small-chat-window-1 {
@@ -660,13 +681,14 @@ option {
   position: fixed;
   bottom: 0px;
   right: 420px;
-  background-color: #f0f2f5;
-  height: 450px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 1px 2px #777;
+  height: auto;
   width: 320px;
   border-radius: 10px 10px 0px 0px;
-  -moz-box-shadow: 0 0 10px #ccc;
+  /* -moz-box-shadow: 0 0 10px #ccc;
   -webkit-box-shadow: 0 0 10px #ccc;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc; */
   padding-right: 1px;
 }
 .small-chat-window-buttons-close {

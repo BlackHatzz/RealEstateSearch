@@ -88,7 +88,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               forceUpdate();
             }}
           >
-            <CloseIcon />
+            <CloseIcon style={{width: 20, height: 20}}/>
           </div>
         </div>
       </div>
@@ -234,7 +234,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               type="submit"
               disabled={currentInput === "" ? true : false}
             >
-              <TelegramIcon className="send-message-icon" />
+              <TelegramIcon className="send-message-icon" style={{ width: 30, height: 30, color:"#0C67CE" }}/>
             </button>
           </form>
         </div>
