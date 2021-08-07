@@ -5,20 +5,27 @@ const admin = require("firebase-admin");
 //
 admin.initializeApp(functions.config().firebase);
 
-exports.messageCreated = functions.firestore
-  .document("conversations/{conversationId}/messages/{messageId}")
-  .onCreate((doc, context) => {
-    const message = doc.data();
-    const conversationId = context.params.conversationId;
-    const type = message.type;
-    if (type === "text") {
-      const notification = {
-        content: `${message.message}`,
-        chatId: conversationId,
-      };
-      return admin.firestore().collection("users").doc();
-    }
-  });
+// exports.messageCreated = functions.firestore
+//   .document("conversations/{conversationId}")
+//   .onWrite((doc, context) => {
+//     const conversation = doc.data();
+//     const conversationId = context.params.conversationId;
+
+//       const notification = {
+//         content: 'new message',
+//         converId: conversationId,
+//         lastMessage: conversation.lastMessage,
+
+//       };
+//       return admin
+//       .firestore()
+//       .collection("users")
+//       .doc(userId)
+//       .collection("notifications")
+//       .add(notification)
+//       .then((doc) => console.log("noti added", doc));
+
+//   });
 exports.appointmentCreated = functions.firestore
   .document("users/{userId}/appointments/{appointmentId}")
   .onCreate((doc, context) => {

@@ -208,6 +208,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                 .collection("conversations")
                 .doc(currentChat.id)
                 .update({
+                  lastMessageRead: false,
                   lastMessage: currentInput,
                   lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
                 });

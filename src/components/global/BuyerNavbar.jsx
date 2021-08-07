@@ -202,6 +202,13 @@ const BuyerNavbar = () => {
                           setCurrentChat(conversation);
                           addViewChat(conversation);
                           setChatTrigger(false);
+
+                          fb.firestore
+                            .collection("conversations")
+                            .doc(conversation.id)
+                            .update({
+                              lastMessageRead: true,
+                            });
                         }}
                       >
                         <div className="conversation-item-image">
@@ -214,7 +221,13 @@ const BuyerNavbar = () => {
                           <p className="conversation-item-info-title">
                             {conversation.data.title}
                           </p>
-                          <p className="conversation-item-info-lastmessage">
+                          <p
+                            className={
+                              conversation.data.lastMessageRead === true
+                                ? "conversation-item-info-lastmessage-seen"
+                                : "conversation-item-info-lastmessage"
+                            }
+                          >
                             {conversation.data.lastMessage}
                           </p>
                         </div>
