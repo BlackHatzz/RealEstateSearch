@@ -14,6 +14,8 @@ import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
 import MessageIcon from "@material-ui/icons/Message";
+import ChatBubble from "../Chat/ChatBubble";
+import SmallChatWindow from "../Chat/SmallChatWindow";
 
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
@@ -24,6 +26,8 @@ const BuyerNavbar = () => {
   const [unseen, setUnseen] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState();
+
   let history = useHistory();
 
   const switchProfileMenu = () => {
@@ -46,7 +50,7 @@ const BuyerNavbar = () => {
 
   useEffect(() => {
     if (uuid !== "null") {
-      const unsubscribe = fb.firestore
+      const getNotifications = fb.firestore
         .collection("users")
         .doc(uuid)
         .collection("notifications")
@@ -77,7 +81,7 @@ const BuyerNavbar = () => {
           });
         return () => {
           getChatData();
-          unsubscribe();
+          getNotifications();
         };
       }
 
@@ -87,6 +91,8 @@ const BuyerNavbar = () => {
 
   return (
     <React.Fragment>
+      <ChatBubble />
+      <SmallChatWindow currentChat={chats[0]} />
       <div className="nav-bar-wrapper">
         {/* left content */}
         <div className="nav-bar-container">
@@ -180,6 +186,8 @@ const BuyerNavbar = () => {
                         key={conversation.id}
                         onClick={() => {
                           addItem(conversation);
+                          setCurrentChat(conversation);
+                          setChatTrigger(false);
                         }}
                       >
                         <div className="conversation-item-image">

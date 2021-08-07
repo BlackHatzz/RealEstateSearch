@@ -15,7 +15,6 @@ const ChatContext = (props) => {
 
   function addItem(item) {
     if (chats.some((e) => e.id === item.id)) {
-      console.log("item exist");
       let index = chats.findIndex((e) => e.id === item.id);
       chats.splice(index, 1);
       chats.unshift(item);

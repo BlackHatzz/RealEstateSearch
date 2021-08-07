@@ -31,6 +31,7 @@ import { SellerScheduler } from "./components/Seller/SellerScheduler";
 import BuyerNavbar from "./components/global/BuyerNavbar";
 import ChatBubble from "./components/Chat/ChatBubble";
 import SmallChatWindow from "./components/Chat/SmallChatWindow";
+import ChatLauncherNew from "./components/Chat/ChatLauncherNew";
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -55,8 +56,8 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {authUser && role && <ChatBubble />}
-      {authUser && role && <SmallChatWindow />}
+      {/* {authUser && role && <ChatLauncherNew />} */}
+
       {/* <div className="menu-bar">
         <BuyerNavbar />
       </div>
