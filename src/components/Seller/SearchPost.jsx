@@ -66,6 +66,8 @@ const SearchPost = () => {
 
   useEffect(() => {
     userId = fb.auth.currentUser?.uid;
+    console.log("user here");
+    console.log(userId);
     async function fetchMyAPI(realEstate, index) {
       // console.log("index  " + index);
       let response = await fetch(
@@ -429,11 +431,11 @@ const SearchPost = () => {
                   }
                 });
 
-                realEstateList = [];
+                // realEstateList = [];
                 // get data from database
                 fetch(
                   Constants.getRealEstateRefBySellerId(
-                    userId,
+                    fb.auth.currentUser?.uid,
                     item.status,
                     0
                   )
