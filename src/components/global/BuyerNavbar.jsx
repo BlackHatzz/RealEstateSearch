@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  useReducer,
+} from "react";
 import "./buyer-nav-bar.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
@@ -19,7 +25,8 @@ import SmallChatWindow from "../Chat/SmallChatWindow";
 
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
-  const { role, resetRole, addItem, chats } = useContext(Context);
+  const { role, resetRole, addItem, chats, viewchats, addViewChat } =
+    useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [chatTrigger, setChatTrigger] = useState(false);
@@ -27,7 +34,7 @@ const BuyerNavbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState();
-
+  const [, forceUpdate] = useReducer((x) => x + 1, 0);
   let history = useHistory();
 
   const switchProfileMenu = () => {
@@ -94,9 +101,10 @@ const BuyerNavbar = () => {
     <React.Fragment>
       <ChatBubble />
       <SmallChatWindow
-        currentChat={chats[0]}
-        oldChat1={chats[1]}
-        oldChat2={chats[2]}
+        currentChat={viewchats[0]}
+        oldChat1={viewchats[1]}
+        oldChat2={viewchats[2]}
+        forceUpdate={forceUpdate}
       />
       <div className="nav-bar-wrapper">
         {/* left content */}
@@ -192,6 +200,7 @@ const BuyerNavbar = () => {
                         onClick={() => {
                           addItem(conversation);
                           setCurrentChat(conversation);
+                          addViewChat(conversation);
                           setChatTrigger(false);
                         }}
                       >

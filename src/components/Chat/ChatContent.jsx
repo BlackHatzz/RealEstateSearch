@@ -12,8 +12,8 @@ import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import { v4 as uuidv4 } from "uuid";
 
-export const ChatContent = ({ currentChat }) => {
-  const { role, removeItem } = useContext(Context);
+export const ChatContent = ({ currentChat, forceUpdate }) => {
+  const { role, removeItem, removeViewChat } = useContext(Context);
 
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
@@ -83,7 +83,9 @@ export const ChatContent = ({ currentChat }) => {
           <div
             className="small-chat-window-buttons-close"
             onClick={() => {
+              removeViewChat(currentChat);
               removeItem(currentChat);
+              forceUpdate();
             }}
           >
             <CloseIcon />

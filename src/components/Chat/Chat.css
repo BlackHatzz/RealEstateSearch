@@ -633,7 +633,7 @@ option {
   position: fixed;
   bottom: 0px;
   right: 90px;
-  background-color: white;
+  background-color: #f0f2f5;
   height: 450px;
   width: 320px;
   border-radius: 10px 10px 0px 0px;
@@ -648,7 +648,7 @@ option {
   position: fixed;
   bottom: 0px;
   right: 420px;
-  background-color: white;
+  background-color: #f0f2f5;
   height: 450px;
   width: 320px;
   border-radius: 10px 10px 0px 0px;

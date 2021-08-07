@@ -10,6 +10,7 @@ const ChatContext = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const [role, setRole] = useLocalStorage("role", "");
   const [chats, setChats] = useLocalStorage("chats", []);
+  const [viewchats, setViewChats] = useLocalStorage("viewchats", []);
 
   // const [role, setRole] = useState();
 
@@ -31,9 +32,34 @@ const ChatContext = (props) => {
     }
   }
 
+  function addViewChat(item) {
+    if (viewchats.some((e) => e.id === item.id)) {
+      // let index = viewchats.findIndex((e) => e.id === item.id);
+      // if (index > 1) {
+      //   viewchats.splice(index, 1);
+      //   viewchats.unshift(item);
+      //   setViewChats(viewchats);
+      // }
+    } else {
+      if (viewchats.length > 1) {
+        viewchats.splice(1, 1);
+      }
+      setViewChats((prevItems) => [item, ...prevItems]);
+    }
+  }
+
+  function removeViewChat(item) {
+    if (viewchats.some((e) => e.id === item.id)) {
+      let index = viewchats.findIndex((e) => e.id === item.id);
+      viewchats.splice(index, 1);
+      setViewChats(viewchats);
+    }
+  }
+
   return (
     <Context.Provider
       value={{
+        viewchats,
         chats,
         chatId,
         isOpen,
@@ -48,6 +74,8 @@ const ChatContext = (props) => {
         resetRole: () => setRole(""),
         addItem,
         removeItem,
+        addViewChat,
+        removeViewChat,
         // aCallback: aCallback,
       }}
     >
