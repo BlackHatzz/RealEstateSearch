@@ -195,7 +195,7 @@ div.detail-box-row {
 
 .contact-button {
   color: white;
-  background-color: black;
+  background-color: #FFA114;
   line-height: 20px;
   padding: 6px 12px 6px 12px;
   font-size: 14px;
@@ -210,8 +210,8 @@ div.detail-box-row {
 }
 
 .more-post-button {
-  color: black;
-  border: 2px solid black;
+  color: #0C67CE;
+  border: 2px solid #0C67CE;
   background-color: white;
   line-height: 20px;
   padding: 6px 12px 6px 12px;

@@ -30,7 +30,7 @@
 .nav-bar-item>.nav-bar-item-hidden{
 
    position: absolute;
-  right: 10%;
+  right: 8%;
   margin-top: 10px;
 }
 .nav-bar-item>.nav-bar-item-info {
@@ -145,7 +145,7 @@
   position: relative;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
-  right: 160px;
+  right: 105%;
   padding: 0;
   overflow-y: auto;
   padding-left: 5px;

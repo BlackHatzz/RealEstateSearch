@@ -344,7 +344,7 @@ class HomePage extends Component {
   // hit enter
   handleSubmitForm = (e) => {
     e.preventDefault();
-    // if (this.state.searchText.length >= 3) {
+    if (this.state.searchText.length >= 3) {
       this.props.history.push(
         "/search-result-page/" +
           this.state.searchText +
@@ -360,7 +360,7 @@ class HomePage extends Component {
           "/" +
           this.state.price.selectedKey
       );
-    // }
+    }
   };
   handlePush = () => {
     if (this.state.searchText.length >= 3) {
