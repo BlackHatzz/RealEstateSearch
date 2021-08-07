@@ -107,6 +107,7 @@ div.collapse-box {
 
 .link {
   cursor: pointer;
+  text-decoration: none;
 }
 
 
