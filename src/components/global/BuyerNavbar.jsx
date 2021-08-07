@@ -15,7 +15,7 @@ import "../global/shared.css";
 import { Link, useHistory } from "react-router-dom";
 import HistoryIcon from "@material-ui/icons/History";
 import { fb } from "../../services";
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
@@ -99,7 +99,6 @@ const BuyerNavbar = () => {
 
   return (
     <React.Fragment>
-
       <ChatBubble />
       <SmallChatWindow
         currentChat={viewchats[0]}
@@ -284,8 +283,6 @@ const BuyerNavbar = () => {
         </div>
       </div> */}
 
-
-
       <div className="nav-bar-wrapper">
         {/* left content */}
         <div className="nav-bar-container">
@@ -293,34 +290,45 @@ const BuyerNavbar = () => {
             <div className="nav-bar-logo">
               <Link to={role === "buyer" ? "/" : "/sell"}>
                 <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
-
               </Link>
-              
-
             </div>
           </div>
           {/* </div> */}
 
           {/* right content */}
           {/* <div className="nav-bar-container"> */}
-          <div className="nav-bar-item" >
+          <div className="nav-bar-item">
             <div className="nav-bar-item-info">
-              
+              <div className="nav-bar-item" onClick={switchChat}>
+                <Badge color="secondary" badgeContent={unseen}>
+                  <MessageIcon style={{ width: "30px", height: "30px" }} />
+                </Badge>
+              </div>
+
               {/* more header item*/}
               <div onClick={switchNotification}>
                 <Badge color="secondary" badgeContent={unseen}>
-                  <NotificationsNoneIcon style={{ width: "30px", height: "30px" }}/>
+                  <NotificationsNoneIcon
+                    style={{ width: "30px", height: "30px" }}
+                  />
                 </Badge>
               </div>
 
               <div className="nav-bar-item-horizontal">
                 <div onClick={switchProfileMenu} className="nav-bar-item">
-                  <div style={{backgroundImage: "url('" + fb.auth.currentUser?.photoURL + "')"}} className="profile-pic">
-                  </div>
+                  <div
+                    style={{
+                      backgroundImage:
+                        "url('" + fb.auth.currentUser?.photoURL + "')",
+                    }}
+                    className="profile-pic"
+                  ></div>
                   <span className="profile-name-text">
                     {fb.auth.currentUser?.displayName}
                   </span>
-                  <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
+                  <RiArrowDropDownLine
+                    style={{ width: "30px", height: "30px" }}
+                  />
                 </div>
               </div>
             </div>
@@ -348,7 +356,9 @@ const BuyerNavbar = () => {
                         }}
                       >
                         <div className="notification-item-left">
-                          <p className="notification-title-text">Buổi hẹn mới</p>
+                          <p className="notification-title-text">
+                            Buổi hẹn mới
+                          </p>
                           <p>{moment(notification.data.date).format("L")}</p>
                           <p>{moment(notification.data.date).format("LT")}</p>
                           <p className="notification-time-text">
@@ -364,6 +374,58 @@ const BuyerNavbar = () => {
                         </div>
                       </div>
                     ))}
+                </div>
+              ) : null}
+
+              {chatTrigger ? (
+                <div className="notification-container">
+                  <h3>Message</h3>
+                  <br></br>
+                  <div className="conversation-list">
+                    {conversations.length > 0 &&
+                      conversations.map((conversation) => (
+                        <div
+                          className="conversation-item"
+                          key={conversation.id}
+                          onClick={() => {
+                            addItem(conversation);
+                            setCurrentChat(conversation);
+                            addViewChat(conversation);
+                            setChatTrigger(false);
+
+                            fb.firestore
+                              .collection("conversations")
+                              .doc(conversation.id)
+                              .update({
+                                lastMessageRead: true,
+                              });
+                          }}
+                        >
+                          <div className="conversation-item-image">
+                            <img
+                              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div className="conversation-item-info">
+                            <p className="conversation-item-info-title">
+                              {conversation.data.title}
+                            </p>
+                            <p
+                              className={
+                                conversation.data.lastMessageRead === true
+                                  ? "conversation-item-info-lastmessage-seen"
+                                  : "conversation-item-info-lastmessage"
+                              }
+                            >
+                              {conversation.data.lastMessage}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                  {conversations.length === 0 && <div>chua co tin nhan</div>}
+                  <div className="conversation-bottom"></div>
                 </div>
               ) : null}
 
@@ -403,10 +465,7 @@ const BuyerNavbar = () => {
                   </div>
                 </div>
               ) : null}
-
             </div>
-
-
           </div>
         </div>
       </div>
