@@ -565,7 +565,9 @@ option {
 .message-input-form {
   display: flex;
   align-items: center;
-  height: 40px;
+  min-height: 40px;
+  height: auto;
+  padding: 0px 0px 5px 2px;
 }
 .seller-left-chat-box {
   display: flex;
