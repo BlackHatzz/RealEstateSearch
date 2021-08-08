@@ -73,9 +73,11 @@ const App = () => {
         <Route path="/seller-search-post/" component={SellerDashboard} />
         {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage}>
+          {role === "seller" && <Redirect to="/seller-search-post" />}
+        </Route>
         <Route exact path="/role" component={Role} />
-        <Route exact path="/sell" component={Seller} />
+
         <Route path="/login">
           {!!authUser ? <Redirect to="/role" /> : <Login />}
         </Route>
