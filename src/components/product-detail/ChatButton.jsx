@@ -53,32 +53,69 @@ export const ChatButton = (props) => {
             { merge: true }
           );
         fb.firestore
-          .collection("conversations")
-          .doc("" + data.id)
-          .set(
-            {
-              lastvisit: currentDate.toUTCString(),
-              title: props.product.title,
-              realId: props.product.id,
-              realImage: props.product.images[0].imgUrl,
-              address: address,
-              seller: props.product.sellerName,
-              sellerId: props.product.sellerId,
-              buyerId: uuid,
-              buyer: buyername,
-              price: props.product.price,
-              area: props.product.area,
-              bed: props.product.numberOfBedroom,
-              bath: props.product.numberOfBathroom,
-              buyerPhone: buyerPhone,
-              buyerAvatar: buyerAvatar,
-              // deal: "none",
-              // dealId: "",
-              // appointment: "none",
-              // appointmentId: "",
-            },
-            { merge: true }
-          );
+          .collection("realestates")
+          .doc(props.product.id + "")
+          .get()
+          .then((doc) => {
+            if (doc.exists) {
+              fb.firestore
+                .collection("conversations")
+                .doc("" + data.id)
+                .set(
+                  {
+                    lastvisit: currentDate.toUTCString(),
+                    title: props.product.title,
+                    realId: props.product.id,
+                    realImage: props.product.images[0].imgUrl,
+                    address: address,
+                    seller: props.product.sellerName,
+                    sellerId: props.product.sellerId,
+                    buyerId: uuid,
+                    buyer: buyername,
+                    price: props.product.price,
+                    area: props.product.area,
+                    bed: props.product.numberOfBedroom,
+                    bath: props.product.numberOfBathroom,
+                    buyerPhone: buyerPhone,
+                    buyerAvatar: buyerAvatar,
+                    staffId: doc.data().staffId,
+                    // deal: "none",
+                    // dealId: "",
+                    // appointment: "none",
+                    // appointmentId: "",
+                  },
+                  { merge: true }
+                );
+            }
+          });
+
+        // fb.firestore
+        //   .collection("conversations")
+        //   .doc("" + data.id)
+        //   .set(
+        //     {
+        //       lastvisit: currentDate.toUTCString(),
+        //       title: props.product.title,
+        //       realId: props.product.id,
+        //       realImage: props.product.images[0].imgUrl,
+        //       address: address,
+        //       seller: props.product.sellerName,
+        //       sellerId: props.product.sellerId,
+        //       buyerId: uuid,
+        //       buyer: buyername,
+        //       price: props.product.price,
+        //       area: props.product.area,
+        //       bed: props.product.numberOfBedroom,
+        //       bath: props.product.numberOfBathroom,
+        //       buyerPhone: buyerPhone,
+        //       buyerAvatar: buyerAvatar,
+        //       // deal: "none",
+        //       // dealId: "",
+        //       // appointment: "none",
+        //       // appointmentId: "",
+        //     },
+        //     { merge: true }
+        //   );
 
         updateOpen();
         updateChat(data.id + "");

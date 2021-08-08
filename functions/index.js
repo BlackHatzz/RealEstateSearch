@@ -43,6 +43,7 @@ exports.appointmentCreated = functions.firestore
       seller: `${appointment.seller}`,
       title: `${appointment.title}`,
       price: `${appointment.dealprice}`,
+      staffId: `${appointment.staffId}`,
     };
     return admin
       .firestore()

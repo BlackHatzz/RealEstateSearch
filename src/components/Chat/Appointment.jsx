@@ -165,6 +165,7 @@ function Appointment({ setTrigger, conversation }) {
               buyer: conversation.data.buyer,
               dealprice: conversation.data.price,
               title: conversation.data.title,
+              staffId: conversation.data.staffId,
             },
             { merge: true }
           );
@@ -187,6 +188,30 @@ function Appointment({ setTrigger, conversation }) {
               buyer: conversation.data.buyer,
               dealprice: conversation.data.price,
               title: conversation.data.title,
+              staffId: conversation.data.staffId,
+            },
+            { merge: true }
+          );
+
+        fb.firestore
+          .collection("users")
+          .doc(conversation.data.staffId)
+          .collection("appointments")
+          .doc(bookId)
+          .set(
+            {
+              buyerId: uuid,
+              sellerId: conversation.data.sellerId,
+              realId: conversation.data.realId,
+              status: "upcoming",
+              id: bookId,
+              date: date,
+              address: conversation.data.address,
+              seller: conversation.data.seller,
+              buyer: conversation.data.buyer,
+              dealprice: conversation.data.price,
+              title: conversation.data.title,
+              staffId: conversation.data.staffId,
             },
             { merge: true }
           );

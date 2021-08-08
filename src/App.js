@@ -36,10 +36,7 @@ import BuyerNavbar from "./components/global/BuyerNavbar";
 import ChatBubble from "./components/Chat/ChatBubble";
 import SmallChatWindow from "./components/Chat/SmallChatWindow";
 
-
-
 moment.locale("vi");
-
 
 const App = () => {
   const history = useHistory();
@@ -65,7 +62,7 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {/* {authUser && role && <ChatLauncherNew />} */}
+      {authUser && role === "seller" && <ChatLauncher />}
 
       {/* <div className="menu-bar">
         <BuyerNavbar />
