@@ -1,12 +1,12 @@
 import "./seller-navbar.css";
 import React, { Component, useState, useEffect, useContext } from "react";
-import "./seller-navbar.css";
+
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import ChatIcon from "@material-ui/icons/Chat";
-import NotificationsNoneIcon from '@material-ui/icons/NotificationsNone';
+import NotificationsNoneIcon from "@material-ui/icons/NotificationsNone";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import MenuIcon from '@material-ui/icons/Menu';
+import MenuIcon from "@material-ui/icons/Menu";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
 import "../global/shared.css";
@@ -21,13 +21,11 @@ import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
 
-
 const SellerNavbar = (props) => {
   const { role, resetRole, addItem, chats, viewchats, addViewChat } =
     useContext(Context);
 
-
-  const {isShowMenu, setShowMenu} = props;
+  const { isShowMenu, setShowMenu } = props;
 
   const uuid = fb.auth.currentUser?.uid;
 
@@ -114,24 +112,29 @@ const SellerNavbar = (props) => {
               </div>
             </Link>
           </div> */}
-          {!isShowMenu &&<div className="logo-container">
-            <div style={{ width: 30, height: 30, marginRight: 10 }}  onClick={() => {setShowMenu(!isShowMenu) }}>
+          {!isShowMenu && (
+            <div className="logo-container">
+              <div
+                style={{ width: 30, height: 30, marginRight: 10 }}
+                onClick={() => {
+                  setShowMenu(!isShowMenu);
+                }}
+              >
                 <MenuIcon style={{ width: 30, height: 30 }} />
               </div>
               <img src="logo.png" className="logo-box" />
-              
-            </div> }
-          
+            </div>
+          )}
         </div>
 
         {/* right content */}
 
         <div className="seller-nav-bar-container">
-          
           <div className="seller-nav-bar-item" onClick={switchNotification}>
-
             <Badge color="secondary" badgeContent={unseen}>
-              <NotificationsNoneIcon style={{ width: "30px", height: "30px" }}/>
+              <NotificationsNoneIcon
+                style={{ width: "30px", height: "30px" }}
+              />
             </Badge>
           </div>
           <div className="seller-nav-bar-item-horizontal">
@@ -146,7 +149,7 @@ const SellerNavbar = (props) => {
             </div>
 
             {notificationTrigger ? (
-              <div className="notification-container">
+              <div className="seller-notification-container">
                 <h3>Thông báo</h3>
                 <br></br>
                 {notifications.length > 0 &&
@@ -244,21 +247,36 @@ const SellerNavbar = (props) => {
                   className="link seller-profile-menu-item top-item"
                   to="/profile-page"
                 >
-                  <AccountCircleIcon className="icon" style={{ width: "25px", height: "25px" }} />
-                  <span className="seller-profile-menu-item-title">Xem Hồ Sơ</span>
+                  <AccountCircleIcon
+                    className="icon"
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                  <span className="seller-profile-menu-item-title">
+                    Xem Hồ Sơ
+                  </span>
                 </Link>
                 <div className="divide"></div>
                 <Link className="link seller-profile-menu-item" to="/schedule">
-                  <EventNoteOutlinedIcon className="icon" style={{ width: "25px", height: "25px" }}/>
-                  <span className="seller-profile-menu-item-title">Lịch hẹn</span>
+                  <EventNoteOutlinedIcon
+                    className="icon"
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                  <span className="seller-profile-menu-item-title">
+                    Lịch hẹn
+                  </span>
                 </Link>
                 <div className="divide"></div>
                 <Link
                   className="link seller-profile-menu-item"
                   to="/transaction-history-page"
                 >
-                  <HistoryIcon className="icon" style={{ width: "25px", height: "25px" }}/>
-                  <span className="seller-profile-menu-item-title">Lịch Sử Giao Dịch</span>
+                  <HistoryIcon
+                    className="icon"
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                  <span className="seller-profile-menu-item-title">
+                    Lịch Sử Giao Dịch
+                  </span>
                 </Link>
                 <div className="divide"></div>
                 <div
@@ -268,8 +286,13 @@ const SellerNavbar = (props) => {
                     fb.auth.signOut();
                   }}
                 >
-                  <ExitToAppIcon className="icon" style={{ width: "25px", height: "25px" }}/>
-                  <span className="seller-profile-menu-item-title">Đăng Xuất</span>
+                  <ExitToAppIcon
+                    className="icon"
+                    style={{ width: "25px", height: "25px" }}
+                  />
+                  <span className="seller-profile-menu-item-title">
+                    Đăng Xuất
+                  </span>
                 </div>
               </div>
             ) : null}
