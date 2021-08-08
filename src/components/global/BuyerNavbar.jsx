@@ -33,7 +33,7 @@ const BuyerNavbar = () => {
   const [unseen, setUnseen] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
-  const [currentChat, setCurrentChat] = useState();
+  // const [currentChat, setCurrentChat] = useState();
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   let history = useHistory();
 
@@ -99,7 +99,7 @@ const BuyerNavbar = () => {
 
   return (
     <React.Fragment>
-      <ChatBubble />
+      {/* <ChatBubble /> */}
       <SmallChatWindow
         currentChat={viewchats[0]}
         oldChat1={viewchats[1]}
@@ -388,9 +388,11 @@ const BuyerNavbar = () => {
                           className="conversation-item"
                           key={conversation.id}
                           onClick={() => {
+                            console.log("conversation");
+                            console.log(conversation);
                             addItem(conversation);
-                            setCurrentChat(conversation);
                             addViewChat(conversation);
+                            // setCurrentChat(conversation);
                             setChatTrigger(false);
 
                             fb.firestore

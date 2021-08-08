@@ -5,8 +5,7 @@ import firebase from "firebase/app";
 
 export const ChatButton = (props) => {
   const currentDate = new Date();
-  const { updateChat } = useContext(Context);
-  const { updateOpen } = useContext(Context);
+  const { updateChat, updateOpen, addItem, addViewChat } = useContext(Context);
 
   const handleConversation = () => {
     const uuid = fb.auth.currentUser.uid;
@@ -85,7 +84,32 @@ export const ChatButton = (props) => {
                     // appointmentId: "",
                   },
                   { merge: true }
-                );
+                )
+                .then(() => {
+                  fb.firestore
+                    .collection("conversations")
+                    .doc("" + data.id)
+                    .get()
+                    .then((doc) => {
+                      if (doc.exists) {
+                        let conObject = {
+                          id: doc.id,
+                          data: doc.data(),
+                        };
+                        console.log("conObject");
+                        console.log(conObject);
+                        addItem(conObject);
+                        addViewChat(conObject);
+
+                        fb.firestore
+                          .collection("conversations")
+                          .doc(doc.id)
+                          .update({
+                            lastMessageRead: true,
+                          });
+                      }
+                    });
+                });
             }
           });
 
