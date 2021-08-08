@@ -67,6 +67,32 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
       })
       .finally(() => setSubmitting(false));
   }
+
+  function sendMessage() {
+    let docref = fb.firestore
+      .collection("conversations")
+      .doc(currentChat.id)
+      .collection("messages")
+      .doc();
+
+    docref
+      .set({
+        id: docref.id,
+        type: "text",
+        message: currentInput,
+        sender: username,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        senderId: uuid,
+      })
+      .finally(() => {
+        setCurrentInput("");
+      });
+    fb.firestore.collection("conversations").doc(currentChat.id).update({
+      lastMessageRead: false,
+      lastMessage: currentInput,
+      lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+    });
+  }
   return (
     <>
       <div className="small-chat-window-title-box">
@@ -88,7 +114,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               forceUpdate();
             }}
           >
-            <CloseIcon style={{width: 20, height: 20}}/>
+            <CloseIcon style={{ width: 20, height: 20 }} />
           </div>
         </div>
       </div>
@@ -186,32 +212,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
             className="message-input-form"
             onSubmit={(e) => {
               e.preventDefault();
-              let docref = fb.firestore
-                .collection("conversations")
-                .doc(currentChat.id)
-                .collection("messages")
-                .doc();
-
-              docref
-                .set({
-                  id: docref.id,
-                  type: "text",
-                  message: currentInput,
-                  sender: username,
-                  timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-                  senderId: uuid,
-                })
-                .finally(() => {
-                  setCurrentInput("");
-                });
-              fb.firestore
-                .collection("conversations")
-                .doc(currentChat.id)
-                .update({
-                  lastMessageRead: false,
-                  lastMessage: currentInput,
-                  lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-                });
+              sendMessage();
             }}
           >
             <textarea
@@ -226,16 +227,26 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                 // target.style.height = `${target.scrollHeight}px`;
                 target.style.height = `${Math.min(target.scrollHeight, 80)}px`;
               }}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  currentInput.trim() !== "" && sendMessage();
+                }
+              }}
               placeholder="Gửi tin nhắn ..."
             />
-
-            <button
-              className="button_send_message"
-              type="submit"
-              disabled={currentInput === "" ? true : false}
-            >
-              <TelegramIcon className="send-message-icon" style={{ width: 30, height: 30, color:"#0C67CE" }}/>
-            </button>
+            {currentInput.trim() !== "" && (
+              <button
+                className="button_send_message"
+                type="submit"
+                disabled={currentInput === "" ? true : false}
+              >
+                <TelegramIcon
+                  className="send-message-icon"
+                  style={{ width: 30, height: 30, color: "#0C67CE" }}
+                />
+              </button>
+            )}
           </form>
         </div>
       </div>
