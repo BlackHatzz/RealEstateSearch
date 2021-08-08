@@ -2047,7 +2047,7 @@ class ManagePost extends Component {
             className="noselect create-button"
           >
             &#65291;
-            <span>Tạo bài viết</span>
+            <span>Tạo bất động sản</span>
           </div>
         </div>
 

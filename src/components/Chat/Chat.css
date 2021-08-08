@@ -614,7 +614,7 @@ option {
   width: 48px;
   border-radius: 24px;
   background-color: white;
-  box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 10px 0px #ccc;
   cursor: pointer;
   background-color: #f0f0f0;
 }

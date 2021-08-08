@@ -438,12 +438,12 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item top-item"
                     to="/profile-page"
                   >
-                    <AccountCircleIcon className="icon" />
+                    <AccountCircleIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
                   <Link className="link profile-menu-item" to="/schedule">
-                    <EventNoteOutlinedIcon className="icon" />
+                    <EventNoteOutlinedIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                     <span className="title">Lịch hẹn</span>
                   </Link>
                   <div className="divide"></div>
@@ -451,7 +451,7 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item"
                     to="/transaction-history-page"
                   >
-                    <HistoryIcon className="icon" />
+                    <HistoryIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                     <span className="title">Lịch Sử Giao Dịch</span>
                   </Link>
                   <div className="divide"></div>
@@ -462,7 +462,7 @@ const BuyerNavbar = () => {
                       fb.auth.signOut();
                     }}
                   >
-                    <ExitToAppIcon className="icon" />
+                    <ExitToAppIcon className="icon" style={{ width: "25px", height: "25px" }}/>
                     <span className="title">Đăng Xuất</span>
                   </div>
                 </div>
