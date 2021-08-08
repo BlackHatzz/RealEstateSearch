@@ -234,7 +234,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               type="submit"
               disabled={currentInput === "" ? true : false}
             >
-              <TelegramIcon className="send-message-icon" style={{ width: 30, height: 30, color:"#0C67CE" }}/>
+              <TelegramIcon className="send-message-icon" style={{ width: 30, height: 30 }}/>
             </button>
           </form>
         </div>
