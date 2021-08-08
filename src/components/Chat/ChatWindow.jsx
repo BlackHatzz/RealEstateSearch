@@ -286,21 +286,21 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
             <div className="chat_window_container_contact_list">
               {reals.map((real) => (
                 <>
-                  {real.data.empty === false && (
-                    <div
-                      key={real.id}
-                      onClick={() => {
-                        // updateChatRealId(real.id);
-                        setCurrentReal(real);
-                      }}
-                    >
-                      <SellerChatItem
-                        currentReal={currentReal}
-                        id={real.id}
-                        data={real.data}
-                      />
-                    </div>
-                  )}
+                  {/* {real.data.empty === false && ( */}
+                  <div
+                    key={real.id}
+                    onClick={() => {
+                      // updateChatRealId(real.id);
+                      setCurrentReal(real);
+                    }}
+                  >
+                    <SellerChatItem
+                      currentReal={currentReal}
+                      id={real.id}
+                      data={real.data}
+                    />
+                  </div>
+                  {/* )} */}
                 </>
               ))}
             </div>
