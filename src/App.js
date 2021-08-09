@@ -89,7 +89,7 @@ const App = () => {
         />
         <Route path="/signup" component={Signup} />
         <Route
-          path="/search-result-page/:searchtext/:type/:area/:adress/:price"
+          path="/search-result-page/:searchtext?/:type/:area/:adress/:price"
           // component={SearchResultPage}
           render={(props) => (
             <SearchResultPage

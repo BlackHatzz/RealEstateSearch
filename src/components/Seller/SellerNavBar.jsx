@@ -139,8 +139,14 @@ const SellerNavbar = (props) => {
           </div>
           <div className="seller-nav-bar-item-horizontal">
             <div onClick={switchProfileMenu} className="seller-nav-bar-item">
-              <div className="seller-profile-pic">
-                <img src={fb.auth.currentUser?.photoURL} alt="" />
+              <div
+                style={{
+                  backgroundImage:
+                    "url('" + fb.auth.currentUser?.photoURL + "')",
+                }}
+                className="seller-profile-pic"
+              >
+                {/* <img src={fb.auth.currentUser?.photoURL} alt="" /> */}
               </div>
               <span className="seller-profile-name-text">
                 {fb.auth.currentUser?.displayName}
