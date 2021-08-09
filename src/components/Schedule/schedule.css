@@ -19,8 +19,8 @@
   flex-direction: column;
   background-color: white;
 
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px 2px rgb(216, 216, 216);
+  /* border-radius: 10px; */
+  box-shadow: 5px 5px 5px 5px rgb(216, 216, 216);
 }
 .schedule-list-menu {
   /* padding: 20px 10px 0px 20px;
@@ -48,7 +48,8 @@
   cursor: pointer;
 }
 
-.schedule-list-menu-link:hover, a:focus {
+.schedule-list-menu-link:hover,
+a:focus {
   text-decoration: none;
 }
 
