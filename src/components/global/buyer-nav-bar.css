@@ -209,6 +209,7 @@
   background-color: #d8dadf;
 }
 .conversation-item-image {
+  max-width: 80px;
   display: flex;
   margin: 5px 5px 5px 5px;
 }

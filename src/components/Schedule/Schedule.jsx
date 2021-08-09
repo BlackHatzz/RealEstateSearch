@@ -24,6 +24,7 @@ const routes = [
 ];
 const Schedule = () => {
   const uuid = fb.auth.currentUser.uid;
+
   return (
     <div style={{ background: "#f0f0f0", height: "100vh" }}>
       <BuyerNavbar />
@@ -34,7 +35,7 @@ const Schedule = () => {
               activeOnlyWhenExact={true}
               to="/schedule"
               label="Sắp tới"
-              style={{TextDecoder}}
+              style={{ TextDecoder }}
             />
             <CustomMenuLink to="/schedule/passed" label="Đã qua" />
           </div>
@@ -65,7 +66,7 @@ function CustomMenuLink({ label, to, activeOnlyWhenExact }) {
 
   return (
     <button className={match ? "schedule-button-active" : "schedule-button"}>
-      <Link to={to} className="schedule-list-menu-link" >
+      <Link to={to} className="schedule-list-menu-link">
         {label}
       </Link>
     </button>

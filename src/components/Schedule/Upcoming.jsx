@@ -7,19 +7,22 @@ const Upcoming = () => {
   const { role } = useContext(Context);
   const uuid = fb.auth.currentUser.uid;
   const [appointments, setAppointments] = useState([]);
+  const currentDate = new Date();
   useEffect(() => {
     const unsubscribe = fb.firestore
       .collection("users")
       .doc(uuid)
       .collection("appointments")
-      .where("status", "==", "upcoming")
+      // .where("status", "==", "upcoming")
       .orderBy("date", "asc")
       .onSnapshot((snapshot) => {
         setAppointments(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
+          snapshot.docs
+            .filter((e) => moment().isBefore(moment(e.data().date).format()))
+            .map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
         );
       });
     return () => {
