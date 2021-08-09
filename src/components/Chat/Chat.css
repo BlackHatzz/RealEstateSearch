@@ -182,8 +182,8 @@
   position: absolute;
   top: -20px;
   /* left: px; */
-  font-size: x-small;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: bold;
   color: black;
   word-wrap: normal;
   min-width: 200px;
@@ -193,7 +193,7 @@
   position: absolute;
   top: -14px;
   right: 0px;
-  font-size: x-small;
+  font-size: 10px;
   font-weight: 800;
   color: black;
 }
@@ -201,7 +201,7 @@
   position: absolute;
   top: -14px;
   left: 0px;
-  font-size: x-small;
+  font-size: 10px;
   font-weight: 800;
   color: black;
   text-align: left;

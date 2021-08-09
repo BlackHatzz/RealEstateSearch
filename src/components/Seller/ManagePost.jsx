@@ -751,7 +751,7 @@ class ManagePost extends Component {
             realEstateNo: houseNo,
             latitude: locationRealEstate.lat,
             longitude: locationRealEstate.lng,
-            typeId: realEstateType,
+            typeId: this.state.selectedRealEstateType,
             description: description,
             area: area,
             price: price,
@@ -2047,7 +2047,7 @@ class ManagePost extends Component {
             className="noselect create-button"
           >
             &#65291;
-            <span>Tạo bất động sản</span>
+            <span>Tạo bài viết</span>
           </div>
         </div>
 
