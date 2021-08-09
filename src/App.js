@@ -63,6 +63,7 @@ const App = () => {
     <div className="app">
       {/* <SellerDashboard /> */}
       {authUser && role === "seller" && <ChatLauncher />}
+      {authUser && role === "buyer" && <BuyerNavbar />}
 
       {/* <div className="menu-bar">
         <BuyerNavbar />

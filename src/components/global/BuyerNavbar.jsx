@@ -288,7 +288,7 @@ const BuyerNavbar = () => {
         <div className="nav-bar-container">
           <div className="nav-bar-item">
             <div className="nav-bar-logo">
-              <Link to={role === "buyer" ? "/" : "/sell"}>
+              <Link to={role === "buyer" && "/"}>
                 <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
               </Link>
             </div>
@@ -438,12 +438,18 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item top-item"
                     to="/profile-page"
                   >
-                    <AccountCircleIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <AccountCircleIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
                   <Link className="link profile-menu-item" to="/schedule">
-                    <EventNoteOutlinedIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <EventNoteOutlinedIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Lịch hẹn</span>
                   </Link>
                   <div className="divide"></div>
@@ -451,7 +457,10 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item"
                     to="/transaction-history-page"
                   >
-                    <HistoryIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <HistoryIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Lịch Sử Giao Dịch</span>
                   </Link>
                   <div className="divide"></div>
@@ -462,7 +471,10 @@ const BuyerNavbar = () => {
                       fb.auth.signOut();
                     }}
                   >
-                    <ExitToAppIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <ExitToAppIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Đăng Xuất</span>
                   </div>
                 </div>
