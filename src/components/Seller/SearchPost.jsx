@@ -349,7 +349,7 @@ const SearchPost = () => {
             to={"/manage-post"}
             className="seller-search-post-create-post"
           >
-            <span>+ Tạo bài viết</span>
+            <span>+ Đăng Tin Bất Động Sản</span>
           </Link>
         </div>
 

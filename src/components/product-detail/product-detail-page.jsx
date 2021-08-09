@@ -380,10 +380,6 @@ constructor(props){
                   <div className="divide"></div>
 
                   <span className="description-title">Thông Tin Dự Án</span>
-                  {(() => {
-                    console.log("shiet");
-                    console.log(product);
-                  })()}
                   <DetailBox
                     project={product?.project}
                     investor={ this.state.product?.investor
