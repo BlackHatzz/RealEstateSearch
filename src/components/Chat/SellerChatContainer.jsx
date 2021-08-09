@@ -15,7 +15,7 @@ export const SellerChatContainer = ({ real }) => {
   const uuid = fb.auth.currentUser.uid;
   const username = fb.auth.currentUser.displayName;
   const [conversations, setConversations] = useState([]);
-  const [selectedChat, setSelectedChat] = useState();
+  const [selectedChat, setSelectedChat] = useState(null);
   const [currentInput, setCurrentInput] = useState("");
 
   useEffect(() => {
@@ -89,74 +89,78 @@ export const SellerChatContainer = ({ real }) => {
               </div>
             ))}
           </div>
-
           <div className="seller-chat-box-body">
-            <div className="seller-chat-box-body-left">
-              <MessageContainer
-                conversation={selectedChat}
-                handleBook={() => {}}
-              />
-              <div className="chat_window_container_message_box_input">
-                <form
-                  className="message-input-form"
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    let docref = fb.firestore
-                      .collection("conversations")
-                      .doc(selectedChat.id)
-                      .collection("messages")
-                      .doc();
-                    docref
-                      .set({
-                        id: docref.id,
-                        type: "text",
-                        message: currentInput,
-                        sender: username,
-                        timestamp:
-                          firebase.firestore.FieldValue.serverTimestamp(),
-                        senderId: uuid,
-                      })
-                      .finally(() => {
-                        setCurrentInput("");
-                      });
-                    fb.firestore
-                      .collection("conversations")
-                      .doc(selectedChat.id)
-                      .update({
-                        lastMessage: currentInput,
-                      });
-                  }}
-                >
-                  <textarea
-                    maxLength="2000"
-                    className="textarea-input"
-                    autoComplete="off"
-                    value={currentInput}
-                    onChange={(e) => {
-                      setCurrentInput(e.target.value);
-                      const target = e.target;
-                      target.style.height = "20px";
-                      // target.style.height = `${target.scrollHeight}px`;
-                      target.style.height = `${Math.min(
-                        target.scrollHeight,
-                        80
-                      )}px`;
-                    }}
-                    placeholder="Gửi tin nhắn ..."
+            {selectedChat && (
+              <>
+                <div className="seller-chat-box-body-left">
+                  <MessageContainer
+                    conversation={selectedChat}
+                    handleBook={() => {}}
                   />
 
-                  <button
-                    className="button_send_message"
-                    type="submit"
-                    disabled={currentInput === "" ? true : false}
-                  >
-                    <TelegramIcon className="send-message-icon" />
-                  </button>
-                </form>
-              </div>
-            </div>
+                  <div className="chat_window_container_message_box_input">
+                    <form
+                      className="message-input-form"
+                      onSubmit={(e) => {
+                        e.preventDefault();
+                        let docref = fb.firestore
+                          .collection("conversations")
+                          .doc(selectedChat.id)
+                          .collection("messages")
+                          .doc();
+                        docref
+                          .set({
+                            id: docref.id,
+                            type: "text",
+                            message: currentInput,
+                            sender: username,
+                            timestamp:
+                              firebase.firestore.FieldValue.serverTimestamp(),
+                            senderId: uuid,
+                          })
+                          .finally(() => {
+                            setCurrentInput("");
+                          });
+                        fb.firestore
+                          .collection("conversations")
+                          .doc(selectedChat.id)
+                          .update({
+                            lastMessage: currentInput,
+                          });
+                      }}
+                    >
+                      <textarea
+                        maxLength="2000"
+                        className="textarea-input"
+                        autoComplete="off"
+                        value={currentInput}
+                        onChange={(e) => {
+                          setCurrentInput(e.target.value);
+                          const target = e.target;
+                          target.style.height = "20px";
+                          // target.style.height = `${target.scrollHeight}px`;
+                          target.style.height = `${Math.min(
+                            target.scrollHeight,
+                            80
+                          )}px`;
+                        }}
+                        placeholder="Gửi tin nhắn ..."
+                      />
 
-            <BuyerInfoBox selectedChat={selectedChat} />
+                      <button
+                        className="button_send_message"
+                        type="submit"
+                        disabled={currentInput === "" ? true : false}
+                      >
+                        <TelegramIcon className="send-message-icon" />
+                      </button>
+                    </form>
+                  </div>
+                </div>
+
+                <BuyerInfoBox selectedChat={selectedChat} />
+              </>
+            )}
           </div>
         </div>
       )}

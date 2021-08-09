@@ -336,7 +336,7 @@ const SearchPost = () => {
         <div style={{ height: "30px" }}></div>
 
         <div className="seller-search-create">
-          <div className="seller-title-tab-list">DANH SÁCH BÀI VIẾT</div>
+          <div className="seller-title-tab-list">DANH SÁCH BẤT ĐỘNG SẢN</div>
           <div className="plastic-white seller-search-post-search-bar-container">
             <input
               placeholder="Tìm kiếm bất động sản..."
@@ -349,7 +349,11 @@ const SearchPost = () => {
             to={"/manage-post"}
             className="seller-search-post-create-post"
           >
+<<<<<<< HEAD
             <span>+ Đăng Tin Bất Động Sản</span>
+=======
+            <span>+ Thêm bất động sản</span>
+>>>>>>> 5c282245b12c1e18a6c52446f3fa53177eaf8ba9
           </Link>
         </div>
 

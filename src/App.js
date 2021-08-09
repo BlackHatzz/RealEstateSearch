@@ -33,6 +33,9 @@ import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
 import BuyerNavbar from "./components/global/BuyerNavbar";
 
+import ChatBubble from "./components/Chat/ChatBubble";
+import SmallChatWindow from "./components/Chat/SmallChatWindow";
+
 moment.locale("vi");
 
 const App = () => {
@@ -59,7 +62,8 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {authUser && role && <ChatLauncher />}
+      {authUser && role === "seller" && <ChatLauncher />}
+
       {/* <div className="menu-bar">
         <BuyerNavbar />
       </div>
@@ -69,9 +73,11 @@ const App = () => {
         <Route path="/seller-search-post/" component={SellerDashboard} />
         {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage}>
+          {role === "seller" && <Redirect to="/seller-search-post" />}
+        </Route>
         <Route exact path="/role" component={Role} />
-        <Route exact path="/sell" component={Seller} />
+
         <Route path="/login">
           {!!authUser ? <Redirect to="/role" /> : <Login />}
         </Route>
@@ -83,7 +89,7 @@ const App = () => {
         />
         <Route path="/signup" component={Signup} />
         <Route
-          path="/search-result-page/:searchtext/:type/:area/:adress/:price"
+          path="/search-result-page/:searchtext?/:type/:area/:adress/:price"
           // component={SearchResultPage}
           render={(props) => (
             <SearchResultPage

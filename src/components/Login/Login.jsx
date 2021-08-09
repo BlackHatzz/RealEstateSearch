@@ -40,6 +40,7 @@ export const Login = () => {
 
             fb.auth.currentUser.updateProfile({
               displayName: user.phoneNumber,
+              photoURL: "",
             });
 
             createUser(user);

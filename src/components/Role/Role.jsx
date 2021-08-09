@@ -1,12 +1,19 @@
 import React, { useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Context } from "../../ChatContext";
+import { fb } from "../../services";
 import "./role.css";
 export const Role = () => {
   const { role, updateSellerRole, updateBuyerRole } = useContext(Context);
   let history = useHistory();
+  const user = fb.auth.currentUser;
   useEffect(() => {
-    console.log("role" + role);
+    // user.updateProfile({
+    //   displayName: "Lê Đình Cảm",
+    //   photoURL:
+    //     "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR807cHsETx7njAkAoa7O10cCy-e11rlRmEAINbO-_W-zyGgRqI",
+    // });
+    // console.log("role" + role);
     if (role) {
       history.push(role === "buyer" ? "/" : "/seller-search-post");
     }
