@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { fb } from "../../services";
 import BuyerNavbar from "../global/BuyerNavbar";
 import Upcoming from "./Upcoming";
@@ -11,6 +11,7 @@ import {
   useRouteMatch,
 } from "react-router-dom";
 import Passed from "./Passed";
+import { Context } from "../../ChatContext";
 const routes = [
   {
     path: "/schedule",
@@ -24,10 +25,10 @@ const routes = [
 ];
 const Schedule = () => {
   const uuid = fb.auth.currentUser.uid;
-
+  const { role } = useContext(Context);
   return (
     <div style={{ background: "#f0f0f0", height: "100vh" }}>
-      <BuyerNavbar />
+      {role === "buyer" && <BuyerNavbar />}
       <div className="schedule-body">
         <div className="schedule-list">
           <div className="schedule-list-menu">

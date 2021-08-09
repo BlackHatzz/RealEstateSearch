@@ -7,8 +7,8 @@ import React, { useEffect, useState } from "react";
 import "./manage-post.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import MenuIcon from '@material-ui/icons/Menu';
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import MenuIcon from "@material-ui/icons/Menu";
 import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
 import "../global/shared.css";
@@ -27,6 +27,7 @@ import {
   useParams,
 } from "react-router-dom";
 import { SellerScheduler } from "./SellerScheduler";
+import Schedule from "../Schedule/Schedule";
 
 const SellerDashboard = () => {
   var [selectedItem, setSelectedItem] = useState(1);
@@ -87,6 +88,18 @@ const SellerDashboard = () => {
       ),
       path: "/seller-scheduler",
       child: <SellerScheduler />,
+    },
+    {
+      key: 4,
+      title: "Lịch hẹn",
+      icon: (
+        <ScheduleIcon
+          id={"seller-dashboard-icon4"}
+          className="seller-dashboard-el icon"
+        />
+      ),
+      path: "/schedule",
+      child: <Schedule />,
     },
     // {
     //   key: 3,
@@ -151,10 +164,20 @@ const SellerDashboard = () => {
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
-          <div className={"left-container " + (!isShowMenu ? "left-container-show-menu" : "")}>
+          <div
+            className={
+              "left-container " +
+              (!isShowMenu ? "left-container-show-menu" : "")
+            }
+          >
             <div className="logo-container">
               <img src="logo.png" className="logo-box" />
-              <div style={{ width: 30, height: 30, marginRight: 10 }}  onClick={() => {setShowMenu(!isShowMenu) }}>
+              <div
+                style={{ width: 30, height: 30, marginRight: 10 }}
+                onClick={() => {
+                  setShowMenu(!isShowMenu);
+                }}
+              >
                 <MenuIcon style={{ width: 30, height: 30 }} />
               </div>
             </div>
@@ -171,7 +194,11 @@ const SellerDashboard = () => {
                     className="alone-selected"
                   ></div>
                 </div>
-                <div id={"box" + item.key.toString()} className="link box" style={{marginTop:"43px"}}>
+                <div
+                  id={"box" + item.key.toString()}
+                  className="link box"
+                  style={{ marginTop: "43px" }}
+                >
                   {item.icon}
                   <span
                     id={"seller-dashboard-title" + item.key.toString()}
@@ -205,7 +232,7 @@ const SellerDashboard = () => {
           </div>
 
           <div className="right-container">
-            <SellerNavbar isShowMenu={isShowMenu} setShowMenu={setShowMenu}/>
+            <SellerNavbar isShowMenu={isShowMenu} setShowMenu={setShowMenu} />
             <div className="divide"></div>
 
             {/* <div className="content-container"> */}
