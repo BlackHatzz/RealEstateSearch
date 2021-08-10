@@ -134,7 +134,7 @@ class SearchSuggestion extends Component {
     if (this.state.searchText.length >= 3) {
       this.setState({
         isTooltipShown: false,
-      })
+      });
       // this.props.history.push("/#");
       this.props.history.push(
         "/search-result-page/" +
@@ -142,14 +142,16 @@ class SearchSuggestion extends Component {
           "/" +
           this.state.type.selectedKey +
           "/" +
-          this.state.fromAreaText + "-" + this.state.toAreaText +
+          this.state.fromAreaText +
+          "-" +
+          this.state.toAreaText +
           // this.state.area.selectedKey +
           "/" +
           this.state.address.selectedKey +
           "/" +
           this.state.price.selectedKey
       );
-      
+
       // this.props.history.push(
       //   "/search-result-page/" +
       //     this.state.searchText +
@@ -165,7 +167,7 @@ class SearchSuggestion extends Component {
     } else {
       this.setState({
         isTooltipShown: true,
-      })
+      });
     }
   };
 
@@ -179,7 +181,7 @@ class SearchSuggestion extends Component {
 
   handleSelectItem = (filterKey, filterTypeKey, option) => {
     console.log("select!");
-    console.log(filterKey, option.key, option.text)
+    console.log(filterKey, option.key, option.text);
     switch (filterKey) {
       case 0:
         this.state.type = {
@@ -198,7 +200,7 @@ class SearchSuggestion extends Component {
         console.log("first split");
         console.log(split);
         for (var i = 0; i < split.length; i++) {
-          if(split[i].match(/\d+/) != null) {
+          if (split[i].match(/\d+/) != null) {
             if (split[i].match(/\d+/).length > 0) {
               const number = split[i].match(/\d+/)[0];
               // console.log(number);
@@ -209,15 +211,14 @@ class SearchSuggestion extends Component {
               }
             }
           }
-          
         }
-        this.state.fromAreaText = (from == null) ? "null" : from.toString();
-        this.state.toAreaText = (to == null ) ? "null" : to.toString();
+        this.state.fromAreaText = from == null ? "null" : from.toString();
+        this.state.toAreaText = to == null ? "null" : to.toString();
 
         console.log("moe");
         console.log(this.state.fromAreaText);
         console.log(this.state.toAreaText);
-        
+
         this.state.area = {
           selectedKey: option.key,
           text: option.text,
@@ -245,7 +246,7 @@ class SearchSuggestion extends Component {
     console.log(this.state.area);
     console.log(this.state.address);
     console.log(this.state.price);
-  }
+  };
 
   render() {
     return (
@@ -269,6 +270,7 @@ class SearchSuggestion extends Component {
             >
               <AiOutlineSearch />
               <input
+                id={"search-bar"}
                 onChange={this.handleChangeInput}
                 type="text"
                 className="search-bar"
@@ -280,7 +282,13 @@ class SearchSuggestion extends Component {
           {/* filter for searching */}
           {this.state.filters.map((filter) => (
             <React.Fragment key={filter.key}>
-              <FilterDropBox handler={this.handleSelectItem} filterKey={filter.key} filter={filter} title="Khu vực" value="Hồ Chí Minh" />
+              <FilterDropBox
+                handler={this.handleSelectItem}
+                filterKey={filter.key}
+                filter={filter}
+                title="Khu vực"
+                value="Hồ Chí Minh"
+              />
             </React.Fragment>
           ))}
           {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
@@ -295,7 +303,7 @@ class SearchSuggestion extends Component {
               pathname: "/search-result-page/" + this.state.searchText,
             }}
           > */}
-            <input className="search-button" type="submit" value="Tìm Kiếm" />
+          <input className="search-button" type="submit" value="Tìm Kiếm" />
           {/* </Link> */}
         </form>
       </div>

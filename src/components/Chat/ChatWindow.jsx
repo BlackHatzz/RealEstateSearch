@@ -22,7 +22,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
   const { role, chatId, updateChat, chatRealId, updateChatRealId } =
     useContext(Context);
 
-  const [currentChat, setCurrentChat] = useState();
+  const [currentChat, setCurrentChat] = useState(null);
   const [currentReal, setCurrentReal] = useState();
   const username = fb.auth.currentUser.displayName;
   const uuid = fb.auth.currentUser.uid;
@@ -56,6 +56,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
       .collection("messages")
       .doc(dealId)
       .set({
+        id: dealId,
         type: "deal",
         deal: deal,
         sender: username,
@@ -119,10 +120,12 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                   </p>
                 </div>
               </div>
+
               <MessageContainer
                 conversation={currentChat}
                 handleBook={handleBook}
               />
+
               {(dealtrigger || booktrigger) && (
                 <div className="chat_window_container_message_box_popup">
                   {dealtrigger && (
@@ -139,7 +142,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                             name="deal"
                             placeholder={currentChat.data.price}
                             maxlength="4"
-                            size="1"
+                            size="4"
                             label="Thỏa thuận (tỷ VNĐ): "
                           />
 
@@ -203,6 +206,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                       .doc(currentChat.id)
                       .collection("messages")
                       .doc();
+
                     docref
                       .set({
                         id: docref.id,
@@ -281,19 +285,23 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
           {role === "seller" && (
             <div className="chat_window_container_contact_list">
               {reals.map((real) => (
-                <div
-                  key={real.id}
-                  onClick={() => {
-                    // updateChatRealId(real.id);
-                    setCurrentReal(real);
-                  }}
-                >
-                  <SellerChatItem
-                    currentReal={currentReal}
-                    id={real.id}
-                    data={real.data}
-                  />
-                </div>
+                <>
+                  {/* {real.data.empty === false && ( */}
+                  <div
+                    key={real.id}
+                    onClick={() => {
+                      // updateChatRealId(real.id);
+                      setCurrentReal(real);
+                    }}
+                  >
+                    <SellerChatItem
+                      currentReal={currentReal}
+                      id={real.id}
+                      data={real.data}
+                    />
+                  </div>
+                  {/* )} */}
+                </>
               ))}
             </div>
           )}

@@ -23,11 +23,11 @@ class Constants {
     return (
       Constants.host +
       "api/v1/realEstate/getRealEstateBySeller/" +
-      sellerId.toString() +
+      sellerId +
       "/" +
-      status.toString() +
+      status +
       "/" +
-      page.toString()
+      page
     );
   }
 
@@ -65,6 +65,10 @@ class Constants {
       "&key=" +
       Constants.googleAPIKey
     );
+  }
+
+  static getRealEstateDetailById(id) {
+    return Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString();
   }
 }
 

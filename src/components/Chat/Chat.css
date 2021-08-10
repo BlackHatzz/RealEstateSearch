@@ -9,8 +9,8 @@
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
   box-sizing: border-box;
   border-right: 1px solid rgb(0, 0, 0);
   border-top: 1px solid rgb(0, 0, 0);
@@ -36,7 +36,8 @@
 
 .chat_window_header {
   width: 100%;
-  padding-top: 8px;
+  height: 50px;
+  /* padding-top: 8px; */
   padding-bottom: 8px;
   display: flex;
   flex-direction: row;
@@ -69,12 +70,15 @@
   padding-left: 15px;
   padding-right: 5px;
   flex: 1;
+  color: #ffa114;
 }
+
 .chat_window_container {
   width: 100%;
-  height: 48vh;
+  height: auto;
   display: flex;
   flex-direction: row;
+  min-height: 380px;
 }
 .chat_window_user {
   width: 100%;
@@ -86,13 +90,13 @@
   flex-direction: column;
   width: 70%;
   height: 100%;
-  border-right: 1px solid gray;
 }
 .chat_window_container_message_box {
   display: flex;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  /* height: auto; */
+  flex: 1;
 }
 .chat_window_container_contact_box {
   width: 29%;
@@ -101,18 +105,17 @@
 .chat_window_container_message_box_display {
   display: flex;
   flex-direction: column;
-  /* flex: 1; */
   width: 100%;
-  overflow-y: auto;
+  overflow-y: scroll;
   overflow-x: hidden;
   padding-top: 32px;
   padding-bottom: 12px;
-  height: 100%;
+  height: 240px;
 }
 .chat_window_container_message_box_display_realestate {
   margin: 5px 5px 5px 5px;
   border-radius: 2px;
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(255, 255, 255);
   flex-direction: row;
   display: flex;
   /* width: 100%; */
@@ -145,13 +148,14 @@
 }
 .chat_window_container_message_box_display_realestate_info > p {
   font-size: 10px;
+  margin: 0 0 5px;
 }
 
 .message {
   position: relative;
-  font-size: 16px;
+  font-size: 15px;
   padding: 7px 12px 8px 12px;
-  border-radius: 18px;
+  border-radius: 8px;
   width: fit-content;
   margin-bottom: 20px;
   color: black;
@@ -164,17 +168,22 @@
   margin-left: auto;
   /* display: flex;
   flex-direction: column; */
-  background-color: black;
+  background-color: #0c67ce;
   color: white;
   margin-right: 14px;
   font-size: 15px;
 }
+
+.message_send p {
+  margin-bottom: 0px;
+}
+
 .message_name {
   position: absolute;
   top: -20px;
   /* left: px; */
-  font-size: x-small;
-  font-weight: 800;
+  font-size: 10px;
+  font-weight: bold;
   color: black;
   word-wrap: normal;
   min-width: 200px;
@@ -182,25 +191,25 @@
 }
 .message_name_send {
   position: absolute;
-  top: -20px;
+  top: -14px;
   right: 0px;
-  font-size: x-small;
+  font-size: 10px;
   font-weight: 800;
   color: black;
 }
 .message_name_receive {
   position: absolute;
-  top: -20px;
+  top: -14px;
   left: 0px;
-  font-size: x-small;
+  font-size: 10px;
   font-weight: 800;
   color: black;
   text-align: left;
 }
 
 .chat_window_container_message_box_input {
-  padding: 12px 8px;
-  border-top: 1px solid gray;
+  padding: 0px 8px;
+  /* border-top: 1px solid gray; */
   height: auto;
   display: flex;
   flex-direction: column;
@@ -226,6 +235,7 @@
 .chat_window_container_contact_list {
   overflow-y: scroll;
   height: 100%;
+  border-left: 1px solid rgb(185, 185, 185);
 }
 
 .contact_item {
@@ -300,10 +310,6 @@ option {
   text-align: center;
 }
 
-.deal-button {
-  margin-bottom: 12px;
-}
-
 .presentation-pic-container {
   width: 75px;
   height: 50px;
@@ -366,16 +372,24 @@ option {
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
+  margin-top: 4px;
 }
 
 .message-receive {
-  background-color: rgb(220, 220, 220);
+  background-color: #e4e6eb;
 }
 
 .deal-form {
   flex-direction: column;
   display: flex;
 }
+.deal-form p {
+  font-size: 14px;
+}
+.deal-form label {
+  font-size: 14px;
+}
+
 .deal-form-button {
   margin-top: 10px;
   display: flex;
@@ -405,11 +419,13 @@ option {
 
 .buyer-appointment-message-upcoming > button {
   border: none;
+  color: black;
   background-color: white;
   border-radius: 5px;
   width: 55px;
-  height: 20px;
+  height: 30px;
   cursor: pointer;
+  margin: 0 auto;
 }
 .seller-deal-message {
   display: flex;
@@ -427,29 +443,36 @@ option {
   border: none;
   background-color: white;
   border-radius: 5px;
-  width: 55px;
+  width: 60px;
   height: 20px;
   cursor: pointer;
 }
 .buyer-deal-message > button {
   border: none;
+  color: black;
   background-color: white;
   border-radius: 5px;
   width: 75px;
-  height: 20px;
+  height: 30px;
   cursor: pointer;
+  /* margin: 0 auto; */
+  position: relative;
+  /* top:50%;  */
+  left: 24%;
 }
 .time-form {
   display: flex;
 }
 
 .deal-button {
-  height: 20px;
+  height: 30px;
   background-color: #fcba03;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 8px;
 }
+
 .deal-button:disabled {
   background-color: gray;
   cursor: not-allowed;
@@ -526,7 +549,7 @@ option {
   /* min-height: 10px; */
   overflow-y: auto;
   font-size: 14px;
-  height: 20px;
+  height: 30px;
   border-radius: 5px;
   border: none;
   background-color: #ebebeb;
@@ -543,6 +566,9 @@ option {
 .message-input-form {
   display: flex;
   align-items: center;
+  min-height: 40px;
+  height: auto;
+  padding: 0px 0px 5px 2px;
 }
 .seller-left-chat-box {
   display: flex;
@@ -576,4 +602,99 @@ option {
 .info-text {
   padding-left: 10px;
   padding-top: 10px;
+}
+
+.chat-bubble {
+  position: fixed;
+  bottom: 15px;
+  right: 20px;
+}
+.chat-bubble-item {
+  height: 48px;
+  width: 48px;
+  border-radius: 24px;
+  background-color: white;
+  box-shadow: 0 10px 0px #ccc;
+  cursor: pointer;
+  background-color: #f0f0f0;
+}
+
+.chat-bubble-item:hover {
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+  background-color: white;
+  transition: all 1s;
+}
+
+.small-chat-window-title-box {
+  height: auto;
+  /* box-shadow: 0 0 10px #ccc; */
+  padding: 5px 0px 0px 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.small-chat-window-title {
+  font-size: 16px;
+  font-weight: 600;
+  flex: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  color: #ffa114;
+  max-width: 70%;
+}
+
+p {
+  margin: 0 0 0px;
+}
+
+.small-chat-window-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  align-self: center;
+
+  /* flex: 1; */
+  padding-right: 5px;
+}
+.small-chat-window-buttons-minimize {
+  cursor: pointer;
+  padding-right: 5px;
+}
+.small-chat-window-2 {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0px;
+  right: 90px;
+  background-color: #ffffff;
+  height: auto;
+  width: 320px;
+  border-radius: 10px 10px 0px 0px;
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+  padding-right: 1px;
+  padding-bottom: 5px;
+}
+.small-chat-window-1 {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0px;
+  right: 420px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 1px 2px #777;
+  height: auto;
+  width: 320px;
+  border-radius: 10px 10px 0px 0px;
+  -moz-box-shadow: 0 0 10px #ccc;
+  -webkit-box-shadow: 0 0 10px #ccc;
+  box-shadow: 0 0 10px #ccc;
+  padding-right: 1px;
+  padding-bottom: 5px;
+}
+.small-chat-window-buttons-close {
+  cursor: pointer;
 }

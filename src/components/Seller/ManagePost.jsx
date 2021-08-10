@@ -24,6 +24,7 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
 import { useHistory } from "react-router";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -170,9 +171,13 @@ class ManagePost extends Component {
     },
     isImageValid: true, // default is true so the notification is not shown after the first loaded
     isPopupLoaded: false,
+    isAutoCompleteMenuShown: false,
+    autoCompleteMenu: [],
   };
 
   componentDidMount() {
+    console.log("fb.auth.currentUser?.uid");
+    console.log(fb.auth.currentUser?.uid);
     // get districts and wards data
     fetch(
       Constants.getDistrictsAndWards
@@ -327,6 +332,9 @@ class ManagePost extends Component {
   };
 
   handleChangeAddress = (event) => {
+    this.setState({
+      isAutoCompleteMenuShown: true,
+    })
     const address = event.target.value.toString();
 
     const dis = document.getElementById("dis-input").value.toString();
@@ -345,13 +353,14 @@ class ManagePost extends Component {
       dis +
       ", " +
       ward +
-      ", " +
-      houseNo +
+      // ", " +
+      // houseNo +
       " " +
       address;
 
     fetch(
-      "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Việt Nam, Hồ Chí Minh, Quận 1, phường Nguyễn Cư Trinh,  T&key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&language=vi"
+      Constants.host + "/api/v1/realEstate/autocomplete/" + searchText 
+      // "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=Việt Nam, Hồ Chí Minh, Quận 1, phường Nguyễn Cư Trinh,  T&key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&language=vi"
       //   "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" +
       //     searchText +
       //     "&key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&sessiontoken=1234567890&language=vi"
@@ -361,6 +370,20 @@ class ManagePost extends Component {
         (result) => {
           console.log("google autocomplete");
           console.log(result);
+          var temp = [];
+          if(result.predictions != null) {
+            for(var i = 0; i < result.predictions.length; i++) {
+              temp.push({
+                id: i,
+                title: result.predictions[i].structured_formatting.main_text
+              });
+            }
+          }
+          this.state.autoCompleteMenu = temp;
+          this.setState({
+            autoCompleteMenu: [...temp],
+          });
+          console.log(this.state.autoCompleteMenu);
         },
         (error) => {}
       );
@@ -716,7 +739,8 @@ class ManagePost extends Component {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+            sellerId: fb.auth.currentUser?.uid,
+            // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
             title: title,
             view: 0,
             districtId: this.state.selectedDistrictId,
@@ -727,7 +751,7 @@ class ManagePost extends Component {
             realEstateNo: houseNo,
             latitude: locationRealEstate.lat,
             longitude: locationRealEstate.lng,
-            typeId: realEstateType,
+            typeId: this.state.selectedRealEstateType,
             description: description,
             area: area,
             price: price,
@@ -740,22 +764,7 @@ class ManagePost extends Component {
             numberOfBedroom: numberOfBedroom,
             numberOfBathroom: numberOfBathroom,
             images: downloadURLsJSON,
-            facilities: [
-              {
-                facilityTypeId: 2,
-                facilityName: "Bệnh Viện 105",
-                latitude: 11.2367,
-                longitude: 102.8123678,
-                distance: 3.0,
-              },
-              {
-                facilityTypeId: 3,
-                facilityName: "Trường FPT",
-                latitude: 13.1234,
-                longitude: 101.1234,
-                distance: 5.0,
-              },
-            ],
+            address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
           }),
         };
 
@@ -1662,6 +1671,7 @@ class ManagePost extends Component {
               {this.state.streetNameTooltip.toggle
                 ? this.renderTooltip(this.state.streetNameTooltip.text)
                 : null}
+              <div style={{maxWidth: "calc(100% - 30% - 8px - 8px)"}}>
               <input
                 onChange={(event) => {
                   const value = event.target.value.toString();
@@ -1702,13 +1712,35 @@ class ManagePost extends Component {
                       },
                     });
                   }
+                  // this.setState({
+                  //   isAutoCompleteMenuShown: false,
+                  // })
                 }}
                 id="street-name-input"
-                // onChange={this.handleChangeAddress}
+                onChange={this.handleChangeAddress}
                 placeholder="Tên đường"
                 type="text"
+                style={{width: "100%"}}
                 className="cou-input-field-right"
               />
+              {this.renderMenu(
+                this.state.isAutoCompleteMenuShown,
+                this.state.autoCompleteMenu,
+                "street-name-input",
+                (selectedItem) => {
+                  document.getElementById("street-name-input").value = selectedItem.title;
+                  this.setState({
+                    isAutoCompleteMenuShown: false,
+                    streetNameTooltip: {
+                      toggle: false,
+                      text: "",
+                      isValid: true,
+                    },
+                  })
+                }
+              )}
+              </div>
+              
             </div>
           </div>
 

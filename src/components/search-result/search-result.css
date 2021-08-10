@@ -3,6 +3,7 @@ div.product-list {
   /* background-color: blue; */
   width: 800px;
   height: 100%;
+  margin-top: 15px;
 }
 
 div.product-item-container {
@@ -14,8 +15,8 @@ div.product-item-container {
   border: 1px solid rgb(230, 230, 230);
   border-radius: 8px;
   box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18);
-  margin-top: 24px;
-  margin-bottom: 24px;
+  margin-top: 0px;
+  margin-bottom: 12px;
   /* width: ; */
   /* height: 500px; */
 }

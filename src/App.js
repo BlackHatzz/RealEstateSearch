@@ -1,8 +1,17 @@
+import "moment/locale/vi";
 import React, { useEffect, useContext, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
+import moment from "moment";
+
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";
-import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import AssignedPostPage from "./components/staff-assigned-post/assigned-post-page";
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
@@ -17,10 +26,18 @@ import TransactionHistoryPage from "./components/transaction-history/Transaction
 import ManagePost from "./components/Seller/ManagePost";
 import SellerDashboard from "./components/Seller/SellerDashboard";
 import Autocomplete from "react-google-autocomplete";
+import SearchPost from "./components/Seller/SearchPost";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
+import BuyerNavbar from "./components/global/BuyerNavbar";
+
+import ChatBubble from "./components/Chat/ChatBubble";
+import SmallChatWindow from "./components/Chat/SmallChatWindow";
+
+moment.locale("vi");
+
 const App = () => {
   const history = useHistory();
   const { authUser } = useAuth();
@@ -45,13 +62,22 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {authUser && role && <ChatLauncher />}
+      {authUser && role === "seller" && <ChatLauncher />}
+
+      {/* <div className="menu-bar">
+        <BuyerNavbar />
+      </div>
+      <div className="invisible"></div> */}
       <Switch>
-        <Route exact path="/seller-search-post" component={SellerDashboard} />
+        {/* <Route path="/seller/e" children={<p>123</p>} /> */}
+        <Route path="/seller-search-post/" component={SellerDashboard} />
+        {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
-        <Route exact path="/" component={HomePage} />
+        <Route exact path="/" component={HomePage}>
+          {role === "seller" && <Redirect to="/seller-search-post" />}
+        </Route>
         <Route exact path="/role" component={Role} />
-        <Route exact path="/sell" component={Seller} />
+
         <Route path="/login">
           {!!authUser ? <Redirect to="/role" /> : <Login />}
         </Route>
@@ -63,7 +89,7 @@ const App = () => {
         />
         <Route path="/signup" component={Signup} />
         <Route
-          path="/search-result-page/:searchtext/:type/:area/:adress/:price"
+          path="/search-result-page/:searchtext?/:type/:area/:adress/:price"
           // component={SearchResultPage}
           render={(props) => (
             <SearchResultPage

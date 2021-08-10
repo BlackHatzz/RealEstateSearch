@@ -7,6 +7,8 @@ import React, { useEffect, useState } from "react";
 import "./manage-post.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
+import ScheduleIcon from "@material-ui/icons/Schedule";
+import MenuIcon from "@material-ui/icons/Menu";
 import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
 import "../global/shared.css";
@@ -14,24 +16,36 @@ import { fb } from "../../services/firebase";
 import Constants from "../global/Constants";
 import ManagePost from "./ManagePost";
 import SearchPost from "./SearchPost";
-import { useHistory } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
+import UpdatePost from "./UpdatePost";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link,
   useRouteMatch,
+  useParams,
 } from "react-router-dom";
 import { SellerScheduler } from "./SellerScheduler";
+import Schedule from "../Schedule/Schedule";
 
 const SellerDashboard = () => {
   var [selectedItem, setSelectedItem] = useState(1);
+  var [isShowMenu, setShowMenu] = useState(false);
   const otherRoutes = [
     {
       path: "/manage-post",
       child: (
         <div className="content-container">
-          <ManagePost history={useHistory()} />
+          <ManagePost />
+        </div>
+      ),
+    },
+    {
+      path: "/seller-update-post/:id",
+      child: (
+        <div className="content-container">
+          <UpdatePost />
         </div>
       ),
     },
@@ -65,15 +79,27 @@ const SellerDashboard = () => {
     },
     {
       key: 3,
-      title: "Tạo thời khóa biểu",
+      title: "Thời biểu lịch hẹn",
       icon: (
-        <HistoryIcon
+        <ScheduleIcon
           id={"seller-dashboard-icon3"}
           className="seller-dashboard-el icon"
         />
       ),
       path: "/seller-scheduler",
       child: <SellerScheduler />,
+    },
+    {
+      key: 4,
+      title: "Lịch hẹn",
+      icon: (
+        <ScheduleIcon
+          id={"seller-dashboard-icon4"}
+          className="seller-dashboard-el icon"
+        />
+      ),
+      path: "/schedule",
+      child: <Schedule />,
     },
     // {
     //   key: 3,
@@ -118,29 +144,43 @@ const SellerDashboard = () => {
 
     document.getElementById(
       "alone-selected" + key.toString()
-    ).style.backgroundColor = "black";
+    ).style.backgroundColor = "#0C67CE";
+    // box-shadow: 0px 2px 6px 2px rgba(20, 20, 20, 0.5);
+    // #0C67CE
 
     document.getElementById("box" + key.toString()).style.backgroundColor =
-      "black";
+      "rgba(199, 251, 255, 0.4)";
 
     document.getElementById(
       "seller-dashboard-title" + key.toString()
-    ).style.color = "white";
+    ).style.color = "#0C67CE";
 
     document.getElementById(
       "seller-dashboard-icon" + key.toString()
-    ).style.color = "white";
+    ).style.color = "#0C67CE";
   };
-
+  let { id } = useParams();
   return (
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
-          <div className="left-container">
+          <div
+            className={
+              "left-container " +
+              (!isShowMenu ? "left-container-show-menu" : "")
+            }
+          >
             <div className="logo-container">
-              <div className="logo-box"></div>
+              <img src="logo.png" className="logo-box" />
+              <div
+                style={{ width: 30, height: 30, marginRight: 10 }}
+                onClick={() => {
+                  setShowMenu(!isShowMenu);
+                }}
+              >
+                <MenuIcon style={{ width: 30, height: 30 }} />
+              </div>
             </div>
-
             {items.map((item) => (
               <Link
                 key={item.key}
@@ -154,7 +194,11 @@ const SellerDashboard = () => {
                     className="alone-selected"
                   ></div>
                 </div>
-                <div id={"box" + item.key.toString()} className="link box">
+                <div
+                  id={"box" + item.key.toString()}
+                  className="link box"
+                  style={{ marginTop: "43px" }}
+                >
                   {item.icon}
                   <span
                     id={"seller-dashboard-title" + item.key.toString()}
@@ -188,11 +232,19 @@ const SellerDashboard = () => {
           </div>
 
           <div className="right-container">
-            <SellerNavbar />
+            <SellerNavbar isShowMenu={isShowMenu} setShowMenu={setShowMenu} />
             <div className="divide"></div>
 
             {/* <div className="content-container"> */}
             {/* <ManagePost /> */}
+            {/* <Switch>
+              <Route path="/seller/:id" children={<Child />} />
+              {(() => {
+                if (id == null || id === "") {
+                  return <Redirect to="/seller/search-post" />;
+                }
+              })()}
+            </Switch> */}
 
             <Switch>
               {items.map((item) => (
@@ -202,12 +254,6 @@ const SellerDashboard = () => {
                   children={() => item.child}
                 />
               ))}
-
-              {/* <Route
-                  key={2}
-                  path={"/transaction-history"}
-                  children={() => <p>history</p>}
-                /> */}
 
               {otherRoutes.map((route) => (
                 <Route
@@ -411,3 +457,15 @@ export default SellerDashboard;
 // }
 
 // export default SellerDashboard;
+
+function Child() {
+  // We can use the `useParams` hook here to access
+  // the dynamic pieces of the URL.
+  let { id } = useParams();
+
+  return (
+    <div>
+      <h3>ID: {id}</h3>
+    </div>
+  );
+}

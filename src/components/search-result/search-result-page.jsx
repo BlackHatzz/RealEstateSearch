@@ -65,22 +65,22 @@ class SearchResultPage extends Component {
       default:
         // 2 elements is max
         const split = this.props.match.params.area.toString().split("-");
-        
-        if(split[0] !== "null" && split[1] !== "null") {
-          for(var i = 0; i < split.length; i++) {
+
+        if (split[0] !== "null" && split[1] !== "null") {
+          for (var i = 0; i < split.length; i++) {
             const numberString = split[i].match(/\d+/)[0];
-            if(i == 0) {
+            if (i == 0) {
               fromArea = parseInt(numberString);
-            } else if(i == 1) {
+            } else if (i == 1) {
               toArea = parseInt(numberString);
             }
           }
-        } else if(split[0] !== "null" && split[1] === "null") {
+        } else if (split[0] !== "null" && split[1] === "null") {
           fromArea = parseInt(split[1]);
-        } else if(split[0] === "null" && split[1] !== "null") {
+        } else if (split[0] === "null" && split[1] !== "null") {
           toArea = parseInt(split[1]);
         }
-        
+
         // fromArea = null;
         // toArea = null;
         break;
@@ -172,6 +172,11 @@ class SearchResultPage extends Component {
           // });
         }
       );
+
+    let element = document.getElementById("search-bar");
+    if (element != null) {
+      element.value = this.props.match.params.searchtext;
+    }
   }
 
   renderSearchResult() {
@@ -219,20 +224,33 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <BuyerNavbar />
         <div
           style={{
-            backgroundColor: "silver",
+            display: "flex",
             width: "100%",
-            height: "1px",
-            padding: "0",
+            height: "100%",
+            flexDirection: "column",
           }}
-        ></div>
-        <SearchSuggestion history={this.props.history} />
+        >
+          <BuyerNavbar />
+          <div
+            style={{
+              width: "100%",
+              borderBottom: "1px solid rgba(0,0,0,0.15)",
+            }}
+          />
+          <SearchSuggestion history={this.props.history} />
 
-        {/* search result list */}
-        <div style={{ width: "100%" }}>
-          <div className="horizontal">{this.renderSearchResult()}</div>
+          {/* search result list */}
+          <div
+            style={{
+              overflowY: "auto",
+              overflowX: "hidden",
+              flex: 1,
+            }}
+          >
+            <div className="horizontal">{this.renderSearchResult()}</div>
+          </div>
         </div>
       </React.Fragment>
     );
