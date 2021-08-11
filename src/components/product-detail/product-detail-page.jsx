@@ -434,10 +434,6 @@ constructor(props){
                       {(() => {
                         if (this.state.product != null) {
                           if (this.state.product?.facilities != null) {
-                            console.log("yeeet");
-                            console.log(
-                              this.state.product?.facilities["Bệnh Viện"]
-                            );
                             return this.state.product?.facilities[
                               this.state.selectedAmenityType.apikey
                             ] ? this.state.product?.facilities[

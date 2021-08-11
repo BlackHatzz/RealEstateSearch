@@ -15,7 +15,7 @@ export const Role = () => {
     // });
     // console.log("role" + role);
     if (role) {
-      history.push(role === "buyer" ? "/" : "/seller-search-post");
+      history.push(role === "buyer" ? "/" : "/seller");
     }
   }, [history, role]);
   return (
@@ -40,7 +40,7 @@ export const Role = () => {
           className="role-button"
           onClick={() => {
             updateSellerRole();
-            history.push("/seller-search-post");
+            history.push("/seller");
           }}
         >
           <img

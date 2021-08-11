@@ -68,13 +68,16 @@ const App = () => {
         <BuyerNavbar />
       </div>
       <div className="invisible"></div> */}
+      {/* <SellerDashboard /> */}
       <Switch>
-        {/* <Route path="/seller/e" children={<p>123</p>} /> */}
-        <Route path="/seller-search-post/" component={SellerDashboard} />
-        {/* <Route path="/seller-search-post/" component={SellerDashboard} /> */}
+        {
+        //Route path="/seller-search-post/" component={SellerDashboard} /> 
+        }
+
+        <Route path="/seller" component={SellerDashboard} />
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
         <Route exact path="/" component={HomePage}>
-          {role === "seller" && <Redirect to="/seller-search-post" />}
+          {role === "seller" && <Redirect to="/seller" />}
         </Route>
         <Route exact path="/role" component={Role} />
 

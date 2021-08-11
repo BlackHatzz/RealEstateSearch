@@ -23,28 +23,6 @@
 .left-container-show-menu{
   margin-left: -350px;
 }
- .logo-container {
-  width: 100%;
-  height: auto;
-  background-color: transparent;
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  /* padding-top: 12px; */
-  /* padding-bottom: 12px; */
-}
- .logo-box {
-  width: 150px;
-  height: auto;
-  margin: 0 auto;
-  /* background-size: 200px 90px; */
-  background-color: red;
-  /* object-fit: cover;
-  background-repeat: no-repeat;
-  background-image: url("logo.png");
-  background-size: 100% 100%; */
-}
 
 .seller-wrapper > .left-container > .item {
   width: 100%;

@@ -346,14 +346,10 @@ const SearchPost = () => {
           </div>
 
           <Link
-            to={"/manage-post"}
+            to={"/seller/manage-post"}
             className="seller-search-post-create-post"
           >
-<<<<<<< HEAD
             <span>+ Đăng Tin Bất Động Sản</span>
-=======
-            <span>+ Thêm bất động sản</span>
->>>>>>> 5c282245b12c1e18a6c52446f3fa53177eaf8ba9
           </Link>
         </div>
 
