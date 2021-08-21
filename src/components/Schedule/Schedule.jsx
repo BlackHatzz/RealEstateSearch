@@ -28,7 +28,7 @@ const Schedule = () => {
   const { role } = useContext(Context);
   return (
     <div style={{ background: "#f0f0f0", height: "100vh" }}>
-      {role === "buyer" && <BuyerNavbar />}
+      {/* {role === "buyer" && <BuyerNavbar />} */}
       <div className="schedule-body">
         <div className="schedule-list">
           <div className="schedule-list-menu">

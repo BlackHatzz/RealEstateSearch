@@ -473,6 +473,7 @@ const BuyerNavbar = () => {
                     onClick={() => {
                       resetRole();
                       fb.auth.signOut();
+                      window.localStorage.clear();
                     }}
                   >
                     <ExitToAppIcon

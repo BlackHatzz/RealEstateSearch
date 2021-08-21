@@ -68,7 +68,10 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
         });
         setDealtrigger((value) => !value);
       })
-      .finally(() => setSubmitting(false));
+      .finally(() => {
+        setSubmitting(false);
+        setAnchorEl(null);
+      });
   }
 
   function sendMessage() {
@@ -137,6 +140,13 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               </div>
               {role === "buyer" && (
                 <div className="chat_window_container_message_box_display_realestate_info_deal_book">
+                  {currentChat.data.deal === "accepted" && (
+                    <div>
+                      <p className="chat_window_container_message_box_display_realestate_info_deal">
+                        Thỏa thuận: {currentChat.data.dealPrice} tỷ
+                      </p>
+                    </div>
+                  )}
                   {currentChat.data.deal === "refused" ||
                   currentChat.data.deal === "none" ||
                   currentChat.data.deal === "cancel" ||
@@ -148,13 +158,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                     >
                       Thỏa thuận
                     </button>
-                  ) : (
-                    <div>
-                      <p className="chat_window_container_message_box_display_realestate_info_deal">
-                        Thỏa thuận: {currentChat.data.dealPrice} tỷ
-                      </p>
-                    </div>
-                  )}
+                  ) : null}
                 </div>
               )}
             </div>
@@ -198,9 +202,11 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                   />
 
                   <div className="deal-form-button">
-                    <button disabled={isSubmitting || !isValid} type="submit">
-                      Gửi
-                    </button>
+                    {!isSubmitting && isValid && (
+                      <button disabled={isSubmitting || !isValid} type="submit">
+                        Gửi
+                      </button>
+                    )}
                     <button
                       type="button"
                       onClick={() => {

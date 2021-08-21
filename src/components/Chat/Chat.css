@@ -400,8 +400,9 @@ option {
   justify-content: space-evenly;
 }
 .deal-form-button > button {
-  background-color: black;
+  background-color: #0c67ce;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
   color: white;
   width: 40px;
@@ -419,7 +420,17 @@ option {
   display: flex;
   flex-direction: column;
 }
+.react-datepicker {
+  font-size: 1.2rem !important;
+}
 
+.react-datepicker__current-month {
+  font-size: 1.2rem !important;
+}
+.react-datepicker__day-name,
+.react-datepicker__day {
+  margin: 0.5rem !important;
+}
 .buyer-appointment-message-upcoming > button {
   border: none;
   color: black;

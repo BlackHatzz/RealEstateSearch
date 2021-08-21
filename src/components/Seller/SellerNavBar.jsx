@@ -121,7 +121,12 @@ const SellerNavbar = (props) => {
               >
                 <MenuIcon style={{ width: 30, height: 30 }} />
               </div>
-              <div style={{backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')"}} className="logo-box" ></div>
+              <div
+                style={{
+                  backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')",
+                }}
+                className="logo-box"
+              ></div>
             </div>
           )}
         </div>
@@ -289,6 +294,7 @@ const SellerNavbar = (props) => {
                   onClick={() => {
                     resetRole();
                     fb.auth.signOut();
+                    window.localStorage.clear();
                   }}
                 >
                   <ExitToAppIcon
