@@ -25,31 +25,28 @@ import EventSeatIcon from "@material-ui/icons/EventSeat";
 import WeekendIcon from "@material-ui/icons/Weekend";
 
 class ProductDetailPage extends Component {
-constructor(props){
-  super(props);
-  this.state = {
-    isFullMode: false,
-    desHeight: "96px",
-    product: null,
-    isLoaded: false,
-    selectedAmenityTypeId: "amenityTypes-1",
-    selectedAmenityType: null,
-    amenityTypes: [
-      { id: "amenityTypes-1", title: "Trường Học", apikey: "Trường Học" },
-      { id: "amenityTypes-2", title: "Bệnh Viện", apikey: "Bệnh Viện" },
-      { id: "amenityTypes-3", title: "Siêu Thị", apikey: "Siêu Thị" },
-      { id: "amenityTypes-4", title: "Ngân Hàng", apikey: "Ngân Hàng" },
-      {
-        id: "amenityTypes-5",
-        title: "Trung Tâm Mua Sắm",
-        apikey: "Trung Tâm Mua Sắm",
-      },
-    ],
-  };
-}
-
-
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      isFullMode: false,
+      desHeight: "96px",
+      product: null,
+      isLoaded: false,
+      selectedAmenityTypeId: "amenityTypes-1",
+      selectedAmenityType: null,
+      amenityTypes: [
+        { id: "amenityTypes-1", title: "Trường Học", apikey: "Trường Học" },
+        { id: "amenityTypes-2", title: "Bệnh Viện", apikey: "Bệnh Viện" },
+        { id: "amenityTypes-3", title: "Siêu Thị", apikey: "Siêu Thị" },
+        { id: "amenityTypes-4", title: "Ngân Hàng", apikey: "Ngân Hàng" },
+        {
+          id: "amenityTypes-5",
+          title: "Trung Tâm Mua Sắm",
+          apikey: "Trung Tâm Mua Sắm",
+        },
+      ],
+    };
+  }
 
   switchToggle = () => {
     if (!this.state.isFullMode) {
@@ -77,26 +74,21 @@ constructor(props){
       method: "GET",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({}),
-    }; 
-    fetch(
-      Constants.getRealEstateDetailRef +
-      this.props.match.params?.id
-    )
+    };
+    fetch(Constants.getRealEstateDetailRef + this.props.match.params?.id)
       .then((res) => res.json())
       .then(
         (result) => {
-         
-
           this.setState({
             product: result,
             isLoaded: true,
           });
-          console.log("Lỗi",{
+          console.log("Lỗi", {
             product: result,
             isLoaded: true,
           });
         },
-        (error) => { }
+        (error) => {}
       );
 
     if (document.getElementById(this.state.selectedAmenityTypeId) != null) {
@@ -133,24 +125,32 @@ constructor(props){
 
     return (
       <React.Fragment>
-
-        <div style={{
-          display: "flex",
-          width: "100vw",
-          height: "100vh",
-          flexDirection: "column"
-        }}>
+        <div
+          style={{
+            display: "flex",
+            width: "100vw",
+            height: "100vh",
+            flexDirection: "column",
+          }}
+        >
           <div style={{ zIndex: 2 }}>
-            <BuyerNavbar />
-            <div style={{ width: "100%", borderBottom: "1px solid rgba(0,0,0,0.15)" }} />
+            {/* <BuyerNavbar /> */}
+            <div
+              style={{
+                width: "100%",
+                borderBottom: "1px solid rgba(0,0,0,0.15)",
+              }}
+            />
             <SearchSuggestion />
           </div>
           {/* product detail */}
 
-          <div style={{
-            overflowY: "auto",
-            flex: 1,
-          }}>
+          <div
+            style={{
+              overflowY: "auto",
+              flex: 1,
+            }}
+          >
             <div className="horizontal">
               <div className="product-info-dislayed-wrapper">
                 {/* left content */}
@@ -262,7 +262,9 @@ constructor(props){
                       <li className="short-info-item">
                         <FaBed className="short-info-icon" />
                         <div className="short-info-content-box">
-                          <span className="short-info-label1">Số phòng ngủ:</span>
+                          <span className="short-info-label1">
+                            Số phòng ngủ:
+                          </span>
                           <span className="short-info-label2">
                             {product?.numberOfBedroom}
                           </span>
@@ -314,7 +316,6 @@ constructor(props){
                       className="description-content"
                     >
                       {product?.description}
-                     
                     </div>
                     <div onClick={this.switchToggle}>
                       <CollapseBox id="collapse-box" />
@@ -323,7 +324,9 @@ constructor(props){
 
                   <div className="divide"></div>
 
-                  <span className="description-title">Đặc Điểm Bất Động Sản</span>
+                  <span className="description-title">
+                    Đặc Điểm Bất Động Sản
+                  </span>
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
@@ -349,7 +352,7 @@ constructor(props){
                             Hướng cửa chính:
                           </span>
                           <span className="short-info-label2">
-                            { this.state.product?.direction}
+                            {this.state.product?.direction}
                             {/*Đông Nam*/}
                           </span>
                         </div>
@@ -366,7 +369,7 @@ constructor(props){
                             Hướng ban công:
                           </span>
                           <span className="short-info-label2">
-                            { this.state.product?.balconyDirection}
+                            {this.state.product?.balconyDirection}
                             {/* {product.balconyDirection} */}
                             {/*Đông nam*/}
                           </span>
@@ -384,8 +387,7 @@ constructor(props){
                   })()}
                   <DetailBox
                     project={product?.project}
-                    investor={ this.state.product?.investor
-                    }
+                    investor={this.state.product?.investor}
                     realEstateNo={product?.realEstateNo}
                     streetName={product?.streetName}
                     wardName={product?.wardName}
@@ -414,8 +416,9 @@ constructor(props){
                           }}
                           style={{
                             width:
-                              (100 / this.state.amenityTypes.length).toString() +
-                              "%",
+                              (
+                                100 / this.state.amenityTypes.length
+                              ).toString() + "%",
                           }}
                           className="tab-item"
                         >
@@ -442,23 +445,28 @@ constructor(props){
                             );
                             return this.state.product?.facilities[
                               this.state.selectedAmenityType.apikey
-                            ] ? this.state.product?.facilities[
-                              this.state.selectedAmenityType.apikey
-                            ].map((item) => {
-                              return (
-                                <div className="info-item">
-                                  <span className="amenities-name">
-                                    {item.facilityName} - {item.addressFacility}
-                                  </span>
-                                  <div className="right-box">
-                                    <LocationOnIcon className="distance-icon" />
-                                    <span className="distance-text">
-                                      {Math.round(item.distance * 100) / 100} km
-                                    </span>
-                                  </div>
-                                </div>
-                              );
-                            }) : "";
+                            ]
+                              ? this.state.product?.facilities[
+                                  this.state.selectedAmenityType.apikey
+                                ].map((item) => {
+                                  return (
+                                    <div className="info-item">
+                                      <span className="amenities-name">
+                                        {item.facilityName} -{" "}
+                                        {item.addressFacility}
+                                      </span>
+                                      <div className="right-box">
+                                        <LocationOnIcon className="distance-icon" />
+                                        <span className="distance-text">
+                                          {Math.round(item.distance * 100) /
+                                            100}{" "}
+                                          km
+                                        </span>
+                                      </div>
+                                    </div>
+                                  );
+                                })
+                              : "";
                           }
                         }
                       })()}
@@ -492,7 +500,9 @@ constructor(props){
                               }}
                               defaultZoom={20}
                               googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&callback=initMap`}
-                              loadingElement={<div style={{ height: `100%` }} />}
+                              loadingElement={
+                                <div style={{ height: `100%` }} />
+                              }
                               containerElement={
                                 <div
                                   style={{
@@ -548,7 +558,9 @@ constructor(props){
                   </div>
 
                   <div className="more-post-button">
-                    <div className="contact-title-container">&#32;Xem hồ sơ</div>
+                    <div className="contact-title-container">
+                      &#32;Xem hồ sơ
+                    </div>
                   </div>
                 </div>
               </div>

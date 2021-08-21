@@ -288,7 +288,7 @@ const BuyerNavbar = () => {
         <div className="nav-bar-container">
           <div className="nav-bar-item">
             <div className="nav-bar-logo">
-              <Link to={role === "buyer" ? "/" : "/sell"}>
+              <Link to={role === "buyer" && "/"}>
                 <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
               </Link>
             </div>
@@ -383,48 +383,52 @@ const BuyerNavbar = () => {
                   <br></br>
                   <div className="conversation-list">
                     {conversations.length > 0 &&
-                      conversations.map((conversation) => (
-                        <div
-                          className="conversation-item"
-                          key={conversation.id}
-                          onClick={() => {
-                            console.log("conversation");
-                            console.log(conversation);
-                            addItem(conversation);
-                            addViewChat(conversation);
-                            // setCurrentChat(conversation);
-                            setChatTrigger(false);
+                      conversations
+                        .filter((e) => e)
+                        .map((conversation) =>
+                          conversation.data.lastMessage ? (
+                            <div
+                              className="conversation-item"
+                              key={conversation.id}
+                              onClick={() => {
+                                console.log("conversation");
+                                console.log(conversation);
+                                addItem(conversation);
+                                addViewChat(conversation);
+                                // setCurrentChat(conversation);
+                                setChatTrigger(false);
 
-                            fb.firestore
-                              .collection("conversations")
-                              .doc(conversation.id)
-                              .update({
-                                lastMessageRead: true,
-                              });
-                          }}
-                        >
-                          <div className="conversation-item-image">
-                            <img
-                              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="conversation-item-info">
-                            <p className="conversation-item-info-title">
-                              {conversation.data.title}
-                            </p>
-                            <p
-                              className={
-                                conversation.data.lastMessageRead === true
-                                  ? "conversation-item-info-lastmessage-seen"
-                                  : "conversation-item-info-lastmessage"
-                              }
+                                fb.firestore
+                                  .collection("conversations")
+                                  .doc(conversation.id)
+                                  .update({
+                                    lastMessageRead: true,
+                                  });
+                              }}
                             >
-                              {conversation.data.lastMessage}
-                            </p>
-                          </div>
-                        </div>
-                      ))}
+                              <div className="conversation-item-image">
+                                <img
+                                  src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+                                  alt=""
+                                />
+                              </div>
+                              <div className="conversation-item-info">
+                                <p className="conversation-item-info-title">
+                                  {conversation.data.title}
+                                </p>
+                                <p
+                                  className={
+                                    conversation.data.lastMessageRead === true
+                                      ? "conversation-item-info-lastmessage-seen"
+                                      : "conversation-item-info-lastmessage"
+                                  }
+                                >
+                                  {conversation.data.lastMessage}
+                                </p>
+                              </div>
+                            </div>
+                          ) : null
+                        )}
                   </div>
                   {conversations.length === 0 && <div>chua co tin nhan</div>}
                   <div className="conversation-bottom"></div>
@@ -438,12 +442,18 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item top-item"
                     to="/profile-page"
                   >
-                    <AccountCircleIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <AccountCircleIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
                   <Link className="link profile-menu-item" to="/schedule">
-                    <EventNoteOutlinedIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <EventNoteOutlinedIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Lịch hẹn</span>
                   </Link>
                   <div className="divide"></div>
@@ -451,7 +461,10 @@ const BuyerNavbar = () => {
                     className="link profile-menu-item"
                     to="/transaction-history-page"
                   >
-                    <HistoryIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <HistoryIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Lịch Sử Giao Dịch</span>
                   </Link>
                   <div className="divide"></div>
@@ -462,7 +475,10 @@ const BuyerNavbar = () => {
                       fb.auth.signOut();
                     }}
                   >
-                    <ExitToAppIcon className="icon" style={{ width: "25px", height: "25px" }}/>
+                    <ExitToAppIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
                     <span className="title">Đăng Xuất</span>
                   </div>
                 </div>
