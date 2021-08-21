@@ -407,10 +407,7 @@ const BuyerNavbar = () => {
                               }}
                             >
                               <div className="conversation-item-image">
-                                <img
-                                  src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
-                                  alt=""
-                                />
+                                <img src={conversation.data.realIMG} alt="" />
                               </div>
                               <div className="conversation-item-info">
                                 <p className="conversation-item-info-title">
