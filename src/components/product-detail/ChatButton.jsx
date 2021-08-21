@@ -78,6 +78,7 @@ export const ChatButton = (props) => {
                     buyerPhone: buyerPhone,
                     buyerAvatar: buyerAvatar,
                     staffId: doc.data().staffId,
+                    realIMG: props.product.images[0].imgUrl,
                     // deal: "none",
                     // dealId: "",
                     // appointment: "none",
