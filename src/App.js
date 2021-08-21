@@ -62,7 +62,7 @@ const App = () => {
   return authResolved ? (
     <div className="app">
       {/* <SellerDashboard /> */}
-      {authUser && role === "seller" && <ChatLauncher />}
+
       {authUser && role === "buyer" && <BuyerNavbar />}
 
       {/* <div className="menu-bar">
@@ -72,7 +72,7 @@ const App = () => {
       {/* <SellerDashboard /> */}
       <Switch>
         {
-        //Route path="/seller-search-post/" component={SellerDashboard} /> 
+          //Route path="/seller-search-post/" component={SellerDashboard} />
         }
 
         <Route path="/seller" component={SellerDashboard} />
