@@ -25,6 +25,7 @@ import EventSeatIcon from "@material-ui/icons/EventSeat";
 import WeekendIcon from "@material-ui/icons/Weekend";
 import WeekendOutlinedIcon from '@material-ui/icons/WeekendOutlined';
 import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 
 class ProductDetailPage extends Component {
 constructor(props){
@@ -176,6 +177,10 @@ constructor(props){
                   </span>
                   <div style={{ height: "10px", width: "100%" }}></div>
 
+                  <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
+                    Mức giá: {product?.price} tỷ
+                  </div>
+
                   <div className="product-short-detail">
                     Ngày đăng: {product?.createAt}
                     {/*Hôm nay*/}
@@ -193,15 +198,28 @@ constructor(props){
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                      <li className="short-info-item">
+                    <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt=""
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
+                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                            {product?.juridical}
+                          </span>
+                        </div>
+                      </li>
+                      {/* <li className="short-info-item">
                         <BiMoney className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Mức giá:</span>
                           <span className="short-info-label2">
-                            {product?.price} tỷ{/*2.15 tỷ*/}
+                            {product?.price} tỷ
                           </span>
                         </div>
-                      </li>
+                      </li> */}
 
                       <li className="short-info-item">
                         <BiArea className="short-info-icon" />
@@ -329,16 +347,39 @@ constructor(props){
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                      <li className="short-info-item">
-                        <FaRegBuilding className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Loại:</span>
-                          <span className="short-info-label2">
-                            {product?.typeName}
-                            {/*Chung Cư*/}
-                          </span>
-                        </div>
-                      </li>
+                    <li className="short-info-item">
+                {(() => {
+                  if(product?.typeName?.toLowerCase() === "chung cư") {
+                    return <FaRegBuilding className="short-info-icon" />;
+                  } else if(product?.typeName?.toLowerCase() === "nhà") {
+                    return <HomeOutlinedIcon className="short-info-icon" />
+                  } else if(product?.typeName?.toLowerCase() === "đất") {
+
+                  }
+                })()}
+                
+                <div className="short-info-content-box">
+                  <span className="short-info-label1">Loại:</span>
+                  <span className="short-info-label2">
+                    {product?.typeName}
+                    {/*Chung Cư*/}
+                  </span>
+                </div>
+              </li>
+
+              {product?.typeName === "Nhà" ? (
+                <li className="short-info-item">
+                  <img
+                    className="short-info-icon"
+                    alt="Hướng cửa chính"
+                    src="https://i.ibb.co/BtkH9J7/stairs.png"
+                  />
+                  <div className="short-info-content-box">
+                    <span className="short-info-label1">Số tầng:</span>
+                    <span className="short-info-label2">{product?.floor}</span>
+                  </div>
+                </li>
+              ) : null}
 
                       <li className="short-info-item">
                         <img
