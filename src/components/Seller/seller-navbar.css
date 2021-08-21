@@ -148,3 +148,27 @@
 
   padding: 0px 5px 10px 5px;
 }
+
+.logo-container {
+    width: 100%;
+    height: auto;
+    background-color: transparent;
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* padding-top: 12px; */
+    /* padding-bottom: 12px; */
+  }
+   .logo-box {
+    width: 150px;
+    height: 70px;
+    margin: 0 auto;
+    background-size: 150px 70px;
+    /* object-fit: fill; */
+    /* background-color: red; */
+    /* object-fit: cover;
+    background-repeat: no-repeat;
+    background-image: url("logo.png");
+    background-size: 100% 100%; */
+  }

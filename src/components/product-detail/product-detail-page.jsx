@@ -8,7 +8,7 @@ import { BiMoney } from "react-icons/bi";
 import {
   FaBed,
   FaBath,
-  FaBuilding,
+  FaRegBuilding,
   FaDoorOpen,
   FaToilet,
 } from "react-icons/fa";
@@ -23,6 +23,9 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { IndeterminateCheckBox } from "@material-ui/icons";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import WeekendIcon from "@material-ui/icons/Weekend";
+import WeekendOutlinedIcon from '@material-ui/icons/WeekendOutlined';
+import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 
 class ProductDetailPage extends Component {
   constructor(props) {
@@ -174,6 +177,10 @@ class ProductDetailPage extends Component {
                   </span>
                   <div style={{ height: "10px", width: "100%" }}></div>
 
+                  <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
+                    Mức giá: {product?.price} tỷ
+                  </div>
+
                   <div className="product-short-detail">
                     Ngày đăng: {product?.createAt}
                     {/*Hôm nay*/}
@@ -191,15 +198,28 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                      <li className="short-info-item">
+                    <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt=""
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
+                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                            {product?.juridical}
+                          </span>
+                        </div>
+                      </li>
+                      {/* <li className="short-info-item">
                         <BiMoney className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Mức giá:</span>
                           <span className="short-info-label2">
-                            {product?.price} tỷ{/*2.15 tỷ*/}
+                            {product?.price} tỷ
                           </span>
                         </div>
-                      </li>
+                      </li> */}
 
                       <li className="short-info-item">
                         <BiArea className="short-info-icon" />
@@ -260,7 +280,7 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
-                        <FaBed className="short-info-icon" />
+                        <HotelOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
                             Số phòng ngủ:
@@ -272,7 +292,7 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
-                        <FaToilet className="short-info-icon" />
+                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
                             Số nhà vệ sinh:
@@ -284,7 +304,7 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
-                        <WeekendIcon className="short-info-icon" />
+                        <WeekendOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Nội thất:</span>
                           <span
@@ -330,16 +350,39 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                      <li className="short-info-item">
-                        <FaBuilding className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Loại:</span>
-                          <span className="short-info-label2">
-                            {product?.typeName}
-                            {/*Chung Cư*/}
-                          </span>
-                        </div>
-                      </li>
+                    <li className="short-info-item">
+                {(() => {
+                  if(product?.typeName?.toLowerCase() === "chung cư") {
+                    return <FaRegBuilding className="short-info-icon" />;
+                  } else if(product?.typeName?.toLowerCase() === "nhà") {
+                    return <HomeOutlinedIcon className="short-info-icon" />
+                  } else if(product?.typeName?.toLowerCase() === "đất") {
+
+                  }
+                })()}
+                
+                <div className="short-info-content-box">
+                  <span className="short-info-label1">Loại:</span>
+                  <span className="short-info-label2">
+                    {product?.typeName}
+                    {/*Chung Cư*/}
+                  </span>
+                </div>
+              </li>
+
+              {product?.typeName === "Nhà" ? (
+                <li className="short-info-item">
+                  <img
+                    className="short-info-icon"
+                    alt="Hướng cửa chính"
+                    src="https://i.ibb.co/BtkH9J7/stairs.png"
+                  />
+                  <div className="short-info-content-box">
+                    <span className="short-info-label1">Số tầng:</span>
+                    <span className="short-info-label2">{product?.floor}</span>
+                  </div>
+                </li>
+              ) : null}
 
                       <li className="short-info-item">
                         <img
@@ -381,10 +424,6 @@ class ProductDetailPage extends Component {
                   <div className="divide"></div>
 
                   <span className="description-title">Thông Tin Dự Án</span>
-                  {(() => {
-                    console.log("shiet");
-                    console.log(product);
-                  })()}
                   <DetailBox
                     project={product?.project}
                     investor={this.state.product?.investor}
@@ -439,10 +478,6 @@ class ProductDetailPage extends Component {
                       {(() => {
                         if (this.state.product != null) {
                           if (this.state.product?.facilities != null) {
-                            console.log("yeeet");
-                            console.log(
-                              this.state.product?.facilities["Bệnh Viện"]
-                            );
                             return this.state.product?.facilities[
                               this.state.selectedAmenityType.apikey
                             ]

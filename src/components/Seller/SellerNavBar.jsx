@@ -11,7 +11,6 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import Badge from "@material-ui/core/Badge";
 import "../global/shared.css";
 import HistoryIcon from "@material-ui/icons/History";
-import "../global/shared.css";
 import { Link, useHistory } from "react-router-dom";
 import MessageIcon from "@material-ui/icons/Message";
 
@@ -122,7 +121,7 @@ const SellerNavbar = (props) => {
               >
                 <MenuIcon style={{ width: 30, height: 30 }} />
               </div>
-              <img src="logo.png" className="logo-box" />
+              <div style={{backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')"}} className="logo-box" ></div>
             </div>
           )}
         </div>
