@@ -6,7 +6,7 @@ import moment from "moment";
 import { fb } from "../../services";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase";
-
+import "react-datepicker/dist/react-datepicker.css";
 function Appointment({ setTrigger, conversation }) {
   const username = fb.auth.currentUser.displayName;
   const uuid = fb.auth.currentUser.uid;
@@ -345,30 +345,15 @@ function Appointment({ setTrigger, conversation }) {
             setMyRef(r);
           }}
         >
-          <button onClick={closeCalendar}>Đồng ý</button>
+          {startTime !== "" && <button onClick={closeCalendar}>Đồng ý</button>}
         </DatePicker>
-        {/* {!!startDate && (
-          <select
-            required={true}
-            value={startTime}
-            onChange={(e) => {
-              setStartTime(e.target.value);
-            }}
-          >
-            <option value="" disabled selected>
-              Chọn khung giờ
-            </option>
-            {!!schedule &&
-              schedule[startDate.getDay()].map((e) => (
-                <option value={e}>{e}</option>
-              ))}
-          </select>
-        )} */}
 
         <div className="deal-form-button">
-          <button type="submit" disabled={startTime === "" ? true : false}>
-            Đặt
-          </button>
+          {startTime !== "" && (
+            <button type="submit" disabled={startTime === "" ? true : false}>
+              Đặt
+            </button>
+          )}
           <button
             type="button"
             onClick={() => {
