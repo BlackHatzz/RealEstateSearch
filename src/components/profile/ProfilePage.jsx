@@ -11,7 +11,6 @@ import MailIcon from "@material-ui/icons/Mail";
 import TransactionItem from "./TransactionItem";
 import Constants from "../global/Constants";
 
-
 class ProfilePage extends Component {
   state = {
     tabs: ["Hồ Sơ", "Giao Dịch"],
@@ -64,7 +63,11 @@ class ProfilePage extends Component {
               </div>
               <span className="title">ID</span>
               <div className="read-only-solid-field-container">
-                <input value="fSUJL0Vjoraru92zOuLbp0Rcff32" type="text" className="solid-field" />
+                <input
+                  value="fSUJL0Vjoraru92zOuLbp0Rcff32"
+                  type="text"
+                  className="solid-field"
+                />
               </div>
             </div>
 
@@ -161,14 +164,13 @@ class ProfilePage extends Component {
     return (
       <React.Fragment>
         <div>
-          <BuyerNavbar />
           <div className="profile-wrapper">
             <div style={{ height: "10px" }}></div>
 
             <div className="profile-container">
               <div style={{ height: "15px" }}></div>
               <div className="profile-pic-container">
-                  {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
+                {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
               </div>
               <div style={{ height: "15px" }}></div>
 
