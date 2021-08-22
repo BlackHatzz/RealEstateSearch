@@ -144,7 +144,6 @@ class HomePage extends Component {
     //   displayName: 'David',
     //   photoURL: 'https://i.ibb.co/NjFGvWn/David-Beckham.jpg',
     // };
-
     // fb.auth.currentUser.updateProfile(update);
     // console.log(fb.auth.currentUser.uid);
     // const { searchText } = this.state;
@@ -382,7 +381,7 @@ class HomePage extends Component {
   render() {
     return (
       <React.Fragment>
-        <BuyerNavbar />
+        {/* <BuyerNavbar /> */}
         <div className="home-show">
           <div className="black-glass">
             <div style={{ height: "120px" }}></div>

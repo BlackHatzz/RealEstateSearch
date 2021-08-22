@@ -16,7 +16,7 @@ import { fb } from "../../services/firebase";
 import Constants from "../global/Constants";
 import ManagePost from "./ManagePost";
 import SearchPost from "./SearchPost";
-import { useHistory, Redirect } from "react-router-dom";
+import { useHistory, useLocation, Redirect } from "react-router-dom";
 import UpdatePost from "./UpdatePost";
 import {
   BrowserRouter as Router,
@@ -28,13 +28,16 @@ import {
 } from "react-router-dom";
 import { SellerScheduler } from "./SellerScheduler";
 import Schedule from "../Schedule/Schedule";
+import { CropDinSharp } from "@material-ui/icons";
 
 const SellerDashboard = () => {
+  let history = useHistory();
+  let location = useLocation();
   var [selectedItem, setSelectedItem] = useState(1);
   var [isShowMenu, setShowMenu] = useState(false);
   const otherRoutes = [
     {
-      path: "/manage-post",
+      path: "/seller/manage-post",
       child: (
         <div className="content-container">
           <ManagePost />
@@ -42,7 +45,7 @@ const SellerDashboard = () => {
       ),
     },
     {
-      path: "/seller-update-post/:id",
+      path: "/seller/seller-update-post/:id",
       child: (
         <div className="content-container">
           <UpdatePost />
@@ -60,7 +63,7 @@ const SellerDashboard = () => {
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/seller-search-post",
+      path: "/seller/search-post",
       child: <SearchPost />,
       //   path: "/manage-post",
       //   child: <div className="content-container"><ManagePost /></div>,
@@ -74,7 +77,7 @@ const SellerDashboard = () => {
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/transaction-history",
+      path: "/seller/transaction-history",
       child: <p>historyewew</p>,
     },
     {
@@ -86,7 +89,7 @@ const SellerDashboard = () => {
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/seller-scheduler",
+      path: "/seller/seller-scheduler",
       child: <SellerScheduler />,
     },
     {
@@ -118,7 +121,14 @@ const SellerDashboard = () => {
   useEffect(() => {
     handleStyleForSelectedItem();
   }, []);
-  //   useHistory().push("/search-post");
+  useEffect(() => {
+      console.log(window.location);
+      // if(window.location.pathname === "/seller") {
+      //   history.push("/seller/search-post");
+      //   window.location.reload();
+      // }
+  }, []);
+    // useHistory().push("/search-post");
   const handleSelectTab = (key) => {
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");
@@ -171,7 +181,8 @@ const SellerDashboard = () => {
             }
           >
             <div className="logo-container">
-              <img src="logo.png" className="logo-box" />
+              {/* <img src="logo.png" className="logo-box" /> */}
+              <div style={{backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')"}} className="logo-box" ></div>
               <div
                 style={{ width: 30, height: 30, marginRight: 10 }}
                 onClick={() => {
@@ -247,14 +258,15 @@ const SellerDashboard = () => {
             </Switch> */}
 
             <Switch>
-              {items.map((item) => (
-                <Route
+              {items.map((item, index) => {
+                console.log('bull');
+                console.log(index);
+                return <Route
                   key={item.key}
                   path={item.path}
                   children={() => item.child}
-                />
-              ))}
-
+                />;
+              })}
               {otherRoutes.map((route) => (
                 <Route
                   key={route.path}
@@ -262,7 +274,10 @@ const SellerDashboard = () => {
                   children={() => route.child}
                 />
               ))}
+              <Redirect to="/seller/search-post" />
+              
             </Switch>
+
             {/* </div> */}
           </div>
         </Router>

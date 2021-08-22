@@ -232,7 +232,7 @@ class SearchResultPage extends Component {
             flexDirection: "column",
           }}
         >
-          <BuyerNavbar />
+          {/* <BuyerNavbar /> */}
           <div
             style={{
               width: "100%",

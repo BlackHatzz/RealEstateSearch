@@ -880,7 +880,7 @@ class ManagePost extends Component {
   render() {
     return (
       <React.Fragment>
-        <div className="tab-title">Thông tin bài viết</div>
+        <div className="tab-title">Thông Tin Bất Động Sản</div>
         {/* kfqne;kf;qwej;gf
                 j;qewhjr;ogne;qorng;oq3bnro;g
                 ;kfqne;kf;qw
@@ -1353,7 +1353,7 @@ class ManagePost extends Component {
         <div style={{ height: "20px" }}></div>
         <div className="row session-row">
           <div className="manage-post-tag">
-            <span>Thông tin bất động sản</span>
+            <span>Thông tin chi tiết</span>
           </div>
           <div className="manage-post-right-arrow"></div>
         </div>
