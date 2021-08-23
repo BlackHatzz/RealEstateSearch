@@ -34,13 +34,13 @@ function Appointment({ setTrigger, conversation }) {
   ];
   const defaultWeekday = [0, 1, 2, 3, 4, 5, 6];
   const periods = [
-    "08:00",
-    "10:00",
-    "12:00",
-    "14:00",
-    "16:00",
-    "18:00",
-    "20:00",
+    "08:00 - 10:00",
+    "10:00 - 12:00",
+    "12:00 - 14:00",
+    "14:00 - 16:00",
+    "16:00 - 18:00",
+    "18:00 - 20:00",
+    "20:00 - 22:00",
   ];
   const [dateformat, setDateformat] = useState("dd/MM/yyyy hh:mm aa");
   useEffect(() => {
@@ -92,6 +92,7 @@ function Appointment({ setTrigger, conversation }) {
           scheduleTable.push(fri);
           scheduleTable.push(sat);
           setSchedule(scheduleTable);
+          console.log(schedule);
         });
       return () => {
         // cleanup
@@ -216,7 +217,7 @@ function Appointment({ setTrigger, conversation }) {
             { merge: true }
           );
 
-        setTrigger((value) => !value);
+        // setTrigger((value) => !value);
       })
       .then(() => {
         // fetch("https://api-realestate.top/apis/v1/appointments/create", {
@@ -244,9 +245,9 @@ function Appointment({ setTrigger, conversation }) {
       {!!startDate &&
         !!schedule &&
         schedule[startDate.getDay()].map((time) => (
-          <div>
+          <div className="time-select-item">
             <input
-              value={time}
+              value={time.slice(0, 5)}
               name="time"
               type="radio"
               onChange={(e) => {
@@ -254,7 +255,7 @@ function Appointment({ setTrigger, conversation }) {
                 setStartTime(e.target.value);
                 setDateformat("dd/MM/yyyy hh:mm aa");
               }}
-              checked={startTime === time}
+              checked={startTime === time.slice(0, 5)}
             />
             {time}
           </div>

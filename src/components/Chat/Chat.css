@@ -475,9 +475,12 @@ option {
   left: 24%;
 }
 .time-form {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }
-
+.time-select-item {
+  width: 100px;
+}
 .deal-button {
   height: 30px;
   background-color: #fcba03;
@@ -491,7 +494,9 @@ option {
   background-color: gray;
   cursor: not-allowed;
 }
-
+.react-datepicker-popper {
+  z-index: 160;
+}
 .real-item,
 .real-item-selected {
   padding: 5px;
@@ -499,6 +504,10 @@ option {
   margin: 5px 8px 5px 8px;
   border-radius: 5px;
   cursor: pointer;
+}
+.MuiPopover-paper {
+  display: block;
+  overflow: visible !important;
 }
 .real-item-selected {
   background-color: #c0c0c0;
@@ -691,6 +700,7 @@ p {
   box-shadow: 0 0 10px #ccc;
   padding-right: 1px;
   padding-bottom: 5px;
+  z-index: 100;
 }
 .small-chat-window-1 {
   display: flex;
@@ -708,6 +718,7 @@ p {
   box-shadow: 0 0 10px #ccc;
   padding-right: 1px;
   padding-bottom: 5px;
+  z-index: 100;
 }
 .small-chat-window-buttons-close {
   cursor: pointer;
