@@ -50,8 +50,8 @@ class ProductItem extends Component {
             </div>
 
             <div className="product-other-info">
+              <div className="product-owner"></div>
               <div className="product-uptime">Ngày đăng: {moment(this.props.item.createAt).calendar()}</div>
-              <div className="product-owner">Người đăng: {this.props.item.sellerName}</div>
               {/* <div className="product-phone-contact horizontal">
                 <BsFillChatDotsFill />
                 <div style={{ width: "12px" }}></div>
