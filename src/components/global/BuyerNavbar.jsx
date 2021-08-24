@@ -302,7 +302,7 @@ const BuyerNavbar = () => {
           <div className="nav-bar-item">
             <div className="nav-bar-item-info">
               <div className="nav-bar-item" onClick={switchChat}>
-                <Badge color="secondary" badgeContent={unseen}>
+                <Badge color="secondary" badgeContent={0}>
                   <MessageIcon style={{ width: "30px", height: "30px" }} />
                 </Badge>
               </div>
