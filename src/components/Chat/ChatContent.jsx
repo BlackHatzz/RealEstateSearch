@@ -12,8 +12,8 @@ import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import { v4 as uuidv4 } from "uuid";
 import Popover from "@material-ui/core/Popover";
-import Popper from "@material-ui/core/Popper";
-export const ChatContent = ({ currentChat, forceUpdate }) => {
+
+export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
   const [dealId, setDealId] = useState();
@@ -142,10 +142,9 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               </div>
               {role === "buyer" && (
                 <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                  {currentChat.data.deal === "accepted" ||
-                  currentChat.data.deal === "pending" ? (
+                  {dealStatus ? (
                     <p className="chat_window_container_message_box_display_realestate_info_deal">
-                      Thỏa thuận: {currentChat.data.dealPrice} tỷ{" "}
+                      Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
                       {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
                     </p>
                   ) : (
