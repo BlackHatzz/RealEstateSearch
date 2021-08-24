@@ -41,11 +41,10 @@ class ProductItem extends Component {
             </div>
 
             {/* address */}
-            <span className="product-address">Đường {this.props.item.streetName}, Phường {this.props.item.wardName}, Quận {this.props.item.disName}</span>
+            <span className="product-address">{this.props.item.realEstateNo} {this.props.item.streetName}, {this.props.item.wardName}, {this.props.item.disName}</span>
 
             {/* description */}
             <div className="product-description">
-
               {maxString(this.props.item.description, 150, "(xem thêm)")}
             </div>
 
