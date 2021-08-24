@@ -15,6 +15,7 @@ const Map = ({defaultZoom = 8, defaultCenter, markerPosition}) => {
             //   }}
             //   position={{ lat: 21.027763, lng: 105.834160 }}
             position={{ lat: markerPosition.lat, lng: markerPosition.lng }}
+            // defaultDraggable
           />
       </GoogleMap>
     </div>

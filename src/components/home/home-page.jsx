@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import BuyerNavbar from "../global/BuyerNavbar";
 import Constants from "../global/Constants";
 import { fb } from "../../services";
+import Popup from "reactjs-popup";
+import TransactionConfirmForm from "../global/TransactionConfirmForm";
 
 class HomePage extends Component {
   state = {
@@ -144,6 +146,7 @@ class HomePage extends Component {
     //   displayName: 'David',
     //   photoURL: 'https://i.ibb.co/NjFGvWn/David-Beckham.jpg',
     // };
+
     // fb.auth.currentUser.updateProfile(update);
     // console.log(fb.auth.currentUser.uid);
     // const { searchText } = this.state;
@@ -183,6 +186,33 @@ class HomePage extends Component {
     //       //   isLoaded: true,
     //       //   error,
     //       // });
+    //     }
+    //   );
+    
+
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     page: 0,
+    //     search: "",
+    //     disName: null,
+    //     minPrice: 0,
+    //     maxPrice: 9999,
+    //     minArea: 0,
+    //     maxArea: 9999,
+    //     type: null
+    //   }),
+    // };
+
+    // fetch(Constants.getRealEstateRef, requestOptions)
+    //   .then((res) => res.json())
+    //   .then(
+    //     (result) => {
+    //       console.log("search result eeee");
+    //       console.log(result);
+    //     },
+    //     (error) => {
     //     }
     //   );
   }
@@ -284,8 +314,8 @@ class HomePage extends Component {
 
   renderSearchConditionaLink = () => {
     // console.log(this.state.searchText.length)
-    console.log("shshshsh");
-    console.log(this.state.area);
+    // console.log("shshshsh");
+    // console.log(this.state.area);
     if (this.state.searchText.length >= 3) {
       return (
         <button className="home-search-button">
@@ -293,7 +323,7 @@ class HomePage extends Component {
             className="link"
             to={{
               pathname:
-                "/search-result-page/" +
+                "/search-result-page/st=" +
                 this.state.searchText +
                 "/" +
                 this.state.type.selectedKey +
@@ -343,9 +373,10 @@ class HomePage extends Component {
   // hit enter
   handleSubmitForm = (e) => {
     e.preventDefault();
-    if (this.state.searchText.length >= 3) {
+    console.log(this.state.searchText);
+    if (this.state.searchText?.length >= 0) {
       this.props.history.push(
-        "/search-result-page/" +
+        "/search-result-page/st=" +
           this.state.searchText +
           "/" +
           this.state.type.selectedKey +
@@ -364,7 +395,7 @@ class HomePage extends Component {
   handlePush = () => {
     if (this.state.searchText.length >= 3) {
       this.props.history.push(
-        "/search-result-page/" +
+        "/search-result-page/st=" +
           this.state.searchText +
           "/" +
           this.state.type.selectedKey +
@@ -448,6 +479,46 @@ class HomePage extends Component {
             </div>
           </div>
         </div>
+        <Popup
+          ref={React.createRef()}
+          overlayStyle={{
+            backgroundColor: "rgba(10, 10, 10, 0.6)",
+          }}
+          onClick={(event) => {
+            console.log(event);
+          }}
+          onClose={false}
+          modal
+          onOpen={(event) => {
+            console.log("on open");
+            console.log(event);
+          }}
+          trigger={
+            <div>eqweqweqweqwewqew</div>
+          }
+        >
+          {(close) => (
+            // <div
+            //   style={{
+            //     width: "100vw",
+            //     height: "100vh",
+            //     display: "flex",
+            //     alignItems: "center",
+            //     justifyContent: "center",
+            //     backgroundColor: "rgba(10, 10, 10, 0.4)",
+            //   }}
+            // >
+            // <div className="success-popup-container">
+            //   {this.renderContent(close)}
+            // </div>
+            // </div>
+            // <SuccessPopup
+            //   close={close}
+            //   title="Chúc Mừng! Bạn đã tạo bài viết thành công!"
+            // />
+            <TransactionConfirmForm close={close} />
+          )}
+        </Popup>
       </React.Fragment>
     );
   }

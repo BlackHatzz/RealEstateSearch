@@ -10,11 +10,23 @@ class SearchResultPage extends Component {
   state = {
     items: [],
     isLoaded: false,
+    searchText: null,
   };
 
   componentDidMount() {
     //this.props.match.params.searchtext
-
+    this.state.searchText =
+      this.props.match.params.searchtext === undefined ||
+      this.props.match.params.searchtext === null
+        ? ""
+        : this.props.match.params.searchtext;
+    this.setState({
+      searchText:
+        this.props.match.params.searchtext === undefined ||
+        this.props.match.params.searchtext === null
+          ? ""
+          : this.props.match.params.searchtext,
+    });
     var fromPrice = 0.0; // million vnd
     var toPrice = 0.0;
     var fromArea = null; // million / m2
@@ -86,9 +98,13 @@ class SearchResultPage extends Component {
         break;
     }
 
-    console.log(this.props.match.params.area);
-    console.log(fromArea);
-    console.log(toArea);
+    // console.log(this.props.match.params.area);
+    // console.log(fromArea);
+    // console.log(toArea);
+    console.log("dumpppppp");
+    console.log(this.props.match.params);
+    // console.log(fromArea);
+    // console.log(toArea);
 
     switch (this.props.match.params.price) {
       case "0":
@@ -137,7 +153,7 @@ class SearchResultPage extends Component {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         page: 0,
-        search: this.props.match.params.searchtext,
+        search: this.state.searchText,
         disName: null,
         minPrice: fromPrice,
         maxPrice: toPrice,
@@ -175,7 +191,7 @@ class SearchResultPage extends Component {
 
     let element = document.getElementById("search-bar");
     if (element != null) {
-      element.value = this.props.match.params.searchtext;
+      element.value = this.state.searchText;
     }
   }
 

@@ -11,6 +11,7 @@ import {
   FaRegBuilding,
   FaDoorOpen,
   FaToilet,
+  FaThemeisle,
 } from "react-icons/fa";
 import { AiOutlineColumnHeight, AiOutlineColumnWidth } from "react-icons/ai";
 import { GrDirections } from "react-icons/gr";
@@ -31,6 +32,7 @@ class ProductDetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      averagePriceInfo: null,
       isFullMode: false,
       desHeight: "96px",
       product: null,
@@ -44,8 +46,8 @@ class ProductDetailPage extends Component {
         { id: "amenityTypes-4", title: "Ngân Hàng", apikey: "Ngân Hàng" },
         {
           id: "amenityTypes-5",
-          title: "Trung Tâm Mua Sắm",
-          apikey: "Trung Tâm Mua Sắm",
+          title: "Bưu Điện",
+          apikey: "Bưu Điện",
         },
       ],
     };
@@ -86,10 +88,23 @@ class ProductDetailPage extends Component {
             product: result,
             isLoaded: true,
           });
-          console.log("Lỗi", {
-            product: result,
-            isLoaded: true,
-          });
+          // console.log("Lỗi", {
+          //   product: result,
+          //   isLoaded: true,
+          // });
+        },
+        (error) => {}
+      );
+
+      fetch(Constants.getAveragePrice("ward", 3, 6, "nhà", "2021"))
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("get average price");
+          console.log(result);
+          this.setState({
+            averagePriceInfo: result
+          })
         },
         (error) => {}
       );
@@ -144,7 +159,7 @@ class ProductDetailPage extends Component {
                 borderBottom: "1px solid rgba(0,0,0,0.15)",
               }}
             />
-            <SearchSuggestion />
+            <SearchSuggestion history={this.props.history} />
           </div>
           {/* product detail */}
 
@@ -177,9 +192,9 @@ class ProductDetailPage extends Component {
                   </span>
                   <div style={{ height: "10px", width: "100%" }}></div>
 
-                  <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
+                  {/* <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
                     Mức giá: {product?.price} tỷ
-                  </div>
+                  </div> */}
 
                   <div className="product-short-detail">
                     Ngày đăng: {product?.createAt}
@@ -191,6 +206,13 @@ class ProductDetailPage extends Component {
                     {/*Hôm nay*/}
                   </div>
                   <div className="product-short-detail">
+                    Giá trung bình khu vực: {(() => {
+                      if(this.state.averagePriceInfo?.length > 0) {
+                        return this.state.averagePriceInfo[0].price;
+                      }
+                    })()}
+                  </div>
+                  <div className="product-short-detail">
                     {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
                   </div>
 
@@ -198,7 +220,7 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                    <li className="short-info-item">
+                    {/* <li className="short-info-item">
                         <img
                           className="short-info-icon"
                           alt=""
@@ -210,8 +232,8 @@ class ProductDetailPage extends Component {
                             {product?.juridical}
                           </span>
                         </div>
-                      </li>
-                      {/* <li className="short-info-item">
+                      </li> */}
+                      <li className="short-info-item">
                         <BiMoney className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Mức giá:</span>
@@ -219,7 +241,7 @@ class ProductDetailPage extends Component {
                             {product?.price} tỷ
                           </span>
                         </div>
-                      </li> */}
+                      </li>
 
                       <li className="short-info-item">
                         <BiArea className="short-info-icon" />
@@ -304,6 +326,19 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt=""
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
+                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                            {product?.juridical}
+                          </span>
+                        </div>
+                      </li>
+                      {/* <li className="short-info-item">
                         <WeekendOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Nội thất:</span>
@@ -319,10 +354,9 @@ class ProductDetailPage extends Component {
                               }
                               return null;
                             })()}
-                            {/* {this.state.product != null && this.state.product?.furniture != null ? this.state.product : null} */}
                           </span>
                         </div>
-                      </li>
+                      </li> */}
                     </ul>
                   </div>
 
