@@ -24,9 +24,9 @@ import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { IndeterminateCheckBox } from "@material-ui/icons";
 import EventSeatIcon from "@material-ui/icons/EventSeat";
 import WeekendIcon from "@material-ui/icons/Weekend";
-import WeekendOutlinedIcon from '@material-ui/icons/WeekendOutlined';
-import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import WeekendOutlinedIcon from "@material-ui/icons/WeekendOutlined";
+import HotelOutlinedIcon from "@material-ui/icons/HotelOutlined";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 
 class ProductDetailPage extends Component {
   constructor(props) {
@@ -50,6 +50,8 @@ class ProductDetailPage extends Component {
           apikey: "Bưu Điện",
         },
       ],
+      averageDistrictPriceInfo: null,
+      averageWardPriceInfo: null,
     };
   }
 
@@ -84,6 +86,8 @@ class ProductDetailPage extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
+          console.log("real detail");
+          console.log(result);
           this.setState({
             product: result,
             isLoaded: true,
@@ -92,22 +96,51 @@ class ProductDetailPage extends Component {
           //   product: result,
           //   isLoaded: true,
           // });
+          fetch(
+            Constants.getAveragePrice(
+              "ward",
+              result?.wardId,
+              6,
+              result?.typeName.toLowerCase(),
+              "2021"
+            )
+          )
+            .then((res) => res.json())
+            .then(
+              (result) => {
+                console.log("get average price ward");
+                console.log(result);
+                this.setState({
+                  averageWardPriceInfo: result,
+                });
+              },
+              (error) => {}
+            );
+          fetch(
+            Constants.getAveragePrice(
+              "district",
+              result?.disId,
+              6,
+              result?.typeName.toLowerCase(),
+              "2021"
+            )
+          )
+            .then((res) => res.json())
+            .then(
+              (result) => {
+                console.log("get average price district");
+                console.log(result);
+                this.setState({
+                  averageDistrictPriceInfo: result,
+                });
+              },
+              (error) => {}
+            );
         },
         (error) => {}
       );
 
-      fetch(Constants.getAveragePrice("ward", 3, 6, "nhà", "2021"))
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          console.log("get average price");
-          console.log(result);
-          this.setState({
-            averagePriceInfo: result
-          })
-        },
-        (error) => {}
-      );
+    // getAveragePrice(addressType,realEstateId,month,realEstateType,year)
 
     if (document.getElementById(this.state.selectedAmenityTypeId) != null) {
       document.getElementById(
@@ -206,13 +239,6 @@ class ProductDetailPage extends Component {
                     {/*Hôm nay*/}
                   </div>
                   <div className="product-short-detail">
-                    Giá trung bình khu vực: {(() => {
-                      if(this.state.averagePriceInfo?.length > 0) {
-                        return this.state.averagePriceInfo.price
-                      }
-                    })()}
-                  </div>
-                  <div className="product-short-detail">
                     {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
                   </div>
 
@@ -220,7 +246,7 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                    {/* <li className="short-info-item">
+                      {/* <li className="short-info-item">
                         <img
                           className="short-info-icon"
                           alt=""
@@ -314,7 +340,11 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
-                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
+                        <img
+                          className="short-info-icon"
+                          alt="Số phòng vệ sinh"
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png"
+                        />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
                             Số nhà vệ sinh:
@@ -332,8 +362,13 @@ class ProductDetailPage extends Component {
                           src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
                         />
                         <div className="short-info-content-box">
-                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
-                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                          <span className="short-info-label1">
+                            Giấy tờ pháp lý:
+                          </span>
+                          <span
+                            style={{ fontSize: "14px" }}
+                            className="short-info-label2"
+                          >
                             {product?.juridical}
                           </span>
                         </div>
@@ -384,39 +419,48 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                    <li className="short-info-item">
-                {(() => {
-                  if(product?.typeName?.toLowerCase() === "chung cư") {
-                    return <FaRegBuilding className="short-info-icon" />;
-                  } else if(product?.typeName?.toLowerCase() === "nhà") {
-                    return <HomeOutlinedIcon className="short-info-icon" />
-                  } else if(product?.typeName?.toLowerCase() === "đất") {
+                      <li className="short-info-item">
+                        {(() => {
+                          if (product?.typeName?.toLowerCase() === "chung cư") {
+                            return (
+                              <FaRegBuilding className="short-info-icon" />
+                            );
+                          } else if (
+                            product?.typeName?.toLowerCase() === "nhà"
+                          ) {
+                            return (
+                              <HomeOutlinedIcon className="short-info-icon" />
+                            );
+                          } else if (
+                            product?.typeName?.toLowerCase() === "đất"
+                          ) {
+                          }
+                        })()}
 
-                  }
-                })()}
-                
-                <div className="short-info-content-box">
-                  <span className="short-info-label1">Loại:</span>
-                  <span className="short-info-label2">
-                    {product?.typeName}
-                    {/*Chung Cư*/}
-                  </span>
-                </div>
-              </li>
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Loại:</span>
+                          <span className="short-info-label2">
+                            {product?.typeName}
+                            {/*Chung Cư*/}
+                          </span>
+                        </div>
+                      </li>
 
-              {product?.typeName === "Nhà" ? (
-                <li className="short-info-item">
-                  <img
-                    className="short-info-icon"
-                    alt="Hướng cửa chính"
-                    src="https://i.ibb.co/BtkH9J7/stairs.png"
-                  />
-                  <div className="short-info-content-box">
-                    <span className="short-info-label1">Số tầng:</span>
-                    <span className="short-info-label2">{product?.floor}</span>
-                  </div>
-                </li>
-              ) : null}
+                      {product?.typeName === "Nhà" ? (
+                        <li className="short-info-item">
+                          <img
+                            className="short-info-icon"
+                            alt="Hướng cửa chính"
+                            src="https://i.ibb.co/BtkH9J7/stairs.png"
+                          />
+                          <div className="short-info-content-box">
+                            <span className="short-info-label1">Số tầng:</span>
+                            <span className="short-info-label2">
+                              {product?.floor}
+                            </span>
+                          </div>
+                        </li>
+                      ) : null}
 
                       <li className="short-info-item">
                         <img
@@ -471,6 +515,56 @@ class ProductDetailPage extends Component {
                         : this.state.product?.facilities
                     }
                   />
+
+                  <div className="divide"></div>
+
+                  <span className="description-title">
+                    Giá trung bình khu vực
+                  </span>
+                  <div className="average-price-wrapper">
+                    <div className="average-price-tab">
+                      <span className="info">
+                        {this.state.product?.disName}
+                      </span>
+                      <span className="sub-info">
+                        {"~"}
+                        {(() => {
+                          if (this.state.averageDistrictPriceInfo?.length > 0) {
+                            return (
+                              
+                              Math.round(
+                                (this.state.averageDistrictPriceInfo[0].price /
+                                  1_000_000) *
+                                  100
+                              ) / 100
+                            );
+                          }
+                        })()}{" "}
+                        triệu/{Constants.squareMeter}
+                      </span>
+                    </div>
+                    <div className="average-price-tab">
+                      <span className="info">
+                        {this.state.product?.wardName}
+                      </span>
+                      <span className="sub-info">
+                      {"~"}
+                        {(() => {
+                          if (this.state.averageWardPriceInfo?.length > 0) {
+                            return (
+                              
+                              Math.round(
+                                (this.state.averageWardPriceInfo[0].price /
+                                  1_000_000) *
+                                  100
+                              ) / 100
+                            );
+                          }
+                        })()}{" "}
+                        triệu/{Constants.squareMeter}
+                      </span>
+                    </div>
+                  </div>
 
                   <div className="divide"></div>
 
