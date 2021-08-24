@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useReducer } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 import { MessageContainer } from "./MessageContainer";
@@ -12,29 +12,31 @@ import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import { v4 as uuidv4 } from "uuid";
 import Popover from "@material-ui/core/Popover";
-
+import Popper from "@material-ui/core/Popper";
 export const ChatContent = ({ currentChat, forceUpdate }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
-  const [dealtrigger, setDealtrigger] = useState(false);
-  const [booktrigger, setBooktrigger] = useState(false);
+  // const [dealtrigger, setDealtrigger] = useState(false);
+  const [booktrigger, setBooktrigger] = useState(null);
   const [currentInput, setCurrentInput] = useState("");
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [dealinfoTrigger, setDealinfoTrigger] = useState(
+    currentChat.data.deal === "accepted" || currentChat.data.deal === "pending"
+      ? false
+      : true
+  );
   const username = fb.auth.currentUser?.displayName;
   const uuid = fb.auth.currentUser?.uid;
   const dealPopup = Boolean(anchorEl);
+  const bookPopup = Boolean(booktrigger);
   const handleDeal = (event) => {
     setDealId(uuidv4());
-    setBooktrigger(false);
-    setDealtrigger((value) => !value);
     setAnchorEl(event.currentTarget);
   };
-  const handleBook = () => {
-    setDealtrigger(false);
-    setBooktrigger((value) => !value);
+  const handleBook = (event) => {
+    setBooktrigger(event.currentTarget);
   };
 
   function submitDeal({ deal }, { setSubmitting }) {
@@ -66,7 +68,6 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
         fb.firestore.collection("conversations").doc(currentChat.id).update({
           lastMessage: "thỏa thuận",
         });
-        setDealtrigger((value) => !value);
       })
       .finally(() => {
         setSubmitting(false);
@@ -99,6 +100,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
       lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
     });
   }
+
   return (
     <>
       <div className="small-chat-window-title-box">
@@ -140,17 +142,13 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               </div>
               {role === "buyer" && (
                 <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                  {currentChat.data.deal === "accepted" && (
-                    <div>
-                      <p className="chat_window_container_message_box_display_realestate_info_deal">
-                        Thỏa thuận: {currentChat.data.dealPrice} tỷ
-                      </p>
-                    </div>
-                  )}
-                  {currentChat.data.deal === "refused" ||
-                  currentChat.data.deal === "none" ||
-                  currentChat.data.deal === "cancel" ||
-                  currentChat.data.deal === undefined ? (
+                  {currentChat.data.deal === "accepted" ||
+                  currentChat.data.deal === "pending" ? (
+                    <p className="chat_window_container_message_box_display_realestate_info_deal">
+                      Thỏa thuận: {currentChat.data.dealPrice} tỷ{" "}
+                      {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
+                    </p>
+                  ) : (
                     <button
                       className="chat-window-deal-button"
                       onClick={handleDeal}
@@ -158,7 +156,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                     >
                       Thỏa thuận
                     </button>
-                  ) : null}
+                  )}
                 </div>
               )}
             </div>
@@ -210,7 +208,6 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
                     <button
                       type="button"
                       onClick={() => {
-                        setDealtrigger((value) => !value);
                         setAnchorEl(null);
                       }}
                     >
@@ -222,9 +219,31 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
             </Formik>
           </div>
         </Popover>
-        {booktrigger && (
+
+        <Popover
+          id={bookPopup ? "simple-popover" : undefined}
+          anchorEl={booktrigger}
+          open={bookPopup}
+          onClose={() => {
+            setBooktrigger(null);
+          }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+        >
+          <Appointment
+            trigger={booktrigger}
+            setTrigger={setBooktrigger}
+            conversation={currentChat}
+          />
+        </Popover>
+        {/* {booktrigger && (
           <div className="chat_window_container_message_box_popup">
-            {}
             {booktrigger && (
               <Appointment
                 trigger={booktrigger}
@@ -233,7 +252,7 @@ export const ChatContent = ({ currentChat, forceUpdate }) => {
               />
             )}
           </div>
-        )}
+        )} */}
 
         <div className="chat_window_container_message_box_input">
           {/* {role === "buyer" && (
