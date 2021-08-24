@@ -174,7 +174,14 @@
   font-size: 10px;
   color: #3858fc;
 }
+.notification-time-text-seen {
+  font-size: 10px;
+  color: #ccc;
+}
 .notification-title-text {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
   font-weight: 600;
 }
 .notification-item-right {

@@ -19,6 +19,7 @@ import { fb } from "../../services";
 import moment from "moment";
 import EventNoteOutlinedIcon from "@material-ui/icons/EventNoteOutlined";
 import { Context } from "../../ChatContext";
+import Modal from "@material-ui/core/Modal";
 
 const SellerNavbar = (props) => {
   const { role, resetRole, addItem, chats, viewchats, addViewChat } =
@@ -36,7 +37,8 @@ const SellerNavbar = (props) => {
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [reals, setReals] = useState([]);
-
+  const [modalopen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState();
   let history = useHistory();
 
   const switchProfileMenu = () => {
@@ -168,7 +170,14 @@ const SellerNavbar = (props) => {
                       className="notification-item"
                       key={notification.id}
                       onClick={() => {
-                        history.push("/schedule");
+                        if (notification.data.content === "new appointment") {
+                          history.push("/schedule");
+                        }
+                        if (notification.data.content === "new transaction") {
+                          setModalOpen(true);
+                          setModalData(notification);
+                        }
+
                         setNotificationTrigger(false);
                         fb.firestore
                           .collection("users")
@@ -181,10 +190,37 @@ const SellerNavbar = (props) => {
                       }}
                     >
                       <div className="notification-item-left">
-                        <p className="notification-title-text">Buổi hẹn mới</p>
-                        <p>{moment(notification.data.date).format("L")}</p>
-                        <p>{moment(notification.data.date).format("LT")}</p>
-                        <p className="notification-time-text">
+                        {notification.data.content === "new transaction" && (
+                          <>
+                            <p className="notification-title-text">
+                              Yêu cầu xác nhận giao dịch
+                            </p>
+
+                            <p className="notification-title-text">
+                              {notification.data.address}
+                            </p>
+                          </>
+                        )}
+
+                        {notification.data.content === "new appointment" && (
+                          <>
+                            <p className="notification-title-text">
+                              {notification.data.title}
+                            </p>
+                            <p>
+                              {moment(notification.data.date).format("L")} -{" "}
+                              {moment(notification.data.date).format("LT")}
+                            </p>
+                          </>
+                        )}
+
+                        <p
+                          className={
+                            notification.data.seen === false
+                              ? "notification-time-text"
+                              : "notification-time-text-seen"
+                          }
+                        >
                           {moment(
                             notification.data.createAt.toDate()
                           ).fromNow()}
@@ -250,6 +286,81 @@ const SellerNavbar = (props) => {
               </div>
             ) : null}
 
+            {modalData && (
+              <Modal
+                open={modalopen}
+                //   onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+              >
+                <div className="modal-confirm">
+                  <h2 id="simple-modal-title">Xác nhận giao dịch</h2>
+                  <div id="simple-modal-description">
+                    <p>Người mua: {modalData.data.buyer}</p>
+                    <p>Người bán: {modalData.data.seller}</p>
+                    <p>Địa chỉ bất động sản: {modalData.data.address}</p>
+                    <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                    <p>
+                      Ngày giao dịch:
+                      {moment(modalData.data.appointmentDate).format("LLL")}
+                    </p>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        fb.firestore
+                          .collection("users")
+                          .doc(modalData.data.staffId + "")
+                          .collection("transactions")
+                          .doc(modalData.data.realId + "")
+                          .set(
+                            {
+                              buyerId: modalData.data.buyerId,
+                              sellerId: modalData.data.sellerId,
+                              realId: modalData.data.realId,
+                              staff: modalData.data.staffId,
+                              sellerAccept: true,
+                            },
+                            { merge: true }
+                          );
+                        setModalOpen(false);
+                      }}
+                    >
+                      Xác nhận
+                    </button>
+                    <button
+                      onClick={() => {
+                        fb.firestore
+                          .collection("users")
+                          .doc(modalData.data.staffId + "")
+                          .collection("transactions")
+                          .doc(modalData.data.realId + "")
+                          .set(
+                            {
+                              buyerId: modalData.data.buyerId,
+                              sellerId: modalData.data.sellerId,
+                              staff: modalData.data.staffId,
+                              realId: modalData.data.realId,
+                              sellerAccept: false,
+                            },
+                            { merge: true }
+                          );
+                        setModalOpen(false);
+                      }}
+                    >
+                      Từ chối
+                    </button>
+                    <button
+                      onClick={() => {
+                        setModalOpen(false);
+                      }}
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                </div>
+              </Modal>
+            )}
             {/* profile menu */}
             {isProfileMenuShown ? (
               <div className="seller-profile-menu-container">
