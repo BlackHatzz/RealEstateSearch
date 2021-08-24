@@ -1,6 +1,6 @@
-div.staff-product-list {
+/* div.staff-product-list {
   margin: 0px 12px 0px 12px;
-  /* background-color: blue; */
+
   width: 800px;
   height: 1000px;
 }
@@ -10,19 +10,18 @@ div.staff-product-item-container {
   flex-direction: row;
   align-items: flex-start;
   justify-content: flex-start;
-  /* background-color: thistle; */
+
   border: 1px solid rgb(230, 230, 230);
   border-radius: 8px;
   box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18);
   margin-top: 24px;
   margin-bottom: 24px;
-  /* width: ; */
-  /* height: 500px; */
+
 }
 
 div.staff-product-image-container {
   border-radius: 4px;
-  /* background-color: yellow; */
+
   width: 224px;
   height: 172px;
   padding-top: 12px;
@@ -40,9 +39,9 @@ img.staff-product-image {
 div.staff-content-product-container {
   padding: 14px 12px 12px 12px;
   margin-left: 12px;
-  /* margin: auto; */
+
   width: 550px;
-  /* background-color: teal; */
+
 }
 
 .staff-product-title {
@@ -112,12 +111,12 @@ div.staff-product-price-box {
 .staff-product-phone-contact {
   color: white;
   background-color: #00c896;
-  /* vertical-align: middle; */
+
   line-height: 20px;
   padding: 6px 12px 6px 12px;
   font-size: 14px;
   font-weight: bold;
-  /* text-align: center; */
+
   border-radius: 4px;
   cursor: pointer;
 }
@@ -125,4 +124,4 @@ div.staff-product-price-box {
   background-color: #00af9c;
 }
 
-
+ */

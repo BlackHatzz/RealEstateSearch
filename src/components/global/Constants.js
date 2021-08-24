@@ -4,7 +4,7 @@ class Constants {
     "https://i.ibb.co/pfHbbcS/Screen-Shot-2021-06-27-at-09-06-47.png";
   // static host = "http://localhost:8080/";
   static host = "https://api-realestate.top/";
-    // "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
+  // "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
   static getRealEstateRef =
     Constants.host + "api/v1/realEstate/getAllRealEstate";
   static getRealEstateDetailRef =
@@ -31,8 +31,6 @@ class Constants {
     );
   }
 
-
-
   // static getRealEstateRefBySellerId(sellerId, page) {
   //   return (
   //     Constants.host +
@@ -42,8 +40,21 @@ class Constants {
   //     page.toString()
   //   );
   // }
+  static getAveragePrice(
+    addressType,
+    realEstateId,
+    month,
+    realEstateType,
+    year
+  ) {
+    return (
+      Constants.host +
+      `apis/v1/average/prices/get?addressType=${addressType.toString()}&id=${realEstateId.toString()}&month=${month.toString()}&reType=${realEstateType.toString()}&year=${year.toString()}`
+    );
+  }
 
-  static getDistrictsAndWards = "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress";
+  static getDistrictsAndWards =
+    "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress";
 
   static getTheChosenBuyerByRealEstateRef(realEstateId) {
     return (
@@ -68,7 +79,9 @@ class Constants {
   }
 
   static getRealEstateDetailById(id) {
-    return Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString();
+    return (
+      Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString()
+    );
   }
 }
 

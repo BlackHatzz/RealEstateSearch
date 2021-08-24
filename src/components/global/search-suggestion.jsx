@@ -131,13 +131,13 @@ class SearchSuggestion extends Component {
     event.preventDefault();
     console.log("submit");
     console.log(this.state.searchText);
-    if (this.state.searchText.length >= 3) {
+    if (this.state.searchText.length >= 0) {
       this.setState({
         isTooltipShown: false,
       });
       // this.props.history.push("/#");
       this.props.history.push(
-        "/search-result-page/" +
+        "/search-result-page/st=" +
           this.state.searchText +
           "/" +
           this.state.type.selectedKey +

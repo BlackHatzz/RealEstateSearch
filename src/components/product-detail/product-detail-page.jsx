@@ -11,6 +11,7 @@ import {
   FaRegBuilding,
   FaDoorOpen,
   FaToilet,
+  FaThemeisle,
 } from "react-icons/fa";
 import { AiOutlineColumnHeight, AiOutlineColumnWidth } from "react-icons/ai";
 import { GrDirections } from "react-icons/gr";
@@ -31,6 +32,7 @@ class ProductDetailPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      averagePriceInfo: null,
       isFullMode: false,
       desHeight: "96px",
       product: null,
@@ -44,8 +46,8 @@ class ProductDetailPage extends Component {
         { id: "amenityTypes-4", title: "Ngân Hàng", apikey: "Ngân Hàng" },
         {
           id: "amenityTypes-5",
-          title: "Trung Tâm Mua Sắm",
-          apikey: "Trung Tâm Mua Sắm",
+          title: "Bưu Điện",
+          apikey: "Bưu Điện",
         },
       ],
     };
@@ -86,10 +88,23 @@ class ProductDetailPage extends Component {
             product: result,
             isLoaded: true,
           });
-          console.log("Lỗi", {
-            product: result,
-            isLoaded: true,
-          });
+          // console.log("Lỗi", {
+          //   product: result,
+          //   isLoaded: true,
+          // });
+        },
+        (error) => {}
+      );
+
+      fetch(Constants.getAveragePrice("ward", 3, 6, "nhà", "2021"))
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("get average price");
+          console.log(result);
+          this.setState({
+            averagePriceInfo: result
+          })
         },
         (error) => {}
       );
@@ -144,7 +159,7 @@ class ProductDetailPage extends Component {
                 borderBottom: "1px solid rgba(0,0,0,0.15)",
               }}
             />
-            <SearchSuggestion />
+            <SearchSuggestion history={this.props.history} />
           </div>
           {/* product detail */}
 
@@ -177,23 +192,188 @@ class ProductDetailPage extends Component {
                   </span>
                   <div style={{ height: "10px", width: "100%" }}></div>
 
-                  <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
-                    {product?.price} tỷ - {product?.area} m²
-                  </div>
-
-                  <div className="product-short-detail">
-                    Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
-                    {product?.wardName}, {product?.disName}
-                    {/*Hôm nay*/}
-                  </div>
+                  {/* <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
+                    Mức giá: {product?.price} tỷ
+                  </div> */}
 
                   <div className="product-short-detail">
                     Ngày đăng: {product?.createAt}
                     {/*Hôm nay*/}
                   </div>
-
+                  <div className="product-short-detail">
+                    Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
+                    {product?.wardName}, {product?.disName}
+                    {/*Hôm nay*/}
+                  </div>
+                  <div className="product-short-detail">
+                    Giá trung bình khu vực: {(() => {
+                      if(this.state.averagePriceInfo?.length > 0) {
+                        return this.state.averagePriceInfo.price
+                      }
+                    })()}
+                  </div>
                   <div className="product-short-detail">
                     {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
+                  </div>
+
+                  <div className="divide"></div>
+
+                  <div className="short-detail-container">
+                    <ul className="short-info-list">
+                    {/* <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt=""
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
+                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                            {product?.juridical}
+                          </span>
+                        </div>
+                      </li> */}
+                      <li className="short-info-item">
+                        <BiMoney className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Mức giá:</span>
+                          <span className="short-info-label2">
+                            {product?.price} tỷ
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                        <BiArea className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Diện tích:</span>
+                          <span className="short-info-label2">
+                            {product?.area} m²{/*68 m²*/}
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                        <AiOutlineColumnHeight className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Chiều dài:</span>
+                          <span className="short-info-label2">
+                            {product?.numberOfBedroom} {Constants.squareMeter}
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                        <AiOutlineColumnWidth className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Chiều rộng:</span>
+                          <span className="short-info-label2">
+                            {product?.numberOfBathroom} {Constants.squareMeter}
+                          </span>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="short-detail-container">
+                    <ul className="short-info-list">
+                      <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt="Giá/m2"
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">
+                            Giá/{Constants.squareMeter}
+                          </span>
+                          <span
+                            style={{ fontSize: "13px" }}
+                            className="short-info-label2"
+                          >
+                            ~
+                            {Math.round(
+                              (product?.price / product?.area) * 1000 * 100
+                            ) / 100}
+                            <br />
+                            triệu/{Constants.squareMeter}
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                        <HotelOutlinedIcon className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">
+                            Số phòng ngủ:
+                          </span>
+                          <span className="short-info-label2">
+                            {product?.numberOfBedroom}
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">
+                            Số nhà vệ sinh:
+                          </span>
+                          <span className="short-info-label2">
+                            {product?.numberOfBathroom}
+                          </span>
+                        </div>
+                      </li>
+
+                      <li className="short-info-item">
+                        <img
+                          className="short-info-icon"
+                          alt=""
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
+                          <span style={{ fontSize: "14px" }} className="short-info-label2">
+                            {product?.juridical}
+                          </span>
+                        </div>
+                      </li>
+                      {/* <li className="short-info-item">
+                        <WeekendOutlinedIcon className="short-info-icon" />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Nội thất:</span>
+                          <span
+                            style={{ fontSize: "14px" }}
+                            className="short-info-label2"
+                          >
+                            {(() => {
+                              if (this.state.product != null) {
+                                if (this.state.product?.furniture != null) {
+                                  return this.state.product?.furniture;
+                                }
+                              }
+                              return null;
+                            })()}
+                          </span>
+                        </div>
+                      </li> */}
+                    </ul>
+                  </div>
+
+                  <div className="divide"></div>
+
+                  <div className="description-container">
+                    <span className="description-title">Thông Tin Mô Tả</span>
+                    <div
+                      id="description-id"
+                      style={{ height: this.state.desHeight }}
+                      className="description-content"
+                    >
+                      {product?.description}
+                    </div>
+                    <div onClick={this.switchToggle}>
+                      <CollapseBox id="collapse-box" />
+                    </div>
                   </div>
 
                   <div className="divide"></div>
@@ -237,99 +417,7 @@ class ProductDetailPage extends Component {
                   </div>
                 </li>
               ) : null}
-                <li className="short-info-item">
-                        <HotelOutlinedIcon className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Số phòng ngủ:
-                          </span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBedroom}
-                          </span>
-                        </div>
-                      </li>
 
-                      <li className="short-info-item">
-                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Số nhà vệ sinh:
-                          </span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBathroom}
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="short-detail-container">
-                    <ul className="short-info-list">
-                      <li className="short-info-item">
-                          <img
-                            className="short-info-icon"
-                            alt="Giá/m2"
-                            src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
-                          />
-                          <div className="short-info-content-box">
-                            <span className="short-info-label1">
-                              Giá/{Constants.squareMeter}:
-                            </span>
-                            <span
-                              className="short-info-label2"
-                            >
-                              ~
-                              {Math.round(
-                                (product?.price / product?.area) * 1000 * 100
-                              ) / 100} 
-                              <span style={{ fontSize: "13px" }}> triệu/{Constants.squareMeter}</span>
-                              
-                            </span>
-                          </div>
-                        </li>
-                      {/* <li className="short-info-item">
-                        <BiMoney className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Mức giá:</span>
-                          <span className="short-info-label2">
-                            {product?.price} tỷ
-                          </span>
-                        </div>
-                      </li> */}
-                      <li className="short-info-item">
-                        <BiArea className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Diện tích:</span>
-                          <span className="short-info-label2">
-                            {product?.area} m²{/*68 m²*/}
-                          </span>
-                        </div>
-                      </li>
-
-                      <li className="short-info-item">
-                        <AiOutlineColumnHeight className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Chiều dài:</span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBedroom} {Constants.squareMeter}
-                          </span>
-                        </div>
-                      </li>
-
-                      <li className="short-info-item">
-                        <AiOutlineColumnWidth className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Chiều rộng:</span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBathroom} {Constants.squareMeter}
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="short-detail-container">
-                    <ul className="short-info-list">                     
                       <li className="short-info-item">
                         <img
                           className="short-info-icon"
@@ -364,58 +452,7 @@ class ProductDetailPage extends Component {
                           </span>
                         </div>
                       </li>
-
-                      <li className="short-info-item">
-                        <img
-                          className="short-info-icon"
-                          alt=""
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
-                        />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
-                          <span style={{ fontSize: "18px" }} className="short-info-label2">
-                            {product?.juridical}
-                          </span>
-                        </div>
-                      </li>
-
-                      <li className="short-info-item">
-                        <WeekendOutlinedIcon className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Nội thất:</span>
-                          <span
-                            style={{ fontSize: "18px" }}
-                            className="short-info-label2"
-                          >
-                            {(() => {
-                              if (this.state.product != null) {
-                                if (this.state.product?.furniture != null) {
-                                  return this.state.product?.furniture;
-                                }
-                              }
-                              return null;
-                            })()}
-                            {/* {this.state.product != null && this.state.product?.furniture != null ? this.state.product : null} */}
-                          </span>
-                        </div>
-                      </li>
                     </ul>
-                  </div>
-
-                  <div className="divide"></div>
-
-                  <div className="description-container">
-                    <span className="description-title">Thông Tin Mô Tả</span>
-                    <div
-                      id="description-id"
-                      style={{ height: this.state.desHeight }}
-                      className="description-content"
-                    >
-                      {product?.description}
-                    </div>
-                    <div onClick={this.switchToggle}>
-                      <CollapseBox id="collapse-box" />
-                    </div>
                   </div>
 
                   <div className="divide"></div>
