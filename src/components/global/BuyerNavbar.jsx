@@ -57,6 +57,11 @@ const BuyerNavbar = () => {
     setNotificationTrigger(false);
   };
 
+  function changeTitle() {
+    let title = document.title.slice(-9);
+    console.log(document.title);
+    document.title = "(" + unseen + ") " + title;
+  }
   useEffect(() => {
     if (uuid !== "null") {
       const getNotifications = fb.firestore
@@ -74,6 +79,8 @@ const BuyerNavbar = () => {
           setUnseen(
             snapshot.docs.filter((doc) => doc.data().seen === false).length
           );
+
+          changeTitle();
         });
 
       if (role === "buyer") {
@@ -97,7 +104,7 @@ const BuyerNavbar = () => {
 
       return () => {};
     }
-  }, [role, uuid]);
+  }, [role, unseen, uuid]);
 
   return (
     <React.Fragment>

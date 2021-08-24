@@ -217,7 +217,7 @@ function Appointment({ setTrigger, conversation }) {
             { merge: true }
           );
 
-        // setTrigger((value) => !value);
+        setTrigger((value) => !value);
       })
       .then(() => {
         // fetch("https://api-realestate.top/apis/v1/appointments/create", {
