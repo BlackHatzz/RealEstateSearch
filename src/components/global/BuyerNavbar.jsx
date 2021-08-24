@@ -22,7 +22,7 @@ import { Context } from "../../ChatContext";
 import MessageIcon from "@material-ui/icons/Message";
 import ChatBubble from "../Chat/ChatBubble";
 import SmallChatWindow from "../Chat/SmallChatWindow";
-
+import Modal from "@material-ui/core/Modal";
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
   const { role, resetRole, addItem, chats, viewchats, addViewChat } =
@@ -33,6 +33,8 @@ const BuyerNavbar = () => {
   const [unseen, setUnseen] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
+  const [modalopen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState();
   // const [currentChat, setCurrentChat] = useState();
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   let history = useHistory();
@@ -343,7 +345,14 @@ const BuyerNavbar = () => {
                         className="notification-item"
                         key={notification.id}
                         onClick={() => {
-                          history.push("/schedule");
+                          if (notification.data.content === "new appointment") {
+                            history.push("/schedule");
+                          }
+                          if (notification.data.content === "new transaction") {
+                            setModalOpen(true);
+                            setModalData(notification);
+                          }
+
                           setNotificationTrigger(false);
                           fb.firestore
                             .collection("users")
@@ -356,12 +365,37 @@ const BuyerNavbar = () => {
                         }}
                       >
                         <div className="notification-item-left">
-                          <p className="notification-title-text">
-                            Buổi hẹn mới
-                          </p>
-                          <p>{moment(notification.data.date).format("L")}</p>
-                          <p>{moment(notification.data.date).format("LT")}</p>
-                          <p className="notification-time-text">
+                          {notification.data.content === "new transaction" && (
+                            <>
+                              <p className="notification-title-text">
+                                Yêu cầu xác nhận giao dịch
+                              </p>
+
+                              <p className="notification-title-text">
+                                {notification.data.address}
+                              </p>
+                            </>
+                          )}
+
+                          {notification.data.content === "new appointment" && (
+                            <>
+                              <p className="notification-title-text">
+                                {notification.data.title}
+                              </p>
+                              <p>
+                                {moment(notification.data.date).format("L")} -{" "}
+                                {moment(notification.data.date).format("LT")}
+                              </p>
+                            </>
+                          )}
+
+                          <p
+                            className={
+                              notification.data.seen === false
+                                ? "notification-time-text"
+                                : "notification-time-text-seen"
+                            }
+                          >
                             {moment(
                               notification.data.createAt.toDate()
                             ).fromNow()}
@@ -376,6 +410,82 @@ const BuyerNavbar = () => {
                     ))}
                 </div>
               ) : null}
+
+              {modalData && (
+                <Modal
+                  open={modalopen}
+                  //   onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div className="modal-confirm">
+                    <h2 id="simple-modal-title">Xác nhận giao dịch</h2>
+                    <div id="simple-modal-description">
+                      <p>Người mua: {modalData.data.buyer}</p>
+                      <p>Người bán: {modalData.data.seller}</p>
+                      <p>Địa chỉ bất động sản: {modalData.data.address}</p>
+                      <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                      <p>
+                        Ngày giao dịch:
+                        {moment(modalData.data.appointmentDate).format("LLL")}
+                      </p>
+                    </div>
+                    <div>
+                      <button
+                        onClick={() => {
+                          fb.firestore
+                            .collection("users")
+                            .doc(modalData.data.staffId + "")
+                            .collection("transactions")
+                            .doc(modalData.data.realId + "")
+                            .set(
+                              {
+                                buyerId: modalData.data.buyerId,
+                                sellerId: modalData.data.sellerId,
+                                realId: modalData.data.realId,
+                                staff: modalData.data.staffId,
+                                buyerAccept: true,
+                              },
+                              { merge: true }
+                            );
+                          setModalOpen(false);
+                        }}
+                      >
+                        Xác nhận
+                      </button>
+                      <button
+                        onClick={() => {
+                          fb.firestore
+                            .collection("users")
+                            .doc(modalData.data.staffId + "")
+                            .collection("transactions")
+                            .doc(modalData.data.realId + "")
+                            .set(
+                              {
+                                buyerId: modalData.data.buyerId,
+                                sellerId: modalData.data.sellerId,
+                                staff: modalData.data.staffId,
+                                realId: modalData.data.realId,
+                                buyerAccept: false,
+                              },
+                              { merge: true }
+                            );
+                          setModalOpen(false);
+                        }}
+                      >
+                        Từ chối
+                      </button>
+                      <button
+                        onClick={() => {
+                          setModalOpen(false);
+                        }}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+              )}
 
               {chatTrigger ? (
                 <div className="notification-container">
