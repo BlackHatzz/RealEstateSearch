@@ -88,7 +88,7 @@ export const Login = () => {
         body: JSON.stringify({
           id: user.uid,
           phone: user.phoneNumber,
-          username: user.phoneNumber,
+          username: "user" + user.phoneNumber,
           status: "active",
           roleId: 4,
         }),
