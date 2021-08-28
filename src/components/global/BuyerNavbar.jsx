@@ -60,7 +60,7 @@ const BuyerNavbar = () => {
   function changeTitle() {
     let title = document.title.slice(-9);
     console.log(document.title);
-    document.title = "(" + unseen + ") " + title;
+    document.title = unseen > 0 ? "(" + unseen + ") " + title : title;
   }
   useEffect(() => {
     if (uuid !== "null") {
