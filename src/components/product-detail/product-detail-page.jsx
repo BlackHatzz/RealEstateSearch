@@ -27,6 +27,8 @@ import WeekendIcon from "@material-ui/icons/Weekend";
 import WeekendOutlinedIcon from "@material-ui/icons/WeekendOutlined";
 import HotelOutlinedIcon from "@material-ui/icons/HotelOutlined";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 class ProductDetailPage extends Component {
   constructor(props) {
@@ -207,16 +209,23 @@ class ProductDetailPage extends Component {
                 {/* left content */}
                 <div className="product-info-container">
                   {/* product image */}
-                  <div className="product-image-wrapper">
-                    <img
-                      className="product-selected-image"
-                      src={product != undefined ? product.images[0].imgUrl : ""}
-                      // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
-                      alt=""
-                    />
-                  </div>
+                  <Carousel>
+                    {product?.images?.map((item, index) => (
+                      <div key={index} className="product-image-wrapper">
+                        <img
+                          className="product-selected-image"
+                          src={
+                            // product != undefined ? product.images[0].imgUrl : ""
+                            item.imgUrl
+                          }
+                          // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
+                          alt=""
+                        />
+                      </div>
+                    ))}
+                  </Carousel>
 
-                  <div style={{ height: "30px", width: "100%" }}></div>
+                  <div style={{ height: "10px", width: "100%" }}></div>
                   {/* product title */}
                   <span className="product-info-title">
                     {product?.title}
@@ -225,7 +234,14 @@ class ProductDetailPage extends Component {
                   </span>
                   <div style={{ height: "10px", width: "100%" }}></div>
 
-                  <div style={{color: "gray", fontWeight: "bold", fontSize: "18px"}} className="product-short-detail">
+                  <div
+                    style={{
+                      color: "gray",
+                      fontWeight: "bold",
+                      fontSize: "18px",
+                    }}
+                    className="product-short-detail"
+                  >
                     {product?.price} tỷ - {product?.area} m²
                   </div>
 
@@ -233,7 +249,6 @@ class ProductDetailPage extends Component {
                     Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
                     {product?.wardName}, {product?.disName}
                     {/*Hôm nay*/}
-                    
                   </div>
                   <div className="product-short-detail">
                     Ngày đăng: {product?.createAt}
@@ -252,40 +267,49 @@ class ProductDetailPage extends Component {
 
                   <div className="short-detail-container">
                     <ul className="short-info-list">
-                    <li className="short-info-item">
-                {(() => {
-                  if(product?.typeName?.toLowerCase() === "chung cư") {
-                    return <FaRegBuilding className="short-info-icon" />;
-                  } else if(product?.typeName?.toLowerCase() === "nhà") {
-                    return <HomeOutlinedIcon className="short-info-icon" />
-                  } else if(product?.typeName?.toLowerCase() === "đất") {
+                      <li className="short-info-item">
+                        {(() => {
+                          if (product?.typeName?.toLowerCase() === "chung cư") {
+                            return (
+                              <FaRegBuilding className="short-info-icon" />
+                            );
+                          } else if (
+                            product?.typeName?.toLowerCase() === "nhà"
+                          ) {
+                            return (
+                              <HomeOutlinedIcon className="short-info-icon" />
+                            );
+                          } else if (
+                            product?.typeName?.toLowerCase() === "đất"
+                          ) {
+                          }
+                        })()}
 
-                  }
-                })()}
-                
-                <div className="short-info-content-box">
-                  <span className="short-info-label1">Loại:</span>
-                  <span className="short-info-label2">
-                    {product?.typeName}
-                    {/*Chung Cư*/}
-                  </span>
-                </div>
-              </li>
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">Loại:</span>
+                          <span className="short-info-label2">
+                            {product?.typeName}
+                            {/*Chung Cư*/}
+                          </span>
+                        </div>
+                      </li>
 
-              {product?.typeName === "Nhà" ? (
-                <li className="short-info-item">
-                  <img
-                    className="short-info-icon"
-                    alt="Hướng cửa chính"
-                    src="https://i.ibb.co/BtkH9J7/stairs.png"
-                  />
-                  <div className="short-info-content-box">
-                    <span className="short-info-label1">Số tầng:</span>
-                    <span className="short-info-label2">{product?.floor}</span>
-                  </div>
-                </li>
-              ) : null}
-                <li className="short-info-item">
+                      {product?.typeName === "Nhà" ? (
+                        <li className="short-info-item">
+                          <img
+                            className="short-info-icon"
+                            alt="Hướng cửa chính"
+                            src="https://i.ibb.co/BtkH9J7/stairs.png"
+                          />
+                          <div className="short-info-content-box">
+                            <span className="short-info-label1">Số tầng:</span>
+                            <span className="short-info-label2">
+                              {product?.floor}
+                            </span>
+                          </div>
+                        </li>
+                      ) : null}
+                      <li className="short-info-item">
                         <HotelOutlinedIcon className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
@@ -298,7 +322,11 @@ class ProductDetailPage extends Component {
                       </li>
 
                       <li className="short-info-item">
-                      <img className="short-info-icon" alt="Số phòng vệ sinh" src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png" />
+                        <img
+                          className="short-info-icon"
+                          alt="Số phòng vệ sinh"
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png"
+                        />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">
                             Số nhà vệ sinh:
@@ -314,27 +342,27 @@ class ProductDetailPage extends Component {
                   <div className="short-detail-container">
                     <ul className="short-info-list">
                       <li className="short-info-item">
-                          <img
-                            className="short-info-icon"
-                            alt="Giá/m2"
-                            src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
-                          />
-                          <div className="short-info-content-box">
-                            <span className="short-info-label1">
-                              Giá/{Constants.squareMeter}:
+                        <img
+                          className="short-info-icon"
+                          alt="Giá/m2"
+                          src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
+                        />
+                        <div className="short-info-content-box">
+                          <span className="short-info-label1">
+                            Giá/{Constants.squareMeter}:
+                          </span>
+                          <span className="short-info-label2">
+                            ~
+                            {Math.round(
+                              (product?.price / product?.area) * 1000 * 100
+                            ) / 100}
+                            <span style={{ fontSize: "13px" }}>
+                              {" "}
+                              triệu/{Constants.squareMeter}
                             </span>
-                            <span
-                              className="short-info-label2"
-                            >
-                              ~
-                              {Math.round(
-                                (product?.price / product?.area) * 1000 * 100
-                              ) / 100} 
-                              <span style={{ fontSize: "13px" }}> triệu/{Constants.squareMeter}</span>
-                              
-                            </span>
-                          </div>
-                        </li>
+                          </span>
+                        </div>
+                      </li>
                       {/* <li className="short-info-item">
                         <BiMoney className="short-info-icon" />
                         <div className="short-info-content-box">
@@ -377,7 +405,7 @@ class ProductDetailPage extends Component {
                   </div>
 
                   <div className="short-detail-container">
-                    <ul className="short-info-list">                     
+                    <ul className="short-info-list">
                       <li className="short-info-item">
                         <img
                           className="short-info-icon"
@@ -420,8 +448,13 @@ class ProductDetailPage extends Component {
                           src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
                         />
                         <div className="short-info-content-box">
-                          <span className="short-info-label1">Giấy tờ pháp lý:</span>
-                          <span style={{ fontSize: "18px" }} className="short-info-label2">
+                          <span className="short-info-label1">
+                            Giấy tờ pháp lý:
+                          </span>
+                          <span
+                            style={{ fontSize: "18px" }}
+                            className="short-info-label2"
+                          >
                             {product?.juridical}
                           </span>
                         </div>
@@ -498,7 +531,6 @@ class ProductDetailPage extends Component {
                         {(() => {
                           if (this.state.averageDistrictPriceInfo?.length > 0) {
                             return (
-                              
                               Math.round(
                                 (this.state.averageDistrictPriceInfo[0].price /
                                   1_000_000) *
@@ -515,11 +547,10 @@ class ProductDetailPage extends Component {
                         {this.state.product?.wardName}
                       </span>
                       <span className="sub-info">
-                      {"~"}
+                        {"~"}
                         {(() => {
                           if (this.state.averageWardPriceInfo?.length > 0) {
                             return (
-                              
                               Math.round(
                                 (this.state.averageWardPriceInfo[0].price /
                                   1_000_000) *
