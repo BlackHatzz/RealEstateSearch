@@ -4,6 +4,9 @@ import FilterDropBox from "./filter-drop-box";
 import "./shared.css";
 import "./search-suggestion.css";
 import Constants from "../global/Constants";
+import TuneOutlinedIcon from "@material-ui/icons/TuneOutlined";
+import { RiArrowDropDownLine } from "react-icons/ri";
+import { Divider } from "@material-ui/core";
 
 class SearchSuggestion extends Component {
   state = {
@@ -125,6 +128,40 @@ class SearchSuggestion extends Component {
       selectedKey: 0,
       text: "Tất cả",
     },
+    isMoreFilterMenuShown: false,
+    isDoorDirectionMenuShown: false,
+    selectedDoorDirection: { key: -1, title: "Tất cả hướng" },
+    doorDirections: [
+      { key: -1, title: "Tất cả hướng" },
+      { key: 1, title: "Đông" },
+      { key: 2, title: "Đông Nam" },
+      { key: 3, title: "Nam" },
+      { key: 4, title: "Tây Nam" },
+      { key: 5, title: "Tây" },
+      { key: 6, title: "Tây Bắc" },
+      { key: 7, title: "Bắc" },
+      { key: 8, title: "Đông Bắc" },
+    ],
+
+    selectedBedroom: { key: -1, title: "Tất cả" },
+    bedrooms: [
+      { key: -1, title: "Tất cả" },
+      { key: 1, title: "1+" },
+      { key: 2, title: "2+" },
+      { key: 3, title: "3+" },
+      { key: 4, title: "4+" },
+    ],
+
+    isSortShown: false,
+    selectedSort: { key: 1, title: "Bất động sản nổi bật" },
+    sorts: [
+      { key: 1, title: "Bất động sản nổi bật" },
+      { key: 2, title: "Tin mới nhất" },
+      { key: 3, title: "Giá thấp đến cao" },
+      { key: 4, title: "Giá cao đến thấp" },
+      { key: 5, title: "Diện tích nhỏ đến lớn" },
+      { key: 6, title: "Diện tích lớn đến nhỏ" },
+    ]
   };
 
   handleSearch = (event) => {
@@ -291,6 +328,152 @@ class SearchSuggestion extends Component {
               />
             </React.Fragment>
           ))}
+          <div>
+            <div
+              onClick={() => {
+                this.setState({
+                  isMoreFilterMenuShown: !this.state.isMoreFilterMenuShown,
+                });
+              }}
+              className="more-filter-container"
+            >
+              <TuneOutlinedIcon className="icon" />
+              <span className="noselect title">Lọc thêm</span>
+            </div>
+            {this.state.isMoreFilterMenuShown ? (
+              <div className="more-filter-menu-wrapper">
+                <div className="more-filter-menu-container linear-gray-border">
+                  <div className="item">
+                    <div className="row">
+                      <span className="row-title">Hướng cửa chính</span>
+                      <div style={{ height: "4px" }}></div>
+                      <div
+                        onClick={() => {
+                          this.setState({
+                            isDoorDirectionMenuShown:
+                              !this.state.isDoorDirectionMenuShown,
+                          });
+                        }}
+                        className="drop-box linear-gray-border"
+                      >
+                        <span className="text noselect">
+                          {this.state.selectedDoorDirection.title}
+                        </span>
+                        <RiArrowDropDownLine className="more-filter-icon" />
+
+                        {this.state.isDoorDirectionMenuShown ? (
+                          <div className="select-wrapper">
+                            <div className="select-container linear-gray-border">
+                              {this.state.doorDirections.map((item, index) => (
+                                <div
+                                  onClick={() => {
+                                    this.setState({
+                                      selectedDoorDirection: item,
+                                    });
+                                  }}
+                                  key={index}
+                                  className="item noselect"
+                                >
+                                  <span>{item.title}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {/* {this.isDoorDirectionMenuShown ? } */}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="item">
+                    <div className="row">
+                      <span className="row-title">Phòng ngủ</span>
+                      <div style={{ height: "4px" }}></div>
+                      <div className="selection-box linear-gray-border">
+                        {this.state.bedrooms.map((item, index) => (
+                          <React.Fragment key={index}>
+                            {/* item */}
+                            {this.state.selectedBedroom.key === item.key ? (
+                              <span style={{backgroundColor: "rgb(200, 200, 200)"}} className="selection-item noselect">
+                                {item.title}
+                              </span>
+                            ) : (
+                              <span onClick={() => {
+                                this.setState({
+                                  selectedBedroom: item
+                                });
+                              }} className="selection-item noselect">
+                                {item.title}
+                              </span>
+                            )}
+
+                            {/* line */}
+                            {index !== this.state.bedrooms.length - 1 ? (
+                              <div className="selection-line"></div>
+                            ) : null}
+                          </React.Fragment>
+                        ))}
+                        {/* <span className="selection-item">Tất cả</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">1+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">2+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">3+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">4+</span> */}
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div className="item">
+                    <div className="row">
+                      <span className="row-title">Sắp xếp</span>
+                      <div style={{ height: "4px" }}></div>
+                      <div
+                        onClick={() => {
+                          this.setState({
+                            isSortShown: !this.state.isSortShown
+                          });
+                        }}
+                        className="drop-box linear-gray-border"
+                      >
+                        <span className="text noselect">
+                          {this.state.selectedSort.title}
+                        </span>
+                        <RiArrowDropDownLine className="more-filter-icon" />
+
+                        {this.state.isSortShown ? (
+                          <div className="select-wrapper">
+                            <div className="select-container linear-gray-border">
+                              {this.state.sorts.map((item, index) => (
+                                <div
+                                  onClick={() => {
+                                    this.setState({
+                                      selectedSort: item,
+                                    });
+                                  }}
+                                  key={index}
+                                  className="item noselect"
+                                >
+                                  <span>{item.title}</span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        ) : null}
+
+                        {/* {this.isDoorDirectionMenuShown ? } */}
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            ) : null}
+          </div>
+
           {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
           <FilterDropBox title="Khu vực" value="Hồ Chí Minh" />
           <FilterDropBox title="Mức giá" value="Tất cả" />

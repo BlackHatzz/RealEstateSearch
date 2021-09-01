@@ -479,46 +479,6 @@ class HomePage extends Component {
             </div>
           </div>
         </div>
-        <Popup
-          ref={React.createRef()}
-          overlayStyle={{
-            backgroundColor: "rgba(10, 10, 10, 0.6)",
-          }}
-          onClick={(event) => {
-            console.log(event);
-          }}
-          onClose={false}
-          modal
-          onOpen={(event) => {
-            console.log("on open");
-            console.log(event);
-          }}
-          trigger={
-            <div>eqweqweqweqwewqew</div>
-          }
-        >
-          {(close) => (
-            // <div
-            //   style={{
-            //     width: "100vw",
-            //     height: "100vh",
-            //     display: "flex",
-            //     alignItems: "center",
-            //     justifyContent: "center",
-            //     backgroundColor: "rgba(10, 10, 10, 0.4)",
-            //   }}
-            // >
-            // <div className="success-popup-container">
-            //   {this.renderContent(close)}
-            // </div>
-            // </div>
-            // <SuccessPopup
-            //   close={close}
-            //   title="Chúc Mừng! Bạn đã tạo bài viết thành công!"
-            // />
-            <TransactionConfirmForm close={close} />
-          )}
-        </Popup>
       </React.Fragment>
     );
   }

@@ -1,9 +1,15 @@
+div.product-detail-wrapper {
+  height: calc(100% - 70px - 50px - 1px);
+  /* height: auto; */
+  width: 100%;
+  overflow-y: scroll;
+}
 div.product-info-container {
   /* background-color: blue; */
   width: 692px;
   height: auto;
   padding-bottom: 48px;
-  background-color: white;
+  background-color: transparent;
 }
 
 div.product-info-dislayed-wrapper {
@@ -153,6 +159,13 @@ div.detail-box-row {
   font-size: 14px;
   line-height: 20px;
   color: #2c2f36;
+}
+
+.contact-wrapper-fixed-box {
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  position: fixed;
 }
 
 .contact-wrapper {
