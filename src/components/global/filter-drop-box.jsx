@@ -73,6 +73,7 @@ class FilterDropBox extends Component {
           <FromToFilterMenu
             handler={this.handleSelectItem}
             options={this.props.filter.options}
+            sign={this.props.filter.sign}
           />
         );
       }

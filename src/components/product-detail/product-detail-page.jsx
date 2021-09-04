@@ -185,7 +185,10 @@ class ProductDetailPage extends Component {
           }}
         />
 
-        <SearchSuggestion history={this.props.history} />
+        <SearchSuggestion
+          params={this.props.match.params}
+          history={this.props.history}
+        />
 
         {/* product detail */}
 
@@ -363,7 +366,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Chiều dài:</span>
                         <span className="short-info-label2">
-                          {product?.numberOfBedroom} {Constants.squareMeter}
+                          {product?.numberOfBedroom} m
                         </span>
                       </div>
                     </li>
@@ -373,7 +376,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Chiều rộng:</span>
                         <span className="short-info-label2">
-                          {product?.numberOfBathroom} {Constants.squareMeter}
+                          {product?.numberOfBathroom} m
                         </span>
                       </div>
                     </li>

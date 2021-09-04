@@ -53,8 +53,8 @@ class Constants {
     );
   }
 
-  static getDistrictsAndWards =
-    "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress";
+  static getDistrictsAndWards = Constants.host + "/api/v1/address/getAddress";
+  static getAllDistricts = Constants.host + "apis/v1/districts/get/all";
 
   static getTheChosenBuyerByRealEstateRef(realEstateId) {
     return (

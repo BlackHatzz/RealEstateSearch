@@ -19,6 +19,8 @@ class HomePage extends Component {
     items: [],
     fromAreaText: null,
     toAreaText: null,
+    fromPriceText: null,
+    toPriceText: null,
     // type 0: is drop down menu
     // type 1: from to field
     filters: [
@@ -39,6 +41,7 @@ class HomePage extends Component {
         filterName: "Diện tích",
         typeKey: 1,
         title: "Tất cả",
+        sign: Constants.squareMeter,
         options: [
           { key: 0, text: "Tất cả" },
           // { key: 1, text: "< 50" + Constants.squareMeter },
@@ -105,17 +108,18 @@ class HomePage extends Component {
       {
         key: 3,
         filterName: "Mức giá",
-        typeKey: 0,
+        typeKey: 1,
         title: "Tất cả",
+        sign: " tỷ",
         options: [
           { key: 0, text: "Tất cả" },
-          { key: 1, text: "< 1 tỷ" },
-          { key: 2, text: "1 tỷ - 2 tỷ" },
-          { key: 3, text: "2 tỷ - 3 tỷ" },
-          { key: 4, text: "3 tỷ - 5 tỷ" },
-          { key: 5, text: "5 tỷ - 10 tỷ" },
-          { key: 6, text: "10 tỷ - 20 tỷ" },
-          { key: 7, text: "> 20 tỷ" },
+          // { key: 1, text: "< 1 tỷ" },
+          // { key: 2, text: "1 tỷ - 2 tỷ" },
+          // { key: 3, text: "2 tỷ - 3 tỷ" },
+          // { key: 4, text: "3 tỷ - 5 tỷ" },
+          // { key: 5, text: "5 tỷ - 10 tỷ" },
+          // { key: 6, text: "10 tỷ - 20 tỷ" },
+          // { key: 7, text: "> 20 tỷ" },
         ],
       },
     ],
@@ -139,6 +143,70 @@ class HomePage extends Component {
     //   [{key: 0, text: "Chung Cư"}, {key: 1, text: "Nhà"}, {key: 2, text: "Đất"}],
     //   [{key: 0, text: "< 500 triệu"}, {key: 1, text: "500 - 1 tỷ"}, {key: 2, text: "1 tỷ - 2 tỷ"}, {key: 3, text: "2 tỷ - 5 tỷ"}]
     // ]
+    advancedFilters: [
+      {
+        key: 4,
+        filterName: "Hướng cửa chính",
+        typeKey: 0,
+        title: "Tất cả hướng",
+        options: [
+          { key: 0, text: "Tất cả hướng" },
+          { key: 1, text: "Đông" },
+          { key: 2, text: "Đông Nam" },
+          { key: 3, text: "Nam" },
+          { key: 4, text: "Tây Nam" },
+          { key: 5, text: "Tây" },
+          { key: 6, text: "Tây Bắc" },
+          { key: 7, text: "Bắc" },
+          { key: 8, text: "Đông Bắc" },
+        ],
+      },
+      {
+        key: 5,
+        filterName: "Phòng ngủ",
+        typeKey: 0,
+        title: "Tất cả",
+        options: [
+          { key: 0, text: "Tất cả", value: 0 },
+          { key: 1, text: "1+", value: 1 },
+          { key: 2, text: "2+", value: 2 },
+          { key: 3, text: "3+", value: 3 },
+          { key: 4, text: "4+", value: 4 },
+        ],
+      },
+      {
+        key: 6,
+        filterName: "Phòng vệ sinh",
+        typeKey: 0,
+        title: "Tất cả",
+        options: [
+          { key: 0, text: "Tất cả", value: 0 },
+          { key: 1, text: "1+", value: 1 },
+          { key: 2, text: "2+", value: 2 },
+          { key: 3, text: "3+", value: 3 },
+          { key: 4, text: "4+", value: 4 },
+        ],
+      },
+
+      {
+        key: 7,
+        filterName: "Sắp xếp",
+        typeKey: 0,
+        title: "Bất động sản nổi bật",
+        options: [
+          { key: 0, text: "Bất động sản nổi bật", value: "view" },
+          { key: 1, text: "Tin mới nhất", value: "-r.create_at" },
+          { key: 2, text: "Giá thấp đến cao", value: "rd.price" },
+          { key: 3, text: "Giá cao đến thấp", value: "-rd.price" },
+          { key: 4, text: "Diện tích nhỏ đến lớn", value: "rd.area" },
+          { key: 5, text: "Diện tích lớn đến nhỏ", value: "-rd.area" },
+        ],
+      },
+    ],
+    selectedDoorDirection: { key: 0, text: "Tất cả hướng" },
+    selectedBedroom: { key: 0, text: "Tất cả", value: 0 },
+    selectedBathroom: { key: 0, text: "Tất cả", value: 0 },
+    selectedSort: { key: 0, text: "Bất động sản nổi bật", value: "view" },
   };
 
   componentDidMount() {
@@ -188,7 +256,6 @@ class HomePage extends Component {
     //       // });
     //     }
     //   );
-    
 
     // const requestOptions = {
     //   method: "POST",
@@ -215,6 +282,29 @@ class HomePage extends Component {
     //     (error) => {
     //     }
     //   );
+    fetch(Constants.getAllDistricts)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          var temp = [{ key: 0, text: "Tất cả" }];
+          for (var i = 0; i < result.length; i++) {
+            temp.push({ key: result[i].id, text: result[i].name });
+          }
+
+          this.state.filters[2] = {
+            key: 2,
+            filterName: "Khu vực",
+            typeKey: 0,
+            title: "Tất cả",
+            options: temp,
+          };
+
+          this.setState({
+            filters: [...this.state.filters],
+          });
+        },
+        (error) => {}
+      );
   }
 
   handleFilter = (filterKey, filterTypeKey, itemKey, title) => {
@@ -271,6 +361,30 @@ class HomePage extends Component {
         };
         break;
       case 3:
+        const split2 = title.split("-");
+        
+        var from2 = null;
+        var to2 = null;
+        // get number only
+        // 2 loop times is maximum
+        console.log("first split");
+        console.log(split2);
+        for (var i = 0; i < split2.length; i++) {
+          if (split2[i].match(/\d+/) != null) {
+            if (split2[i].match(/\d+/).length > 0) {
+              const number = split2[i].match(/\d+/)[0];
+              // console.log(number);
+              if (i == 0) {
+                from2 = parseInt(number);
+              } else if (i == 1) {
+                to2 = parseInt(number);
+              }
+            }
+          }
+        }
+        this.state.fromPriceText = from2 == null ? "null" : from2.toString();
+        this.state.toPriceText = to2 == null ? "null" : to2.toString();
+
         this.state.price = {
           selectedKey: itemKey,
           text: title,
@@ -388,7 +502,18 @@ class HomePage extends Component {
           "/" +
           this.state.address.selectedKey +
           "/" +
-          this.state.price.selectedKey
+          // this.state.price.selectedKey +
+          this.state.fromPriceText + 
+          "-" +
+          this.state.toPriceText +
+          "/" +
+          this.state.selectedDoorDirection.text +
+          "/" +
+          this.state.selectedBedroom.value +
+          "/" +
+          this.state.selectedBathroom.value +
+          "/" +
+          this.state.selectedSort.value
       );
     }
   };
@@ -475,6 +600,16 @@ class HomePage extends Component {
                 <HomeFilterBox title="Khu vực" /> */}
                 {/* <HomeFilterBox title="Mức giá" />
                 <HomeFilterBox title="Diện tích " /> */}
+              </div>
+
+              <div className="home-filter-wrapper">
+                {this.state.advancedFilters.map((filter) => (
+                  <HomeFilterBox
+                    key={filter.key}
+                    handler={this.handleFilter}
+                    filter={filter}
+                  />
+                ))}
               </div>
             </div>
           </div>
