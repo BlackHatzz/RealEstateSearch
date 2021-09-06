@@ -182,8 +182,8 @@ class SearchSuggestion extends Component {
     // set search text
     this.setState({
       searchText:
-        this.props.params.searchtext === undefined ||
-        this.props.params.searchtext === null
+        this.props.params?.searchtext === undefined ||
+          this.props.params?.searchtext === null
           ? ""
           : this.props.params.searchtext,
     });
@@ -204,23 +204,23 @@ class SearchSuggestion extends Component {
           // set real estate type
           tempFilters[0].title =
             this.state.filters[0].options[
-              parseInt(this.props.params.type)
-            ].text;
+              parseInt(this.props.params?.type)
+            ]?.text;
           this.setState({
             type: {
               selectedKey:
-                this.state.filters[0].options[parseInt(this.props.params.type)]
-                  .key,
+                this.state.filters[0].options[parseInt(this.props.params?.type)]
+                  ?.key,
               text: this.state.filters[0].options[
-                parseInt(this.props.params.type)
-              ].text,
+                parseInt(this.props.params?.type)
+              ]?.text,
             },
           });
 
           // set area
           // tempFilters[1].title = this.props.params.area;
 
-          const split = this.props.params.area.split("-");
+          const split = this.props.params?.area.split("-");
           console.log(split);
           var from = null;
           var to = null;
@@ -228,9 +228,9 @@ class SearchSuggestion extends Component {
           // 2 loop times is maximum
           console.log("first split");
           console.log(split);
-          for (var i = 0; i < split.length; i++) {
+          for (var i = 0; i < split?.length; i++) {
             if (split[i].match(/\d+/) != null) {
-              if (split[i].match(/\d+/).length > 0) {
+              if (split[i].match(/\d+/)?.length > 0) {
                 const number = split[i].match(/\d+/)[0];
                 // console.log(number);
                 if (i == 0) {
@@ -278,15 +278,15 @@ class SearchSuggestion extends Component {
 
           // set price
           var priceText = "";
-          const split2 = this.props.params.price.split("-");
+          const split2 = this.props.params?.price.split("-");
 
           var from2 = null;
           var to2 = null;
           // get number only
           // 2 loop times is maximum
-          for (var i = 0; i < split2.length; i++) {
+          for (var i = 0; i < split2?.length; i++) {
             if (split2[i].match(/\d+/) != null) {
-              if (split2[i].match(/\d+/).length > 0) {
+              if (split2[i].match(/\d+/)?.length > 0) {
                 const number = split2[i].match(/\d+/)[0];
                 // console.log(number);
                 if (i == 0) {
@@ -324,11 +324,11 @@ class SearchSuggestion extends Component {
           tempFilters[3].title = priceText;
 
           // set address(district)
-          tempFilters[2].title = temp[parseInt(this.props.params.address)].text;
+          tempFilters[2].title = temp[parseInt(this.props.params?.address)]?.text;
           this.setState({
             address: {
-              selectedKey: temp[parseInt(this.props.params.address)].key,
-              text: temp[parseInt(this.props.params.address)].text,
+              selectedKey: temp[parseInt(this.props.params?.address)]?.key,
+              text: temp[parseInt(this.props.params?.address)]?.text,
             },
           });
 
@@ -338,10 +338,10 @@ class SearchSuggestion extends Component {
 
           // set advanced filter
           this.setState({
-            selectedBedroom: this.state.bedrooms[this.props.params.bedroom],
+            selectedBedroom: this.state.bedrooms[this.props.params?.bedroom],
           });
         },
-        (error) => {}
+        (error) => { }
       );
 
     // type: {
@@ -365,28 +365,28 @@ class SearchSuggestion extends Component {
     // this.props.history.push("/#");
     this.props.history.push(
       "/search-result-page/st=" +
-        this.state.searchText +
-        "/" +
-        this.state.type.selectedKey +
-        "/" +
-        this.state.fromAreaText +
-        "-" +
-        this.state.toAreaText +
-        // this.state.area.selectedKey +
-        "/" +
-        this.state.address.selectedKey +
-        "/" +
-        this.state.fromPriceText +
-        "-" +
-        this.state.toPriceText +
-        "/" +
-        this.state.selectedDoorDirection.title +
-        "/" +
-        this.state.selectedBedroom.value +
-        "/" +
-        this.state.selectedBathroom.value +
-        "/" +
-        this.state.selectedSort.value
+      this.state.searchText +
+      "/" +
+      this.state.type.selectedKey +
+      "/" +
+      this.state.fromAreaText +
+      "-" +
+      this.state.toAreaText +
+      // this.state.area.selectedKey +
+      "/" +
+      this.state.address.selectedKey +
+      "/" +
+      this.state.fromPriceText +
+      "-" +
+      this.state.toPriceText +
+      "/" +
+      this.state.selectedDoorDirection.title +
+      "/" +
+      this.state.selectedBedroom.value +
+      "/" +
+      this.state.selectedBathroom.value +
+      "/" +
+      this.state.selectedSort.value
     );
 
     // this.props.history.push(
@@ -454,18 +454,18 @@ class SearchSuggestion extends Component {
         break;
       case 2:
         this.state.address = {
-          selectedKey: option.key,
+          selectedKey: option?.key,
           text: option.text,
         };
         break;
       case 3:
         const split2 = option.text.split("-");
-        
+
         var from2 = null;
         var to2 = null;
         // get number only
         // 2 loop times is maximum
-        
+
         for (var i = 0; i < split2.length; i++) {
           if (split2[i].match(/\d+/) != null) {
             if (split2[i].match(/\d+/).length > 0) {
@@ -521,135 +521,135 @@ class SearchSuggestion extends Component {
               </span>
             </div>
           ) : null}
-          </div>
-          {/* search */}
+        </div>
+        {/* search */}
+        <div
+          style={{ alignItems: "flex-start" }}
+          className="search-bar vertical"
+        >
           <div
-            style={{ alignItems: "flex-start" }}
-            className="search-bar vertical"
+            style={{ width: "95%", marginLeft: "6px" }}
+            className="horizontal"
           >
-            <div
-              style={{ width: "95%", marginLeft: "6px" }}
-              className="horizontal"
-            >
-              <AiOutlineSearch />
-              <input
-                id={"search-bar"}
-                onChange={this.handleChangeInput}
-                type="text"
-                className="search-bar"
-                placeholder="Tìm kiếm địa điểm, khu vực"
-                autoComplete="off"
-                defaultValue={this.state.searchText}
-              />
-            </div>
+            <AiOutlineSearch />
+            <input
+              id={"search-bar"}
+              onChange={this.handleChangeInput}
+              type="text"
+              className="search-bar"
+              placeholder="Tìm kiếm địa điểm, khu vực"
+              autoComplete="off"
+              defaultValue={this.state.searchText}
+            />
           </div>
-          {/* filter for searching */}
-          {this.state.filters.map((filter) => (
-            <React.Fragment key={filter.key}>
-              <FilterDropBox
-                handler={this.handleSelectItem}
-                filterKey={filter.key}
-                filter={filter}
-                title="Khu vực"
-                value="Hồ Chí Minh"
-              />
-            </React.Fragment>
-          ))}
-          <div>
-            <div
-              onClick={() => {
-                this.setState({
-                  isMoreFilterMenuShown: !this.state.isMoreFilterMenuShown,
-                });
-              }}
-              className="more-filter-container"
-            >
-              <TuneOutlinedIcon className="icon" />
-              <span className="noselect title">Lọc thêm</span>
-            </div>
-            {this.state.isMoreFilterMenuShown ? (
-              <div className="more-filter-menu-wrapper">
-                <div className="more-filter-menu-container linear-gray-border">
-                  <div className="item">
-                    <div className="row">
-                      <span className="row-title">Hướng cửa chính</span>
-                      <div style={{ height: "4px" }}></div>
-                      <div
-                        onClick={() => {
-                          this.setState({
-                            isDoorDirectionMenuShown:
-                              !this.state.isDoorDirectionMenuShown,
-                          });
-                        }}
-                        className="drop-box linear-gray-border"
-                      >
-                        <span className="text noselect">
-                          {this.state.selectedDoorDirection.title}
-                        </span>
-                        <RiArrowDropDownLine className="more-filter-icon" />
+        </div>
+        {/* filter for searching */}
+        {this.state.filters.map((filter) => (
+          <React.Fragment key={filter.key}>
+            <FilterDropBox
+              handler={this.handleSelectItem}
+              filterKey={filter.key}
+              filter={filter}
+              title="Khu vực"
+              value="Hồ Chí Minh"
+            />
+          </React.Fragment>
+        ))}
+        <div>
+          <div
+            onClick={() => {
+              this.setState({
+                isMoreFilterMenuShown: !this.state.isMoreFilterMenuShown,
+              });
+            }}
+            className="more-filter-container"
+          >
+            <TuneOutlinedIcon className="icon" />
+            <span className="noselect title">Lọc thêm</span>
+          </div>
+          {this.state.isMoreFilterMenuShown ? (
+            <div className="more-filter-menu-wrapper">
+              <div className="more-filter-menu-container linear-gray-border">
+                <div className="item">
+                  <div className="row">
+                    <span className="row-title">Hướng cửa chính</span>
+                    <div style={{ height: "4px" }}></div>
+                    <div
+                      onClick={() => {
+                        this.setState({
+                          isDoorDirectionMenuShown:
+                            !this.state.isDoorDirectionMenuShown,
+                        });
+                      }}
+                      className="drop-box linear-gray-border"
+                    >
+                      <span className="text noselect">
+                        {this.state.selectedDoorDirection.title}
+                      </span>
+                      <RiArrowDropDownLine className="more-filter-icon" />
 
-                        {this.state.isDoorDirectionMenuShown ? (
-                          <div className="select-wrapper">
-                            <div className="select-container linear-gray-border">
-                              {this.state.doorDirections.map((item, index) => (
-                                <div
-                                  onClick={() => {
-                                    this.setState({
-                                      selectedDoorDirection: item,
-                                    });
-                                  }}
-                                  key={index}
-                                  className="item noselect"
-                                >
-                                  <span>{item.title}</span>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        ) : null}
-
-                        {/* {this.isDoorDirectionMenuShown ? } */}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="item">
-                    <div className="row">
-                      <span className="row-title">Phòng ngủ</span>
-                      <div style={{ height: "4px" }}></div>
-                      <div className="selection-box linear-gray-border">
-                        {this.state.bedrooms.map((item, index) => (
-                          <React.Fragment key={index}>
-                            {/* item */}
-                            {this.state.selectedBedroom.key === item.key ? (
-                              <span
-                                style={{
-                                  backgroundColor: "rgb(200, 200, 200)",
-                                }}
-                                className="selection-item noselect"
-                              >
-                                {item.title}
-                              </span>
-                            ) : (
-                              <span
+                      {this.state.isDoorDirectionMenuShown ? (
+                        <div className="select-wrapper">
+                          <div className="select-container linear-gray-border">
+                            {this.state.doorDirections.map((item, index) => (
+                              <div
                                 onClick={() => {
                                   this.setState({
-                                    selectedBedroom: item,
+                                    selectedDoorDirection: item,
                                   });
                                 }}
-                                className="selection-item noselect"
+                                key={index}
+                                className="item noselect"
                               >
-                                {item.title}
-                              </span>
-                            )}
+                                <span>{item.title}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      ) : null}
 
-                            {/* line */}
-                            {index !== this.state.bedrooms.length - 1 ? (
-                              <div className="selection-line"></div>
-                            ) : null}
-                          </React.Fragment>
-                        ))}
-                        {/* <span className="selection-item">Tất cả</span>
+                      {/* {this.isDoorDirectionMenuShown ? } */}
+                    </div>
+                  </div>
+                </div>
+
+                <div className="item">
+                  <div className="row">
+                    <span className="row-title">Phòng ngủ</span>
+                    <div style={{ height: "4px" }}></div>
+                    <div className="selection-box linear-gray-border">
+                      {this.state.bedrooms.map((item, index) => (
+                        <React.Fragment key={index}>
+                          {/* item */}
+                          {this.state.selectedBedroom.key === item.key ? (
+                            <span
+                              style={{
+                                backgroundColor: "rgb(200, 200, 200)",
+                              }}
+                              className="selection-item noselect"
+                            >
+                              {item.title}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => {
+                                this.setState({
+                                  selectedBedroom: item,
+                                });
+                              }}
+                              className="selection-item noselect"
+                            >
+                              {item.title}
+                            </span>
+                          )}
+
+                          {/* line */}
+                          {index !== this.state.bedrooms.length - 1 ? (
+                            <div className="selection-line"></div>
+                          ) : null}
+                        </React.Fragment>
+                      ))}
+                      {/* <span className="selection-item">Tất cả</span>
                         <div className="selection-line"></div>
                         <span className="selection-item">1+</span>
                         <div className="selection-line"></div>
@@ -658,47 +658,47 @@ class SearchSuggestion extends Component {
                         <span className="selection-item">3+</span>
                         <div className="selection-line"></div>
                         <span className="selection-item">4+</span> */}
-                      </div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="item">
-                    <div className="row">
-                      <span className="row-title">Phòng vệ sinh</span>
-                      <div style={{ height: "4px" }}></div>
-                      <div className="selection-box linear-gray-border">
-                        {this.state.bathrooms.map((item, index) => (
-                          <React.Fragment key={index}>
-                            {/* item */}
-                            {this.state.selectedBathroom.key === item.key ? (
-                              <span
-                                style={{
-                                  backgroundColor: "rgb(200, 200, 200)",
-                                }}
-                                className="selection-item noselect"
-                              >
-                                {item.title}
-                              </span>
-                            ) : (
-                              <span
-                                onClick={() => {
-                                  this.setState({
-                                    selectedBathroom: item,
-                                  });
-                                }}
-                                className="selection-item noselect"
-                              >
-                                {item.title}
-                              </span>
-                            )}
+                <div className="item">
+                  <div className="row">
+                    <span className="row-title">Phòng vệ sinh</span>
+                    <div style={{ height: "4px" }}></div>
+                    <div className="selection-box linear-gray-border">
+                      {this.state.bathrooms.map((item, index) => (
+                        <React.Fragment key={index}>
+                          {/* item */}
+                          {this.state.selectedBathroom.key === item.key ? (
+                            <span
+                              style={{
+                                backgroundColor: "rgb(200, 200, 200)",
+                              }}
+                              className="selection-item noselect"
+                            >
+                              {item.title}
+                            </span>
+                          ) : (
+                            <span
+                              onClick={() => {
+                                this.setState({
+                                  selectedBathroom: item,
+                                });
+                              }}
+                              className="selection-item noselect"
+                            >
+                              {item.title}
+                            </span>
+                          )}
 
-                            {/* line */}
-                            {index !== this.state.bathrooms.length - 1 ? (
-                              <div className="selection-line"></div>
-                            ) : null}
-                          </React.Fragment>
-                        ))}
-                        {/* <span className="selection-item">Tất cả</span>
+                          {/* line */}
+                          {index !== this.state.bathrooms.length - 1 ? (
+                            <div className="selection-line"></div>
+                          ) : null}
+                        </React.Fragment>
+                      ))}
+                      {/* <span className="selection-item">Tất cả</span>
                         <div className="selection-line"></div>
                         <span className="selection-item">1+</span>
                         <div className="selection-line"></div>
@@ -707,57 +707,57 @@ class SearchSuggestion extends Component {
                         <span className="selection-item">3+</span>
                         <div className="selection-line"></div>
                         <span className="selection-item">4+</span> */}
-                      </div>
                     </div>
                   </div>
+                </div>
 
-                  <div className="item">
-                    <div className="row">
-                      <span className="row-title">Sắp xếp</span>
-                      <div style={{ height: "4px" }}></div>
-                      <div
-                        onClick={() => {
-                          this.setState({
-                            isSortShown: !this.state.isSortShown,
-                          });
-                        }}
-                        className="drop-box linear-gray-border"
-                      >
-                        <span className="text noselect">
-                          {this.state.selectedSort.title}
-                        </span>
-                        <RiArrowDropDownLine className="more-filter-icon" />
+                <div className="item">
+                  <div className="row">
+                    <span className="row-title">Sắp xếp</span>
+                    <div style={{ height: "4px" }}></div>
+                    <div
+                      onClick={() => {
+                        this.setState({
+                          isSortShown: !this.state.isSortShown,
+                        });
+                      }}
+                      className="drop-box linear-gray-border"
+                    >
+                      <span className="text noselect">
+                        {this.state.selectedSort.title}
+                      </span>
+                      <RiArrowDropDownLine className="more-filter-icon" />
 
-                        {this.state.isSortShown ? (
-                          <div className="select-wrapper">
-                            <div className="select-container linear-gray-border">
-                              {this.state.sorts.map((item, index) => (
-                                <div
-                                  onClick={() => {
-                                    this.setState({
-                                      selectedSort: item,
-                                    });
-                                  }}
-                                  key={index}
-                                  className="item noselect"
-                                >
-                                  <span>{item.title}</span>
-                                </div>
-                              ))}
-                            </div>
+                      {this.state.isSortShown ? (
+                        <div className="select-wrapper">
+                          <div className="select-container linear-gray-border">
+                            {this.state.sorts.map((item, index) => (
+                              <div
+                                onClick={() => {
+                                  this.setState({
+                                    selectedSort: item,
+                                  });
+                                }}
+                                key={index}
+                                className="item noselect"
+                              >
+                                <span>{item.title}</span>
+                              </div>
+                            ))}
                           </div>
-                        ) : null}
+                        </div>
+                      ) : null}
 
-                        {/* {this.isDoorDirectionMenuShown ? } */}
-                      </div>
+                      {/* {this.isDoorDirectionMenuShown ? } */}
                     </div>
                   </div>
                 </div>
               </div>
-            ) : null}
-          </div>
+            </div>
+          ) : null}
+        </div>
 
-          {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
+        {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
           <FilterDropBox title="Khu vực" value="Hồ Chí Minh" />
           <FilterDropBox title="Mức giá" value="Tất cả" />
           <FilterDropBox title="Diện tích" value="Tất cả" /> */}
