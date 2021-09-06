@@ -179,11 +179,22 @@ class ProductDetailPage extends Component {
 
     return (
       <React.Fragment>
-        <div style={{display:"flex",height:"88vh", flexDirection:"column"}}>
-          <SearchSuggestion history={this.props.history} />
-          {/* product detail */}
+        <div
+          style={{
+            width: "100%",
+            borderBottom: "1px solid rgba(0,0,0,0.15)",
+          }}
+        />
 
-          <div className="product-detail-content">
+        <SearchSuggestion
+          params={this.props.match.params}
+          history={this.props.history}
+        />
+
+        {/* product detail */}
+
+        <div className="product-detail-wrapper">
+          <div className="horizontal">
             <div className="product-info-dislayed-wrapper">
               {/* left content */}
               <div className="product-info-container">
@@ -240,27 +251,19 @@ class ProductDetailPage extends Component {
 
                 <div className="divide"></div>
 
-                <span className="description-title">
-                  Đặc Điểm Bất Động Sản
-                </span>
+                <span className="description-title">Đặc Điểm Bất Động Sản</span>
 
                 <div className="short-detail-container">
                   <ul className="short-info-list">
                     <li className="short-info-item">
                       {(() => {
                         if (product?.typeName?.toLowerCase() === "chung cư") {
-                          return (
-                            <FaRegBuilding className="short-info-icon" />
-                          );
-                        } else if (
-                          product?.typeName?.toLowerCase() === "nhà"
-                        ) {
+                          return <FaRegBuilding className="short-info-icon" />;
+                        } else if (product?.typeName?.toLowerCase() === "nhà") {
                           return (
                             <HomeOutlinedIcon className="short-info-icon" />
                           );
-                        } else if (
-                          product?.typeName?.toLowerCase() === "đất"
-                        ) {
+                        } else if (product?.typeName?.toLowerCase() === "đất") {
                         }
                       })()}
 
@@ -291,9 +294,7 @@ class ProductDetailPage extends Component {
                     <li className="short-info-item">
                       <HotelOutlinedIcon className="short-info-icon" />
                       <div className="short-info-content-box">
-                        <span className="short-info-label1">
-                          Số phòng ngủ:
-                        </span>
+                        <span className="short-info-label1">Số phòng ngủ:</span>
                         <span className="short-info-label2">
                           {product?.numberOfBedroom}
                         </span>
@@ -316,12 +317,14 @@ class ProductDetailPage extends Component {
                       </div>
                     </li>
                   </ul>
+                </div>
 
+                <div className="short-detail-container">
                   <ul className="short-info-list">
                     <li className="short-info-item">
                       <img
                         className="short-info-icon"
-                        alt="Giá"
+                        alt="Giá/m2"
                         src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
                       />
                       <div className="short-info-content-box">
@@ -364,7 +367,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Chiều dài:</span>
                         <span className="short-info-label2">
-                          {product?.numberOfBedroom} {Constants.squareMeter}
+                          {product?.numberOfBedroom} m
                         </span>
                       </div>
                     </li>
@@ -374,12 +377,14 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Chiều rộng:</span>
                         <span className="short-info-label2">
-                          {product?.numberOfBathroom} {Constants.squareMeter}
+                          {product?.numberOfBathroom} m
                         </span>
                       </div>
                     </li>
                   </ul>
+                </div>
 
+                <div className="short-detail-container">
                   <ul className="short-info-list">
                     <li className="short-info-item">
                       <img
@@ -427,6 +432,7 @@ class ProductDetailPage extends Component {
                           Giấy tờ pháp lý:
                         </span>
                         <span
+                          style={{ fontSize: "18px" }}
                           className="short-info-label2"
                         >
                           {product?.juridical}
@@ -439,6 +445,7 @@ class ProductDetailPage extends Component {
                       <div className="short-info-content-box">
                         <span className="short-info-label1">Nội thất:</span>
                         <span
+                          style={{ fontSize: "18px" }}
                           className="short-info-label2"
                         >
                           {(() => {
@@ -496,9 +503,7 @@ class ProductDetailPage extends Component {
                 </span>
                 <div className="average-price-wrapper">
                   <div className="average-price-tab">
-                    <span className="info">
-                      {this.state.product?.disName}
-                    </span>
+                    <span className="info">{this.state.product?.disName}</span>
                     <span className="sub-info">
                       {"~"}
                       {(() => {
@@ -516,9 +521,7 @@ class ProductDetailPage extends Component {
                     </span>
                   </div>
                   <div className="average-price-tab">
-                    <span className="info">
-                      {this.state.product?.wardName}
-                    </span>
+                    <span className="info">{this.state.product?.wardName}</span>
                     <span className="sub-info">
                       {"~"}
                       {(() => {
@@ -554,9 +557,8 @@ class ProductDetailPage extends Component {
                         }}
                         style={{
                           width:
-                            (
-                              100 / this.state.amenityTypes.length
-                            ).toString() + "%",
+                            (100 / this.state.amenityTypes.length).toString() +
+                            "%",
                         }}
                         className="tab-item"
                       >
@@ -592,8 +594,7 @@ class ProductDetailPage extends Component {
                                   <div className="right-box">
                                     <LocationOnIcon className="distance-icon" />
                                     <span className="distance-text">
-                                      {Math.round(item.distance * 100) /
-                                        100}{" "}
+                                      {Math.round(item.distance * 100) / 100}{" "}
                                       km
                                     </span>
                                   </div>
@@ -634,9 +635,7 @@ class ProductDetailPage extends Component {
                             }}
                             defaultZoom={20}
                             googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&callback=initMap`}
-                            loadingElement={
-                              <div style={{ height: `100%` }} />
-                            }
+                            loadingElement={<div style={{ height: `100%` }} />}
                             containerElement={
                               <div
                                 style={{
@@ -656,22 +655,23 @@ class ProductDetailPage extends Component {
               </div>
 
               {/* right content */}
-              <div className="linear-gray-border contact-wrapper">
-                <div
-                  style={{
-                    backgroundImage: "url('" + product?.sellerAvatar + "')",
-                  }}
-                  className="contact-pic"
-                ></div>
-                <div className="contact-name">
-                  {product?.sellerName}
-                  {/*Nguyen Duc Huy*/}
-                </div>
-                <div className="contact-button">
-                  {/* <BsFillChatDotsFill /> */}
+              <div style={{ marginTop: "4px" }} className="contact-wrapper">
+                <div className="linear-gray-border contact-wrapper-fixed-box contact-wrapper">
+                  <div
+                    style={{
+                      backgroundImage: "url('" + product?.sellerAvatar + "')",
+                    }}
+                    className="contact-pic"
+                  ></div>
+                  <div className="contact-name">
+                    {product?.sellerName}
+                    {/*Nguyen Duc Huy*/}
+                  </div>
+                  <div className="contact-button">
+                    {/* <BsFillChatDotsFill /> */}
 
-                  {/* <div style={{width: "18px"}}></div> */}
-                  {/* <Link
+                    {/* <div style={{width: "18px"}}></div> */}
+                    {/* <Link
                     className="link contact-title-container"
                     to="/chat-page"
                     onClick={() => {
@@ -682,24 +682,29 @@ class ProductDetailPage extends Component {
                       &#32; Nhắn tin
                     </div>
                   </Link> */}
-                  <ChatButton product={product} />
-                </div>
+                    <ChatButton product={product} />
+                  </div>
 
-                <div className="more-post-button">
-                  <div className="contact-title-container">
-                    &#32;Xem thêm bài viết
+                  <div className="more-post-button">
+                    <div className="contact-title-container">
+                      &#32;Xem thêm bài viết
+                    </div>
+                  </div>
+
+                  <div className="more-post-button">
+                    <div className="contact-title-container">
+                      &#32;Xem hồ sơ
+                    </div>
                   </div>
                 </div>
 
-                <div className="more-post-button">
-                  <div className="contact-title-container">
-                    &#32;Xem hồ sơ
-                  </div>
-                </div>
               </div>
+
             </div>
+
           </div>
         </div>
+
       </React.Fragment>
     );
   }

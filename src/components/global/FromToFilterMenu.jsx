@@ -34,12 +34,9 @@ class FromToFilterMenu extends Component {
     handleConfirm = () => {
         const fromAreaText = document.getElementById("sug-from-input").value;
         const toAreaText = document.getElementById("sug-to-input").value;
-        console.log("sdakljf");
-        console.log(fromAreaText);
-        console.log(toAreaText);
         const option = {
             key: 99,
-            text: fromAreaText + Constants.squareMeter + " - " + toAreaText + Constants.squareMeter,
+            text: fromAreaText + this.props.sign + " - " + toAreaText + this.props.sign,
         };
         this.props.handler(option);
     }
@@ -63,14 +60,14 @@ class FromToFilterMenu extends Component {
             {/* <p>qweqwe</p> */}
             <div className="search-suggestion-filter-menu-from-to-container">
                 <div className="box">
-                    <span className="title">Tối thiểu</span>
+                    <span className="title">Từ</span>
                     <div className="field-container">
-                        <input id="sug-from-input" placeholder={Constants.squareMeter} type="text" className="input" />
+                        <input id="sug-from-input" placeholder={this.props.sign} type="text" className="input" />
                     </div>
 
-                    <span className="title">Tối đa</span>
+                    <span className="title">Tới</span>
                     <div className="field-container">
-                        <input id="sug-to-input" placeholder={Constants.squareMeter} type="text" className="input" />
+                        <input id="sug-to-input" placeholder={this.props.sign} type="text" className="input" />
                     </div>
 
                     <div onClick={this.handleConfirm} className="primary-background-color confirm">

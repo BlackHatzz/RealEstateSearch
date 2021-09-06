@@ -136,6 +136,7 @@ input.search-bar:focus {
   background-color: white;
   border-radius: 4px;
   border: 1px solid rgb(200, 200, 200);
+  z-index: 1;
 }
 
 .search-suggestion-filter-menu>.line {
@@ -223,4 +224,157 @@ input.search-bar:focus {
   font-size: 14px;
   text-align: center;
   color: white;
+}
+
+.more-filter-container {
+  height: 100%;
+  width: 115px;
+  background-color: transparent;
+  padding-right: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.more-filter-container .icon {
+  width: 20px;
+  height: 20px;
+  background-color: transparent;
+}
+
+.more-filter-container>.title {
+  font-size: 14px;
+}
+
+.more-filter-menu-wrapper {
+  position: relative;
+  width: 0px;
+  height: 0px;
+  background-color: green;
+}
+
+.more-filter-menu-container {
+  position: relative;
+  width: 400px;
+  height: auto;
+  background-color: white;
+  top: 10px;
+  left: -130px;
+  padding-bottom: 24px;
+  z-index: 2;
+}
+
+.more-filter-menu-container .item {
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.more-filter-menu-container .item .row {
+  width: 92%;
+  padding-top: 12px;
+}
+
+.more-filter-menu-container .item .row .row-title {
+  font-size: 14px;
+}
+
+.more-filter-menu-container .drop-box {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.more-filter-menu-container .drop-box:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+.more-filter-menu-container .drop-box .text {
+  font-size: 14px;
+  padding-left: 12px;
+}
+
+.more-filter-menu-container .drop-box .more-filter-icon {
+  width: 40px;
+  height: 40px;
+  padding-right: 8px;
+  color: gray;
+}
+
+.more-filter-menu-container .drop-box .select-wrapper {
+  width: 92%;
+  height: 0px;
+  position: absolute;
+}
+
+.more-filter-menu-container .drop-box .select-container {
+  position: relative;
+  top: 20px;
+  width: 100%;
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: white;
+  padding: 0;
+  margin: 0;
+}
+
+.more-filter-menu-container .select-container>.item {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.more-filter-menu-container .select-container>.item span {
+  font-size: 14px;
+}
+
+.more-filter-menu-container .select-container>.item:hover span {
+  font-weight: bold;
+  color: #0C67CE;
+}
+
+.more-filter-menu-container .selection-box {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.more-filter-menu-container .selection-box .selection-item {
+  width: 20%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+.more-filter-menu-container .selection-box .selection-item:hover {
+  background-color: rgb(200, 200, 200);
+}
+
+.more-filter-menu-container .selection-line {
+  height: 100%;
+  width: 1px;
+  padding: 0;
+  margin: 0;
+  background-color: silver;
 }

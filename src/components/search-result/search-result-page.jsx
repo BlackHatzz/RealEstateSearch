@@ -12,9 +12,39 @@ class SearchResultPage extends Component {
     items: [],
     isLoaded: false,
     searchText: null,
+
+    suggestionInfo: {},
+    realEstateTypes: [
+      { key: 0, text: "Tất cả" },
+      { key: 1, text: "Chung Cư" },
+      { key: 2, text: "Nhà" },
+      { key: 3, text: "Đất" },
+    ],
+    doorDirections: [
+      { key: 0, title: "Tất cả hướng" },
+      { key: 1, title: "Đông" },
+      { key: 2, title: "Đông Nam" },
+      { key: 3, title: "Nam" },
+      { key: 4, title: "Tây Nam" },
+      { key: 5, title: "Tây" },
+      { key: 6, title: "Tây Bắc" },
+      { key: 7, title: "Bắc" },
+      { key: 8, title: "Đông Bắc" },
+    ],
   };
 
   componentDidMount() {
+    // set info
+    // this.setState({
+    //   suggestionInfo: {
+    //     // type: this.state.realEstateTypes[parseInt(this.props.match.params.type)],
+    //     type: { key: 1, text: "Chung Cư" },
+    //   }
+    // });
+    this.state.suggestionInfo = 2;
+    console.log("nope");
+    console.log(this.state.suggestionInfo);
+
     //this.props.match.params.searchtext
     this.state.searchText =
       this.props.match.params.searchtext === undefined ||
@@ -28,10 +58,37 @@ class SearchResultPage extends Component {
           ? ""
           : this.props.match.params.searchtext,
     });
-    var fromPrice = 0.0; // million vnd
-    var toPrice = 0.0;
+    var fromPrice = null; // million vnd
+    var toPrice = null;
     var fromArea = null; // million / m2
     var toArea = null;
+    var address =
+      this.props.match.params.address === "0"
+        ? null
+        : parseInt(this.props.match.params.address);
+    var doorDirection = this.props.match.params.doorDirection
+      ?.toLowerCase()
+      .includes("tất cả")
+      ? null
+      : this.props.match.params.doorDirection;
+    var bedroom =
+      this.props.match.params.bedroom === "0" ||
+      this.props.match.params.bedroom === undefined
+        ? null
+        : parseInt(this.props.match.params.bedroom);
+    var bathroom =
+      this.props.match.params.bathroom === "0" ||
+      this.props.match.params.bathroom === undefined
+        ? null
+        : parseInt(this.props.match.params.bathroom);
+    var sort =
+      this.props.match.params.sort === "view" ||
+      this.props.match.params.sort === undefined
+        ? null
+        : this.props.match.params.sort;
+
+    console.log("path");
+    console.log(this.props);
 
     // if (this.props.match.params.area == 0) {
     //   fromArea = null;
@@ -89,7 +146,7 @@ class SearchResultPage extends Component {
             }
           }
         } else if (split[0] !== "null" && split[1] === "null") {
-          fromArea = parseInt(split[1]);
+          fromArea = parseInt(split[0]);
         } else if (split[0] === "null" && split[1] !== "null") {
           toArea = parseInt(split[1]);
         }
@@ -142,12 +199,30 @@ class SearchResultPage extends Component {
         break;
 
       default:
+        // 2 elements is max
+        const split2 = this.props.match.params.price.toString().split("-");
+
+        if (split2[0] !== "null" && split2[1] !== "null") {
+          for (var i = 0; i < split2.length; i++) {
+            const numberString = split2[i].match(/\d+/)[0];
+            if (i == 0) {
+              fromPrice = parseInt(numberString);
+            } else if (i == 1) {
+              toPrice = parseInt(numberString);
+            }
+          }
+        } else if (split2[0] !== "null" && split2[1] === "null") {
+          fromPrice = parseInt(split2[0]);
+        } else if (split2[0] === "null" && split2[1] !== "null") {
+          toPrice = parseInt(split2[1]);
+        }
         break;
     }
 
     // console.log(this.props.match.params.price);
-    // console.log(fromPrice);
-    // console.log(toPrice);
+    console.log("area info");
+    console.log(fromArea);
+    console.log(toArea);
 
     const requestOptions = {
       method: "POST",
@@ -155,7 +230,8 @@ class SearchResultPage extends Component {
       body: JSON.stringify({
         page: 0,
         search: this.state.searchText,
-        disName: null,
+        disId: address,
+        wardId: null,
         minPrice: fromPrice,
         maxPrice: toPrice,
         minArea: fromArea,
@@ -164,8 +240,30 @@ class SearchResultPage extends Component {
           this.props.match.params.type == 0
             ? null
             : this.props.match.params.type,
+        direction: doorDirection,
+        numberOfBedroom: bedroom,
+        numberOfBathroom: bathroom,
+        sort: sort,
       }),
     };
+
+    // const requestOptions = {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     page: 0,
+    //     search: this.state.searchText,
+    //     disName: null,
+    //     minPrice: fromPrice,
+    //     maxPrice: toPrice,
+    //     minArea: fromArea,
+    //     maxArea: toArea,
+    //     type:
+    //       this.props.match.params.type == 0
+    //         ? null
+    //         : this.props.match.params.type,
+    //   }),
+    // };
 
     fetch(Constants.getRealEstateRef, requestOptions)
       .then((res) => res.json())
@@ -220,7 +318,13 @@ class SearchResultPage extends Component {
             key={item.id}
             className="link"
             to={{
-              pathname: "/product-detail-page/" + item.id,
+              pathname:
+                "/product-detail-page/" +
+                item.id +
+                `${this.props.location.pathname.replace(
+                  "/search-result-page",
+                  ""
+                )}`,
               product: item,
             }}
           >

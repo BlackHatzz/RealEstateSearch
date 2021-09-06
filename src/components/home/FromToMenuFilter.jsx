@@ -27,10 +27,10 @@ class FromToMenuFilter extends Component {
     this.props.handler(
       -1,
       fromText.toString() +
-        Constants.squareMeter +
+        this.props.sign +
         " - " +
         toText.toString() +
-        Constants.squareMeter
+        this.props.sign
     );
   };
 
@@ -63,20 +63,20 @@ class FromToMenuFilter extends Component {
         <div>
           <div className="noselect home-filter-from-to-option">
             <form className="home-filter-from-to-container">
-              <span className="title">Tối thiểu</span>
+              <span className="title">Từ</span>
               <div className="home-filter-input-container">
                 <input
                   id="fromInput"
                   type="text"
-                  placeholder={Constants.squareMeter}
+                  placeholder={this.props.sign}
                 />
               </div>
-              <span className="title">Tối đa</span>
+              <span className="title">Tới</span>
               <div className="home-filter-input-container">
                 <input
                   id="toInput"
                   type="text"
-                  placeholder={Constants.squareMeter}
+                  placeholder={this.props.sign}
                 />
               </div>
 

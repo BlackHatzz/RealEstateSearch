@@ -93,7 +93,7 @@ const App = () => {
         />
         <Route path="/signup" component={Signup} />
         <Route
-          path="/search-result-page/st=:searchtext?/:type/:area/:adress/:price"
+          path="/search-result-page/st=:searchtext?/:type/:area/:address/:price/:doorDirection/:bedroom/:bathroom/:sort"
           // component={SearchResultPage}
           render={(props) => (
             <SearchResultPage
@@ -108,7 +108,7 @@ const App = () => {
           )}
         ></Route>
         <Route
-          path="/product-detail-page/:id"
+          path="/product-detail-page/:id/st=:searchtext?/:type/:area/:address/:price/:doorDirection/:bedroom/:bathroom/:sort"
           component={ProductDetailPage}
         ></Route>
         <Route path="/assigned-post-page" component={AssignedPostPage}></Route>
