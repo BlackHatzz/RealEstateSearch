@@ -86,25 +86,27 @@ class FilterDropBox extends Component {
       <React.Fragment>
         <div
           // onClick={this.switchMenuStatus}
-          className="noselect filter-drop-box horizontal"
+          className="noselect filter-drop-box"
         >
-          <div style={{ alignItems: "flex-start" }} className="vertical">
-            <div onClick={this.switchMenuStatus} className="filter-drop-box-label horizontal">
+          <div onClick={this.switchMenuStatus} className="filter-drop-box-label"
+          >
+            <span>
               {this.state.filter.filterName}
-              <RiArrowDropDownLine style={{ width: "30px", height: "25px" }} />
-            </div>
-            <div className="filter-drop-box-value">
-              {this.state.filter.title}
-            </div>
-            <div className="search-suggestion-filter-menu-container">
-              {/* {this.state.isMenuShown ? (
+            </span>
+            <RiArrowDropDownLine style={{ width: "30px", height: "25px" }} />
+          </div>
+          <div className="filter-drop-box-value">
+            {this.state.filter.title}
+          </div>
+          <div className="search-suggestion-filter-menu-container"
+          >
+            {/* {this.state.isMenuShown ? (
                 <FilterItemListMenu
                   handler={this.handleSelectItem}
                   options={this.props.filter.options}
                 />
               ) : null} */}
-              {this.renderMenu()}
-            </div>
+            {this.renderMenu()}
           </div>
         </div>
       </React.Fragment>

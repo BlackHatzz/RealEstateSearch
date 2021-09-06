@@ -3,6 +3,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import FilterDropBox from "./filter-drop-box";
 import "./shared.css";
 import "./search-suggestion.css";
+import "./search-suggestion-mobile.css";
 import Constants from "../global/Constants";
 
 class SearchSuggestion extends Component {
@@ -138,18 +139,18 @@ class SearchSuggestion extends Component {
       // this.props.history.push("/#");
       this.props.history.push(
         "/search-result-page/st=" +
-          this.state.searchText +
-          "/" +
-          this.state.type.selectedKey +
-          "/" +
-          this.state.fromAreaText +
-          "-" +
-          this.state.toAreaText +
-          // this.state.area.selectedKey +
-          "/" +
-          this.state.address.selectedKey +
-          "/" +
-          this.state.price.selectedKey
+        this.state.searchText +
+        "/" +
+        this.state.type.selectedKey +
+        "/" +
+        this.state.fromAreaText +
+        "-" +
+        this.state.toAreaText +
+        // this.state.area.selectedKey +
+        "/" +
+        this.state.address.selectedKey +
+        "/" +
+        this.state.price.selectedKey
       );
 
       // this.props.history.push(
@@ -250,8 +251,19 @@ class SearchSuggestion extends Component {
 
   render() {
     return (
-      <div id="search-suggestion" className="suggestion-container vertical">
-        <form onSubmit={this.handleSearch} className="horizontal">
+      <form onSubmit={this.handleSearch} className="suggestion-container">
+
+        {/* search */}
+        <div className="search-bar" >
+          <AiOutlineSearch />
+          <input
+            id={"search-bar"}
+            onChange={this.handleChangeInput}
+            type="text"
+            className="search-bar"
+            placeholder="Tìm kiếm địa điểm, khu vực"
+            autoComplete="off"
+          />
           {this.state.isTooltipShown ? (
             <div className="search-suggestion-tooltip noselect">
               <span className="tooltiptext">
@@ -259,54 +271,34 @@ class SearchSuggestion extends Component {
               </span>
             </div>
           ) : null}
-          {/* search */}
-          <div
-            style={{ alignItems: "flex-start" }}
-            className="search-bar vertical"
-          >
-            <div
-              style={{ width: "95%", marginLeft: "6px" }}
-              className="horizontal"
-            >
-              <AiOutlineSearch />
-              <input
-                id={"search-bar"}
-                onChange={this.handleChangeInput}
-                type="text"
-                className="search-bar"
-                placeholder="Tìm kiếm địa điểm, khu vực"
-                autoComplete="off"
-              />
-            </div>
-          </div>
-          {/* filter for searching */}
-          {this.state.filters.map((filter) => (
-            <React.Fragment key={filter.key}>
-              <FilterDropBox
-                handler={this.handleSelectItem}
-                filterKey={filter.key}
-                filter={filter}
-                title="Khu vực"
-                value="Hồ Chí Minh"
-              />
-            </React.Fragment>
-          ))}
-          {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
+        </div>
+        {/* filter for searching */}
+        {this.state.filters.map((filter) => (
+          <React.Fragment key={filter.key}>
+            <FilterDropBox
+              handler={this.handleSelectItem}
+              filterKey={filter.key}
+              filter={filter}
+              title="Khu vực"
+              value="Hồ Chí Minh"
+            />
+          </React.Fragment>
+        ))}
+        {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
           <FilterDropBox title="Khu vực" value="Hồ Chí Minh" />
           <FilterDropBox title="Mức giá" value="Tất cả" />
           <FilterDropBox title="Diện tích" value="Tất cả" /> */}
 
-          {/* search button */}
-          {/* <Link
+        {/* search button */}
+        {/* <Link
             className="link"
             to={{
               pathname: "/search-result-page/" + this.state.searchText,
             }}
           > */}
-          <input className="search-button" type="submit" value="Tìm Kiếm" />
-          {/* </Link> */}
-        </form>
-      </div>
+        <input className="search-button" type="submit" value="Tìm Kiếm" />
+        {/* </Link> */}
+      </form>
     );
   }
 }

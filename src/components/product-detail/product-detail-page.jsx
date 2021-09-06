@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import SearchSuggestion from "../global/search-suggestion";
 import "../global/shared.css";
 import "./product-detail.css";
+import "./product-detail-mobile.css";
 import DetailBox from "./detail-box";
 import { BiArea } from "react-icons/bi";
 import { BiMoney } from "react-icons/bi";
@@ -116,7 +117,7 @@ class ProductDetailPage extends Component {
                   averageWardPriceInfo: result,
                 });
               },
-              (error) => {}
+              (error) => { }
             );
           fetch(
             Constants.getAveragePrice(
@@ -136,10 +137,10 @@ class ProductDetailPage extends Component {
                   averageDistrictPriceInfo: result,
                 });
               },
-              (error) => {}
+              (error) => { }
             );
         },
-        (error) => {}
+        (error) => { }
       );
 
     // getAveragePrice(addressType,realEstateId,month,realEstateType,year)
@@ -178,192 +179,168 @@ class ProductDetailPage extends Component {
 
     return (
       <React.Fragment>
-        <div
-          style={{
-            display: "flex",
-            width: "100vw",
-            height: "100vh",
-            flexDirection: "column",
-          }}
-        >
-          <div style={{ zIndex: 2 }}>
-            {/* <BuyerNavbar /> */}
-            <div
-              style={{
-                width: "100%",
-                borderBottom: "1px solid rgba(0,0,0,0.15)",
-              }}
-            />
-            <SearchSuggestion history={this.props.history} />
-          </div>
+        <div style={{display:"flex",height:"88vh", flexDirection:"column"}}>
+          <SearchSuggestion history={this.props.history} />
           {/* product detail */}
 
-          <div
-            style={{
-              overflowY: "auto",
-              flex: 1,
-            }}
-          >
-            <div className="horizontal">
-              <div className="product-info-dislayed-wrapper">
-                {/* left content */}
-                <div className="product-info-container">
-                  {/* product image */}
-                  <Carousel>
-                    {product?.images?.map((item, index) => (
-                      <div key={index} className="product-image-wrapper">
-                        <img
-                          className="product-selected-image"
-                          src={
-                            // product != undefined ? product.images[0].imgUrl : ""
-                            item.imgUrl
-                          }
-                          // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
-                          alt=""
-                        />
-                      </div>
-                    ))}
-                  </Carousel>
+          <div className="product-detail-content">
+            <div className="product-info-dislayed-wrapper">
+              {/* left content */}
+              <div className="product-info-container">
+                {/* product image */}
+                <Carousel>
+                  {product?.images?.map((item, index) => (
+                    <div key={index} className="product-image-wrapper">
+                      <img
+                        className="product-selected-image"
+                        src={
+                          // product != undefined ? product.images[0].imgUrl : ""
+                          item.imgUrl
+                        }
+                        // src="https://file4.batdongsan.com.vn/resize/745x510/2021/06/13/20210613095556-483e_wm.jpg"
+                        alt=""
+                      />
+                    </div>
+                  ))}
+                </Carousel>
 
-                  <div style={{ height: "10px", width: "100%" }}></div>
-                  {/* product title */}
-                  <span className="product-info-title">
-                    {product?.title}
-                    {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
+                <div style={{ height: "10px", width: "100%" }}></div>
+                {/* product title */}
+                <span className="product-info-title">
+                  {product?.title}
+                  {/* PHÚ ĐÔNG PREMIER KÝ HĐ TRỰC TIẾP CDT CÒN CĂN ĐỘC QUYỀN TẦNG
                   ĐẸP, GIÁ TỐT */}
-                  </span>
-                  <div style={{ height: "10px", width: "100%" }}></div>
+                </span>
+                <div style={{ height: "10px", width: "100%" }}></div>
 
-                  <div
-                    style={{
-                      color: "gray",
-                      fontWeight: "bold",
-                      fontSize: "18px",
-                    }}
-                    className="product-short-detail"
-                  >
-                    {product?.price} tỷ - {product?.area} m²
-                  </div>
+                <div
+                  style={{
+                    color: "gray",
+                    fontWeight: "bold",
+                    fontSize: "18px",
+                  }}
+                  className="product-short-detail"
+                >
+                  {product?.price} tỷ - {product?.area} m²
+                </div>
 
-                  <div className="product-short-detail">
-                    Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
-                    {product?.wardName}, {product?.disName}
-                    {/*Hôm nay*/}
-                  </div>
-                  <div className="product-short-detail">
-                    Ngày đăng: {product?.createAt}
-                    {/*Hôm nay*/}
-                  </div>
+                <div className="product-short-detail">
+                  Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
+                  {product?.wardName}, {product?.disName}
+                  {/*Hôm nay*/}
+                </div>
+                <div className="product-short-detail">
+                  Ngày đăng: {product?.createAt}
+                  {/*Hôm nay*/}
+                </div>
 
-                  <div className="product-short-detail">
-                    {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
-                  </div>
+                <div className="product-short-detail">
+                  {/* Giá trung bình khu vực: {product.averagePrice} triệu/m² */}
+                </div>
 
-                  <div className="divide"></div>
+                <div className="divide"></div>
 
-                  <span className="description-title">
-                    Đặc Điểm Bất Động Sản
-                  </span>
+                <span className="description-title">
+                  Đặc Điểm Bất Động Sản
+                </span>
 
-                  <div className="short-detail-container">
-                    <ul className="short-info-list">
-                      <li className="short-info-item">
-                        {(() => {
-                          if (product?.typeName?.toLowerCase() === "chung cư") {
-                            return (
-                              <FaRegBuilding className="short-info-icon" />
-                            );
-                          } else if (
-                            product?.typeName?.toLowerCase() === "nhà"
-                          ) {
-                            return (
-                              <HomeOutlinedIcon className="short-info-icon" />
-                            );
-                          } else if (
-                            product?.typeName?.toLowerCase() === "đất"
-                          ) {
-                          }
-                        })()}
+                <div className="short-detail-container">
+                  <ul className="short-info-list">
+                    <li className="short-info-item">
+                      {(() => {
+                        if (product?.typeName?.toLowerCase() === "chung cư") {
+                          return (
+                            <FaRegBuilding className="short-info-icon" />
+                          );
+                        } else if (
+                          product?.typeName?.toLowerCase() === "nhà"
+                        ) {
+                          return (
+                            <HomeOutlinedIcon className="short-info-icon" />
+                          );
+                        } else if (
+                          product?.typeName?.toLowerCase() === "đất"
+                        ) {
+                        }
+                      })()}
 
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Loại:</span>
-                          <span className="short-info-label2">
-                            {product?.typeName}
-                            {/*Chung Cư*/}
-                          </span>
-                        </div>
-                      </li>
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">Loại:</span>
+                        <span className="short-info-label2">
+                          {product?.typeName}
+                          {/*Chung Cư*/}
+                        </span>
+                      </div>
+                    </li>
 
-                      {product?.typeName === "Nhà" ? (
-                        <li className="short-info-item">
-                          <img
-                            className="short-info-icon"
-                            alt="Hướng cửa chính"
-                            src="https://i.ibb.co/BtkH9J7/stairs.png"
-                          />
-                          <div className="short-info-content-box">
-                            <span className="short-info-label1">Số tầng:</span>
-                            <span className="short-info-label2">
-                              {product?.floor}
-                            </span>
-                          </div>
-                        </li>
-                      ) : null}
-                      <li className="short-info-item">
-                        <HotelOutlinedIcon className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Số phòng ngủ:
-                          </span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBedroom}
-                          </span>
-                        </div>
-                      </li>
-
+                    {product?.typeName === "Nhà" ? (
                       <li className="short-info-item">
                         <img
                           className="short-info-icon"
-                          alt="Số phòng vệ sinh"
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png"
+                          alt="Hướng cửa chính"
+                          src="https://i.ibb.co/BtkH9J7/stairs.png"
                         />
                         <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Số nhà vệ sinh:
-                          </span>
+                          <span className="short-info-label1">Số tầng:</span>
                           <span className="short-info-label2">
-                            {product?.numberOfBathroom}
+                            {product?.floor}
                           </span>
                         </div>
                       </li>
-                    </ul>
-                  </div>
+                    ) : null}
+                    <li className="short-info-item">
+                      <HotelOutlinedIcon className="short-info-icon" />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Số phòng ngủ:
+                        </span>
+                        <span className="short-info-label2">
+                          {product?.numberOfBedroom}
+                        </span>
+                      </div>
+                    </li>
 
-                  <div className="short-detail-container">
-                    <ul className="short-info-list">
-                      <li className="short-info-item">
-                        <img
-                          className="short-info-icon"
-                          alt="Giá/m2"
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
-                        />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Giá/{Constants.squareMeter}:
+                    <li className="short-info-item">
+                      <img
+                        className="short-info-icon"
+                        alt="Số phòng vệ sinh"
+                        src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png"
+                      />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Số nhà vệ sinh:
+                        </span>
+                        <span className="short-info-label2">
+                          {product?.numberOfBathroom}
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+
+                  <ul className="short-info-list">
+                    <li className="short-info-item">
+                      <img
+                        className="short-info-icon"
+                        alt="Giá"
+                        src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
+                      />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Giá:
+                        </span>
+                        <span className="short-info-label2">
+                          ~
+                          {Math.round(
+                            (product?.price / product?.area) * 1000 * 100
+                          ) / 100}
+                          <span style={{ fontSize: "13px" }}>
+                            {" "}
+                            triệu/{Constants.squareMeter}
                           </span>
-                          <span className="short-info-label2">
-                            ~
-                            {Math.round(
-                              (product?.price / product?.area) * 1000 * 100
-                            ) / 100}
-                            <span style={{ fontSize: "13px" }}>
-                              {" "}
-                              triệu/{Constants.squareMeter}
-                            </span>
-                          </span>
-                        </div>
-                      </li>
-                      {/* <li className="short-info-item">
+                        </span>
+                      </div>
+                    </li>
+                    {/* <li className="short-info-item">
                         <BiMoney className="short-info-icon" />
                         <div className="short-info-content-box">
                           <span className="short-info-label1">Mức giá:</span>
@@ -372,333 +349,329 @@ class ProductDetailPage extends Component {
                           </span>
                         </div>
                       </li> */}
-                      <li className="short-info-item">
-                        <BiArea className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Diện tích:</span>
-                          <span className="short-info-label2">
-                            {product?.area} m²{/*68 m²*/}
-                          </span>
-                        </div>
-                      </li>
+                    <li className="short-info-item">
+                      <BiArea className="short-info-icon" />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">Diện tích:</span>
+                        <span className="short-info-label2">
+                          {product?.area} m²{/*68 m²*/}
+                        </span>
+                      </div>
+                    </li>
 
-                      <li className="short-info-item">
-                        <AiOutlineColumnHeight className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Chiều dài:</span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBedroom} {Constants.squareMeter}
-                          </span>
-                        </div>
-                      </li>
+                    <li className="short-info-item">
+                      <AiOutlineColumnHeight className="short-info-icon" />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">Chiều dài:</span>
+                        <span className="short-info-label2">
+                          {product?.numberOfBedroom} {Constants.squareMeter}
+                        </span>
+                      </div>
+                    </li>
 
-                      <li className="short-info-item">
-                        <AiOutlineColumnWidth className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Chiều rộng:</span>
-                          <span className="short-info-label2">
-                            {product?.numberOfBathroom} {Constants.squareMeter}
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
+                    <li className="short-info-item">
+                      <AiOutlineColumnWidth className="short-info-icon" />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">Chiều rộng:</span>
+                        <span className="short-info-label2">
+                          {product?.numberOfBathroom} {Constants.squareMeter}
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
 
-                  <div className="short-detail-container">
-                    <ul className="short-info-list">
-                      <li className="short-info-item">
-                        <img
-                          className="short-info-icon"
-                          alt="Hướng cửa chính"
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/direction.png"
-                        />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Hướng cửa chính:
-                          </span>
-                          <span className="short-info-label2">
-                            {this.state.product?.direction}
-                            {/*Đông Nam*/}
-                          </span>
-                        </div>
-                      </li>
+                  <ul className="short-info-list">
+                    <li className="short-info-item">
+                      <img
+                        className="short-info-icon"
+                        alt="Hướng cửa chính"
+                        src="https://static.chotot.com/storage/icons/logos/ad-param/direction.png"
+                      />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Hướng cửa chính:
+                        </span>
+                        <span className="short-info-label2">
+                          {this.state.product?.direction}
+                          {/*Đông Nam*/}
+                        </span>
+                      </div>
+                    </li>
 
-                      <li className="short-info-item">
-                        <img
-                          className="short-info-icon"
-                          alt="Hướng ban công"
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/balconydirection.png"
-                        />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Hướng ban công:
-                          </span>
-                          <span className="short-info-label2">
-                            {this.state.product?.balconyDirection}
-                            {/* {product.balconyDirection} */}
-                            {/*Đông nam*/}
-                          </span>
-                        </div>
-                      </li>
+                    <li className="short-info-item">
+                      <img
+                        className="short-info-icon"
+                        alt="Hướng ban công"
+                        src="https://static.chotot.com/storage/icons/logos/ad-param/balconydirection.png"
+                      />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Hướng ban công:
+                        </span>
+                        <span className="short-info-label2">
+                          {this.state.product?.balconyDirection}
+                          {/* {product.balconyDirection} */}
+                          {/*Đông nam*/}
+                        </span>
+                      </div>
+                    </li>
 
-                      <li className="short-info-item">
-                        <img
-                          className="short-info-icon"
-                          alt=""
-                          src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
-                        />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">
-                            Giấy tờ pháp lý:
-                          </span>
-                          <span
-                            style={{ fontSize: "18px" }}
-                            className="short-info-label2"
-                          >
-                            {product?.juridical}
-                          </span>
-                        </div>
-                      </li>
-
-                      <li className="short-info-item">
-                        <WeekendOutlinedIcon className="short-info-icon" />
-                        <div className="short-info-content-box">
-                          <span className="short-info-label1">Nội thất:</span>
-                          <span
-                            style={{ fontSize: "18px" }}
-                            className="short-info-label2"
-                          >
-                            {(() => {
-                              if (this.state.product != null) {
-                                if (this.state.product?.furniture != null) {
-                                  return this.state.product?.furniture;
-                                }
-                              }
-                              return null;
-                            })()}
-                            {/* {this.state.product != null && this.state.product?.furniture != null ? this.state.product : null} */}
-                          </span>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="divide"></div>
-
-                  <div className="description-container">
-                    <span className="description-title">Thông Tin Mô Tả</span>
-                    <div
-                      id="description-id"
-                      style={{ height: this.state.desHeight }}
-                      className="description-content"
-                    >
-                      {product?.description}
-                    </div>
-                    <div onClick={this.switchToggle}>
-                      <CollapseBox id="collapse-box" />
-                    </div>
-                  </div>
-
-                  <div className="divide"></div>
-
-                  <span className="description-title">Thông Tin Dự Án</span>
-                  <DetailBox
-                    project={product?.project}
-                    investor={this.state.product?.investor}
-                    realEstateNo={product?.realEstateNo}
-                    streetName={product?.streetName}
-                    wardName={product?.wardName}
-                    disName={product?.disName}
-                    facilities={
-                      this.state.product == null
-                        ? []
-                        : this.state.product?.facilities
-                    }
-                  />
-
-                  <div className="divide"></div>
-
-                  <span className="description-title">
-                    Giá trung bình khu vực
-                  </span>
-                  <div className="average-price-wrapper">
-                    <div className="average-price-tab">
-                      <span className="info">
-                        {this.state.product?.disName}
-                      </span>
-                      <span className="sub-info">
-                        {"~"}
-                        {(() => {
-                          if (this.state.averageDistrictPriceInfo?.length > 0) {
-                            return (
-                              Math.round(
-                                (this.state.averageDistrictPriceInfo[0].price /
-                                  1_000_000) *
-                                  100
-                              ) / 100
-                            );
-                          }
-                        })()}{" "}
-                        triệu/{Constants.squareMeter}
-                      </span>
-                    </div>
-                    <div className="average-price-tab">
-                      <span className="info">
-                        {this.state.product?.wardName}
-                      </span>
-                      <span className="sub-info">
-                        {"~"}
-                        {(() => {
-                          if (this.state.averageWardPriceInfo?.length > 0) {
-                            return (
-                              Math.round(
-                                (this.state.averageWardPriceInfo[0].price /
-                                  1_000_000) *
-                                  100
-                              ) / 100
-                            );
-                          }
-                        })()}{" "}
-                        triệu/{Constants.squareMeter}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="divide"></div>
-
-                  <span className="description-title">Tiện Ích Xung Quanh</span>
-                  <div className="amenities-wrapper">
-                    <div className="amenities-wrapper-tab-container">
-                      {this.state.amenityTypes.map((item, index) => (
-                        <div
-                          key={index}
-                          id={item.id}
-                          onClick={() => {
-                            this.setState({
-                              selectedAmenityTypeId: item.id,
-                              selectedAmenityType: item,
-                            });
-                          }}
-                          style={{
-                            width:
-                              (
-                                100 / this.state.amenityTypes.length
-                              ).toString() + "%",
-                          }}
-                          className="tab-item"
+                    <li className="short-info-item">
+                      <img
+                        className="short-info-icon"
+                        alt=""
+                        src="https://static.chotot.com/storage/icons/logos/ad-param/property_legal_document.png"
+                      />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">
+                          Giấy tờ pháp lý:
+                        </span>
+                        <span
+                          className="short-info-label2"
                         >
-                          <span>{item.title}</span>
-                        </div>
-                      ))}
-                    </div>
+                          {product?.juridical}
+                        </span>
+                      </div>
+                    </li>
 
-                    <div
-                      style={{
-                        width: "100%",
-                        height: "1px",
-                        backgroundColor: "rgb(200, 200, 200)",
-                      }}
-                    ></div>
+                    <li className="short-info-item">
+                      <WeekendOutlinedIcon className="short-info-icon" />
+                      <div className="short-info-content-box">
+                        <span className="short-info-label1">Nội thất:</span>
+                        <span
+                          className="short-info-label2"
+                        >
+                          {(() => {
+                            if (this.state.product != null) {
+                              if (this.state.product?.furniture != null) {
+                                return this.state.product?.furniture;
+                              }
+                            }
+                            return null;
+                          })()}
+                          {/* {this.state.product != null && this.state.product?.furniture != null ? this.state.product : null} */}
+                        </span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
 
-                    <div className="info-container">
+                <div className="divide"></div>
+
+                <div className="description-container">
+                  <span className="description-title">Thông Tin Mô Tả</span>
+                  <div
+                    id="description-id"
+                    style={{ height: this.state.desHeight }}
+                    className="description-content"
+                  >
+                    {product?.description}
+                  </div>
+                  <div onClick={this.switchToggle}>
+                    <CollapseBox id="collapse-box" />
+                  </div>
+                </div>
+
+                <div className="divide"></div>
+
+                <span className="description-title">Thông Tin Dự Án</span>
+                <DetailBox
+                  project={product?.project}
+                  investor={this.state.product?.investor}
+                  realEstateNo={product?.realEstateNo}
+                  streetName={product?.streetName}
+                  wardName={product?.wardName}
+                  disName={product?.disName}
+                  facilities={
+                    this.state.product == null
+                      ? []
+                      : this.state.product?.facilities
+                  }
+                />
+
+                <div className="divide"></div>
+
+                <span className="description-title">
+                  Giá trung bình khu vực
+                </span>
+                <div className="average-price-wrapper">
+                  <div className="average-price-tab">
+                    <span className="info">
+                      {this.state.product?.disName}
+                    </span>
+                    <span className="sub-info">
+                      {"~"}
                       {(() => {
-                        if (this.state.product != null) {
-                          if (this.state.product?.facilities != null) {
-                            return this.state.product?.facilities[
-                              this.state.selectedAmenityType.apikey
-                            ]
-                              ? this.state.product?.facilities[
-                                  this.state.selectedAmenityType.apikey
-                                ].map((item) => {
-                                  return (
-                                    <div className="info-item">
-                                      <span className="amenities-name">
-                                        {item.facilityName} -{" "}
-                                        {item.addressFacility}
-                                      </span>
-                                      <div className="right-box">
-                                        <LocationOnIcon className="distance-icon" />
-                                        <span className="distance-text">
-                                          {Math.round(item.distance * 100) /
-                                            100}{" "}
-                                          km
-                                        </span>
-                                      </div>
-                                    </div>
-                                  );
-                                })
-                              : "";
-                          }
+                        if (this.state.averageDistrictPriceInfo?.length > 0) {
+                          return (
+                            Math.round(
+                              (this.state.averageDistrictPriceInfo[0].price /
+                                1_000_000) *
+                              100
+                            ) / 100
+                          );
                         }
-                      })()}
-                      {/* <div className="info-item">
+                      })()}{" "}
+                      triệu/{Constants.squareMeter}
+                    </span>
+                  </div>
+                  <div className="average-price-tab">
+                    <span className="info">
+                      {this.state.product?.wardName}
+                    </span>
+                    <span className="sub-info">
+                      {"~"}
+                      {(() => {
+                        if (this.state.averageWardPriceInfo?.length > 0) {
+                          return (
+                            Math.round(
+                              (this.state.averageWardPriceInfo[0].price /
+                                1_000_000) *
+                              100
+                            ) / 100
+                          );
+                        }
+                      })()}{" "}
+                      triệu/{Constants.squareMeter}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="divide"></div>
+
+                <span className="description-title">Tiện Ích Xung Quanh</span>
+                <div className="amenities-wrapper">
+                  <div className="amenities-wrapper-tab-container">
+                    {this.state.amenityTypes.map((item, index) => (
+                      <div
+                        key={index}
+                        id={item.id}
+                        onClick={() => {
+                          this.setState({
+                            selectedAmenityTypeId: item.id,
+                            selectedAmenityType: item,
+                          });
+                        }}
+                        style={{
+                          width:
+                            (
+                              100 / this.state.amenityTypes.length
+                            ).toString() + "%",
+                        }}
+                        className="tab-item"
+                      >
+                        <span>{item.title}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div
+                    style={{
+                      width: "100%",
+                      height: "1px",
+                      backgroundColor: "rgb(200, 200, 200)",
+                    }}
+                  ></div>
+
+                  <div className="info-container">
+                    {(() => {
+                      if (this.state.product != null) {
+                        if (this.state.product?.facilities != null) {
+                          return this.state.product?.facilities[
+                            this.state.selectedAmenityType.apikey
+                          ]
+                            ? this.state.product?.facilities[
+                              this.state.selectedAmenityType.apikey
+                            ].map((item) => {
+                              return (
+                                <div className="info-item">
+                                  <span className="amenities-name">
+                                    {item.facilityName} -{" "}
+                                    {item.addressFacility}
+                                  </span>
+                                  <div className="right-box">
+                                    <LocationOnIcon className="distance-icon" />
+                                    <span className="distance-text">
+                                      {Math.round(item.distance * 100) /
+                                        100}{" "}
+                                      km
+                                    </span>
+                                  </div>
+                                </div>
+                              );
+                            })
+                            : "";
+                        }
+                      }
+                    })()}
+                    {/* <div className="info-item">
                       <span className="amenities-name">Truong FPT</span>
                       <div className="right-box">
                         <LocationOnIcon />
                         2.3 km
                       </div>
                     </div> */}
-                    </div>
+                  </div>
 
-                    <div className="divide"></div>
+                  <div className="divide"></div>
 
-                    <span className="description-title">Vị Trí</span>
-                    {(() => {
-                      if (this.state.product != null) {
-                        if (
-                          this.state.product?.latitude != null &&
-                          this.state.product?.longitude
-                        ) {
-                          return (
-                            <Map
-                              markerPosition={{
-                                lat: this.state.product?.latitude,
-                                lng: this.state.product?.longitude,
-                              }}
-                              defaultCenter={{
-                                lat: this.state.product?.latitude,
-                                lng: this.state.product?.longitude,
-                              }}
-                              defaultZoom={20}
-                              googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&callback=initMap`}
-                              loadingElement={
-                                <div style={{ height: `100%` }} />
-                              }
-                              containerElement={
-                                <div
-                                  style={{
-                                    height: `400px`,
-                                    margin: `auto`,
-                                    // border: "1px solid black",
-                                  }}
-                                />
-                              }
-                              mapElement={<div style={{ height: `100%` }} />}
-                            />
-                          );
-                        }
+                  <span className="description-title">Vị Trí</span>
+                  {(() => {
+                    if (this.state.product != null) {
+                      if (
+                        this.state.product?.latitude != null &&
+                        this.state.product?.longitude
+                      ) {
+                        return (
+                          <Map
+                            markerPosition={{
+                              lat: this.state.product?.latitude,
+                              lng: this.state.product?.longitude,
+                            }}
+                            defaultCenter={{
+                              lat: this.state.product?.latitude,
+                              lng: this.state.product?.longitude,
+                            }}
+                            defaultZoom={20}
+                            googleMapURL={`https://maps.googleapis.com/maps/api/js?key=AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg&callback=initMap`}
+                            loadingElement={
+                              <div style={{ height: `100%` }} />
+                            }
+                            containerElement={
+                              <div
+                                style={{
+                                  height: `400px`,
+                                  margin: `auto`,
+                                  // border: "1px solid black",
+                                }}
+                              />
+                            }
+                            mapElement={<div style={{ height: `100%` }} />}
+                          />
+                        );
                       }
-                    })()}
-                  </div>
+                    }
+                  })()}
                 </div>
+              </div>
 
-                {/* right content */}
-                <div className="linear-gray-border contact-wrapper">
-                  <div
-                    style={{
-                      backgroundImage: "url('" + product?.sellerAvatar + "')",
-                    }}
-                    className="contact-pic"
-                  ></div>
-                  <div className="contact-name">
-                    {product?.sellerName}
-                    {/*Nguyen Duc Huy*/}
-                  </div>
-                  <div className="contact-button">
-                    {/* <BsFillChatDotsFill /> */}
+              {/* right content */}
+              <div className="linear-gray-border contact-wrapper">
+                <div
+                  style={{
+                    backgroundImage: "url('" + product?.sellerAvatar + "')",
+                  }}
+                  className="contact-pic"
+                ></div>
+                <div className="contact-name">
+                  {product?.sellerName}
+                  {/*Nguyen Duc Huy*/}
+                </div>
+                <div className="contact-button">
+                  {/* <BsFillChatDotsFill /> */}
 
-                    {/* <div style={{width: "18px"}}></div> */}
-                    {/* <Link
+                  {/* <div style={{width: "18px"}}></div> */}
+                  {/* <Link
                     className="link contact-title-container"
                     to="/chat-page"
                     onClick={() => {
@@ -709,19 +682,18 @@ class ProductDetailPage extends Component {
                       &#32; Nhắn tin
                     </div>
                   </Link> */}
-                    <ChatButton product={product} />
-                  </div>
+                  <ChatButton product={product} />
+                </div>
 
-                  <div className="more-post-button">
-                    <div className="contact-title-container">
-                      &#32;Xem thêm bài viết
-                    </div>
+                <div className="more-post-button">
+                  <div className="contact-title-container">
+                    &#32;Xem thêm bài viết
                   </div>
+                </div>
 
-                  <div className="more-post-button">
-                    <div className="contact-title-container">
-                      &#32;Xem hồ sơ
-                    </div>
+                <div className="more-post-button">
+                  <div className="contact-title-container">
+                    &#32;Xem hồ sơ
                   </div>
                 </div>
               </div>

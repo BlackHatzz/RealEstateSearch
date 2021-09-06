@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./search-result.css";
+import "./search-result-mobile.css";
 import ProductItem from "./product-item";
 import SearchSuggestion from "../global/search-suggestion";
 import { Link } from "react-router-dom";
@@ -17,13 +18,13 @@ class SearchResultPage extends Component {
     //this.props.match.params.searchtext
     this.state.searchText =
       this.props.match.params.searchtext === undefined ||
-      this.props.match.params.searchtext === null
+        this.props.match.params.searchtext === null
         ? ""
         : this.props.match.params.searchtext;
     this.setState({
       searchText:
         this.props.match.params.searchtext === undefined ||
-        this.props.match.params.searchtext === null
+          this.props.match.params.searchtext === null
           ? ""
           : this.props.match.params.searchtext,
     });
@@ -200,7 +201,7 @@ class SearchResultPage extends Component {
       return null;
     }
 
-    if (this.state.items.length === 0) {
+    if (this.state.items?.length === 0) {
       return (
         <div className="not-found-container">
           <div className="not-found"></div>
@@ -214,7 +215,7 @@ class SearchResultPage extends Component {
     }
     return (
       <div className="product-list">
-        {this.state.items.map((item) => (
+        {this.state.items?.map((item) => (
           <Link
             key={item.id}
             className="link"
@@ -240,14 +241,6 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div
-          style={{
-            display: "flex",
-            width: "100%",
-            height: "100%",
-            flexDirection: "column",
-          }}
-        >
           {/* <BuyerNavbar /> */}
           <div
             style={{
@@ -262,12 +255,11 @@ class SearchResultPage extends Component {
             style={{
               overflowY: "auto",
               overflowX: "hidden",
-              flex: 1,
+              height:"80vh"
             }}
           >
             <div className="horizontal">{this.renderSearchResult()}</div>
           </div>
-        </div>
       </React.Fragment>
     );
   }

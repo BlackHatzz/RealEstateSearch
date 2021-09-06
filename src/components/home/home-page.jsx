@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./home.css";
+import "./home-mobile.css";
 import "../global/shared.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import HomeFilterBox from "./home-filter-box";

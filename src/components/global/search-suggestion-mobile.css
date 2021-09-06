@@ -1,0 +1,11 @@
+@media only screen and (max-width:500px) {
+  div.search-bar {
+    width: 100%;
+  }
+  .suggestion-container {
+    height: auto;
+  }
+  .filter-drop-box {
+    width: 30%;
+  }
+}
