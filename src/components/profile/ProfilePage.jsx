@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BuyerNavbar from "../global/BuyerNavbar";
 import "./profile.css";
+import "./profile-mobile.css";
 import "../global/shared.css";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
@@ -163,7 +164,6 @@ class ProfilePage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
           <div className="profile-wrapper">
             <div style={{ height: "10px" }}></div>
 
@@ -185,7 +185,6 @@ class ProfilePage extends Component {
               {this.renderContent()}
             </div>
           </div>
-        </div>
       </React.Fragment>
     );
   }
