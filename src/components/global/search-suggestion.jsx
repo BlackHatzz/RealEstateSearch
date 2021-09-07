@@ -534,7 +534,6 @@ class SearchSuggestion extends Component {
             />
           </React.Fragment>
         ))}
-        <div>
           <div
             onClick={() => {
               this.setState({
@@ -734,7 +733,6 @@ class SearchSuggestion extends Component {
               </div>
             </div>
           ) : null}
-        </div>
 
         {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
           <FilterDropBox title="Khu vực" value="Hồ Chí Minh" />
