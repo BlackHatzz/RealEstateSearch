@@ -141,12 +141,15 @@ function Appointment({ setTrigger, conversation }) {
             appointment: "upcoming",
             appointmentId: bookId,
             appointmentDate: date,
+            lastMessage: "lịch hẹn",
+            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
           },
           { merge: true }
         );
-        fb.firestore.collection("conversations").doc(conversation.id).update({
-          lastMessage: "lịch hẹn",
-        });
+        // fb.firestore.collection("conversations").doc(conversation.id).update({
+        //   lastMessage: "lịch hẹn",
+        //   lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+        // });
 
         fb.firestore
           .collection("users")

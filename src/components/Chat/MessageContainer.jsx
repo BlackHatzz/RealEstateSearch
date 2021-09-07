@@ -4,6 +4,7 @@ import "moment/locale/vi";
 import React, { useEffect, useState, useRef, useContext } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
+import firebase from "firebase";
 
 export const MessageContainer = ({ conversation, handleBook }) => {
   const uuid = fb.auth.currentUser?.uid;
@@ -130,6 +131,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
         .then(() => {
           fb.firestore.collection("conversations").doc(conversation.id).update({
             appointment: "cancel",
+            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
           });
         });
 
@@ -169,6 +171,7 @@ export const MessageContainer = ({ conversation, handleBook }) => {
         .then(() => {
           fb.firestore.collection("conversations").doc(conversation.id).update({
             deal: "cancel",
+            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
           });
         });
     }
