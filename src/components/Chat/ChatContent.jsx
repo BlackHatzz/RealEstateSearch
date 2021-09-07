@@ -12,6 +12,7 @@ import { FormField } from "../FormField";
 import { defaultValues, validationSchema } from "./formikDealConfig";
 import { v4 as uuidv4 } from "uuid";
 import Popover from "@material-ui/core/Popover";
+import moment from "moment";
 
 export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
@@ -20,6 +21,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
   const [minimize, setMinimize] = useState(false);
   // const [dealtrigger, setDealtrigger] = useState(false);
   const [booktrigger, setBooktrigger] = useState(null);
+  const [bookStatus, setBookStatus] = useState("none");
   const [currentInput, setCurrentInput] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const [dealinfoTrigger, setDealinfoTrigger] = useState(
@@ -62,11 +64,12 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
               deal: "pending",
               dealId: dealId + "",
               dealPrice: deal,
+              lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
             }
             // { merge: true }
           );
         fb.firestore.collection("conversations").doc(currentChat.id).update({
-          lastMessage: "thỏa thuận",
+          lastMessage: "thỏa thuận mới",
         });
       })
       .finally(() => {
@@ -127,40 +130,77 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
         </div>
       </div>
       <div className="chat_window_container_message_box">
-        <div className="chat_window_container_message_box_display_realestate">
-          <div className="chat_window_container_message_box_display_realestate_image">
-            <img src={currentChat.data?.realIMG} alt="" />
-          </div>
-          <div className="chat_window_container_message_box_display_realestate_info">
-            <div className="chat_window_container_message_box_display_realestate_info_title">
-              <p>{currentChat.data.address}</p>
-              <p>
-                {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
-                {currentChat.data.bath} WC
-              </p>
+        <div>
+          <div className="chat_window_container_message_box_display_realestate">
+            <div className="chat_window_container_message_box_display_realestate_image">
+              <img src={currentChat.data?.realIMG} alt="" />
             </div>
-            {role === "buyer" && (
-              <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                {dealStatus ? (
-                  <p className="chat_window_container_message_box_display_realestate_info_deal">
-                    Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
-                    {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
-                  </p>
-                ) : (
-                  <button
-                    className="chat-window-deal-button"
-                    onClick={handleDeal}
-                    type="button"
-                  >
-                    Thỏa thuận
-                  </button>
-                )}
+
+            <div className="chat_window_container_message_box_display_realestate_info">
+              <div className="chat_window_container_message_box_display_realestate_info_title">
+                <p>{currentChat.data.address}</p>
+                <p>
+                  {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
+                  {currentChat.data.bath} WC
+                </p>
               </div>
-            )}
+              {role === "buyer" && (
+                <div className="chat_window_container_message_box_display_realestate_info_deal_book">
+                  {dealStatus ? (
+                    <p className="chat_window_container_message_box_display_realestate_info_deal">
+                      Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
+                      {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
+                    </p>
+                  ) : (
+                    <button
+                      className="chat-window-deal-button"
+                      onClick={handleDeal}
+                      type="button"
+                    >
+                      Thỏa thuận
+                    </button>
+                  )}
+                  {bookStatus === "upcoming" && (
+                    <p className="chat_window_container_message_box_display_realestate_info_deal">
+                      Lịch hẹn:{" "}
+                      {moment(currentChat.data.appointmentDate).format("llll")}
+                    </p>
+                  )}
+                  {bookStatus === "cancel" && (
+                    <button
+                      className="chat-window-deal-button"
+                      onClick={handleBook}
+                      type="button"
+                    >
+                      Đặt lịch
+                    </button>
+                  )}
+                  {bookStatus === "none" && dealStatus && (
+                    <div>
+                      {currentChat.data.deal === "accepted" && (
+                        <button
+                          className="chat-window-deal-button"
+                          onClick={handleBook}
+                          type="button"
+                        >
+                          Đặt lịch
+                        </button>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
-        <MessageContainer conversation={currentChat} handleBook={handleBook} />
+        <MessageContainer
+          conversation={currentChat}
+          handleBook={handleBook}
+          setBookStatus={setBookStatus}
+          bookStatus={bookStatus}
+        />
+
         <Popover
           id={dealPopup ? "simple-popover" : undefined}
           anchorEl={anchorEl}
@@ -233,6 +273,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
           }}
         >
           <Appointment
+            setBookStatus={setBookStatus}
             trigger={booktrigger}
             setTrigger={setBooktrigger}
             conversation={currentChat}

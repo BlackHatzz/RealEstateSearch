@@ -1,4 +1,5 @@
 class Constants {
+
     static squareMeter = "m²";
     static notFoundImageRef =
         "https://i.ibb.co/pfHbbcS/Screen-Shot-2021-06-27-at-09-06-47.png";
@@ -18,6 +19,7 @@ class Constants {
     static getTransactionByUserId =
         Constants.host + "api/v1/transaction/getTransactionByUserId";
     static createUser = Constants.host + "apis/v1/accounts/create";
+
 
     static getRealEstateRefBySellerId(sellerId, status, page) {
         return (

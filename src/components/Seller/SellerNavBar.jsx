@@ -301,11 +301,12 @@ const SellerNavbar = (props) => {
                     <p>Địa chỉ bất động sản: {modalData.data.address}</p>
                     <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
                     <p>
-                      Ngày giao dịch:
-                      {moment(modalData.data.appointmentDate).format("LLL")}
+                      Ngày giao dịch:{" "}
+                      {moment(modalData.data.appointmentDate).format("LL")} -{" "}
+                      {moment(modalData.data.appointmentDate).format("LT")}
                     </p>
                   </div>
-                  <div>
+                  <div className="transaction-modal-button-group">
                     <button
                       onClick={() => {
                         fb.firestore
