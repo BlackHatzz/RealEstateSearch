@@ -6,6 +6,7 @@ import React, {
   useReducer,
 } from "react";
 import "./buyer-nav-bar.css";
+import "./buyer-nav-bar-mobile.css";
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -109,7 +110,7 @@ const BuyerNavbar = () => {
         };
       }
 
-      return () => {};
+      return () => { };
     }
   }, [role, unseen, uuid]);
 
@@ -567,6 +568,11 @@ const BuyerNavbar = () => {
               {/* profile menu */}
               {isProfileMenuShown ? (
                 <div className="profile-menu-container">
+                  <div className="user-fullname">
+                    <p>
+                      {fb.auth.currentUser?.displayName}
+                    </p>
+                  </div>
                   <Link
                     className="link profile-menu-item top-item"
                     to="/profile-page"

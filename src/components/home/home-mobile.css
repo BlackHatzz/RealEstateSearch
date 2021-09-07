@@ -1,0 +1,23 @@
+@media only screen and (max-width: 500px) {
+  .home-search-wrapper {
+    width: 100%;
+    padding: 14px 6px;
+  }
+  .home-search-bar {
+    height: 50px;
+    width: 100%;
+  }
+  div.home-filter-wrapper {
+    width: 100%;
+  }
+  div.home-filter-box {
+    margin-top: 10px;
+    width: 48vw;
+  }
+  div.home-filter-menu {
+    width: 48vw;
+  }
+  div.home-filter-menu-height-auto {
+    width: 48vw;
+  }
+}

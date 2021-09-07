@@ -1,0 +1,19 @@
+@media only screen and (max-width:500px) {
+  div.product-list {
+    width: 100%;
+  }
+  .product-description {
+    display: none;
+  }
+  div.product-price-box {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .product-area::before {
+    content: '';
+    margin-right: 0;
+  }
+  .product-address {
+    margin-top: 12px;
+  }
+}

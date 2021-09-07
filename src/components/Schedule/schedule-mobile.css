@@ -1,0 +1,9 @@
+@media only screen and (max-width:500px) {
+  .schedule-list {
+    width: 90%;
+  }
+  .schedule-detail {
+    padding-left: 30px;
+  }
+  .schedule-body {}
+}

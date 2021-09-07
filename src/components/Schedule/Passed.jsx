@@ -2,6 +2,7 @@ import moment from "moment";
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
+import { upperFirstLetter } from "../../utils/upperFirstLetter";
 
 const Passed = () => {
   const { role } = useContext(Context);
@@ -37,7 +38,7 @@ const Passed = () => {
             <div className="schedule-list-item" key={appointment.id}>
               <div className="schedule-list-item-header">
                 <div className="schedule-list-item-date">
-                  {moment(appointment.data.date).locale("vi").format("dddd") +
+                  {upperFirstLetter(moment(appointment.data.date).locale("vi").format("dddd")) +
                     " " +
                     moment(appointment.data.date).locale("vi").format("LL")}
                 </div>

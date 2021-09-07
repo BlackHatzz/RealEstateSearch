@@ -26,7 +26,12 @@ class HomeFilterBox extends Component {
       title: title,
       showMenu: false,
     });
-    this.props.handler(this.props.filter.key, this.props.filter.typeKey, itemKey, title);
+    this.props.handler(
+      this.props.filter.key,
+      this.props.filter.typeKey,
+      itemKey,
+      title
+    );
   };
 
   renderFilterMenu = () => {
@@ -41,11 +46,12 @@ class HomeFilterBox extends Component {
         );
       case 1:
         console.log("special");
-        return(
+        return (
           <FromToMenuFilter
-          handler={this.handleUpdateTitle}
-          options={this.props.filter.options}
-        />
+            handler={this.handleUpdateTitle}
+            options={this.props.filter.options}
+            sign={this.props.filter.sign}
+          />
         );
 
       default:
@@ -63,17 +69,26 @@ class HomeFilterBox extends Component {
               {this.props.filter.filterName}
             </span>
             <br />
-            <span className="noselect home-filter-title2">
-              {this.state.title}
-            </span>
+            {(() => {
+              if(this.state.title.length > 12) {
+                return (
+                  <span style={{fontSize: "13px", paddingLeft: "0px"}} className="noselect home-filter-title2">
+                    {this.state.title}
+                  </span>
+                ); 
+              }
+              return (
+                <span className="noselect home-filter-title2">
+                  {this.state.title}
+                </span>
+              );
+            })()}
           </div>
 
           <RiArrowDropDownLine className="home-filter-icon" />
         </div>
         {/* <HomeFilterMenuOption /> */}
-        {this.state.showMenu ? (
-          this.renderFilterMenu()
-        ) : null}
+        {this.state.showMenu ? this.renderFilterMenu() : null}
         {/* {this.state.showMenu ? (
           <HomeFilterMenuOption
             handler={this.handleUpdateTitle}

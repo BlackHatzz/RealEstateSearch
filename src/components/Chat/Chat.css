@@ -4,6 +4,7 @@
   bottom: 0px;
   right: 10px;
 }
+
 .chat_window,
 .chat_window_button {
   display: flex;
@@ -19,11 +20,13 @@
   bottom: 0px;
   right: 10px;
 }
+
 .chat_window {
   width: 700px;
   height: fit-content;
   box-shadow: 0px 0px 2px 2px rgba(3, 44, 71, 0.18);
 }
+
 .chat_window_button:hover {
   cursor: pointer;
 }
@@ -45,7 +48,7 @@
   border-bottom: 1px solid gray;
 }
 
-.chat_window_header > h2 {
+.chat_window_header>h2 {
   font-size: 0.9375rem;
   font-weight: 500;
   padding-left: 10px;
@@ -63,9 +66,11 @@
   align-self: flex-end;
   padding-right: 25px;
 }
+
 .chat_window_close_button:hover {
   cursor: pointer;
 }
+
 .chat_window_header_title {
   padding-left: 15px;
   padding-right: 5px;
@@ -80,24 +85,27 @@
   flex-direction: row;
   min-height: 380px;
 }
+
 .chat_window_user {
   width: 100%;
   display: flex;
   border-bottom: 1px solid rgb(219, 217, 217);
 }
+
 .chat_window_container_left_box {
   display: flex;
   flex-direction: column;
   width: 70%;
   height: 100%;
 }
+
 .chat_window_container_message_box {
   display: flex;
   flex-direction: column;
   width: 100%;
   /* height: auto; */
-  flex: 1;
 }
+
 .chat_window_container_contact_box {
   width: 29%;
 }
@@ -112,6 +120,7 @@
   padding-bottom: 12px;
   height: 240px;
 }
+
 .chat_window_container_message_box_display_realestate {
   margin: 5px 5px 5px 5px;
   border-radius: 2px;
@@ -123,15 +132,18 @@
   height: 80px;
   border-bottom: 1px solid rgb(219, 217, 217);
 }
+
 .chat_window_container_message_box_display_realestate_image {
   /* height: 80%; */
   margin: 5px 5px 5px 5px;
   width: 30%;
 }
-.chat_window_container_message_box_display_realestate_image > img {
+
+.chat_window_container_message_box_display_realestate_image>img {
   height: 60px;
   width: auto;
 }
+
 .chat_window_container_message_box_display_realestate_info {
   display: flex;
   flex-direction: column;
@@ -139,17 +151,20 @@
   padding-left: 5px;
   width: 70%;
 }
+
 .chat_window_container_message_box_display_realestate_info_title {
   width: 190px;
   font-size: 10px;
   font-weight: 700;
 }
-.chat_window_container_message_box_display_realestate_info_title > p {
+
+.chat_window_container_message_box_display_realestate_info_title>p {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
-.chat_window_container_message_box_display_realestate_info > p {
+
+.chat_window_container_message_box_display_realestate_info>p {
   font-size: 10px;
   margin: 0 0 5px;
 }
@@ -192,6 +207,7 @@
   min-width: 200px;
   text-align: right;
 }
+
 .message_name_send {
   position: absolute;
   top: -14px;
@@ -200,6 +216,7 @@
   font-weight: 800;
   color: black;
 }
+
 .message_name_receive {
   position: absolute;
   top: -14px;
@@ -211,14 +228,13 @@
 }
 
 .chat_window_container_message_box_input {
-  padding: 0px 8px;
-  /* border-top: 1px solid gray; */
+  padding: 10px 8px 0;
+  border-top: 1px solid gray;
   height: auto;
-  display: flex;
-  flex-direction: column;
+  display: inline-block;
 }
 
-.button_send_message {
+.message-input-form .button_send_message {
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -227,7 +243,9 @@
   margin-left: 4px;
   height: 40px;
   width: 40px;
+  display: flex;
 }
+
 .button_send_message:disabled {
   cursor: not-allowed;
 }
@@ -235,6 +253,7 @@
 .contact_item:hover .item_unselect {
   background-color: rgb(225, 225, 225);
 }
+
 .chat_window_container_contact_list {
   overflow-y: scroll;
   height: 100%;
@@ -275,6 +294,7 @@
   margin: 4px auto;
   border-radius: 6px;
 }
+
 .contact-title {
   font-size: 12px;
   font-weight: 700;
@@ -283,6 +303,7 @@
   overflow: hidden;
   white-space: nowrap;
 }
+
 .contact-info {
   font-size: 12px;
   font-weight: 400;
@@ -293,12 +314,15 @@
 option[value=""][disabled] {
   display: none;
 }
+
 select:required:invalid {
   color: gray;
 }
+
 option {
   color: black;
 }
+
 .chat_window_container_message_box_popup {
   background-color: white;
   border: 1px solid gray;
@@ -322,7 +346,8 @@ option {
   padding: 4px;
   /* background-image: url('https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg'); */
 }
-.presentation-pic-container > img {
+
+.presentation-pic-container>img {
   width: 75px;
   height: 50px;
   object-fit: fill;
@@ -335,6 +360,7 @@ option {
   flex-direction: row;
   align-items: center;
 }
+
 .chat-field-container {
   width: 100%;
   background-color: #dadde2;
@@ -346,6 +372,7 @@ option {
   border-radius: 25px;
   word-wrap: break-word;
 }
+
 .chat-field {
   background-color: transparent;
   width: 100%;
@@ -355,11 +382,13 @@ option {
   margin: auto;
   font-size: 14px;
 }
+
 .chat-field:focus {
   outline: none;
   border: none;
   text-decoration: none;
 }
+
 .send-message-icon {
   width: 2px;
   height: 2px;
@@ -386,22 +415,27 @@ option {
   flex-direction: column;
   display: flex;
 }
+
 .deal-form p {
   font-size: 14px;
 }
+
 .deal-form label {
   font-size: 14px;
 }
+
 .deal-popup-form {
   padding: 10px 10px 10px 10px;
 }
+
 .deal-form-button {
   margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
 }
-.deal-form-button > button {
+
+.deal-form-button>button {
   background-color: #0c67ce;
   border: none;
   border-radius: 5px;
@@ -410,18 +444,22 @@ option {
   width: 40px;
   padding: 5px 3px;
 }
+
 .chat_window_container_message_box_user {
   border-bottom: 1px solid rgb(175, 175, 175);
 }
-.chat_window_container_message_box_user > p {
+
+.chat_window_container_message_box_user>p {
   font-size: 16;
   font-weight: 600;
   padding-left: 20px;
 }
+
 .buyer-appointment-message-upcoming {
   display: flex;
   flex-direction: column;
 }
+
 .react-datepicker {
   font-size: 1.2rem !important;
 }
@@ -429,11 +467,13 @@ option {
 .react-datepicker__current-month {
   font-size: 1.2rem !important;
 }
+
 .react-datepicker__day-name,
 .react-datepicker__day {
   margin: 0.5rem !important;
 }
-.buyer-appointment-message-upcoming > button {
+
+.buyer-appointment-message-upcoming>button {
   border: none;
   color: black;
   background-color: white;
@@ -443,10 +483,12 @@ option {
   cursor: pointer;
   margin: 0 auto;
 }
+
 .seller-deal-message {
   display: flex;
   width: auto;
 }
+
 .seller-deal-message-pending-button {
   padding-top: 5px;
   display: flex;
@@ -455,7 +497,7 @@ option {
   width: 150px;
 }
 
-.seller-deal-message-pending-button > button {
+.seller-deal-message-pending-button>button {
   border: none;
   background-color: white;
   border-radius: 5px;
@@ -463,7 +505,8 @@ option {
   height: 20px;
   cursor: pointer;
 }
-.buyer-deal-message > button {
+
+.buyer-deal-message>button {
   border: none;
   color: black;
   background-color: white;
@@ -476,13 +519,16 @@ option {
   /* top:50%;  */
   left: 24%;
 }
+
 .time-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
+
 .time-select-item {
   width: 100px;
 }
+
 .deal-button {
   height: 30px;
   background-color: #fcba03;
@@ -496,9 +542,11 @@ option {
   background-color: gray;
   cursor: not-allowed;
 }
+
 .react-datepicker-popper {
   z-index: 160;
 }
+
 .real-item,
 .real-item-selected {
   padding: 5px;
@@ -507,22 +555,27 @@ option {
   border-radius: 5px;
   cursor: pointer;
 }
+
 .MuiPopover-paper {
   display: block;
   overflow: visible !important;
 }
+
 .real-item-selected {
   background-color: #c0c0c0;
 }
+
 .real-item:hover,
 .real-item-selected:hover {
   background-color: #c0c0c0;
 }
+
 .seller-chat-box {
   height: 100%;
   display: flex;
   flex-direction: column;
 }
+
 .real-title {
   border-bottom: 1px solid #c0c0c0;
 }
@@ -544,17 +597,21 @@ option {
   cursor: pointer;
   width: 120px;
 }
+
 .buyer-info-selected {
   border: 1px solid #c0c0c0;
 }
+
 .buyer-info-notselected {
   background-color: white;
 }
+
 .seller-chat-box-body {
   display: flex;
   height: 100%;
   overflow: auto;
 }
+
 .seller-chat-box-body-left {
   display: flex;
   flex-direction: column;
@@ -568,7 +625,7 @@ option {
   flex-direction: column;
 }
 
-.textarea-input {
+.message-input-form .textarea-input {
   resize: none;
   overflow: hidden;
   /* min-height: 10px; */
@@ -578,52 +635,64 @@ option {
   border-radius: 5px;
   border: none;
   background-color: #ebebeb;
-  width: 100%;
+  width: auto;
   padding-left: 10px;
   padding-top: 5px;
+  display: flex;
+  flex: 1;
 }
+
 .textarea-input:focus {
   border-radius: 5px;
   border: none;
   outline: none;
   text-decoration: none;
 }
+
 .message-input-form {
   display: flex;
+  flex-direction: row;
   align-items: center;
   min-height: 40px;
   height: auto;
   padding: 0px 0px 5px 2px;
 }
+
 .seller-left-chat-box {
   display: flex;
   flex-direction: column;
   height: 100%;
   overflow: auto;
 }
+
 .buyer-info-name {
   padding-left: 5px;
   font-weight: 600;
 }
+
 .buyer-info-lastmessage {
   color: #0352fc;
   padding-left: 10px;
 }
+
 .buyer-info-deal {
   padding-left: 5px;
   font-size: 12px;
   color: #afafaf;
 }
+
 .buyer-info-lastmessage {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
+
 .info-title {
   background-color: #f0f0f0;
   padding: 5px 0px 5px 10px;
   font-weight: 600;
 }
+
 .info-text {
   padding-left: 10px;
   padding-top: 10px;
@@ -634,6 +703,7 @@ option {
   bottom: 15px;
   right: 20px;
 }
+
 .chat-bubble-item {
   height: 48px;
   width: 48px;
@@ -659,6 +729,7 @@ option {
   display: flex;
   justify-content: space-between;
 }
+
 .small-chat-window-title {
   font-size: 16px;
   font-weight: 600;
@@ -679,14 +750,15 @@ p {
   flex-direction: row;
   align-items: center;
   align-self: center;
-
   /* flex: 1; */
   padding-right: 5px;
 }
+
 .small-chat-window-buttons-minimize {
   cursor: pointer;
   padding-right: 5px;
 }
+
 .small-chat-window-2 {
   display: flex;
   flex-direction: column;
@@ -704,10 +776,11 @@ p {
   padding-bottom: 5px;
   z-index: 100;
 }
+
 .small-chat-window-1 {
+  position: fixed;
   display: flex;
   flex-direction: column;
-  position: fixed;
   bottom: 0px;
   right: 420px;
   background-color: #ffffff;
@@ -722,12 +795,15 @@ p {
   padding-bottom: 5px;
   z-index: 100;
 }
+
 .small-chat-window-buttons-close {
   cursor: pointer;
 }
+
 .chat_window_container_message_box_display_realestate_info_deal {
   font-size: 12px;
 }
+
 .chat-window-deal-button {
   background-color: #0c67ce;
   border: none;
