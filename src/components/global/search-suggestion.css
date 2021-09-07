@@ -261,12 +261,12 @@ input.search-bar:focus {
 }
 
 .more-filter-menu-container {
-  position: relative;
+  position: absolute;
   width: 400px;
   height: auto;
   background-color: white;
-  top: 10px;
-  left: -130px;
+  top: 30px;
+  right: -100px;
   padding-bottom: 24px;
   z-index: 2;
 }

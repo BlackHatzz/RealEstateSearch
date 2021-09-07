@@ -338,7 +338,7 @@ class SearchSuggestion extends Component {
 
           // set advanced filter
           this.setState({
-            selectedBedroom: this.state.bedrooms[this.props.params?.bedroom],
+            selectedBedroom: this.state.bedrooms[this.props.params?.bedroom?this.props.params?.bedroom:0],
           });
         },
         (error) => { }
@@ -600,7 +600,7 @@ class SearchSuggestion extends Component {
                       {this.state.bedrooms.map((item, index) => (
                         <React.Fragment key={index}>
                           {/* item */}
-                          {this.state.selectedBedroom.key === item.key ? (
+                          {this.state.selectedBedroom?.key === item.key ? (
                             <span
                               style={{
                                 backgroundColor: "rgb(200, 200, 200)",
