@@ -127,41 +127,120 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
         </div>
       </div>
       <div className="chat_window_container_message_box">
-        <div className="chat_window_container_message_box_display_realestate">
-          <div className="chat_window_container_message_box_display_realestate_image">
-            <img src={currentChat.data?.realIMG} alt="" />
-          </div>
-          <div className="chat_window_container_message_box_display_realestate_info">
-            <div className="chat_window_container_message_box_display_realestate_info_title">
-              <p>{currentChat.data.address}</p>
-              <p>
-                {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
-                {currentChat.data.bath} WC
-              </p>
+        <div>
+          <div className="chat_window_container_message_box_display_realestate">
+            <div className="chat_window_container_message_box_display_realestate_image">
+              <img src={currentChat.data?.realIMG} alt="" />
             </div>
-            {role === "buyer" && (
-              <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                {dealStatus ? (
-                  <p className="chat_window_container_message_box_display_realestate_info_deal">
-                    Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
-                    {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
-                  </p>
-                ) : (
-                  <button
-                    className="chat-window-deal-button"
-                    onClick={handleDeal}
-                    type="button"
-                  >
-                    Thỏa thuận
-                  </button>
-                )}
+            <div className="chat_window_container_message_box_display_realestate_info">
+              <div className="chat_window_container_message_box_display_realestate_info_title">
+                <p>{currentChat.data.address}</p>
+                <p>
+                  {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
+                  {currentChat.data.bath} WC
+                </p>
               </div>
-            )}
+              {role === "buyer" && (
+                <div className="chat_window_container_message_box_display_realestate_info_deal_book">
+                  {dealStatus ? (
+                    <p className="chat_window_container_message_box_display_realestate_info_deal">
+                      Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
+                      {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
+                    </p>
+                  ) : (
+                    <button
+                      className="chat-window-deal-button"
+                      onClick={handleDeal}
+                      type="button"
+                    >
+                      Thỏa thuận
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
         <MessageContainer conversation={currentChat} handleBook={handleBook} />
 
+        <Popover
+          id={dealPopup ? "simple-popover" : undefined}
+          anchorEl={anchorEl}
+          open={dealPopup}
+          onClose={() => {
+            setAnchorEl(null);
+          }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+        >
+          <div className="deal-popup-form">
+            <Formik
+              onSubmit={submitDeal}
+              validateOnMount={true}
+              initialValues={defaultValues}
+              validationSchema={validationSchema}
+            >
+              {({ isValid, isSubmitting, errors }) => (
+                <Form className="deal-form">
+                  <p>Giá gốc: {currentChat.data.price} tỷ</p>
+                  <FormField
+                    name="deal"
+                    placeholder={currentChat.data.price}
+                    maxLength="4"
+                    size="1"
+                    label="Thỏa thuận (tỷ VNĐ): "
+                  />
+
+                  <div className="deal-form-button">
+                    {!isSubmitting && isValid && (
+                      <button disabled={isSubmitting || !isValid} type="submit">
+                        Gửi
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setAnchorEl(null);
+                      }}
+                    >
+                      Hủy
+                    </button>
+                  </div>
+                </Form>
+              )}
+            </Formik>
+          </div>
+        </Popover>
+
+        <Popover
+          id={bookPopup ? "simple-popover" : undefined}
+          anchorEl={booktrigger}
+          open={bookPopup}
+          onClose={() => {
+            setBooktrigger(null);
+          }}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "center",
+          }}
+          transformOrigin={{
+            vertical: "bottom",
+            horizontal: "center",
+          }}
+        >
+          <Appointment
+            trigger={booktrigger}
+            setTrigger={setBooktrigger}
+            conversation={currentChat}
+          />
+        </Popover>
         {/* {booktrigger && (
           <div className="chat_window_container_message_box_popup">
             {booktrigger && (
