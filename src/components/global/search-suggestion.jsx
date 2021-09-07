@@ -198,21 +198,21 @@ class SearchSuggestion extends Component {
             temp.push({ key: result[i].id, text: result[i].name });
           }
 
-          tempFilters[2].options = temp;
+          tempFilters[0].options = temp;
 
           // set filters
           // set real estate type
-          tempFilters[0].title =
-            this.state.filters[0].options[
-              parseInt(this.props.params?.type)
+           tempFilters[0].title =
+            this.state.filters[2].options[
+              parseInt(this.props.params?.type ? this.props.params?.type : 0)
             ]?.text;
           this.setState({
             type: {
               selectedKey:
-                this.state.filters[0].options[parseInt(this.props.params?.type)]
+                this.state.filters[2].options[parseInt(this.props.params?.type ? this.props.params?.type : 0)]
                   ?.key,
-              text: this.state.filters[0].options[
-                parseInt(this.props.params?.type)
+              text: this.state.filters[2].options[
+                parseInt(this.props.params?.type ? this.props.params?.type : 0)
               ]?.text,
             },
           });
@@ -324,11 +324,11 @@ class SearchSuggestion extends Component {
           tempFilters[3].title = priceText;
 
           // set address(district)
-          tempFilters[2].title = temp[parseInt(this.props.params?.address)]?.text;
+          tempFilters[2].title = temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.text;
           this.setState({
             address: {
-              selectedKey: temp[parseInt(this.props.params?.address)]?.key,
-              text: temp[parseInt(this.props.params?.address)]?.text,
+              selectedKey: temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.key,
+              text: temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.text,
             },
           });
 
@@ -521,27 +521,6 @@ class SearchSuggestion extends Component {
               </span>
             </div>
           ) : null}
-        </div>
-        {/* search */}
-        <div
-          style={{ alignItems: "flex-start" }}
-          className="search-bar vertical"
-        >
-          <div
-            style={{ width: "95%", marginLeft: "6px" }}
-            className="horizontal"
-          >
-            <AiOutlineSearch />
-            <input
-              id={"search-bar"}
-              onChange={this.handleChangeInput}
-              type="text"
-              className="search-bar"
-              placeholder="Tìm kiếm địa điểm, khu vực"
-              autoComplete="off"
-              defaultValue={this.state.searchText}
-            />
-          </div>
         </div>
         {/* filter for searching */}
         {this.state.filters.map((filter) => (

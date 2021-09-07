@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.suggestion-container>* {
+  display: inline-block;
+}
+
 input.search-bar {
   margin-left: 5px;
   outline: none;
@@ -38,6 +42,7 @@ input.search-bar:focus {
 }
 
 .filter-drop-box {
+  min-width: 120px;
   display: inline-block;
   background-color: transparent;
   vertical-align: middle;
