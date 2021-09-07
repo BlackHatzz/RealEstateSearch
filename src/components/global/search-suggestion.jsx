@@ -198,20 +198,20 @@ class SearchSuggestion extends Component {
             temp.push({ key: result[i].id, text: result[i].name });
           }
 
-          tempFilters[0].options = temp;
+          tempFilters[2].options = temp;
 
           // set filters
           // set real estate type
           tempFilters[0].title =
-            this.state.filters[2].options[
+            this.state.filters[0].options[
               parseInt(this.props.params?.type ? this.props.params?.type : 0)
             ]?.text;
           this.setState({
             type: {
               selectedKey:
-                this.state.filters[2].options[parseInt(this.props.params?.type ? this.props.params?.type : 0)]
+                this.state.filters[0].options[parseInt(this.props.params?.type ? this.props.params?.type : 0)]
                   ?.key,
-              text: this.state.filters[2].options[
+              text: this.state.filters[0].options[
                 parseInt(this.props.params?.type ? this.props.params?.type : 0)
               ]?.text,
             },
