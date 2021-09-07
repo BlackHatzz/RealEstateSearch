@@ -132,6 +132,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
             <div className="chat_window_container_message_box_display_realestate_image">
               <img src={currentChat.data?.realIMG} alt="" />
             </div>
+
             <div className="chat_window_container_message_box_display_realestate_info">
               <div className="chat_window_container_message_box_display_realestate_info_title">
                 <p>{currentChat.data.address}</p>
@@ -139,6 +140,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
                   {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
                   {currentChat.data.bath} WC
                 </p>
+
               </div>
               {role === "buyer" && (
                 <div className="chat_window_container_message_box_display_realestate_info_deal_book">
