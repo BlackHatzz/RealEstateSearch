@@ -216,6 +216,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <div className="deal-popup-form">
             <Formik
@@ -271,6 +272,7 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <Appointment
             setBookStatus={setBookStatus}

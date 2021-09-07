@@ -359,7 +359,7 @@ class SearchResultPage extends Component {
             style={{
               overflowY: "auto",
               overflowX: "hidden",
-              height:"80vh"
+              height:"86vh"
             }}
           >
             <div className="horizontal">{this.renderSearchResult()}</div>

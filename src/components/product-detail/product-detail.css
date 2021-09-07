@@ -1,9 +1,11 @@
 div.product-detail-wrapper {
-  height: calc(100% - 70px - 50px - 1px);
+  height: 84vh;
   /* height: auto; */
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
+
 div.product-info-container {
   /* background-color: blue; */
   width: 60%;
@@ -173,11 +175,8 @@ div.detail-box-row {
   color: #2c2f36;
 }
 
-.contact-wrapper-fixed-box {
-  width: auto;
-  height: auto;
-  background-color: transparent;
-  position: fixed;
+.profile-mobile {
+  display: none;
 }
 
 .contact-wrapper {
