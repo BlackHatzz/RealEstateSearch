@@ -1,0 +1,59 @@
+@media only screen and (max-width:500px) {
+  .seller-search-post-wrapper {
+    /* height: 800px; */
+    /* display: flex; */
+    flex-direction: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+    flex-direction: column;
+  }
+  .seller-search-create {
+    display: block;
+    flex-direction: inherit;
+    padding-left: 5px;
+    margin-top: 10px;
+  }
+  .seller-title-tab-list {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+  .seller-search-post-search-bar-container {
+    width: 70%;
+    display: inline-flex;
+  }
+  .seller-search-post-create-post {
+    display: inline-flex;
+    width: max-content;
+    align-items: center;
+    justify-content: center;
+    margin-left: 5%;
+    height: 42px;
+    vertical-align: middle;
+  }
+  .seller-search-post-create-post::before {
+    content: "+ Tin mới";
+    color: rgb(255, 255, 255);
+    font-size: 1.1em;
+    align-items: flex-start;
+  }
+  .seller-search-post-create-post>* {
+    display: none;
+  }
+  .seller-tab-container {
+    padding-left: 0;
+  }
+  .seller-tab-item {
+    width: max-content;
+    margin-right: 0;
+    text-align: center;
+    margin-left: 3px;
+    margin-right: 3px;
+  }
+  .seller-tab-item:nth-child(4) {
+    margin-right: 0;
+  }
+  .seller-total-record {
+    display: none;
+  }
+}

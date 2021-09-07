@@ -1,0 +1,22 @@
+@media only screen and (max-width:500px) {
+  .seller-wrapper>.left-container {
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    width: 75vw;
+  }
+  .left-container-show-menu {}
+  /* .left-container::after {
+      background: red;
+      border: 1px solid red;
+      width: 100vw;
+      height: 100vh;
+    }  */
+  .drawer-bg-menu-mobile {
+    position: absolute;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+  }
+}

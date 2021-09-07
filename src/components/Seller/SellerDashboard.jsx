@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 //   getLatLng,
 // } from "react-places-autocomplete";
 import "./manage-post.css";
+import "./manage-post-mobile.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
 import ScheduleIcon from "@material-ui/icons/Schedule";
@@ -122,13 +123,13 @@ const SellerDashboard = () => {
     handleStyleForSelectedItem();
   }, []);
   useEffect(() => {
-      console.log(window.location);
-      // if(window.location.pathname === "/seller") {
-      //   history.push("/seller/search-post");
-      //   window.location.reload();
-      // }
+    console.log(window.location);
+    // if(window.location.pathname === "/seller") {
+    //   history.push("/seller/search-post");
+    //   window.location.reload();
+    // }
   }, []);
-    // useHistory().push("/search-post");
+  // useHistory().push("/search-post");
   const handleSelectTab = (key) => {
     const list = document.getElementsByClassName("alone-selected");
     const list2 = document.getElementsByClassName("box");
@@ -174,6 +175,7 @@ const SellerDashboard = () => {
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
+          <div className={(isShowMenu ? "drawer-bg-menu-mobile" : "")} />
           <div
             className={
               "left-container " +
@@ -182,7 +184,7 @@ const SellerDashboard = () => {
           >
             <div className="logo-container">
               {/* <img src="logo.png" className="logo-box" /> */}
-              <div style={{backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')"}} className="logo-box" ></div>
+              <div style={{ backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')" }} className="logo-box" ></div>
               <div
                 style={{ width: 30, height: 30, marginRight: 10 }}
                 onClick={() => {
@@ -275,7 +277,7 @@ const SellerDashboard = () => {
                 />
               ))}
               <Redirect to="/seller/search-post" />
-              
+
             </Switch>
 
             {/* </div> */}

@@ -1,4 +1,5 @@
 import "./search-post.css";
+import "./search-post-mobile.css";
 import "../global/shared.css";
 import React, { useEffect, useState, useCallback } from "react";
 import {
@@ -333,7 +334,6 @@ const SearchPost = () => {
   return (
     <React.Fragment>
       <div className="seller-search-post-wrapper">
-        <div style={{ height: "30px" }}></div>
 
         <div className="seller-search-create">
           <div className="seller-title-tab-list">DANH SÁCH BẤT ĐỘNG SẢN</div>
@@ -471,7 +471,7 @@ const SearchPost = () => {
 
 
 
-          <div style={{flex: 1, textAlign: "right", marginRight: "12%"}}>
+          <div className="seller-total-record">
             Tổng số bài đăng: {paging.totalRecord} bài
             </div>
         </div>
