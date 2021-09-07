@@ -6,7 +6,12 @@ import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 import firebase from "firebase";
 
-export const MessageContainer = ({ conversation, handleBook }) => {
+export const MessageContainer = ({
+  conversation,
+  handleBook,
+  setBookStatus,
+  bookStatus,
+}) => {
   const uuid = fb.auth.currentUser?.uid;
   const username = fb.auth.currentUser?.displayName;
   const [messages, setMessages] = useState([]);
@@ -156,6 +161,8 @@ export const MessageContainer = ({ conversation, handleBook }) => {
       fb.firestore.collection("conversations").doc(conversation.id).update({
         lastMessage: "lịch hẹn đã hủy",
       });
+
+      setBookStatus("cancel");
     }
   };
   const handleCancelDeal = () => {
@@ -204,16 +211,18 @@ export const MessageContainer = ({ conversation, handleBook }) => {
                       <p>Thỏa thuận</p>
                       <p>Giá {message.deal} tỷ</p>
                       <p>đã được chấp nhận</p>
-                      <button
-                        disabled={
-                          conversation.data.appointment === "upcoming"
-                            ? true
-                            : false
-                        }
-                        onClick={handleBook}
-                      >
-                        Đặt lịch
-                      </button>
+                      {bookStatus !== "upcoming" && (
+                        <button
+                          disabled={
+                            conversation.data.appointment === "upcoming"
+                              ? true
+                              : false
+                          }
+                          onClick={handleBook}
+                        >
+                          Đặt lịch
+                        </button>
+                      )}
                     </div>
                   )}
                   {message.status === "refused" && (

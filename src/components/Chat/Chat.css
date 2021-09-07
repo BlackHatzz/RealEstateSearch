@@ -48,7 +48,7 @@
   border-bottom: 1px solid gray;
 }
 
-.chat_window_header>h2 {
+.chat_window_header > h2 {
   font-size: 0.9375rem;
   font-weight: 500;
   padding-left: 10px;
@@ -139,9 +139,9 @@
   width: 30%;
 }
 
-.chat_window_container_message_box_display_realestate_image>img {
+.chat_window_container_message_box_display_realestate_image > img {
   height: 60px;
-  width: auto;
+  width: 80px;
 }
 
 .chat_window_container_message_box_display_realestate_info {
@@ -158,13 +158,13 @@
   font-weight: 700;
 }
 
-.chat_window_container_message_box_display_realestate_info_title>p {
+.chat_window_container_message_box_display_realestate_info_title > p {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
 }
 
-.chat_window_container_message_box_display_realestate_info>p {
+.chat_window_container_message_box_display_realestate_info > p {
   font-size: 10px;
   margin: 0 0 5px;
 }
@@ -347,7 +347,7 @@ option {
   /* background-image: url('https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg'); */
 }
 
-.presentation-pic-container>img {
+.presentation-pic-container > img {
   width: 75px;
   height: 50px;
   object-fit: fill;
@@ -435,7 +435,7 @@ option {
   justify-content: space-evenly;
 }
 
-.deal-form-button>button {
+.deal-form-button > button {
   background-color: #0c67ce;
   border: none;
   border-radius: 5px;
@@ -449,7 +449,7 @@ option {
   border-bottom: 1px solid rgb(175, 175, 175);
 }
 
-.chat_window_container_message_box_user>p {
+.chat_window_container_message_box_user > p {
   font-size: 16;
   font-weight: 600;
   padding-left: 20px;
@@ -473,7 +473,7 @@ option {
   margin: 0.5rem !important;
 }
 
-.buyer-appointment-message-upcoming>button {
+.buyer-appointment-message-upcoming > button {
   border: none;
   color: black;
   background-color: white;
@@ -497,7 +497,7 @@ option {
   width: 150px;
 }
 
-.seller-deal-message-pending-button>button {
+.seller-deal-message-pending-button > button {
   border: none;
   background-color: white;
   border-radius: 5px;
@@ -506,7 +506,7 @@ option {
   cursor: pointer;
 }
 
-.buyer-deal-message>button {
+.buyer-deal-message > button {
   border: none;
   color: black;
   background-color: white;
