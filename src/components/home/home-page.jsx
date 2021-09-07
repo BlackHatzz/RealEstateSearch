@@ -146,7 +146,6 @@ class HomePage extends Component {
     //   displayName: 'David',
     //   photoURL: 'https://i.ibb.co/NjFGvWn/David-Beckham.jpg',
     // };
-
     // fb.auth.currentUser.updateProfile(update);
     // console.log(fb.auth.currentUser.uid);
     // const { searchText } = this.state;
@@ -188,8 +187,6 @@ class HomePage extends Component {
     //       // });
     //     }
     //   );
-    
-
     // const requestOptions = {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
@@ -204,7 +201,6 @@ class HomePage extends Component {
     //     type: null
     //   }),
     // };
-
     // fetch(Constants.getRealEstateRef, requestOptions)
     //   .then((res) => res.json())
     //   .then(
@@ -493,9 +489,7 @@ class HomePage extends Component {
             console.log("on open");
             console.log(event);
           }}
-          trigger={
-            <div>eqweqweqweqwewqew</div>
-          }
+          trigger={<div>eqweqweqweqwewqew</div>}
         >
           {(close) => (
             // <div

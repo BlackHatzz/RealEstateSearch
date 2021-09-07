@@ -88,10 +88,11 @@
 .modal-confirm {
   position: absolute;
   width: 400px;
-
+  border-radius: 5px;
   background-color: white;
   top: 50%;
   left: 40%;
+  padding: 0px 0px 10px 10px;
   /* transform: translate(-50%, -50%); */
 }
 .set-schedule-form {
@@ -172,4 +173,13 @@
 .save-button:disabled {
   background-color: gray;
   cursor: not-allowed;
+}
+
+.modal-transaction-text {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.transaction-modal-button-group > button {
+  width: 80px;
 }

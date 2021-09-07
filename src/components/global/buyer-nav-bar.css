@@ -260,3 +260,11 @@
   font-weight: 600;
   color: #4784ff;
 }
+.modal-transaction-text {
+  font-size: 16px;
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.transaction-modal-button-group > button {
+  width: 80px;
+}

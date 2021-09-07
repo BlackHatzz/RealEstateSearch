@@ -200,7 +200,7 @@ class SearchResultPage extends Component {
       return null;
     }
 
-    if (this.state.items.length === 0) {
+    if (this.state.items?.length === 0) {
       return (
         <div className="not-found-container">
           <div className="not-found"></div>
