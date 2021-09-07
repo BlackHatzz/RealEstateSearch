@@ -155,6 +155,16 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
                     Thỏa thuận
                   </button>
                 )}
+                {currentChat.data.deal === "accepted" &&
+                  currentChat.data.appointment !== "upcoming" && (
+                    <button
+                      className="chat-window-deal-button"
+                      onClick={handleDeal}
+                      type="button"
+                    >
+                      Đặt lịch
+                    </button>
+                  )}
               </div>
             )}
           </div>
