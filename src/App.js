@@ -35,6 +35,7 @@ import BuyerNavbar from "./components/global/BuyerNavbar";
 
 import ChatBubble from "./components/Chat/ChatBubble";
 import SmallChatWindow from "./components/Chat/SmallChatWindow";
+import NewProfile from "./components/Login/NewProfile";
 
 moment.locale("vi");
 
@@ -44,7 +45,7 @@ const App = () => {
   const authResolved = useResolved(authUser);
   // const [isTokenFound, setTokenFound] = useState(false);
   // getToken(setTokenFound);
-  const { role } = useContext(Context);
+  const { role, isNewUser } = useContext(Context);
 
   useEffect(() => {
     if (authResolved) {
@@ -81,9 +82,12 @@ const App = () => {
           {role === "seller" && <Redirect to="/seller" />}
         </Route>
         <Route exact path="/role" component={Role} />
+        <Route exact path="/new-profile" component={NewProfile} />
 
         <Route path="/login">
-          {!!authUser ? <Redirect to="/role" /> : <Login />}
+          {!!authUser && isNewUser && <Redirect to="/new-profile" />}
+          {!!authUser && !isNewUser && <Redirect to="/role" />}
+          {!authUser && <Login />}
         </Route>
         <Route path="/schedule" component={Schedule} />
         <Route path="/profile-page" component={ProfilePage} />

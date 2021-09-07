@@ -1,19 +1,22 @@
 import { fb } from "../../services";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Form, Formik } from "formik";
 import { useHistory } from "react-router-dom";
 import { FormField } from "../FormField";
 import { validationSchema, defaultValues } from "./formikConfig";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
+import { Context } from "../../ChatContext";
 
 // import { useStateValue } from "../../StateProvider";
 // import { actionTypes } from "../../reducer";
 
 export const Login = () => {
-  const history = useHistory();
   // const [{}, dispatch] = useStateValue();
   const [serverError, setServerError] = useState("");
+  let history = useHistory();
+  const { triggerNewUser } = useContext(Context);
+
   useEffect(() => {
     const uiConfig = {
       callbacks: {
@@ -27,23 +30,26 @@ export const Login = () => {
           console.log("provider id:" + providerId);
           console.log("operationType:" + operationType);
           if (isNewUser) {
-            fb.firestore
-              .collection("users")
-              .doc(user.uid)
-              .set({
-                uuid: user.uid,
-                userName: user.phoneNumber,
-                phoneNumber: user.phoneNumber,
-                photoURL: user.photoURL + "",
-                role: "customer",
-              });
+            console.log("new user");
+            history.push("/new-profile");
+            triggerNewUser(true);
+            // fb.firestore
+            //   .collection("users")
+            //   .doc(user.uid)
+            //   .set({
+            //     uuid: user.uid,
+            //     userName: user.phoneNumber,
+            //     phoneNumber: user.phoneNumber,
+            //     photoURL: user.photoURL + "",
+            //     role: "customer",
+            //   });
 
-            fb.auth.currentUser.updateProfile({
-              displayName: user.phoneNumber,
-              photoURL: "",
-            });
+            // fb.auth.currentUser.updateProfile({
+            //   displayName: user.phoneNumber,
+            //   photoURL: "",
+            // });
 
-            createUser(user);
+            // createUser(user);
           }
 
           return true;
@@ -129,7 +135,7 @@ export const Login = () => {
 
   return (
     <div className="auth-form-container">
-      <div id="firebaseui-auth-container"></div>
+      <div id="firebaseui-auth-container" />
       {/* <div className="auth-form">
         <h1 className="title">Đăng Nhập</h1>
         <Formik

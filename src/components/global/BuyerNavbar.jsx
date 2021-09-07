@@ -26,8 +26,15 @@ import SmallChatWindow from "../Chat/SmallChatWindow";
 import Modal from "@material-ui/core/Modal";
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
-  const { role, resetRole, addItem, chats, viewchats, addViewChat } =
-    useContext(Context);
+  const {
+    role,
+    resetRole,
+    addItem,
+    chats,
+    viewchats,
+    addViewChat,
+    triggerNewUser,
+  } = useContext(Context);
   const [isProfileMenuShown, setIsProfileMenuShown] = useState(false);
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [chatTrigger, setChatTrigger] = useState(false);
@@ -429,16 +436,24 @@ const BuyerNavbar = () => {
                   <div className="modal-confirm">
                     <h2 id="simple-modal-title">Xác nhận giao dịch</h2>
                     <div id="simple-modal-description">
-                      <p>Người mua: {modalData.data.buyer}</p>
-                      <p>Người bán: {modalData.data.seller}</p>
-                      <p>Địa chỉ bất động sản: {modalData.data.address}</p>
-                      <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
-                      <p>
+                      <p className="modal-transaction-text">
+                        Người mua: {modalData.data.buyer}
+                      </p>
+                      <p className="modal-transaction-text">
+                        Người bán: {modalData.data.seller}
+                      </p>
+                      <p className="modal-transaction-text">
+                        Địa chỉ bất động sản: {modalData.data.address}
+                      </p>
+                      <p className="modal-transaction-text">
+                        Giá thỏa thuận: {modalData.data.dealPrice} tỷ
+                      </p>
+                      <p className="modal-transaction-text">
                         Ngày giao dịch:
                         {moment(modalData.data.appointmentDate).format("LLL")}
                       </p>
                     </div>
-                    <div>
+                    <div className="transaction-modal-button-group">
                       <button
                         onClick={() => {
                           fb.firestore
@@ -592,6 +607,7 @@ const BuyerNavbar = () => {
                     className="profile-menu-item bottom-item"
                     onClick={() => {
                       resetRole();
+                      triggerNewUser(false);
                       fb.auth.signOut();
                       window.localStorage.clear();
                     }}
