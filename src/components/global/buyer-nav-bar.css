@@ -34,6 +34,7 @@
   align-items: center;
   justify-content: flex-start;
   flex: 1;
+  position: relative;
 }
 
 .nav-bar-container>.nav-bar-item:first-child {
@@ -46,6 +47,7 @@
 
 .nav-bar-item>.nav-bar-item-hidden {
   position: absolute;
+  width: 100%;
 }
 
 .nav-bar-item>.nav-bar-item-hidden::content {
@@ -118,7 +120,8 @@
 .profile-menu-container {
   width: 200px;
   background-color: white;
-  position: relative;
+  position: absolute;
+  right: 0;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
   padding: 0;

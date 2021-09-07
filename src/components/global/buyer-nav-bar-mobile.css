@@ -12,6 +12,7 @@
     align-items: inherit;
     justify-content: inherit;
     flex: 1;
+    position: inherit;
   }
   .nav-bar-item .nav-bar-logo {
     width: auto;

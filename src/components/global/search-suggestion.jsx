@@ -202,7 +202,7 @@ class SearchSuggestion extends Component {
 
           // set filters
           // set real estate type
-           tempFilters[0].title =
+          tempFilters[0].title =
             this.state.filters[2].options[
               parseInt(this.props.params?.type ? this.props.params?.type : 0)
             ]?.text;
@@ -324,11 +324,11 @@ class SearchSuggestion extends Component {
           tempFilters[3].title = priceText;
 
           // set address(district)
-          tempFilters[2].title = temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.text;
+          tempFilters[2].title = temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.text;
           this.setState({
             address: {
-              selectedKey: temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.key,
-              text: temp[parseInt(this.props.params?.address?this.props.params?.address:0)]?.text,
+              selectedKey: temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.key,
+              text: temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.text,
             },
           });
 
@@ -374,7 +374,7 @@ class SearchSuggestion extends Component {
       this.state.toAreaText +
       // this.state.area.selectedKey +
       "/" +
-      this.state.address.selectedKey +
+      this.state.address?.selectedKey +
       "/" +
       this.state.fromPriceText +
       "-" +
@@ -382,11 +382,11 @@ class SearchSuggestion extends Component {
       "/" +
       this.state.selectedDoorDirection.title +
       "/" +
-      this.state.selectedBedroom.value +
+      this.state.selectedBedroom?.value +
       "/" +
-      this.state.selectedBathroom.value +
+      this.state.selectedBathroom?.value +
       "/" +
-      this.state.selectedSort.value
+      this.state.selectedSort?.value
     );
 
     // this.props.history.push(
