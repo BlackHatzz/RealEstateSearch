@@ -479,14 +479,18 @@ const SearchPost = () => {
         <div className="seller-search-list-search-result">
           <div className="seller-search-list-search-container">
             {realEstateList.length > 0 ? (
-              realEstateList.map((item, index) => {
+              <> {realEstateList.map((item, index) => {
                 var link = null;
                 if (selectedTabItemKey === tabItemList[1].key) {
                   link = "/seller-update-post/" + item.realEstate.id;
                 }
                 return renderRealEstateItem(item, index, link);
-              })
-            ) : (
+              })}
+                <ul class="pagination justify-content-center" style={{ transform: ["translateX(-50%)"], marginLeft: "50%" }}>
+
+                  {generatePaging().map(val => val)}
+                </ul>
+              </>) : (
               <React.Fragment>
                 <div className="not-found-container">
                   <div className="not-found"></div>
@@ -498,10 +502,7 @@ const SearchPost = () => {
                 </div>
               </React.Fragment>
             )}
-            <ul class="pagination justify-content-center" style={{ transform: ["translateX(-50%)"], marginLeft: "50%" }}>
 
-              {generatePaging().map(val => val)}
-            </ul>
           </div>
 
 
