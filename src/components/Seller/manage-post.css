@@ -62,7 +62,6 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
 }
 
 .seller-wrapper>.left-container>.item .icon {
@@ -82,9 +81,10 @@
 
 .seller-wrapper>.right-container {
   width: 100%;
-  height: calc(100%);
+  height: 100vh;
   background-color: white;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 
 .seller-wrapper>.right-container>.divide {
@@ -179,9 +179,6 @@
   font-size: 16px;
   font-weight: 400;
   text-align: left;
-  width: 100px;
-  max-width: 100px;
-  min-width: 100px;
   /* background-color: blue; */
   padding: 4px 4px 4px 6px;
 }

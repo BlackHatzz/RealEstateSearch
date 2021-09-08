@@ -75,12 +75,12 @@
 
 .real-post-item-buyer {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 
 .real-post-item-buyer-info {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 1;
 }
 

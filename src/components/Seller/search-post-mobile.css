@@ -19,41 +19,85 @@
     margin-bottom: 10px;
   }
   .seller-search-post-search-bar-container {
-    width: 70%;
-    display: inline-flex;
+    width: 95%;
+    display: flex;
+    margin: auto;
   }
   .seller-search-post-create-post {
-    display: inline-flex;
+    display: flex;
+    margin: auto;
     width: max-content;
     align-items: center;
     justify-content: center;
-    margin-left: 5%;
-    height: 42px;
+    margin-top: 5px;
+    height: 35px;
     vertical-align: middle;
   }
   .seller-search-post-create-post::before {
-    content: "+ Tin mới";
-    color: rgb(255, 255, 255);
+    /* content: "+ Tạo BĐS"; */
+    /* color: rgb(255, 255, 255);
     font-size: 1.1em;
-    align-items: flex-start;
+    align-items: flex-start; */
   }
   .seller-search-post-create-post>* {
-    display: none;
+    /* display: none; */
   }
   .seller-tab-container {
     padding-left: 0;
+    display: block;
+    width: 100vw;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    align-items: inherit;
+    flex-direction: inherit;
   }
   .seller-tab-item {
-    width: max-content;
-    margin-right: 0;
+    display: inline-block;
+    width: auto;
     text-align: center;
-    margin-left: 3px;
-    margin-right: 3px;
-  }
-  .seller-tab-item:nth-child(4) {
-    margin-right: 0;
+    padding: 5px 10px;
   }
   .seller-total-record {
     display: none;
+  }
+  /* .seller-search-list-search-result {
+    width: 100vw;
+  } */
+  /* div.seller-search-image-container {
+    width: auto;
+    height: auto;
+    position: relative;
+    flex: 1;
+    display: flex;
+  }*/
+  div.content-product-container {
+    margin-left: 0;
+    width: auto;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+  }
+  .seller-search-list-search-container .box {
+    width: 95vw;
+    padding: 4px;
+    display: flex;
+  }
+  .seller-search-list-search-container .description {
+    display: none;
+  }
+  .seller-search-list-search-container div.price-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: inherit;
+  }
+  .seller-search-list-search-container .area::before {
+    content: "";
+  }
+  .real-post-item-buyer-deal {
+    padding-left: 0;
+  }
+  .real-post-item-buyer-book {
+    padding-left: 10px;
   }
 }

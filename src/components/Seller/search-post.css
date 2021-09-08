@@ -1,16 +1,12 @@
 .seller-search-post-wrapper {
-  width: 100%;
-  height: calc(100% - 71px);
-  max-height: calc(100% - 71px);
-  /* height: 800px; */
-  /* display: flex; */
+  flex: 1;
   align-items: center;
   justify-content: center;
   background-color: transparent;
-  overflow-x: hidden;
-  overflow-y: scroll;
   display: flex;
   flex-direction: column;
+  overflow-y: hidden;
+  width: 100%;
 }
 
 .croll-y-able {
@@ -98,13 +94,17 @@
 .seller-search-list-search-result {
   background-color: #F0F2F5;
   flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .seller-search-list-search-container {
-  padding-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 10px auto 0;
   height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   /* background-color: white; */
 }
 
@@ -122,45 +122,35 @@
 
 div.seller-search-image-container {
   border-radius: 4px;
-  background-color: gray;
-  width: 224px;
-  height: 172px;
-  background-size: 224px 172px;
-  /* padding-top: 12px;
-  padding-bottom: 12px; */
-  object-fit: cover;
-  background-repeat: no-repeat;
+  width: auto;
+  height: 150px;
+  overflow: hidden;
+  justify-content: center;
+  display: flex;
+  flex: 1;
+  border: 1px solid #cecece;
 }
 
-.seller-search-image-container>img {
-  background-repeat: no-repeat;
-  object-fit: cover;
-  width: 100%;
-  height: 100%;
-  border-radius: 2px;
-  margin-left: 12px;
-}
-
-.seller-search-list-search-container>.content-container {
+div.content-product-container {
   padding: 14px 12px 12px 12px;
   margin-left: 12px;
   /* margin: auto; */
-  width: 550px;
+  flex: 3;
+  display: flex;
+  flex-direction: column;
   /* background-color: teal; */
 }
 
-.seller-search-list-search-container .title {
+.seller-search-list-search-container .product-title {
   color: #c12f25;
-  text-indent: 20px;
   text-transform: uppercase;
-  padding-bottom: 8px;
+  padding-bottom: 0;
   font-weight: bold;
-  font-size: 14px;
-  line-height: 12px;
-  text-rendering: optimizeLegibility;
+  font-size: 1.1em;
+  line-height: inherit;
 }
 
-.seller-search-list-search-container>div.price-box {
+.seller-search-list-search-container div.price-box {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -176,6 +166,10 @@ div.seller-search-image-container {
   padding-bottom: 4px;
 }
 
+.seller-search-list-search-container .area::before {
+  content: "• ";
+}
+
 .seller-search-list-search-container .area {
   font-weight: bold;
   color: #2c2f36;
@@ -184,10 +178,11 @@ div.seller-search-image-container {
 }
 
 .seller-search-list-search-container .address {
-  margin-top: 8px;
   font-size: 14px;
   color: black;
 }
+
+.real-post-item-buyer-list {}
 
 .seller-search-list-search-container .description {
   margin-top: 8px;
@@ -195,6 +190,10 @@ div.seller-search-image-container {
   height: 51px;
   color: #747c87;
   overflow: hidden;
+}
+
+.real-post-item-buyer-info>div {
+  display: flex;
 }
 
 .seller-search-list-search-container .other-info {
@@ -270,39 +269,35 @@ div.seller-search-image-container {
 }
 
 .seller-tab-container {
-  /* box-shadow: 6px 6px 10px rgba(3, 44, 71, 0.18); */
   width: 100%;
-  height: 40px;
   background-color: transparent;
   margin-top: 20px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  /* justify-content: center; */
   padding-left: 10%;
+  overflow-y: hidden;
+  overflow-x: auto;
+}
+
+.seller-tab-group {
+  width: max-content;
+  display: block;
 }
 
 .seller-tab-item {
-  /* box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1); */
-  /* float: left; */
-  width: 12%;
-  height: 100%;
   margin-right: 10px;
+  padding: 5px 10px;
   background-color: transparent;
-  /* border-radius: 7px; */
   border: 2px solid #FFF;
-  /* border-top-left-radius: 32px;
-  border-top-right-radius: 32px; */
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  display: inline-block;
+  text-align: center;
   cursor: pointer;
 }
 
 .seller-tab-item:hover {
-  /* background-color: rgba(199, 251, 255, 0.4); */
-  /* background-color: transparent; */
+  background-color: rgba(199, 251, 255, 0.4);
+  background-color: transparent;
   border-bottom: 2px solid rgb(12, 103, 206);
 }
 

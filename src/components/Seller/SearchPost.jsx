@@ -23,7 +23,7 @@ import { useHistory } from "react-router";
 import Modal from "@material-ui/core/Modal";
 import { fb } from "../../services";
 
-  var userId = fb.auth.currentUser?.id;
+var userId = fb.auth.currentUser?.id;
 const SearchPost = () => {
   var [firstLoad, setFirstLoad] = useState(true);
   var [realEstateList, setRealEstateList] = useState([]);
@@ -90,7 +90,7 @@ const SearchPost = () => {
         console.log("affeter");
         console.log(realEstateList);
       }
-    } 
+    }
 
     if (!isRealEstateLoaded) {
       console.log("userId", userId, fb.auth.currentUser)
@@ -108,13 +108,13 @@ const SearchPost = () => {
             setIsRealEstateLoaded(true);
             // setRealEstateList(result.content);
             let myRealEstateList = [];
-          for (var i = 0; i < result.content.length; i++) {
-            myRealEstateList.push({
-              user: null,
-              realEstate: result.content[i],
-            });
-            setRealEstateList(myRealEstateList);
-          };
+            for (var i = 0; i < result.content.length; i++) {
+              myRealEstateList.push({
+                user: null,
+                realEstate: result.content[i],
+              });
+              setRealEstateList(myRealEstateList);
+            };
 
             let myPaging = {
               totalRecord: result.totalRecord,
@@ -122,18 +122,18 @@ const SearchPost = () => {
               contentSize: result.contentSize,
               pageIndex: result.pageIndex,
             }
-  
+
             setPaging(myPaging)
             //   realEstateList = result.content;
             console.log(" step 2 - " + realEstateList.length);
             for (var i = 0; i < realEstateList.length; i++) {
 
               fetchMyAPI(realEstateList[i].realEstate, i);
-             
+
             }
 
           },
-          (error) => {}
+          (error) => { }
         );
     }
 
@@ -349,7 +349,7 @@ const SearchPost = () => {
             to={"/seller/manage-post"}
             className="seller-search-post-create-post"
           >
-            <span>+ Đăng Tin Bất Động Sản</span>
+            <span>+ Tạo mới Bất Động Sản</span>
           </Link>
         </div>
 
@@ -358,90 +358,91 @@ const SearchPost = () => {
           {
             // first reload auto select "new" post
           }
-          {tabItemList.map((item) => (
-            <div
-              onClick={() => {
-                // re-render ui
-                tabItemList.map((reRenderItem) => {
-                  if (reRenderItem.key !== item.key) {
-                    // not selected item
-                    const tabItemElement = document.getElementById(
-                      reRenderItem.key
-                    );
-                    tabItemElement.style = undefined;
-                    // tabItemElement.style.border =
-                    //   "3px solid " + reRenderItem.hexColorCode;
+          <div className="seller-tab-group">
+            {tabItemList.map((item) => (
+              <div
+                onClick={() => {
+                  // re-render ui
+                  tabItemList.map((reRenderItem) => {
+                    if (reRenderItem.key !== item.key) {
+                      // not selected item
+                      const tabItemElement = document.getElementById(
+                        reRenderItem.key
+                      );
+                      tabItemElement.style = undefined;
+                      // tabItemElement.style.border =
+                      //   "3px solid " + reRenderItem.hexColorCode;
 
-                    const titleTabItemElement = document.getElementById(
-                      "span-" + reRenderItem.key
-                    );
-                    titleTabItemElement.style.color = "black";//reRenderItem.hexColorCode;
-                  } else {
-                    // selected item
-                    setSelectedTabItemKey(reRenderItem.key);
-                    const tabItemElement = document.getElementById(
-                      reRenderItem.key
-                    );
-                    tabItemElement.style.borderBottomColor =
-                      reRenderItem.hexColorCode;
-                    tabItemElement.style.fontWeight =
-                      "bold";
-                    // tabItemElement.style.border =
-                    //   "3px solid " + reRenderItem.hexColorCode;
+                      const titleTabItemElement = document.getElementById(
+                        "span-" + reRenderItem.key
+                      );
+                      titleTabItemElement.style.color = "black";//reRenderItem.hexColorCode;
+                    } else {
+                      // selected item
+                      setSelectedTabItemKey(reRenderItem.key);
+                      const tabItemElement = document.getElementById(
+                        reRenderItem.key
+                      );
+                      tabItemElement.style.borderBottomColor =
+                        reRenderItem.hexColorCode;
+                      tabItemElement.style.fontWeight =
+                        "bold";
+                      // tabItemElement.style.border =
+                      //   "3px solid " + reRenderItem.hexColorCode;
 
-                    const titleTabItemElement = document.getElementById(
-                      "span-" + reRenderItem.key
-                    );
-                    titleTabItemElement.style.color = reRenderItem.hexColorCode;//"white";//
-                  }
-                });
+                      const titleTabItemElement = document.getElementById(
+                        "span-" + reRenderItem.key
+                      );
+                      titleTabItemElement.style.color = reRenderItem.hexColorCode;//"white";//
+                    }
+                  });
 
-                // realEstateList = [];
-                // get data from database
-                fetch(
-                  Constants.getRealEstateRefBySellerId(
-                    fb.auth.currentUser?.uid,
-                    item.status,
-                    0
+                  // realEstateList = [];
+                  // get data from database
+                  fetch(
+                    Constants.getRealEstateRefBySellerId(
+                      fb.auth.currentUser?.uid,
+                      item.status,
+                      0
+                    )
                   )
-                )
-                  .then((res) => res.json())
-                  .then(
-                    (result) => {
-                      console.log(result);
-                      if (result.content.length > 0) {
-                        let myRealEstateList = [];
+                    .then((res) => res.json())
+                    .then(
+                      (result) => {
+                        console.log(result);
+                        if (result.content.length > 0) {
+                          let myRealEstateList = [];
 
-                        for (var i = 0; i < result.content.length; i++) {
-                          myRealEstateList.push({
-                            realEstate: result.content[i],
-                            user: null,
-                          });
-                        }
-                        setRealEstateList(myRealEstateList);
-                        let myPaging = {
-                          totalRecord: result.totalRecord,
-                          totalPage: result.totalPage,
-                          contentSize: result.contentSize,
-                          pageIndex: result.pageIndex,
-                        }
-              
-                        setPaging(myPaging)
-                      } else {
-                        setRealEstateList([]);
-                      }
-                    },
-                    (error) => { }
-                  );
-              }}
-              key={item.key}
-              id={item.key}
-              className={"seller-tab-item " + item.status}
-            >
-              <span id={"span-" + item.key}>{item.title}</span>
-            </div>
-          ))}
+                          for (var i = 0; i < result.content.length; i++) {
+                            myRealEstateList.push({
+                              realEstate: result.content[i],
+                              user: null,
+                            });
+                          }
+                          setRealEstateList(myRealEstateList);
+                          let myPaging = {
+                            totalRecord: result.totalRecord,
+                            totalPage: result.totalPage,
+                            contentSize: result.contentSize,
+                            pageIndex: result.pageIndex,
+                          }
 
+                          setPaging(myPaging)
+                        } else {
+                          setRealEstateList([]);
+                        }
+                      },
+                      (error) => { }
+                    );
+                }}
+                key={item.key}
+                id={item.key}
+                className={"seller-tab-item " + item.status}
+              >
+                <span id={"span-" + item.key}>{item.title}</span>
+              </div>
+            ))}
+          </div>
           {(() => {
             if (firstLoad) {
               // first reload auto select "new" tab (chưa kiểm duyệt)
@@ -473,7 +474,7 @@ const SearchPost = () => {
 
           <div className="seller-total-record">
             Tổng số bài đăng: {paging.totalRecord} bài
-            </div>
+          </div>
         </div>
         <div className="seller-search-list-search-result">
           <div className="seller-search-list-search-container">
@@ -693,12 +694,9 @@ const RealItem = ({ realEstate, link = null }) => {
     //   </div>
     <Link to={link == null ? "#" : link} className="box link">
       <div
-        style={{
-          backgroundImage: "url(' " + realEstate.images[0].imgUrl + " ')",
-        }}
         className="seller-search-image-container"
       >
-        {/* <img src={realEstate.images[0]} alt="" /> */}
+        <img src={realEstate.images[0].imgUrl} alt="" style={{ width: "auto", height: "100%" }} />
       </div>
       <div className="content-product-container">
         {/* title of product */}
@@ -711,14 +709,13 @@ const RealItem = ({ realEstate, link = null }) => {
 
         {/* price and area */}
         <div className="price-box">
-          <span className="price">
+          <p className="price">
             Giá trị ~
             {Math.round((realEstate.price / realEstate.area) * 1000 * 100) /
               100}{" "}
             triệu/m²
-          </span>
-          <span className="price">&#8226;</span>
-          <span className="area">Diện tích {realEstate.area} m²</span>
+          </p>
+          <p className="area">Diện tích {realEstate.area} m²</p>
         </div>
 
         {/* address */}
@@ -729,16 +726,16 @@ const RealItem = ({ realEstate, link = null }) => {
 
 
         {/* description */}
-        <div className="description">
-          {/* Mô tả: {realEstate.description} */}
+        {/* <div className="description"> */}
+        {/* Mô tả: {realEstate.description} */}
 
-          {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
+        {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
 
             liền tường - Trả góp 65% GTCH trong 20 năm, LS 0% trong 24
             tháng. - NHẬN NHÀ chỉ cần 800Tr (30%) đóng trong 12 tháng -
             TẶNG gói nội thất cao cấp trị giá tới 6% GTCH. - CHIẾT KHẤU
             400Triệu - Khi Thanh Toán Sớm . */}
-        </div>
+        {/* </div> */}
 
         {realEstate.status === "active" && (
           <div className="real-post-item-buyer-list">
@@ -749,11 +746,11 @@ const RealItem = ({ realEstate, link = null }) => {
               <div className="real-post-item-buyer">
                 <div className="real-post-item-buyer-info">
                   <p>{conversation.data.buyer}</p>
-                  <p className="real-post-item-buyer-deal">
-                    Thỏa thuận: {conversation.data.dealPrice} tỷ
-                  </p>
-                  <div className="real-post-item-buyer-book">
-                    <p>
+                  <div>
+                    <p className="real-post-item-buyer-deal">
+                      Thỏa thuận: {conversation.data.dealPrice} tỷ
+                    </p>
+                    <p className="real-post-item-buyer-book">
                       Lịch hẹn:{" "}
                       {conversation.data.appointmentDate
                         ? moment(conversation.data.appointmentDate).calendar()
@@ -799,7 +796,7 @@ const RealItem = ({ realEstate, link = null }) => {
         <div className="other-info">
 
           <div className="uptime"> {/* Ngày đăng:  */}{
-moment(realEstate.createAt).calendar()}</div>
+            moment(realEstate.createAt).calendar()}</div>
           {/* {renderStatus(item.user, realEstate)} */}
           {/* <div className="owner">Người đăng: </div> */}
           {/* <div className="product-phone-contact horizontal">
