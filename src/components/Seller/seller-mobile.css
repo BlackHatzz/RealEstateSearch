@@ -1,0 +1,80 @@
+@media only screen and (max-width:500px) {
+  .set-schedule-form {
+    margin-left: 0;
+    padding: 5px;
+    display: flex;
+    flex: 1;
+    width: 100vw;
+    flex-direction: column;
+    transform: none;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .time-scheduler {
+    flex: 1;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  .set-schedule-form .save-button {
+    width: 95vw;
+    height: auto;
+    padding: 7px;
+    margin: auto;
+    margin-bottom: 7px;
+    font-size: 1.1em;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  .notification-save-scheduler {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 3;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  .save-message-hidden {
+    display: none;
+  }
+  .icon-content-saved-scheduler-fail {
+    color: rgb(180, 15, 15);
+    align-self: center;
+    flex: 1;
+  }
+  .icon-content-saved-scheduler-done {
+    color: rgb(12, 151, 12);
+    align-self: center;
+    flex: 1;
+  }
+  .message-content-saved-scheduler {
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+  .content-saved-scheduler {
+    background: #fff;
+    border: 1px solid rgb(59, 59, 59);
+    border-radius: 10px;
+    padding: 10px;
+    width: 90vw;
+    height: 200px;
+    margin: auto;
+    margin-top: 50vh;
+    transform: translateY(-50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .content-saved-scheduler button {
+    background: #4B8AFF;
+    border: none;
+    padding: 5px;
+    color: #fff;
+    font-size: 1.1em;
+    margin-top: 20px;
+    border-radius: 5%;
+    font-weight: bold;
+  }
+}

@@ -175,7 +175,8 @@ const SellerDashboard = () => {
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
-          <div className={(isShowMenu ? "drawer-bg-menu-mobile" : "")} />
+          <div className={(isShowMenu ? "drawer-bg-menu-mobile" : "")}
+          onClick={()=>setShowMenu(!isShowMenu)} />
           <div
             className={
               "left-container " +

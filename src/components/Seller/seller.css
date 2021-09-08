@@ -95,6 +95,7 @@
 .close-sale-button {}
 
 .modal-confirm {
+  display: inherit;
   position: absolute;
   width: 400px;
   border-radius: 5px;
@@ -141,10 +142,14 @@
 
 .period-item {
   border-radius: 5px;
-  padding: 5px 5px 0px 5px;
-  margin: 5px 5px 0px 5px;
-  background-color: white;
+  padding: 5px 5px;
+  margin: 5px 5px;
   cursor: pointer;
+  text-align: center;
+}
+
+.period-item-inactive {
+  background-color: white;
 }
 
 .period-item:hover {
@@ -160,11 +165,7 @@
 }
 
 .period-item-active {
-  padding: 5px;
-  margin: 5px;
-  cursor: pointer;
   background-color: #89b2ff;
-  border-radius: 5px;
 }
 
 .set-schedule-form-note {
@@ -199,6 +200,10 @@
   display: flex;
   flex-direction: row;
   margin-top: 5px;
+}
+
+.notification-save-scheduler {
+  display: none;
 }
 
 .transaction-modal-button-group>button {

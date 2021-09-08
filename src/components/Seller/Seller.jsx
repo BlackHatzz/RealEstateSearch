@@ -15,6 +15,7 @@ import SearchPost from "./SearchPost";
 import ManagePost from "./ManagePost";
 import "./manage-post.css";
 import "./seller.css";
+import "./seller-mobile.css";
 import { SellerPost } from "./SellerPost";
 export const Seller = () => {
   const routes = [

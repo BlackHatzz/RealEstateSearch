@@ -5,6 +5,12 @@
     background-color: white;
     width: 75vw;
   }
+  .seller-wrapper>.right-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
   .left-container-show-menu {}
   /* .left-container::after {
       background: red;
