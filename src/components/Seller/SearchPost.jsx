@@ -304,10 +304,10 @@ const SearchPost = () => {
   const generatePaging = () => {
 
     let firstTag = <li class={"page-item " + (paging.pageIndex == 0 ? "disabled" : "")}>
-      <a class="page-link" onClick={() => callAPIGetAllByPaging(paging.pageIndex - 1)}>Trước</a>
+      <a   class="page-link" onClick={() => callAPIGetAllByPaging(Math.max(0, paging.pageIndex - 1))}>Trước</a>
     </li>
     let lastTag = <li class={"page-item " + (paging.totalPage - 1 == paging.pageIndex ? "disabled" : "")}>
-      <a class="page-link" onClick={() => callAPIGetAllByPaging(paging.pageIndex + 1)}>Sau</a>
+      <a class="page-link" onClick={() => callAPIGetAllByPaging(Math.min(paging.pageIndex + 1, paging.totalPage-1))}>Sau</a>
     </li>
 
     let tags = [firstTag];
@@ -319,7 +319,6 @@ const SearchPost = () => {
       let currentIndexTag = <li class="page-item active">
         <span class="page-link">
           {i + 1}
-          <span class="sr-only">(current)</span>
         </span>
       </li>;
       if (paging.pageIndex == i) {
@@ -430,6 +429,13 @@ const SearchPost = () => {
                           setPaging(myPaging)
                         } else {
                           setRealEstateList([]);
+                          let myPaging = {
+                            totalRecord: 0,
+                            totalPage: 1,
+                            contentSize: 0,
+                            pageIndex: 0,
+                          };
+                          setPaging(myPaging);
                         }
                       },
                       (error) => { }
@@ -486,7 +492,7 @@ const SearchPost = () => {
                 }
                 return renderRealEstateItem(item, index, link);
               })}
-                <ul class="pagination justify-content-center" style={{ transform: ["translateX(-50%)"], marginLeft: "50%" }}>
+                <ul class="pagination" >
 
                   {generatePaging().map(val => val)}
                 </ul>

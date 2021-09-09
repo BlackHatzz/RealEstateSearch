@@ -1,12 +1,12 @@
 .drawer-btn-menu {
   display: inline-block;
-  vertical-align: middle;
   margin-left: 10px;
-  margin-right: 10px;
+  vertical-align: middle;
 }
 
 .drawer-btn-menu~.nav-bar-logo {
   display: inline-block;
+  vertical-align: middle;
 }
 
 .logo-container {

@@ -1,6 +1,6 @@
 @media only screen and (max-width:500px) {
   div.search-bar {
-    width: 55%;
+    width: 50%;
   }
   div.search-bar-with-option {
     width: 84% !important;
@@ -8,7 +8,10 @@
   .suggestion-container {
     height: auto;
     text-align: center;
-    padding-left: 0;
+    padding: 5px 0;
+  }
+  .search-suggestion-filter-menu-container {
+    width: 80vw;
   }
   .suggestion-container-with-option {
     padding-top: 10px;
@@ -16,12 +19,15 @@
     padding-left: 10px;
     text-align: left !important;
     position: absolute;
+    bottom: 0;
+    width: initial;
   }
   .filter-drop-box {
     width: 45%;
   }
   .more-filter-container {
-    width: 50px;
+    height: initial;
+    width: 30px;
     margin: 0 9px;
     text-align: center;
   }
@@ -36,7 +42,9 @@
   }
   .show-more-mobile-filtler {
     display: inline-block;
-    /*asdasdas*/
+    margin-bottom: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
   }
   .more-filter-container>.title::before {
     margin-left: 0;

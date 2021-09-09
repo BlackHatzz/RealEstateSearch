@@ -172,3 +172,45 @@ div.collapse-box {
   align-items: center;
   justify-content: center;
 }
+
+.pagination {
+  max-width: 80vw;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 0;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.page-item {
+  list-style-type: none;
+  border: 1px solid #a0a1a3;
+  padding: 0;
+  margin: 5px;
+  height: 30px;
+  width: max-content;
+  border-radius: 5%;
+  box-shadow: 0px 0px 5px #b8b8b8;
+}
+
+.disabled {
+  color: rgb(155, 155, 155);
+}
+
+.active {
+  background: rgb(77, 133, 236);
+  color: #FFF;
+}
+
+.disabled a {
+  pointer-events: none;
+}
+
+.page-link {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  vertical-align: middle;
+}

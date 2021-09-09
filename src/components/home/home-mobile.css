@@ -1,18 +1,19 @@
 @media only screen and (max-width: 500px) {
   .home-search-wrapper {
     width: 100%;
-    padding: 14px 6px;
+    padding: 10px 0;
+    position: relative;
   }
   .home-search-bar {
     height: 50px;
-    width: 100%;
+    width: 90%;
   }
   div.home-filter-wrapper {
     width: 100%;
   }
   div.home-filter-box {
-    margin-top: 10px;
-    width: 48vw;
+    margin: 5px;
+    width: 45vw;
   }
   div.home-filter-menu {
     width: 48vw;

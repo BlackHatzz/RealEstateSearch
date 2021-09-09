@@ -8,16 +8,24 @@
   .nav-bar-container>.nav-bar-item:last-child {
     margin: 0;
   }
-  .nav-bar-container>.nav-bar-item {
+  .nav-bar-container>.nav-bar-item:first-child {
     align-items: inherit;
     justify-content: inherit;
     flex: 1;
     position: inherit;
   }
+  .nav-bar-container>.nav-bar-item {
+    align-items: inherit;
+    justify-content: inherit;
+    position: inherit;
+    flex: initial;
+  }
   .nav-bar-item .nav-bar-logo {
-    margin-top: 5px;
     width: auto;
-    height: 50px;
+    height: 100%;
+  }
+  .nav-bar-item .nav-bar-logo * {
+    height: 100%;
   }
   .profile-name-text {
     display: none;
@@ -45,8 +53,5 @@
   }
   .profile-menu-container {
     width: 100%;
-  }
-  * {
-    /* border: 1px red solid; */
   }
 }
