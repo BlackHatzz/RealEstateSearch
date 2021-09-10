@@ -171,7 +171,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
               address: conversation.data.address,
               seller: conversation.data.seller,
               buyer: conversation.data.buyer,
-              dealprice: conversation.data.price,
+              dealprice: conversation.data.dealPrice,
               title: conversation.data.title,
               staffId: conversation.data.staffId,
             },
