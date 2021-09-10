@@ -1,6 +1,10 @@
 @media screen and (max-width: 500px) {
+  .app {
+    width: 100vw;
+  }
   .nav-bar-wrapper {
     align-items: inherit;
+    display: block;
   }
   .nav-bar-container>.nav-bar-item:first-child {
     margin: 0;
