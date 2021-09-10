@@ -32,18 +32,20 @@ export const MessageContainer = ({
   let currentMessagesList = [];
   useEffect(() => {
     setIsNewMessage(true);
-    let setInfo = () => {};
+
+    console.log("conversation", conversation.id);
+
     if (conversation) {
-      setInfo = fb.firestore
+      fb.firestore
         .collection("conversations")
         .doc(conversation.id)
         .onSnapshot((doc) => {
           setDealId(doc.data()?.dealId);
+          console.log("idid", doc.data()?.appointmentId);
           setBookId(doc.data()?.appointmentId);
         });
 
       getMessages();
-      setInfo();
     }
   }, [conversation, uuid]);
 
@@ -195,6 +197,7 @@ export const MessageContainer = ({
   };
 
   const handelCancelAppointment = () => {
+    console.log("cancel click", bookId);
     if (bookId) {
       fb.firestore
         .collection("conversations")
@@ -381,13 +384,17 @@ export const MessageContainer = ({
                 <div>
                   {message.status === "upcoming" && (
                     <div className="buyer-appointment-message-upcoming">
-                      <p>Lịch hẹn sắp tới</p>
+                      <p>Lịch hẹn sắp tới{message.status}</p>
                       <p>
                         {moment(message.appointment)
                           .locale("vi")
                           .format("LLLL")}
                       </p>
-                      <button onClick={handelCancelAppointment}>Hủy</button>
+                      <button
+                        onClick={() => handelCancelAppointment(message.id)}
+                      >
+                        Hủy
+                      </button>
                     </div>
                   )}
                   {message.status === "cancel" && <div>Lịch hẹn đã hủy</div>}
