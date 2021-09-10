@@ -19,7 +19,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
         setCurrentChatBookStatus(
-          data?.appointment === "upcomming" ? true : false
+          !!data?.appointment ? data.appointment : "none"
         );
       });
     const oldChatDeal = fb.firestore
@@ -30,7 +30,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
         setOldChatDealStatus(
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
-        setOldChatBookStatus(data?.appointment === "upcoming" ? true : false);
+        setOldChatBookStatus(!!data?.appointment ? data.appointment : "none");
       });
     return () => {
       currentChatDeal();
@@ -48,6 +48,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             forceUpdate={forceUpdate}
             dealStatus={currentChatDealStatus}
             bookStatus={currentChatBookStatus}
+            setBookStatus={setOldChatBookStatus}
           />
         </div>
       )}
@@ -58,6 +59,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             forceUpdate={forceUpdate}
             dealStatus={oldChatDealStatus}
             bookStatus={oldChatBookStatus}
+            setBookStatus={setCurrentChatBookStatus}
           />
         </div>
       )}

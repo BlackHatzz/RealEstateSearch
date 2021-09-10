@@ -109,9 +109,11 @@ export const SellerScheduler = () => {
         setButtonDisable(true);
         setCompleteMessage("done");
       } else {
+
         setError("Error");
         setCompleteMessage("fail");
         console.log(error);
+
       }
     });
   };

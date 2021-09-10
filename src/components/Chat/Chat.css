@@ -626,8 +626,8 @@ option {
 }
 
 .message-input-form .textarea-input {
-  resize: none;
-  overflow: hidden;
+  resize: none !important;
+  overflow: hidden !important;
   /* min-height: 10px; */
   overflow-y: auto;
   font-size: 14px;
@@ -774,7 +774,7 @@ p {
   box-shadow: 0 0 10px #ccc;
   padding-right: 1px;
   padding-bottom: 5px;
-  z-index: 100;
+  z-index: 80;
 }
 
 .small-chat-window-1 {
@@ -793,7 +793,7 @@ p {
   box-shadow: 0 0 10px #ccc;
   padding-right: 1px;
   padding-bottom: 5px;
-  z-index: 100;
+  z-index: 80;
 }
 
 .small-chat-window-buttons-close {
