@@ -21,6 +21,7 @@
     position: absolute;
     bottom: 0;
     width: initial;
+    overflow: hidden;
   }
   .filter-drop-box {
     width: 45%;
@@ -60,8 +61,7 @@
     border: none;
     z-index: 0;
   }
-  
-  .more-filter-menu-container>.item:last-child .drop-box .select-wrapper  {
+  .more-filter-menu-container>.item:last-child .drop-box .select-wrapper {
     transform: translateY(-100%);
     top: 35px;
   }
@@ -71,6 +71,9 @@
   .hidden-filter {
     display: none;
   } */
+  .search-suggestion-filter-menu {
+    width: 50%;
+  }
   .search-button-with-option {
     width: 94vw !important;
     position: absolute;
