@@ -23,6 +23,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid #b8b8b8;
 }
 
 .nav-bar-wrapper>.nav-bar-container {
@@ -30,7 +31,6 @@
   flex: 1;
   padding: 5px 0;
   height: 100%;
-  border-bottom: 1px solid #b8b8b8;
 }
 
 .nav-bar-container>.nav-bar-item {

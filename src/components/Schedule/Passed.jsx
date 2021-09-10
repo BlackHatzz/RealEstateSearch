@@ -31,7 +31,7 @@ const Passed = () => {
   }, [uuid]);
 
   return (
-    <div>
+    <>
       {appointments.length ? (
         <div className="schedule-list-container">
           {appointments.map((appointment) => (
@@ -62,7 +62,7 @@ const Passed = () => {
       ) : (
         <div className="schedule-empty">Chưa có lịch hẹn đã qua </div>
       )}
-    </div>
+    </>
   );
 };
 

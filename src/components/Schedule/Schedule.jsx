@@ -70,7 +70,7 @@ function CustomMenuLink({ label, to, activeOnlyWhenExact }) {
 
   return (
     <button className={match ? "schedule-button-active" : "schedule-button"}>
-      <Link to={to} className="schedule-list-menu-link">
+      <Link to={to} className="schedule-list-menu-link link">
         {label}
       </Link>
     </button>

@@ -4,4 +4,7 @@
     margin: auto;
     padding: 5px;
   }
+  .history-container {
+    width: max-content;
+  }
 }

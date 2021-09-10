@@ -32,7 +32,7 @@ const Upcoming = () => {
   }, [uuid]);
 
   return (
-    <div>
+    <>
       {appointments.length ? (
         <div className="schedule-list-container">
           {appointments.map((appointment) => (
@@ -63,7 +63,7 @@ const Upcoming = () => {
       ) : (
         <div className="schedule-empty">Chưa có lịch hẹn </div>
       )}
-    </div>
+    </>
   );
 };
 
