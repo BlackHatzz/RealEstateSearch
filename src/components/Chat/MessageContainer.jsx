@@ -41,7 +41,6 @@ export const MessageContainer = ({
         .doc(conversation.id)
         .onSnapshot((doc) => {
           setDealId(doc.data()?.dealId);
-          console.log("idid", doc.data()?.appointmentId);
           setBookId(doc.data()?.appointmentId);
         });
 
