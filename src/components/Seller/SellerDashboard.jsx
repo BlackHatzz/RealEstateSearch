@@ -29,6 +29,7 @@ import {
 import { SellerScheduler } from "./SellerScheduler";
 import Schedule from "../Schedule/Schedule";
 import { CropDinSharp } from "@material-ui/icons";
+import TransactionHistory from "./TransactionHistory";
 
 const SellerDashboard = () => {
   let history = useHistory();
@@ -78,7 +79,7 @@ const SellerDashboard = () => {
         />
       ),
       path: "/seller/transaction-history",
-      child: <p>historyewew</p>,
+      child: <TransactionHistory />,
     },
     {
       key: 3,

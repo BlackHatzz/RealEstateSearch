@@ -5,8 +5,7 @@ class Constants {
   // static host = "http://localhost:8080/";
   static host = "https://api-realestate.top/";
   // "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/";
-  static getRealEstateRef =
-    Constants.host + "api/v1/realEstate/getRealEstate";
+  static getRealEstateRef = Constants.host + "api/v1/realEstate/getRealEstate";
   static getRealEstateDetailRef =
     Constants.host + "api/v1/realEstate/getRealEstateDetail/";
   // static getRealEstateRef =
@@ -83,6 +82,33 @@ class Constants {
       Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString()
     );
   }
+
+  static Buyer = class {
+    static getTransactionHistory(userId, page) {
+      return (
+        Constants.host +
+        "api/v1/transaction/getTransactionByUserId/" +
+        userId.toString() +
+        "/" +
+        "buyer" +
+        "/" +
+        page.toString()
+      );
+    }
+  };
+  static Seller = class {
+    static getTransactionHistory(userId, page) {
+      return (
+        Constants.host +
+        "api/v1/transaction/getTransactionByUserId/" +
+        userId.toString() +
+        "/" +
+        "seller" +
+        "/" +
+        page.toString()
+      );
+    }
+  };
 }
 
 export default Constants;
