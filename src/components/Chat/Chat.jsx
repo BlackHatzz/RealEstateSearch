@@ -1,6 +1,7 @@
 import React from "react";
 import { Sidebar } from "./Sidebar";
 import "./Chat.css";
+import "./Chat-mobile.css";
 import Messageboard from "./Messageboard";
 import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import BuyerNavbar from "../global/BuyerNavbar";

@@ -7,7 +7,7 @@ import { fb } from "../../services";
 import { v4 as uuidv4 } from "uuid";
 import firebase from "firebase";
 import "react-datepicker/dist/react-datepicker.css";
-function Appointment({ setTrigger, conversation }) {
+function Appointment({ setTrigger, conversation, setBookStatus }) {
   const username = fb.auth.currentUser.displayName;
   const uuid = fb.auth.currentUser.uid;
   const currentDate = new Date();
@@ -115,13 +115,10 @@ function Appointment({ setTrigger, conversation }) {
   };
   const handleAppointmentSubmit = (event) => {
     event.preventDefault();
-    console.log(startTime);
-    console.log(startDate);
-    const d = moment(startDate).format("L");
-    console.log(d);
-    const date = moment(d + " " + startTime, "DD/MM/YYYY hh:mm").toISOString();
 
-    console.log(date);
+    const d = moment(startDate).format("L");
+
+    const date = moment(d + " " + startTime, "DD/MM/YYYY hh:mm").toISOString();
 
     fb.firestore
       .collection("conversations")
@@ -136,17 +133,26 @@ function Appointment({ setTrigger, conversation }) {
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
       .then(() => {
-        fb.firestore.collection("conversations").doc(conversation.id).set(
-          {
-            appointment: "upcoming",
-            appointmentId: bookId,
-            appointmentDate: date,
-          },
-          { merge: true }
-        );
-        fb.firestore.collection("conversations").doc(conversation.id).update({
-          lastMessage: "lịch hẹn",
-        });
+        fb.firestore
+          .collection("conversations")
+          .doc(conversation.id)
+          .set(
+            {
+              appointment: "upcoming",
+              appointmentId: bookId,
+              appointmentDate: date,
+              lastMessage: "lịch hẹn",
+              lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+            },
+            { merge: true }
+          )
+          .then(() => {
+            setBookStatus("upcoming");
+          });
+        // fb.firestore.collection("conversations").doc(conversation.id).update({
+        //   lastMessage: "lịch hẹn",
+        //   lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+        // });
 
         fb.firestore
           .collection("users")

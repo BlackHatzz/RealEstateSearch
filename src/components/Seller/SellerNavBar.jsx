@@ -97,178 +97,172 @@ const SellerNavbar = (props) => {
         };
       }
 
-      return () => {};
+      return () => { };
     }
   }, [role, uuid]);
 
   return (
     <React.Fragment>
-      <div className="seller-nav-bar-wrapper">
+      <div className="nav-bar-wrapper">
         {/* left content */}
-        <div className="seller-nav-bar-container">
-          {/* <div className="seller-nav-bar-item">
-            <Link to={role === "buyer" ? "/" : "/sell"}>
-              <div className="nav-bar-logo">
-                <img src="https://i.ibb.co/MhLF1VS/abc.png" alt="" />
-              </div>
-            </Link>
-          </div> */}
-          {!isShowMenu && (
-            <div className="logo-container">
+        <div className="nav-bar-container">
+          {!isShowMenu && (<>
+            <div className="nav-bar-item">
               <div
-                style={{ width: 30, height: 30, marginRight: 10 }}
                 onClick={() => {
                   setShowMenu(!isShowMenu);
                 }}
+                className="drawer-btn-menu"
               >
                 <MenuIcon style={{ width: 30, height: 30 }} />
               </div>
-              <div
-                style={{
-                  backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')",
-                }}
-                className="logo-box"
-              ></div>
-            </div>
-          )}
-        </div>
-
-        {/* right content */}
-
-        <div className="seller-nav-bar-container">
-          <div className="seller-nav-bar-item" onClick={switchNotification}>
-            <Badge color="secondary" badgeContent={unseen}>
-              <NotificationsNoneIcon
-                style={{ width: "30px", height: "30px" }}
-              />
-            </Badge>
-          </div>
-          <div className="seller-nav-bar-item-horizontal">
-            <div onClick={switchProfileMenu} className="seller-nav-bar-item">
-              <div
-                style={{
-                  backgroundImage:
-                    "url('" + fb.auth.currentUser?.photoURL + "')",
-                }}
-                className="seller-profile-pic"
-              >
-                {/* <img src={fb.auth.currentUser?.photoURL} alt="" /> */}
+              <div className="nav-bar-logo">
+                <Link to={"/"}>
+                  <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
+                </Link>
               </div>
-              <span className="seller-profile-name-text">
-                {fb.auth.currentUser?.displayName}
-              </span>
-              <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
+            </div>
+          </>)}
+
+          {/* right content */}
+          <div className="nav-bar-item">
+            <div className="nav-bar-item-info">
+              <div className="nav-bar-item" onClick={switchNotification}>
+                <Badge color="secondary" badgeContent={unseen}>
+                  <NotificationsNoneIcon
+                    style={{ width: "30px", height: "30px" }}
+                  />
+                </Badge>
+              </div>
+              <div className="nav-bar-item-horizontal">
+                <div onClick={switchProfileMenu} className="nav-bar-item">
+                  <div
+                    style={{
+                      backgroundImage:
+                        "url('" + fb.auth.currentUser?.photoURL + "')",
+                    }}
+                    className="profile-pic"
+                  >
+                    {/* <img src={fb.auth.currentUser?.photoURL} alt="" /> */}
+                  </div>
+                  <span className="profile-name-text">
+                    {fb.auth.currentUser?.displayName}
+                  </span>
+                  <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
+                </div>
+              </div>
             </div>
 
-            {notificationTrigger ? (
-              <div className="seller-notification-container">
-                <h3>Thông báo</h3>
-                <br></br>
-                {notifications.length > 0 &&
-                  notifications.map((notification) => (
-                    <div
-                      className="notification-item"
-                      key={notification.id}
-                      onClick={() => {
-                        if (notification.data.content === "new appointment") {
-                          history.push("/schedule");
-                        }
-                        if (notification.data.content === "new transaction") {
-                          setModalOpen(true);
-                          setModalData(notification);
-                        }
-
-                        setNotificationTrigger(false);
-                        fb.firestore
-                          .collection("users")
-                          .doc(uuid)
-                          .collection("notifications")
-                          .doc(notification.id)
-                          .update({
-                            seen: true,
-                          });
-                      }}
-                    >
-                      <div className="notification-item-left">
-                        {notification.data.content === "new transaction" && (
-                          <>
-                            <p className="notification-title-text">
-                              Yêu cầu xác nhận giao dịch
-                            </p>
-
-                            <p className="notification-title-text">
-                              {notification.data.address}
-                            </p>
-                          </>
-                        )}
-
-                        {notification.data.content === "new appointment" && (
-                          <>
-                            <p className="notification-title-text">
-                              {notification.data.title}
-                            </p>
-                            <p>
-                              {moment(notification.data.date).format("L")} -{" "}
-                              {moment(notification.data.date).format("LT")}
-                            </p>
-                          </>
-                        )}
-
-                        <p
-                          className={
-                            notification.data.seen === false
-                              ? "notification-time-text"
-                              : "notification-time-text-seen"
-                          }
-                        >
-                          {moment(
-                            notification.data.createAt.toDate()
-                          ).fromNow()}
-                        </p>
-                      </div>
-                      <div className="notification-item-right">
-                        {notification.data.seen === false && (
-                          <div className="seen-dot"></div>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            ) : null}
-
-            {chatTrigger ? (
-              <div className="notification-container">
-                <h3>Message</h3>
-                <br></br>
-                <div className="conversation-list">
-                  {reals.length > 0 &&
-                    reals.map((real) => (
+            <div className="nav-bar-item-hidden">
+              {notificationTrigger ? (
+                <div className="notification-container">
+                  <h3>Thông báo</h3>
+                  <br></br>
+                  {notifications.length > 0 &&
+                    notifications.map((notification) => (
                       <div
-                        className="conversation-item"
-                        key={real.id}
+                        className="notification-item"
+                        key={notification.id}
                         onClick={() => {
-                          // addItem(real);
-                          // addViewChat(real);
-                          // setChatTrigger(false);
-                          // fb.firestore
-                          //   .collection("conversations")
-                          //   .doc(conversation.id)
-                          //   .update({
-                          //     lastMessageRead: true,
-                          //   });
+                          if (notification.data.content === "new appointment") {
+                            history.push("/schedule");
+                          }
+                          if (notification.data.content === "new transaction") {
+                            setModalOpen(true);
+                            setModalData(notification);
+                          }
+
+                          setNotificationTrigger(false);
+                          fb.firestore
+                            .collection("users")
+                            .doc(uuid)
+                            .collection("notifications")
+                            .doc(notification.id)
+                            .update({
+                              seen: true,
+                            });
                         }}
                       >
-                        <div className="conversation-item-image">
-                          <img
-                            src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
-                            alt=""
-                          />
-                        </div>
-                        <div className="conversation-item-info">
-                          <p className="conversation-item-info-title">
-                            {real.data.title}
+                        <div className="notification-item-left">
+                          {notification.data.content === "new transaction" && (
+                            <>
+                              <p className="notification-title-text">
+                                Yêu cầu xác nhận giao dịch
+                              </p>
+
+                              <p className="notification-title-text">
+                                {notification.data.address}
+                              </p>
+                            </>
+                          )}
+
+                          {notification.data.content === "new appointment" && (
+                            <>
+                              <p className="notification-title-text">
+                                {notification.data.title}
+                              </p>
+                              <p>
+                                {moment(notification.data.date).format("L")} -{" "}
+                                {moment(notification.data.date).format("LT")}
+                              </p>
+                            </>
+                          )}
+
+                          <p
+                            className={
+                              notification.data.seen === false
+                                ? "notification-time-text"
+                                : "notification-time-text-seen"
+                            }
+                          >
+                            {moment(
+                              notification.data.createAt.toDate()
+                            ).fromNow()}
                           </p>
-                          {/* <p
+                        </div>
+                        <div className="notification-item-right">
+                          {notification.data.seen === false && (
+                            <div className="seen-dot"></div>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                </div>
+              ) : null}
+
+              {chatTrigger ? (
+                <div className="notification-container">
+                  <h3>Message</h3>
+                  <br></br>
+                  <div className="conversation-list">
+                    {reals.length > 0 &&
+                      reals.map((real) => (
+                        <div
+                          className="conversation-item"
+                          key={real.id}
+                          onClick={() => {
+                            // addItem(real);
+                            // addViewChat(real);
+                            // setChatTrigger(false);
+                            // fb.firestore
+                            //   .collection("conversations")
+                            //   .doc(conversation.id)
+                            //   .update({
+                            //     lastMessageRead: true,
+                            //   });
+                          }}
+                        >
+                          <div className="conversation-item-image">
+                            <img
+                              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
+                              alt=""
+                            />
+                          </div>
+                          <div className="conversation-item-info">
+                            <p className="conversation-item-info-title">
+                              {real.data.title}
+                            </p>
+                            {/* <p
                             className={
                               conversation.data.lastMessageRead === true
                                 ? "conversation-item-info-lastmessage-seen"
@@ -277,147 +271,156 @@ const SellerNavbar = (props) => {
                           >
                             {conversation.data.lastMessage}
                           </p> */}
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                  </div>
+                  {conversations.length === 0 && <div>chua co tin nhan</div>}
+                  <div className="conversation-bottom"></div>
                 </div>
-                {conversations.length === 0 && <div>chua co tin nhan</div>}
-                <div className="conversation-bottom"></div>
-              </div>
-            ) : null}
+              ) : null}
 
-            {modalData && (
-              <Modal
-                open={modalopen}
-                //   onClose={handleClose}
-                aria-labelledby="simple-modal-title"
-                aria-describedby="simple-modal-description"
-              >
-                <div className="modal-confirm">
-                  <h2 id="simple-modal-title">Xác nhận giao dịch</h2>
-                  <div id="simple-modal-description">
-                    <p>Người mua: {modalData.data.buyer}</p>
-                    <p>Người bán: {modalData.data.seller}</p>
-                    <p>Địa chỉ bất động sản: {modalData.data.address}</p>
-                    <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+              {modalData && (
+                <Modal
+                  open={modalopen}
+                  //   onClose={handleClose}
+                  aria-labelledby="simple-modal-title"
+                  aria-describedby="simple-modal-description"
+                >
+                  <div className="modal-confirm">
+                    <h2 id="simple-modal-title">Xác nhận giao dịch</h2>
+                    <div id="simple-modal-description">
+                      <p>Người mua: {modalData.data.buyer}</p>
+                      <p>Người bán: {modalData.data.seller}</p>
+                      <p>Địa chỉ bất động sản: {modalData.data.address}</p>
+                      <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
+                      <p>
+                        Ngày giao dịch: {" "}
+                        {moment(modalData.data.appointmentDate).format("LL")} -{" "}
+                        {moment(modalData.data.appointmentDate).format("LT")}
+                      </p>
+                    </div>
+                    <div className="transaction-modal-button-group">
+                      <button
+                        onClick={() => {
+                          fb.firestore
+                            .collection("users")
+                            .doc(modalData.data.staffId + "")
+                            .collection("transactions")
+                            .doc(modalData.data.realId + "")
+                            .set(
+                              {
+                                buyerId: modalData.data.buyerId,
+                                sellerId: modalData.data.sellerId,
+                                realId: modalData.data.realId,
+                                staff: modalData.data.staffId,
+                                sellerAccept: true,
+                              },
+                              { merge: true }
+                            );
+                          setModalOpen(false);
+                        }}
+                      >
+                        Xác nhận
+                      </button>
+                      <button
+                        onClick={() => {
+                          fb.firestore
+                            .collection("users")
+                            .doc(modalData.data.staffId + "")
+                            .collection("transactions")
+                            .doc(modalData.data.realId + "")
+                            .set(
+                              {
+                                buyerId: modalData.data.buyerId,
+                                sellerId: modalData.data.sellerId,
+                                staff: modalData.data.staffId,
+                                realId: modalData.data.realId,
+                                sellerAccept: false,
+                              },
+                              { merge: true }
+                            );
+                          setModalOpen(false);
+                        }}
+                      >
+                        Từ chối
+                      </button>
+                      <button
+                        onClick={() => {
+                          setModalOpen(false);
+                        }}
+                      >
+                        Hủy
+                      </button>
+                    </div>
+                  </div>
+                </Modal>
+              )}
+              {/* profile menu */}
+              {isProfileMenuShown ? (
+                <div className="profile-menu-container">
+                  <div className="user-fullname">
                     <p>
-                      Ngày giao dịch:
-                      {moment(modalData.data.appointmentDate).format("LLL")}
+                      {fb.auth.currentUser?.displayName}
                     </p>
                   </div>
-                  <div>
-                    <button
-                      onClick={() => {
-                        fb.firestore
-                          .collection("users")
-                          .doc(modalData.data.staffId + "")
-                          .collection("transactions")
-                          .doc(modalData.data.realId + "")
-                          .set(
-                            {
-                              buyerId: modalData.data.buyerId,
-                              sellerId: modalData.data.sellerId,
-                              realId: modalData.data.realId,
-                              staff: modalData.data.staffId,
-                              sellerAccept: true,
-                            },
-                            { merge: true }
-                          );
-                        setModalOpen(false);
-                      }}
-                    >
-                      Xác nhận
-                    </button>
-                    <button
-                      onClick={() => {
-                        fb.firestore
-                          .collection("users")
-                          .doc(modalData.data.staffId + "")
-                          .collection("transactions")
-                          .doc(modalData.data.realId + "")
-                          .set(
-                            {
-                              buyerId: modalData.data.buyerId,
-                              sellerId: modalData.data.sellerId,
-                              staff: modalData.data.staffId,
-                              realId: modalData.data.realId,
-                              sellerAccept: false,
-                            },
-                            { merge: true }
-                          );
-                        setModalOpen(false);
-                      }}
-                    >
-                      Từ chối
-                    </button>
-                    <button
-                      onClick={() => {
-                        setModalOpen(false);
-                      }}
-                    >
-                      Hủy
-                    </button>
+                  <Link
+                    className="link profile-menu-item top-item"
+                    to="/profile-page"
+                  >
+                    <AccountCircleIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">
+                      Xem Hồ Sơ
+                    </span>
+                  </Link>
+                  <div className="divide"></div>
+                  <Link className="link profile-menu-item" to="/schedule">
+                    <EventNoteOutlinedIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">
+                      Lịch hẹn
+                    </span>
+                  </Link>
+                  <div className="divide"></div>
+                  <Link
+                    className="link profile-menu-item"
+                    to="/transaction-history-page"
+                  >
+                    <HistoryIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">
+                      Lịch Sử Giao Dịch
+                    </span>
+                  </Link>
+                  <div className="divide"></div>
+                  <div
+                    className="profile-menu-item bottom-item"
+                    onClick={() => {
+                      resetRole();
+                      fb.auth.signOut();
+                      window.localStorage.clear();
+                    }}
+                  >
+                    <ExitToAppIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">
+                      Đăng Xuất
+                    </span>
                   </div>
                 </div>
-              </Modal>
-            )}
-            {/* profile menu */}
-            {isProfileMenuShown ? (
-              <div className="seller-profile-menu-container">
-                <Link
-                  className="link seller-profile-menu-item top-item"
-                  to="/profile-page"
-                >
-                  <AccountCircleIcon
-                    className="icon"
-                    style={{ width: "25px", height: "25px" }}
-                  />
-                  <span className="seller-profile-menu-item-title">
-                    Xem Hồ Sơ
-                  </span>
-                </Link>
-                <div className="divide"></div>
-                <Link className="link seller-profile-menu-item" to="/schedule">
-                  <EventNoteOutlinedIcon
-                    className="icon"
-                    style={{ width: "25px", height: "25px" }}
-                  />
-                  <span className="seller-profile-menu-item-title">
-                    Lịch hẹn
-                  </span>
-                </Link>
-                <div className="divide"></div>
-                <Link
-                  className="link seller-profile-menu-item"
-                  to="/transaction-history-page"
-                >
-                  <HistoryIcon
-                    className="icon"
-                    style={{ width: "25px", height: "25px" }}
-                  />
-                  <span className="seller-profile-menu-item-title">
-                    Lịch Sử Giao Dịch
-                  </span>
-                </Link>
-                <div className="divide"></div>
-                <div
-                  className="seller-profile-menu-item bottom-item"
-                  onClick={() => {
-                    resetRole();
-                    fb.auth.signOut();
-                    window.localStorage.clear();
-                  }}
-                >
-                  <ExitToAppIcon
-                    className="icon"
-                    style={{ width: "25px", height: "25px" }}
-                  />
-                  <span className="seller-profile-menu-item-title">
-                    Đăng Xuất
-                  </span>
-                </div>
-              </div>
-            ) : null}
+              ) : null}
+
+            </div>
+
           </div>
         </div>
       </div>

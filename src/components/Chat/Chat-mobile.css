@@ -1,0 +1,56 @@
+@media only screen and (max-width: 500px) {
+  .chat-mobile-confirm>div {
+    background: none;
+    border: none;
+    min-height: 0 !important;
+    position: inherit;
+    top: 0;
+    left: 0;
+  }
+  .deal-popup-form {
+    position: absolute;
+    top: 200px;
+    transform: translateX(-30%);
+    background: #fff;
+    border-radius: 5%;
+    border: 1px solid rgb(165, 165, 165);
+    width: max-content;
+  }
+  .appointment {
+    position: absolute;
+    top: 0;
+    left: -50vw;
+    background: #fff;
+    border-radius: 5%;
+    border: 1px solid rgb(165, 165, 165);
+    width: max-content;
+  }
+  .small-chat-window-2 {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: 3;
+    border-radius: 0;
+  }
+  .small-chat-window-1 {
+    position: absolute;
+    top: 74px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    z-index: 3;
+    border-radius: 0;
+  }
+  .chat_window_container_message_box {
+    flex: 1;
+    height: 90%;
+  }
+  .chat_window_container_message_box_display {
+    position: relative;
+    height: 100%;
+  }
+}

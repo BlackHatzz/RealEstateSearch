@@ -1,0 +1,125 @@
+@media only screen and (max-width:500px) {
+  .seller-wrapper>.left-container {
+    position: absolute;
+    z-index: 2;
+    background-color: white;
+    width: 75vw;
+  }
+  .seller-wrapper>.right-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
+  .left-container-show-menu {}
+  /* .left-container::after {
+      background: red;
+      width: 100vw;
+      height: 100vh;
+    }  */
+  .drawer-bg-menu-mobile {
+    position: absolute;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+  }
+  .seller-wrapper>.right-container>.content-container {
+    width: 97vw;
+    margin: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 5px;
+  }
+  .seller-wrapper>.right-container>.content-container>.tab-title {
+    font-size: 22px;
+    font-weight: bold;
+    padding: 10px 0px 0;
+  }
+  .seller-wrapper>.right-container>.content-container .row-group {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  .manage-post-tag {
+    height: 30px;
+  }
+  .manage-post-right-arrow {
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    border-left: 15px solid #0C67CE;
+  }
+  .seller-wrapper>.right-container>.content-container .row {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .seller-wrapper>.right-container>.content-container .col3 {
+    width: 50%;
+  }
+  .seller-wrapper>.right-container>.content-container .col3:first-child {
+    width: 60%;
+  }
+  .seller-wrapper>.right-container>.content-container .col2 {
+    width: 100%;
+    margin-top: 5px;
+  }
+  .seller-wrapper>.right-container>.content-container .col2 .title {
+    flex: 1;
+  }
+  .seller-wrapper>.right-container>.content-container .col4 {
+    width: 50%;
+    margin-top: 5px;
+  }
+  .seller-wrapper>.right-container .file-box {
+    background-color: transparent;
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  .seller-wrapper>.right-container .file-input-ui-first {
+    width: 50%;
+    flex-direction: column;
+  }
+  .seller-wrapper>.right-container .file-input-ui-last {
+    width: 50%;
+  }
+  .seller-wrapper>.right-container>.content-container .reverse-row {
+    align-items: center;
+  }
+  .seller-wrapper>.right-container>.content-container .reverse-row {
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+  .manage-post-drop-down-menu {
+    position: absolute;
+    right: 10px;
+    top: 40px;
+    left: initial;
+    bottom: initial;
+    width: 170px;
+    height: auto;
+    max-height: 170px;
+  }
+  .create-button {
+    padding: 5px;
+    cursor: pointer;
+    margin: auto;
+    width: 95vw;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}

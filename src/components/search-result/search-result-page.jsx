@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./search-result.css";
+import "./search-result-mobile.css";
 import ProductItem from "./product-item";
 import SearchSuggestion from "../global/search-suggestion";
 import { Link } from "react-router-dom";
@@ -47,13 +48,13 @@ class SearchResultPage extends Component {
     //this.props.match.params.searchtext
     this.state.searchText =
       this.props.match.params.searchtext === undefined ||
-      this.props.match.params.searchtext === null
+        this.props.match.params.searchtext === null
         ? ""
         : this.props.match.params.searchtext;
     this.setState({
       searchText:
         this.props.match.params.searchtext === undefined ||
-        this.props.match.params.searchtext === null
+          this.props.match.params.searchtext === null
           ? ""
           : this.props.match.params.searchtext,
     });
@@ -298,7 +299,7 @@ class SearchResultPage extends Component {
       return null;
     }
 
-    if (this.state.items.length === 0) {
+    if (this.state.items?.length === 0) {
       return (
         <div className="not-found-container">
           <div className="not-found"></div>
@@ -312,7 +313,7 @@ class SearchResultPage extends Component {
     }
     return (
       <div className="product-list">
-        {this.state.items.map((item) => (
+        {this.state.items?.map((item) => (
           <Link
             key={item.id}
             className="link"
@@ -344,28 +345,25 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-        {/* <BuyerNavbar /> */}
-        <div
-          style={{
-            width: "100%",
-            borderBottom: "1px solid rgba(0,0,0,0.15)",
-          }}
-        />
-        <SearchSuggestion
-          suggestionInfo={this.state.suggestionInfo}
-          params={this.props.match.params}
-          history={this.props.history}
-        />
-        {/* search result list */}
-        <div
-          style={{
-            height: "calc(100% - 1px - 70px - 50px)",
-            overflowY: "auto",
-          }}
-          className="horizontal"
-        >
-          {this.renderSearchResult()}
-        </div>
+          {/* <BuyerNavbar /> */}
+          <div
+            style={{
+              width: "100%",
+              borderBottom: "1px solid rgba(0,0,0,0.15)",
+            }}
+          />
+          <SearchSuggestion history={this.props.history} />
+
+          {/* search result list */}
+          <div
+            style={{
+              overflowY: "auto",
+              overflowX: "hidden",
+              height:"86vh"
+            }}
+          >
+            <div className="horizontal">{this.renderSearchResult()}</div>
+          </div>
       </React.Fragment>
     );
   }

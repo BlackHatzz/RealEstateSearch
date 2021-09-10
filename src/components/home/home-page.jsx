@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./home.css";
+import "./home-mobile.css";
 import "../global/shared.css";
 import { AiOutlineSearch } from "react-icons/ai";
 import HomeFilterBox from "./home-filter-box";
@@ -214,7 +215,6 @@ class HomePage extends Component {
     //   displayName: 'David',
     //   photoURL: 'https://i.ibb.co/NjFGvWn/David-Beckham.jpg',
     // };
-
     // fb.auth.currentUser.updateProfile(update);
     // console.log(fb.auth.currentUser.uid);
     // const { searchText } = this.state;
@@ -271,7 +271,6 @@ class HomePage extends Component {
     //     type: null
     //   }),
     // };
-
     // fetch(Constants.getRealEstateRef, requestOptions)
     //   .then((res) => res.json())
     //   .then(
@@ -614,6 +613,7 @@ class HomePage extends Component {
             </div>
           </div>
         </div>
+
       </React.Fragment>
     );
   }

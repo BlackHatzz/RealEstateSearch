@@ -8,6 +8,7 @@ const ChatContext = (props) => {
   const [chatId, setChatId] = useState("0");
   const [chatRealId, setChatRealId] = useState("0");
   const [isOpen, setIsOpen] = useState(false);
+  const [isNewUser, setIsNewUser] = useState(false);
   const [role, setRole] = useLocalStorage("role", "");
   const [chats, setChats] = useLocalStorage("chats", []);
   const [viewchats, setViewChats] = useLocalStorage("viewchats", []);
@@ -65,6 +66,8 @@ const ChatContext = (props) => {
         isOpen,
         role,
         chatRealId,
+        isNewUser,
+        triggerNewUser: (value) => setIsNewUser(value),
         updateChat: (id) => setChatId(id),
         updateChatRealId: (id) => setChatRealId(id),
         updateOpen: () => setIsOpen(true),

@@ -30,13 +30,14 @@ class ProductItem extends Component {
           <div className="content-product-container">
             {/* title of product */}
             <span className="product-title">
-              {this.props.item.title}
+             {(this.props.item.title.length>45 && window.innerWidth<500)?
+             maxString(this.props.item.title,45,""):
+             this.props.item.title}
             </span>
 
             {/* price and area */}
             <div className="product-price-box">
               <span className="product-price">Giá trị ~{Math.round(((this.props.item.price / this.props.item.area) * 1000) * 100) / 100} triệu/m²</span>
-              <span className="product-price">&#8226;</span>
               <span className="product-area">Diện tích {this.props.item.area} m²</span>
             </div>
 

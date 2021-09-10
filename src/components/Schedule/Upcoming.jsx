@@ -3,6 +3,7 @@ import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../../ChatContext";
 import { fb } from "../../services";
 import "./schedule.css";
+import { upperFirstLetter } from "../../utils/upperFirstLetter";
 const Upcoming = () => {
   const { role } = useContext(Context);
   const uuid = fb.auth.currentUser.uid;
@@ -38,7 +39,7 @@ const Upcoming = () => {
             <div className="schedule-list-item" key={appointment.id}>
               <div className="schedule-list-item-header">
                 <div className="schedule-list-item-date">
-                  {moment(appointment.data.date).locale("vi").format("dddd") +
+                  {upperFirstLetter(moment(appointment.data.date).locale("vi").format("dddd")) +
                     " " +
                     moment(appointment.data.date).locale("vi").format("LL")}
                 </div>

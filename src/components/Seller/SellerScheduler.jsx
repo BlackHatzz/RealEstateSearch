@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
+import CancelIcon from '@material-ui/icons/Cancel';
+
 import { fb } from "../../services";
 
 export const SellerScheduler = () => {
@@ -7,6 +10,7 @@ export const SellerScheduler = () => {
   const [buttonDisable, setButtonDisable] = useState(true);
   const [trigger, setTrigger] = useState(false);
   const [error, setError] = useState("");
+  const [completeMessage, setCompleteMessage] = useState("");
 
   const defaultWeekdays = [
     "Chủ nhật",
@@ -18,12 +22,12 @@ export const SellerScheduler = () => {
     "Thứ bảy",
   ];
   const periods = [
-    "08:00-10:00",
-    "10:00-12:00",
-    "12:00-14:00",
-    "14:00-16:00",
-    "16:00-18:00",
-    "18:00-20:00",
+    "08:00 - 10:00",
+    "10:00 - 12:00",
+    "12:00 - 14:00",
+    "14:00 - 16:00",
+    "16:00 - 18:00",
+    "18:00 - 20:00",
   ];
   useEffect(() => {
     fetch(`https://api-realestate.top/apis/v1/schedules/all?sellerId=${uuid}`)
@@ -69,7 +73,7 @@ export const SellerScheduler = () => {
 
         console.log(scheduleTable);
       });
-    return () => {};
+    return () => { };
   }, [uuid]);
 
   const handleSubmit = () => {
@@ -103,8 +107,10 @@ export const SellerScheduler = () => {
       if (response.status === 200) {
         console.log("create schedule success");
         setButtonDisable(true);
+        setCompleteMessage("done");
       } else {
         setError("Error");
+        setCompleteMessage("fail");
         console.log(error);
       }
     });
@@ -118,34 +124,37 @@ export const SellerScheduler = () => {
         <p>Thời gian rảnh</p>
       </div>
       <br />
-      {defaultWeekdays.map((e, index) => (
-        <div id={index} className="set-schedule-form-item">
-          <p className="set-schedule-form-item-day">{e}</p>
+      <div className="time-scheduler">
 
-          <div className="periods">
-            {periods.map((period, i) => (
-              <div
-                key={i}
-                className={
-                  schedule.length > 0 && schedule[index].includes(period)
-                    ? "period-item-active"
-                    : "period-item"
-                }
-                onClick={() => {
-                  schedule[index].includes(period)
-                    ? schedule[index].splice(schedule[index].indexOf(period), 1)
-                    : schedule[index].push(period);
-                  setSchedule(schedule);
-                  setTrigger((e) => !e);
-                  setButtonDisable(false);
-                }}
-              >
-                {period}
-              </div>
-            ))}
+        {defaultWeekdays.map((e, index) => (
+          <div id={index} className="set-schedule-form-item">
+            <p className="set-schedule-form-item-day">{e}</p>
+
+            <div className="periods">
+              {periods.map((period, i) => (
+                <div
+                  key={i}
+                  className={
+                    schedule.length > 0 && schedule[index].includes(period)
+                      ? "period-item period-item-active"
+                      : "period-item period-item-inactive"
+                  }
+                  onClick={() => {
+                    schedule[index].includes(period)
+                      ? schedule[index].splice(schedule[index].indexOf(period), 1)
+                      : schedule[index].push(period);
+                    setSchedule(schedule);
+                    setTrigger((e) => !e);
+                    setButtonDisable(false);
+                  }}
+                >
+                  {period}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
       <br />
 
       <button
@@ -155,6 +164,20 @@ export const SellerScheduler = () => {
       >
         Lưu
       </button>
+      <div className={"notification-save-scheduler " + (completeMessage === "" ? "save-message-hidden" : "")}>
+        <div className="content-saved-scheduler">
+          {completeMessage === "done" ?
+            <CheckCircleIcon className="icon-content-saved-scheduler-done" style={{width:70, height:70}} /> :
+            <CancelIcon className="icon-content-saved-scheduler-fail" style={{width:70, height:70}}  />
+          }
+          <p className="message-content-saved-scheduler">
+            {completeMessage === "done" ?
+              "Đã lưu thời gian rảnh của bạn!" :
+              "Đã có sự số sảy ra!"
+            }</p>
+          <button onClick={() => setCompleteMessage("")}>OK</button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -5,7 +5,9 @@ import { ChatContent } from "./ChatContent";
 
 const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
   const [currentChatDealStatus, setCurrentChatDealStatus] = useState();
+  const [currentChatBookStatus, setCurrentChatBookStatus] = useState();
   const [oldChatDealStatus, setOldChatDealStatus] = useState();
+  const [oldChatBookStatus, setOldChatBookStatus] = useState();
 
   useEffect(() => {
     const currentChatDeal = fb.firestore
@@ -16,6 +18,9 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
         setCurrentChatDealStatus(
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
+        setCurrentChatBookStatus(
+          data?.appointment === "upcomming" ? true : false
+        );
       });
     const oldChatDeal = fb.firestore
       .collection("conversations")
@@ -25,6 +30,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
         setOldChatDealStatus(
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
+        setOldChatBookStatus(data?.appointment === "upcoming" ? true : false);
       });
     return () => {
       currentChatDeal();
@@ -41,6 +47,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             currentChat={currentChat}
             forceUpdate={forceUpdate}
             dealStatus={currentChatDealStatus}
+            bookStatus={currentChatBookStatus}
           />
         </div>
       )}
@@ -50,6 +57,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             currentChat={oldChat1}
             forceUpdate={forceUpdate}
             dealStatus={oldChatDealStatus}
+            bookStatus={oldChatBookStatus}
           />
         </div>
       )}

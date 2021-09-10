@@ -1,3 +1,20 @@
+/* -----new edit----- */
+
+.user-fullname {
+  display: none;
+  width: 100%;
+  height: 60px;
+  font-size: 1.2em;
+  font-weight: bold;
+  justify-content: center;
+  align-items: center;
+  /* background-color: red; */
+  border-bottom: 1px solid;
+}
+
+
+/* -----end new edit---- */
+
 .nav-bar-wrapper {
   width: 100%;
   height: 70px;
@@ -8,67 +25,72 @@
   justify-content: space-between;
 }
 
-.nav-bar-wrapper > .nav-bar-container {
+.nav-bar-wrapper>.nav-bar-container {
   display: flex;
-
   flex: 1;
 }
 
-.nav-bar-container > .nav-bar-item {
+.nav-bar-container>.nav-bar-item {
   align-items: center;
   justify-content: flex-start;
   flex: 1;
+  position: relative;
 }
 
-.nav-bar-container > .nav-bar-item:first-child {
+.nav-bar-container>.nav-bar-item:first-child {
   margin-left: 10%;
 }
-.nav-bar-container > .nav-bar-item:last-child {
+
+.nav-bar-container>.nav-bar-item:last-child {
   margin-right: 10%;
 }
 
-.nav-bar-item > .nav-bar-item-hidden {
-  max-width: 400px;
+.nav-bar-item>.nav-bar-item-hidden {
+  position: absolute;
+  width: 100%;
+}
+
+.nav-bar-item>.nav-bar-item-hidden::content {
+  width: 400px;
   position: absolute;
   right: 8%;
   margin-top: 10px;
 }
-.nav-bar-item > .nav-bar-item-info {
+
+.nav-bar-item>.nav-bar-item-info {
   display: flex;
   height: 100%;
-
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
 }
 
-.nav-bar-item-info > div {
+.nav-bar-item-info>div {
   margin-left: 20px;
   cursor: pointer;
 }
+
 .nav-bar-item .nav-bar-logo {
   width: 200px;
   height: 50px;
-  background-repeat: no-repeat;
   /* object-fit: cover; */
   background-color: white;
   cursor: pointer;
   /* background-image: url('https://i.ibb.co/MhLF1VS/abc.png'); */
 }
+
 .nav-bar-logo img {
   width: 100%;
   height: 50px;
   object-fit: cover;
-  background-repeat: no-repeat;
 }
 
 .nav-bar-item-horizontal {
   cursor: pointer;
 }
 
-.nav-bar-item-horizontal > .nav-bar-item {
+.nav-bar-item-horizontal>.nav-bar-item {
   display: flex;
-
   align-items: center;
   flex-direction: row;
   justify-content: flex-start;
@@ -84,6 +106,7 @@
   margin-left: 10px;
   background-size: 50px 50px;
 }
+
 .profile-name-text {
   font-size: 14px;
   padding-left: 8px;
@@ -97,13 +120,15 @@
 .profile-menu-container {
   width: 200px;
   background-color: white;
-  position: relative;
+  position: absolute;
+  right: 0;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
   padding: 0;
   z-index: 100;
 }
-.profile-menu-container > .profile-menu-item {
+
+.profile-menu-container>.profile-menu-item {
   width: 100%;
   height: 40px;
   background-color: transparent;
@@ -113,24 +138,27 @@
   align-items: center;
 }
 
-.profile-menu-container > .profile-menu-item:hover {
+.profile-menu-container>.profile-menu-item:hover {
   background-color: #d8dadf;
   cursor: pointer;
 }
-.profile-menu-container > .profile-menu-item > .icon {
+
+.profile-menu-container>.profile-menu-item>.icon {
   color: black;
   /* padding-left: 12px; */
   margin-left: 12px;
   width: "30px";
   height: "30px";
 }
-.profile-menu-container > .profile-menu-item .title {
+
+.profile-menu-container>.profile-menu-item .title {
   padding-left: 12px;
   font-size: 16px;
   text-align: left;
   color: black;
 }
-.profile-menu-container > .divide {
+
+.profile-menu-container>.divide {
   width: 100%;
   height: 1px;
   background-color: rgb(190, 190, 190);
@@ -161,33 +189,40 @@
   border-radius: 10px;
   padding-left: 10px;
 }
+
 .notification-item-left {
   width: 90%;
   display: flex;
   flex-direction: column;
 }
+
 .notification-item:hover {
   background-color: #d8dadf;
   cursor: pointer;
 }
+
 .notification-time-text {
   font-size: 10px;
   color: #3858fc;
 }
+
 .notification-time-text-seen {
   font-size: 10px;
   color: #ccc;
 }
+
 .notification-title-text {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   font-weight: 600;
 }
+
 .notification-item-right {
   align-self: center;
   padding-right: 5px;
 }
+
 .seen-dot {
   background-color: #3858fc;
   width: 10px;
@@ -199,6 +234,7 @@
   overflow-y: auto;
   max-height: 80vh;
 }
+
 .conversation-item {
   width: 95%;
   height: 60px;
@@ -210,21 +246,24 @@
   border-radius: 5px;
   padding-left: 10px;
 }
+
 .conversation-item:hover {
   cursor: pointer;
   background-color: #d8dadf;
 }
+
 .conversation-item-image {
   max-width: 80px;
   display: flex;
   margin: 5px 5px 5px 5px;
 }
 
-.conversation-item-image > img {
+.conversation-item-image>img {
   height: 100%;
   width: auto;
   border-radius: 5px;
 }
+
 .conversation-item-info {
   display: flex;
   flex-direction: column;
@@ -232,6 +271,7 @@
   height: 100%;
   padding: 5px 0px 0px 10px;
 }
+
 .conversation-item-info-title {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -241,6 +281,7 @@
   font-weight: 700;
   color: black;
 }
+
 .conversation-item-info-lastmessage-seen {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -259,4 +300,34 @@
   font-size: 14px;
   font-weight: 600;
   color: #4784ff;
+}
+
+.transaction-modal-button-group {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+}
+
+.transaction-modal-button-group>button {
+  width: 80px;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  background-color: #0c67ce;
+  font-size: 16px;
+  font-weight: 400;
+  margin: 0 auto;
+  display: block;
+}
+
+#simple-modal-title {
+  color: #0c67ce;
+}
+
+#simple-modal-description>p {
+  font-size: 14px;
+  font-weight: 400;
+  margin-bottom: 5px;
 }

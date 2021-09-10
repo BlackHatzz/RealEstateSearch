@@ -2,6 +2,7 @@
   background-color: #0C67CE !important;
   color: white !important;
 }
+
 .primary-blue {
   color: #0C67CE;
 }
@@ -27,6 +28,7 @@
 .plastic-white {
   background-color: #dadde2;
 }
+
 .plastic-white2 {
   background-color: #dadde2;
 }
@@ -83,15 +85,20 @@ div.black-glass {
 }
 
 .noselect {
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none; /* Safari */
-  -khtml-user-select: none; /* Konqueror HTML */
-  -moz-user-select: none; /* Old versions of Firefox */
-  -ms-user-select: none; /* Internet Explorer/Edge */
-  user-select: none; /* Non-prefixed version, currently
+  -webkit-touch-callout: none;
+  /* iOS Safari */
+  -webkit-user-select: none;
+  /* Safari */
+  -khtml-user-select: none;
+  /* Konqueror HTML */
+  -moz-user-select: none;
+  /* Old versions of Firefox */
+  -ms-user-select: none;
+  /* Internet Explorer/Edge */
+  user-select: none;
+  /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
 
 div.collapse-box {
   background-color: inherit;
@@ -106,6 +113,7 @@ div.collapse-box {
   margin: 0 auto;
   cursor: pointer;
 }
+
 .linear-gray-border {
   border: 1px solid rgb(200, 200, 200);
   border-radius: 4px;
@@ -116,21 +124,20 @@ div.collapse-box {
   text-decoration: none;
 }
 
-
 .link:hover {
   text-decoration: none;
 }
 
-
 .not-found-container {
   margin: 0 auto;
   margin-top: 24px;
-  width: 500px;
-  height: 500px;
+  width: 100vw;
+  height: 100%;
   object-fit: cover;
   background-repeat: no-repeat;
   background-size: 330px 330px;
   background-color: inherit;
+  text-align: center;
 }
 
 .not-found {
@@ -152,6 +159,7 @@ div.collapse-box {
   width: 100%;
   display: inline-block;
 }
+
 .whole-screen {
   width: 100vw;
   height: 100vh;
@@ -163,4 +171,46 @@ div.collapse-box {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.pagination {
+  max-width: 80vw;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  margin-bottom: 10px;
+  padding: 0;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.page-item {
+  list-style-type: none;
+  border: 1px solid #a0a1a3;
+  padding: 0;
+  margin: 5px;
+  height: 30px;
+  width: max-content;
+  border-radius: 5%;
+  box-shadow: 0px 0px 5px #b8b8b8;
+}
+
+.disabled {
+  color: rgb(155, 155, 155);
+}
+
+.active {
+  background: rgb(77, 133, 236);
+  color: #FFF;
+}
+
+.disabled a {
+  pointer-events: none;
+}
+
+.page-link {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  vertical-align: middle;
 }
