@@ -129,7 +129,7 @@ input.search-bar:focus {
 .search-suggestion-filter-menu-container {
   /* visibility: hidden; */
   position: absolute;
-  width: 100%;
+  min-width: 190px;;
   /* height: 100px; */
 }
 

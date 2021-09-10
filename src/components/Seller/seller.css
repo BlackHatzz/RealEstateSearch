@@ -108,12 +108,14 @@
 }
 
 .set-schedule-form {
-  margin-left: 50%;
+  margin-left: initial;
   padding: 30px;
   display: flex;
   width: fit-content;
   flex-direction: column;
-  transform: translateX(-50%);
+  align-self: center;
+  flex: 1;
+  overflow-y: auto;
 }
 
 .set-schedule-form-item {
@@ -146,6 +148,7 @@
   margin: 5px 5px;
   cursor: pointer;
   text-align: center;
+  width: max-content;
 }
 
 .period-item-inactive {

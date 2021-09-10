@@ -346,12 +346,6 @@ class SearchResultPage extends Component {
     return (
       <React.Fragment>
           {/* <BuyerNavbar /> */}
-          <div
-            style={{
-              width: "100%",
-              borderBottom: "1px solid rgba(0,0,0,0.15)",
-            }}
-          />
           <SearchSuggestion history={this.props.history} />
 
           {/* search result list */}
