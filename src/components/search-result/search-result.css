@@ -52,13 +52,9 @@ div.content-product-container {
 
 .product-title {
   color: #c12f25;
-  text-indent: 20px;
   text-transform: uppercase;
-  padding-bottom: 8px;
   font-weight: bold;
   font-size: 14px;
-  line-height: 12px;
-  text-rendering: optimizeLegibility;
 }
 
 div.product-price-box {

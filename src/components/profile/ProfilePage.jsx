@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import BuyerNavbar from "../global/BuyerNavbar";
 import "./profile.css";
+import "./profile-mobile.css";
 import "../global/shared.css";
 import PersonIcon from "@material-ui/icons/Person";
 import LockIcon from "@material-ui/icons/Lock";
@@ -163,27 +164,25 @@ class ProfilePage extends Component {
   render() {
     return (
       <React.Fragment>
-        <div>
-          <div className="profile-wrapper">
-            <div style={{ height: "10px" }}></div>
+        <div className="profile-wrapper">
+          <div style={{ height: "10px" }}></div>
 
-            <div className="profile-container">
-              <div style={{ height: "15px" }}></div>
-              <div className="profile-pic-container">
-                {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
-              </div>
-              <div style={{ height: "15px" }}></div>
-
-              <div className="divide"></div>
-
-              <div className="profile-pic-tab-bar-container">
-                <div onClick={() => this.switchTab(0)} className="item">
-                  <span className="title">Thông Tin Hồ Sơ</span>
-                </div>
-              </div>
-
-              {this.renderContent()}
+          <div className="profile-container">
+            <div style={{ height: "15px" }}></div>
+            <div className="profile-pic-container">
+              {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
             </div>
+            <div style={{ height: "15px" }}></div>
+
+            <div className="divide"></div>
+
+            <div className="profile-pic-tab-bar-container">
+              <div onClick={() => this.switchTab(0)} className="item">
+                <span className="title">Thông Tin Hồ Sơ</span>
+              </div>
+            </div>
+
+            {this.renderContent()}
           </div>
         </div>
       </React.Fragment>

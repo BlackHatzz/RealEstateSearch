@@ -87,7 +87,7 @@ class FilterDropBox extends Component {
       <React.Fragment>
         <div
           // onClick={this.switchMenuStatus}
-          className="noselect filter-drop-box"
+          className={"noselect filter-drop-box " +(this.props.showMobile?"show-more-mobile-filtler": "hidden-mobile-filter")}
         >
           <div onClick={this.switchMenuStatus} className="filter-drop-box-label"
           >

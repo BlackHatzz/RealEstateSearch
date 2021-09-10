@@ -204,15 +204,15 @@ class SearchSuggestion extends Component {
           // set real estate type
           tempFilters[0].title =
             this.state.filters[0].options[
-              parseInt(this.props.params?.type)
+              parseInt(this.props.params?.type ? this.props.params?.type : 0)
             ]?.text;
           this.setState({
             type: {
               selectedKey:
-                this.state.filters[0].options[parseInt(this.props.params?.type)]
+                this.state.filters[0].options[parseInt(this.props.params?.type ? this.props.params?.type : 0)]
                   ?.key,
               text: this.state.filters[0].options[
-                parseInt(this.props.params?.type)
+                parseInt(this.props.params?.type ? this.props.params?.type : 0)
               ]?.text,
             },
           });
@@ -324,11 +324,11 @@ class SearchSuggestion extends Component {
           tempFilters[3].title = priceText;
 
           // set address(district)
-          tempFilters[2].title = temp[parseInt(this.props.params?.address)]?.text;
+          tempFilters[2].title = temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.text;
           this.setState({
             address: {
-              selectedKey: temp[parseInt(this.props.params?.address)]?.key,
-              text: temp[parseInt(this.props.params?.address)]?.text,
+              selectedKey: temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.key,
+              text: temp[parseInt(this.props.params?.address ? this.props.params?.address : 0)]?.text,
             },
           });
 
@@ -338,7 +338,7 @@ class SearchSuggestion extends Component {
 
           // set advanced filter
           this.setState({
-            selectedBedroom: this.state.bedrooms[this.props.params?.bedroom],
+            selectedBedroom: this.state.bedrooms[this.props.params?.bedroom ? this.props.params?.bedroom : 0],
           });
         },
         (error) => { }
@@ -374,7 +374,7 @@ class SearchSuggestion extends Component {
       this.state.toAreaText +
       // this.state.area.selectedKey +
       "/" +
-      this.state.address.selectedKey +
+      this.state.address?.selectedKey +
       "/" +
       this.state.fromPriceText +
       "-" +
@@ -382,11 +382,11 @@ class SearchSuggestion extends Component {
       "/" +
       this.state.selectedDoorDirection.title +
       "/" +
-      this.state.selectedBedroom.value +
+      this.state.selectedBedroom?.value +
       "/" +
-      this.state.selectedBathroom.value +
+      this.state.selectedBathroom?.value +
       "/" +
-      this.state.selectedSort.value
+      this.state.selectedSort?.value
     );
 
     // this.props.history.push(
@@ -501,10 +501,10 @@ class SearchSuggestion extends Component {
 
   render() {
     return (
-      <form onSubmit={this.handleSearch} className="suggestion-container">
+      <form onSubmit={this.handleSearch} className={"suggestion-container "+(this.state.isMoreFilterMenuShown ?"suggestion-container-with-option":"")}>
 
         {/* search */}
-        <div className="search-bar" >
+        <div className={"search-bar " + (this.state.isMoreFilterMenuShown ? "search-bar-with-option" : "")} >
           <AiOutlineSearch />
           <input
             id={"search-bar"}
@@ -522,27 +522,6 @@ class SearchSuggestion extends Component {
             </div>
           ) : null}
         </div>
-        {/* search */}
-        <div
-          style={{ alignItems: "flex-start" }}
-          className="search-bar vertical"
-        >
-          <div
-            style={{ width: "95%", marginLeft: "6px" }}
-            className="horizontal"
-          >
-            <AiOutlineSearch />
-            <input
-              id={"search-bar"}
-              onChange={this.handleChangeInput}
-              type="text"
-              className="search-bar"
-              placeholder="Tìm kiếm địa điểm, khu vực"
-              autoComplete="off"
-              defaultValue={this.state.searchText}
-            />
-          </div>
-        </div>
         {/* filter for searching */}
         {this.state.filters.map((filter) => (
           <React.Fragment key={filter.key}>
@@ -552,210 +531,209 @@ class SearchSuggestion extends Component {
               filter={filter}
               title="Khu vực"
               value="Hồ Chí Minh"
+              showMobile={this.state.isMoreFilterMenuShown}
             />
           </React.Fragment>
         ))}
-        <div>
-          <div
-            onClick={() => {
-              this.setState({
-                isMoreFilterMenuShown: !this.state.isMoreFilterMenuShown,
-              });
-            }}
-            className="more-filter-container"
-          >
-            <TuneOutlinedIcon className="icon" />
-            <span className="noselect title">Lọc thêm</span>
-          </div>
-          {this.state.isMoreFilterMenuShown ? (
-            <div className="more-filter-menu-wrapper">
-              <div className="more-filter-menu-container linear-gray-border">
-                <div className="item">
-                  <div className="row">
-                    <span className="row-title">Hướng cửa chính</span>
-                    <div style={{ height: "4px" }}></div>
-                    <div
-                      onClick={() => {
-                        this.setState({
-                          isDoorDirectionMenuShown:
-                            !this.state.isDoorDirectionMenuShown,
-                        });
-                      }}
-                      className="drop-box linear-gray-border"
-                    >
-                      <span className="text noselect">
-                        {this.state.selectedDoorDirection.title}
-                      </span>
-                      <RiArrowDropDownLine className="more-filter-icon" />
+        <div
+          onClick={() => {
+            this.setState({
+              isMoreFilterMenuShown: !this.state.isMoreFilterMenuShown,
+            });
+          }}
+          className={"more-filter-container " + (this.state.isMoreFilterMenuShown ? "move-button-filtler" : "")}
+        >
+          <TuneOutlinedIcon className="icon" />
+          <span className="noselect title"></span>
+        </div>
+        {/* {this.state.isMoreFilterMenuShown ? ( */}
+        <div className={(this.state.isMoreFilterMenuShown ? "show-more-filtler" : "hidden-filter") + " more-filter-menu-wrapper"}>
+          <div className="more-filter-menu-container linear-gray-border">
+            <div className="item">
+              <div className="row">
+                <span className="row-title">Hướng cửa chính</span>
+                <div style={{ height: "4px" }}></div>
+                <div
+                  onClick={() => {
+                    this.setState({
+                      isDoorDirectionMenuShown:
+                        !this.state.isDoorDirectionMenuShown,
+                    });
+                  }}
+                  className="drop-box linear-gray-border"
+                >
+                  <span className="text noselect">
+                    {this.state.selectedDoorDirection.title}
+                  </span>
+                  <RiArrowDropDownLine className="more-filter-icon" />
 
-                      {this.state.isDoorDirectionMenuShown ? (
-                        <div className="select-wrapper">
-                          <div className="select-container linear-gray-border">
-                            {this.state.doorDirections.map((item, index) => (
-                              <div
-                                onClick={() => {
-                                  this.setState({
-                                    selectedDoorDirection: item,
-                                  });
-                                }}
-                                key={index}
-                                className="item noselect"
-                              >
-                                <span>{item.title}</span>
-                              </div>
-                            ))}
+                  {this.state.isDoorDirectionMenuShown ? (
+                    <div className="select-wrapper">
+                      <div className="select-container linear-gray-border">
+                        {this.state.doorDirections.map((item, index) => (
+                          <div
+                            onClick={() => {
+                              this.setState({
+                                selectedDoorDirection: item,
+                              });
+                            }}
+                            key={index}
+                            className="item noselect"
+                          >
+                            <span>{item.title}</span>
                           </div>
-                        </div>
-                      ) : null}
-
-                      {/* {this.isDoorDirectionMenuShown ? } */}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                </div>
+                  ) : null}
 
-                <div className="item">
-                  <div className="row">
-                    <span className="row-title">Phòng ngủ</span>
-                    <div style={{ height: "4px" }}></div>
-                    <div className="selection-box linear-gray-border">
-                      {this.state.bedrooms.map((item, index) => (
-                        <React.Fragment key={index}>
-                          {/* item */}
-                          {this.state.selectedBedroom.key === item.key ? (
-                            <span
-                              style={{
-                                backgroundColor: "rgb(200, 200, 200)",
-                              }}
-                              className="selection-item noselect"
-                            >
-                              {item.title}
-                            </span>
-                          ) : (
-                            <span
-                              onClick={() => {
-                                this.setState({
-                                  selectedBedroom: item,
-                                });
-                              }}
-                              className="selection-item noselect"
-                            >
-                              {item.title}
-                            </span>
-                          )}
-
-                          {/* line */}
-                          {index !== this.state.bedrooms.length - 1 ? (
-                            <div className="selection-line"></div>
-                          ) : null}
-                        </React.Fragment>
-                      ))}
-                      {/* <span className="selection-item">Tất cả</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">1+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">2+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">3+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">4+</span> */}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="row">
-                    <span className="row-title">Phòng vệ sinh</span>
-                    <div style={{ height: "4px" }}></div>
-                    <div className="selection-box linear-gray-border">
-                      {this.state.bathrooms.map((item, index) => (
-                        <React.Fragment key={index}>
-                          {/* item */}
-                          {this.state.selectedBathroom.key === item.key ? (
-                            <span
-                              style={{
-                                backgroundColor: "rgb(200, 200, 200)",
-                              }}
-                              className="selection-item noselect"
-                            >
-                              {item.title}
-                            </span>
-                          ) : (
-                            <span
-                              onClick={() => {
-                                this.setState({
-                                  selectedBathroom: item,
-                                });
-                              }}
-                              className="selection-item noselect"
-                            >
-                              {item.title}
-                            </span>
-                          )}
-
-                          {/* line */}
-                          {index !== this.state.bathrooms.length - 1 ? (
-                            <div className="selection-line"></div>
-                          ) : null}
-                        </React.Fragment>
-                      ))}
-                      {/* <span className="selection-item">Tất cả</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">1+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">2+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">3+</span>
-                        <div className="selection-line"></div>
-                        <span className="selection-item">4+</span> */}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="item">
-                  <div className="row">
-                    <span className="row-title">Sắp xếp</span>
-                    <div style={{ height: "4px" }}></div>
-                    <div
-                      onClick={() => {
-                        this.setState({
-                          isSortShown: !this.state.isSortShown,
-                        });
-                      }}
-                      className="drop-box linear-gray-border"
-                    >
-                      <span className="text noselect">
-                        {this.state.selectedSort.title}
-                      </span>
-                      <RiArrowDropDownLine className="more-filter-icon" />
-
-                      {this.state.isSortShown ? (
-                        <div className="select-wrapper">
-                          <div className="select-container linear-gray-border">
-                            {this.state.sorts.map((item, index) => (
-                              <div
-                                onClick={() => {
-                                  this.setState({
-                                    selectedSort: item,
-                                  });
-                                }}
-                                key={index}
-                                className="item noselect"
-                              >
-                                <span>{item.title}</span>
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                      ) : null}
-
-                      {/* {this.isDoorDirectionMenuShown ? } */}
-                    </div>
-                  </div>
+                  {/* {this.isDoorDirectionMenuShown ? } */}
                 </div>
               </div>
             </div>
-          ) : null}
+
+            <div className="item">
+              <div className="row">
+                <span className="row-title">Phòng ngủ</span>
+                <div style={{ height: "4px" }}></div>
+                <div className="selection-box linear-gray-border">
+                  {this.state.bedrooms.map((item, index) => (
+                    <React.Fragment key={index}>
+                      {/* item */}
+                      {this.state.selectedBedroom?.key === item.key ? (
+                        <span
+                          style={{
+                            backgroundColor: "rgb(200, 200, 200)",
+                          }}
+                          className="selection-item noselect"
+                        >
+                          {item.title}
+                        </span>
+                      ) : (
+                        <span
+                          onClick={() => {
+                            this.setState({
+                              selectedBedroom: item,
+                            });
+                          }}
+                          className="selection-item noselect"
+                        >
+                          {item.title}
+                        </span>
+                      )}
+
+                      {/* line */}
+                      {index !== this.state.bedrooms.length - 1 ? (
+                        <div className="selection-line"></div>
+                      ) : null}
+                    </React.Fragment>
+                  ))}
+                  {/* <span className="selection-item">Tất cả</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">1+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">2+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">3+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">4+</span> */}
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="row">
+                <span className="row-title">Phòng vệ sinh</span>
+                <div style={{ height: "4px" }}></div>
+                <div className="selection-box linear-gray-border">
+                  {this.state.bathrooms.map((item, index) => (
+                    <React.Fragment key={index}>
+                      {/* item */}
+                      {this.state.selectedBathroom.key === item.key ? (
+                        <span
+                          style={{
+                            backgroundColor: "rgb(200, 200, 200)",
+                          }}
+                          className="selection-item noselect"
+                        >
+                          {item.title}
+                        </span>
+                      ) : (
+                        <span
+                          onClick={() => {
+                            this.setState({
+                              selectedBathroom: item,
+                            });
+                          }}
+                          className="selection-item noselect"
+                        >
+                          {item.title}
+                        </span>
+                      )}
+
+                      {/* line */}
+                      {index !== this.state.bathrooms.length - 1 ? (
+                        <div className="selection-line"></div>
+                      ) : null}
+                    </React.Fragment>
+                  ))}
+                  {/* <span className="selection-item">Tất cả</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">1+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">2+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">3+</span>
+                        <div className="selection-line"></div>
+                        <span className="selection-item">4+</span> */}
+                </div>
+              </div>
+            </div>
+
+            <div className="item">
+              <div className="row">
+                <span className="row-title">Sắp xếp</span>
+                <div style={{ height: "4px" }}></div>
+                <div
+                  onClick={() => {
+                    this.setState({
+                      isSortShown: !this.state.isSortShown,
+                    });
+                  }}
+                  className="drop-box linear-gray-border"
+                >
+                  <span className="text noselect">
+                    {this.state.selectedSort.title}
+                  </span>
+                  <RiArrowDropDownLine className="more-filter-icon" />
+
+                  {this.state.isSortShown ? (
+                    <div className="select-wrapper">
+                      <div className="select-container linear-gray-border">
+                        {this.state.sorts.map((item, index) => (
+                          <div
+                            onClick={() => {
+                              this.setState({
+                                selectedSort: item,
+                              });
+                            }}
+                            key={index}
+                            className="item noselect"
+                          >
+                            <span>{item.title}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : null}
+
+                  {/* {this.isDoorDirectionMenuShown ? } */}
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        {/* ) : null} */}
 
         {/* <FilterDropBox title="Loại nhà đất" value="Tất cả" />
           <FilterDropBox title="Khu vực" value="Hồ Chí Minh" />
@@ -769,7 +747,7 @@ class SearchSuggestion extends Component {
               pathname: "/search-result-page/" + this.state.searchText,
             }}
           > */}
-        <input className="search-button" type="submit" value="Tìm Kiếm" />
+        <input className={"search-button " + (this.state.isMoreFilterMenuShown ? "search-button-with-option" : "")} type="submit" value="Tìm Kiếm" />
         {/* </Link> */}
       </form>
     );

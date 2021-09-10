@@ -209,7 +209,7 @@ class ManagePost extends Component {
           });
           console.log(this.state.districtWardList);
         },
-        (error) => {}
+        (error) => { }
       );
     // set key event
     document
@@ -401,7 +401,7 @@ class ManagePost extends Component {
           });
           console.log(this.state.autoCompleteMenu);
         },
-        (error) => {}
+        (error) => { }
       );
   };
 
@@ -711,8 +711,8 @@ class ManagePost extends Component {
       var data = null;
       await fetch(
         "https://maps.googleapis.com/maps/api/geocode/json?address=" +
-          searchText +
-          "&key=AIzaSyAk_HxKWrfBT1g9WkfL0gqRIa9HD0d7Q0I"
+        searchText +
+        "&key=AIzaSyAk_HxKWrfBT1g9WkfL0gqRIa9HD0d7Q0I"
       )
         .then((res) => res.json())
         .then(
@@ -721,7 +721,7 @@ class ManagePost extends Component {
             console.log(result);
             data = result;
           },
-          (error) => {}
+          (error) => { }
         );
       await console.log("done 1");
       return data;
@@ -809,7 +809,7 @@ class ManagePost extends Component {
                 isLoaded: true,
               });
             },
-            (error) => {}
+            (error) => { }
           );
       });
     });
@@ -938,7 +938,7 @@ class ManagePost extends Component {
 
         {/* session 1 */}
         <div style={{ height: "10px" }}></div>
-        <div className="row session-row">
+        <div className="row-group session-row">
           <div className="manage-post-tag">
             <span>Thông tin cơ bản</span>
           </div>
@@ -973,8 +973,8 @@ class ManagePost extends Component {
               </div> */}
               {this.state.titleTooltip.toggle
                 ? this.renderTooltip(this.state.titleTooltip.text, {
-                    top: "-50px",
-                  })
+                  top: "-50px",
+                })
                 : null}
               <textarea
                 id="title-textarea"
@@ -1034,12 +1034,12 @@ class ManagePost extends Component {
           </div>
         </div>
 
-        <div style={{ justifyContent: "flex-start" }} className="row">
+        <div className="row">
           <div className="col3">
             <h2 className="title">
               Giá tiền*
               <br />
-              tỷ đồng
+              (tỷ đồng)
             </h2>
             <div className="input-container">
               {this.state.priceTooltip.toggle
@@ -1146,7 +1146,7 @@ class ManagePost extends Component {
             <h2 className="title">
               Diện tích*
               <br />
-              m2
+              (m2)
             </h2>
             <div className="input-container">
               {this.state.areaTooltip.toggle
@@ -1223,7 +1223,7 @@ class ManagePost extends Component {
             <h2 className="title">
               Chiều dài*
               <br />
-              m
+              (m)
             </h2>
             <div className="input-container">
               {this.state.lengthTooltip.toggle
@@ -1300,7 +1300,7 @@ class ManagePost extends Component {
             <h2 className="title">
               Chiều rộng*
               <br />
-              m
+              (m)
             </h2>
             <div className="input-container">
               {this.state.widthTooltip.toggle
@@ -1391,7 +1391,7 @@ class ManagePost extends Component {
 
         {/* session 1 */}
         <div style={{ height: "20px" }}></div>
-        <div className="row session-row">
+        <div className="row-group session-row">
           <div className="manage-post-tag">
             <span>Thông tin chi tiết</span>
           </div>
@@ -2145,7 +2145,7 @@ class ManagePost extends Component {
 
         {/* session 3 */}
         <div style={{ height: "20px" }}></div>
-        <div className="row session-row">
+        <div className="row-group session-row">
           <div className="manage-post-tag">
             <span>Mô tả bất động sản</span>
           </div>
@@ -2171,7 +2171,7 @@ class ManagePost extends Component {
 
         <div className="row">
           <div className="col0">
-            <h2 className="row-title">Hình ảnh*</h2>
+            <h2 className="row-title">Hình ảnh* {this.state.files.length > 0?`(${this.state.files.length} - tệp)`:"" }</h2>
             {(() => {
               if (!this.state.isImageValid) {
                 return (
@@ -2348,7 +2348,6 @@ class ManagePost extends Component {
           )}
         </Popup> */}
 
-        <div style={{ height: "90px" }}></div>
       </React.Fragment>
     );
   }

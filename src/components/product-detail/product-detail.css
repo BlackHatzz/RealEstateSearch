@@ -1,9 +1,11 @@
 div.product-detail-wrapper {
-  height: calc(100% - 70px - 50px - 1px);
+  height: 84vh;
   /* height: auto; */
   width: 100%;
   overflow-y: scroll;
+  overflow-x: hidden;
 }
+
 div.product-info-container {
   /* background-color: blue; */
   width: 60%;
@@ -52,10 +54,8 @@ img.product-selected-image {
   color: #c12f25;
   text-indent: 20px;
   text-transform: uppercase;
-  padding-bottom: 8px;
   font-weight: bold;
   font-size: 25px;
-  line-height: 28px;
   margin-bottom: 12px;
 }
 
@@ -173,16 +173,14 @@ div.detail-box-row {
   color: #2c2f36;
 }
 
-.contact-wrapper-fixed-box {
-  width: auto;
-  height: auto;
-  background-color: transparent;
-  position: fixed;
+.profile-mobile {
+  display: none;
 }
 
 .contact-wrapper {
   display: flex;
   width: 30%;
+  height: max-content;
   flex-direction: column;
   align-items: center;
 }

@@ -20,6 +20,10 @@ export const ChatContent = ({
   dealStatus,
   bookStatus,
   setBookStatus,
+  lastDoc,
+  currentMessagesList,
+  messageEl,
+  messagesEndRef,
 }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
@@ -207,6 +211,10 @@ export const ChatContent = ({
           bookStatus={bookStatus}
           isNewMessage={isNewMessage}
           setIsNewMessage={setIsNewMessage}
+          lastDoc={lastDoc}
+          currentMessagesList={currentMessagesList}
+          messageEl={messageEl}
+          messagesEndRef={messagesEndRef}
         />
 
         <Popover
@@ -224,6 +232,7 @@ export const ChatContent = ({
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <div className="deal-popup-form">
             <Formik
@@ -279,6 +288,7 @@ export const ChatContent = ({
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <Appointment
             setBookStatus={setBookStatus}
