@@ -344,7 +344,7 @@ input.search-bar:focus {
   background-color: white;
   padding: 0;
   margin: 0;
-  z-index: 1;
+  z-index: 3;
 }
 
 .more-filter-menu-container .select-container>.item {

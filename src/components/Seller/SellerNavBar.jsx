@@ -106,9 +106,9 @@ const SellerNavbar = (props) => {
       <div className="nav-bar-wrapper">
         {/* left content */}
         <div className="nav-bar-container">
-          {!isShowMenu && (<>
+          
             <div className="nav-bar-item">
-              <div
+              {!isShowMenu && (<><div
                 onClick={() => {
                   setShowMenu(!isShowMenu);
                 }}
@@ -121,8 +121,8 @@ const SellerNavbar = (props) => {
                   <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
                 </Link>
               </div>
-            </div>
           </>)}
+            </div>
 
           {/* right content */}
           <div className="nav-bar-item">

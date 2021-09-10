@@ -116,6 +116,7 @@ export const SellerScheduler = () => {
     });
   };
   return (
+    <>
     <div className="set-schedule-form">
       <h3>Khung giờ rảnh lặp lại hàng tuần</h3>
 
@@ -164,7 +165,7 @@ export const SellerScheduler = () => {
       >
         Lưu
       </button>
-      <div className={"notification-save-scheduler " + (completeMessage === "" ? "save-message-hidden" : "")}>
+        </div> <div className={"notification-save-scheduler " + (completeMessage === "" ? "save-message-hidden" : "")}>
         <div className="content-saved-scheduler">
           {completeMessage === "done" ?
             <CheckCircleIcon className="icon-content-saved-scheduler-done" style={{width:70, height:70}} /> :
@@ -178,6 +179,6 @@ export const SellerScheduler = () => {
           <button onClick={() => setCompleteMessage("")}>OK</button>
         </div>
       </div>
-    </div>
+ </>
   );
 };

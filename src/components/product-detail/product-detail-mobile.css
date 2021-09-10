@@ -21,6 +21,8 @@
     align-items: flex-start;
   }
   .profile-mobile {
+    position: relative;
+    height: 60px;
     display: block;
     text-align: left;
     margin-bottom: 10px;
@@ -32,10 +34,11 @@
     border-radius: 100%;
   }
   .profile-mobile>div {
-    display: inline-block;
+    display: inline-table;
     width: auto;
+    position: relative;
     margin-left: 10px;
-    vertical-align: middle;
+    vertical-align: top;
   }
   .profile-mobile .profile-mobile-name {
     font-size: 1.2em;

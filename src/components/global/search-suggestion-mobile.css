@@ -60,6 +60,11 @@
     border: none;
     z-index: 0;
   }
+  
+  .more-filter-menu-container>.item:last-child .drop-box .select-wrapper  {
+    transform: translateY(-100%);
+    top: 35px;
+  }
   /* .show-more-filtler {
     display: block;
   }
