@@ -59,6 +59,7 @@ class TransactionHistoryPage extends Component {
                   <div className="grid-item">{transaction.downPrice}</div>
                 </React.Fragment>
               ))}
+              
               {/* <div className="grid-item">7</div>
               <div className="grid-item">8</div>
               <div className="grid-item">9</div>
