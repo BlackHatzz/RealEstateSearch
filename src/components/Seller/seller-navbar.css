@@ -1,174 +1,27 @@
-/* *{
-  border: 1px solid red;
-}
- */
-
-.seller-nav-bar-wrapper {
-  width: 100%;
-  height: 70px;
-  background-color: white;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0px 3px 6px 2px rgba(182, 182, 182, 0.384);
-}
-
-.seller-nav-bar-wrapper .seller-nav-bar-container {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  width: 308px;
-  height: 100%;
-  background-color: inherit;
-  padding-left: 30px;
-}
-
-.seller-nav-bar-container .seller-nav-bar-item {
-  /* width: 300px; */
-  height: 100%;
-  background-color: inherit;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  padding-left: 12px;
-  padding-right: 12px;
-  cursor: pointer;
-}
-
-.seller-nav-bar-item .nav-bar-logo {
-  width: 200px;
-  height: 50px;
-  background-repeat: no-repeat;
-  object-fit: cover;
-  background-color: white;
-  /* background-image: url('https://i.ibb.co/MhLF1VS/abc.png'); */
-}
-.seller-nav-bar-logo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  background-repeat: no-repeat;
-}
-
-.seller-nav-bar-item-horizontal {
-  height: 100%;
-  background-color: inherit;
-  /* display: flex;
-    flex-direction: columns;
-    align-items: center;
-    justify-content: flex-start; */
-}
-
-.seller-profile-pic {
-  width: 50px;
-  height: 50px;
-  background-color: gray;
-  object-fit: cover;
-  background-repeat: no-repeat;
-  border-radius: 25px;
+.drawer-btn-menu {
+  display: inline-block;
   margin-left: 10px;
-  background-size: 50px 50px;
-}
-.seller-profile-name-text {
-  width: auto;
-  font-size: 14px;
-  text-align: left;
-  padding-left: 8px;
-  width: 110px;
-  padding-right: 8px;
+  vertical-align: middle;
 }
 
-.seller-nav-bar-item .seller-nav-bar-item-text {
-  font-size: 14px;
-  text-align: center;
-}
-
-.seller-profile-menu-container {
-  width: 200px;
-  /* height: 80px; */
-  background-color: white;
-  position: relative;
-  border-radius: 6px;
-  border: 1px solid rgb(190, 190, 190);
-  left: -14px;
-  /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start; */
-  padding: 0;
-}
-.seller-profile-menu-container > .seller-profile-menu-item {
-  width: 100%;
-  height: 40px;
-  background-color: transparent;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-}
-
-.seller-profile-menu-container > .seller-profile-menu-item:hover {
-  background-color: #d8dadf;
-  cursor: pointer;
-}
-.seller-profile-menu-container > .seller-profile-menu-item > .icon {
-  color: black;
-  margin-left: 12px;
-}
-.seller-profile-menu-container
-  > .seller-profile-menu-item
-  .seller-profile-menu-item-title {
-  padding-left: 12px;
-  font-size: 16px;
-  text-align: left;
-  color: black;
-}
-.seller-profile-menu-container > .divide {
-  width: 100%;
-  height: 1px;
-  background-color: rgb(190, 190, 190);
-  padding: 0;
-  margin: 0;
-}
-.seller-notification-container {
-  width: 200px;
-
-  max-height: 80vh;
-  background-color: white;
-  position: relative;
-  border-radius: 6px;
-  border: 1px solid rgb(190, 190, 190);
-
-  right: 60px;
-
-  overflow-y: auto;
-
-  padding: 0px 5px 10px 5px;
+.drawer-btn-menu~.nav-bar-logo {
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .logo-container {
-    width: 100%;
-    height: auto;
-    background-color: transparent;
-    flex-direction: row;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    /* padding-top: 12px; */
-    /* padding-bottom: 12px; */
-  }
-   .logo-box {
-    width: 150px;
-    height: 70px;
-    margin: 0 auto;
-    background-size: 150px 70px;
-    /* object-fit: fill; */
-    /* background-color: red; */
-    /* object-fit: cover;
-    background-repeat: no-repeat;
-    background-image: url("logo.png");
-    background-size: 100% 100%; */
-  }
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+  flex-direction: row;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-box {
+  width: 150px;
+  height: 70px;
+  margin: 0 auto;
+  background-size: 150px 70px;
+}

@@ -30,7 +30,9 @@ class ProductItem extends Component {
           <div className="content-product-container">
             {/* title of product */}
             <span className="product-title">
-              {this.props.item.title}
+             {(this.props.item.title.length>45 && window.innerWidth<500)?
+             maxString(this.props.item.title,45,""):
+             this.props.item.title}
             </span>
 
             {/* price and area */}

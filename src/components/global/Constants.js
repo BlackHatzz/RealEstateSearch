@@ -67,6 +67,38 @@ class Constants {
         );
     }
 
+  static getRealEstateDetailById(id) {
+    return (
+      Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString()
+    );
+  }
+
+  static Buyer = class {
+    static getTransactionHistory(userId, page) {
+      return (
+        Constants.host +
+        "api/v1/transaction/getTransactionByUserId/" +
+        userId.toString() +
+        "/" +
+        "buyer" +
+        "/" +
+        page.toString()
+      );
+    }
+  };
+  static Seller = class {
+    static getTransactionHistory(userId, page) {
+      return (
+        Constants.host +
+        "api/v1/transaction/getTransactionByUserId/" +
+        userId.toString() +
+        "/" +
+        "seller" +
+        "/" +
+        page.toString()
+      );
+    }
+  };
     static createRealEstateRef =
         Constants.host + "api/v1/realEstate/createRealEstate";
 
@@ -80,11 +112,7 @@ class Constants {
         );
     }
 
-    static getRealEstateDetailById(id) {
-        return (
-            Constants.host + "api/v1/realEstate/getRealEstateDetail/" + id.toString()
-        );
-    }
+    
 }
 
 export default Constants;

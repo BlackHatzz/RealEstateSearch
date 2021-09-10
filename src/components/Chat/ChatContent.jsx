@@ -224,6 +224,7 @@ export const ChatContent = ({
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <div className="deal-popup-form">
             <Formik
@@ -279,6 +280,7 @@ export const ChatContent = ({
             vertical: "bottom",
             horizontal: "center",
           }}
+          className="chat-mobile-confirm"
         >
           <Appointment
             setBookStatus={setBookStatus}
@@ -300,6 +302,7 @@ export const ChatContent = ({
         )} */}
 
         <div className="chat_window_container_message_box_input">
+
           <form
             className="message-input-form"
             onSubmit={(e) => {

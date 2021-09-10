@@ -8,6 +8,10 @@
   text-align: center;
 }
 
+.suggestion-container>* {
+  display: inline-block;
+}
+
 input.search-bar {
   margin-left: 5px;
   outline: none;
@@ -17,7 +21,7 @@ input.search-bar {
 }
 
 div.search-bar {
-  display: inline-block;
+  display: inline-flex;
   border-radius: 4px;
   border: 1px solid #ccd3d9;
   width: 300px;
@@ -26,6 +30,7 @@ div.search-bar {
   background-color: white;
   vertical-align: middle;
   padding: 0 10px;
+  flex-direction: row;
 }
 
 div.search-bar>* {
@@ -38,6 +43,7 @@ input.search-bar:focus {
 }
 
 .filter-drop-box {
+  min-width: 120px;
   display: inline-block;
   background-color: transparent;
   vertical-align: middle;
@@ -74,6 +80,7 @@ input.search-bar:focus {
   outline: none;
   border: none;
   padding: 10px 16px 10px 16px;
+  vertical-align: middle;
   cursor: pointer;
 }
 
@@ -121,9 +128,8 @@ input.search-bar:focus {
 
 .search-suggestion-filter-menu-container {
   /* visibility: hidden; */
-  position: relative;
-  background-color: red;
-  width: 100%;
+  position: absolute;
+  min-width: 190px;;
   /* height: 100px; */
 }
 
@@ -226,42 +232,49 @@ input.search-bar:focus {
   color: white;
 }
 
+.show-more-filtler {
+  display: inline-block;
+}
+
+.hidden-filter {
+  display: none;
+}
+
 .more-filter-container {
   height: 100%;
   width: 115px;
-  background-color: transparent;
-  padding-right: 24px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   cursor: pointer;
+  position: relative;
+  display: inline-block;
 }
 
 .more-filter-container .icon {
   width: 20px;
   height: 20px;
-  background-color: transparent;
+  vertical-align: middle;
 }
 
 .more-filter-container>.title {
   font-size: 14px;
+  vertical-align: middle;
+}
+
+.more-filter-container>.title::before {
+  margin-left: 5px;
+  content: "Lọc thêm";
 }
 
 .more-filter-menu-wrapper {
   position: relative;
-  width: 0px;
-  height: 0px;
-  background-color: green;
 }
 
 .more-filter-menu-container {
-  position: relative;
+  position: absolute;
   width: 400px;
   height: auto;
   background-color: white;
-  top: 10px;
-  left: -130px;
+  top: 30px;
+  right: -10px;
   padding-bottom: 24px;
   z-index: 2;
 }
@@ -288,11 +301,13 @@ input.search-bar:focus {
 .more-filter-menu-container .drop-box {
   width: 100%;
   height: 40px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
   cursor: pointer;
+  text-align: center;
+}
+
+.more-filter-menu-container .drop-box>* {
+  vertical-align: middle;
+  display: inline-block;
 }
 
 .more-filter-menu-container .drop-box:hover {
@@ -315,11 +330,12 @@ input.search-bar:focus {
   width: 92%;
   height: 0px;
   position: absolute;
+  left: 4%;
 }
 
 .more-filter-menu-container .drop-box .select-container {
   position: relative;
-  top: 20px;
+  top: 40px;
   width: 100%;
   height: auto;
   max-height: 200px;
@@ -328,6 +344,7 @@ input.search-bar:focus {
   background-color: white;
   padding: 0;
   margin: 0;
+  z-index: 3;
 }
 
 .more-filter-menu-container .select-container>.item {
