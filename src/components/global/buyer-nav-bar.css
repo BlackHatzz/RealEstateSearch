@@ -28,6 +28,8 @@
 .nav-bar-wrapper>.nav-bar-container {
   display: flex;
   flex: 1;
+  padding: 5px 0;
+  border-bottom: 1px solid #b8b8b8;
 }
 
 .nav-bar-container>.nav-bar-item {

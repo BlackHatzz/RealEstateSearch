@@ -248,8 +248,6 @@ const SellerDashboard = () => {
 
           <div className="right-container">
             <SellerNavbar isShowMenu={isShowMenu} setShowMenu={setShowMenu} />
-            <div className="divide"></div>
-
             {/* <div className="content-container"> */}
             {/* <ManagePost /> */}
             {/* <Switch>
