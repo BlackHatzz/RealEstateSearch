@@ -199,7 +199,7 @@ div.collapse-box {
   color: rgb(155, 155, 155);
 }
 
-.active {
+.pagination  .active {
   background: rgb(77, 133, 236);
   color: #FFF;
 }

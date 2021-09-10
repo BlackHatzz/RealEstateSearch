@@ -15,12 +15,12 @@
 
 .seller-search-create {
   /* box-sizing: border-box; */
-  width: 100%;
+  width: 80%;
   /* height: 100vh; */
   display: flex;
   flex-direction: row;
   padding-left: 10%;
-  margin-top: 30px;
+  margin: 30px auto 0;
 }
 
 .seller-search-post-search-bar-container {
@@ -269,7 +269,8 @@ div.content-product-container {
 }
 
 .seller-tab-container {
-  width: 100%;
+  width: 80%;
+  margin: auto;
   background-color: transparent;
   margin-top: 20px;
   display: flex;
