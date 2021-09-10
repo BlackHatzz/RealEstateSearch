@@ -48,6 +48,20 @@ const BuyerNavbar = () => {
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   let history = useHistory();
 
+  const wrapperRef = useRef(null);
+  const chatRef = useRef(null);
+  const notiRef = useRef(null);
+  const profileRef = useRef(null);
+  useOutsideAlerter(
+    wrapperRef,
+    notiRef,
+    chatRef,
+    profileRef,
+    setNotificationTrigger,
+    setIsProfileMenuShown,
+    setChatTrigger
+  );
+
   const switchProfileMenu = () => {
     setIsProfileMenuShown((value) => !value);
     setNotificationTrigger(false);
@@ -327,14 +341,14 @@ const BuyerNavbar = () => {
           {/* <div className="nav-bar-container"> */}
           <div className="nav-bar-item">
             <div className="nav-bar-item-info">
-              <div className="nav-bar-item" onClick={switchChat}>
+              <div ref={chatRef} className="nav-bar-item" onClick={switchChat}>
                 <Badge color="secondary" badgeContent={unreadChat}>
                   <MessageIcon style={{ width: "30px", height: "30px" }} />
                 </Badge>
               </div>
 
               {/* more header item*/}
-              <div onClick={switchNotification}>
+              <div ref={notiRef} onClick={switchNotification}>
                 <Badge color="secondary" badgeContent={unseen}>
                   <NotificationsNoneIcon
                     style={{ width: "30px", height: "30px" }}
@@ -343,7 +357,11 @@ const BuyerNavbar = () => {
               </div>
 
               <div className="nav-bar-item-horizontal">
-                <div onClick={switchProfileMenu} className="nav-bar-item">
+                <div
+                  ref={profileRef}
+                  onClick={switchProfileMenu}
+                  className="nav-bar-item"
+                >
                   <div
                     style={{
                       backgroundImage:
@@ -362,7 +380,7 @@ const BuyerNavbar = () => {
             </div>
             <div className="nav-bar-item-hidden">
               {notificationTrigger ? (
-                <div className="notification-container">
+                <div ref={wrapperRef} className="notification-container">
                   <h3>Thông báo</h3>
                   <br></br>
                   {notifications.length > 0 &&
@@ -522,7 +540,7 @@ const BuyerNavbar = () => {
               )}
 
               {chatTrigger ? (
-                <div className="notification-container">
+                <div ref={wrapperRef} className="notification-container">
                   <h3>Message</h3>
                   <br></br>
                   <div className="conversation-list">
@@ -577,7 +595,7 @@ const BuyerNavbar = () => {
 
               {/* profile menu */}
               {isProfileMenuShown ? (
-                <div className="profile-menu-container">
+                <div ref={wrapperRef} className="profile-menu-container">
                   <div className="user-fullname">
                     <p>{fb.auth.currentUser?.displayName}</p>
                   </div>
@@ -637,3 +655,49 @@ const BuyerNavbar = () => {
 };
 
 export default BuyerNavbar;
+
+function useOutsideAlerter(
+  ref,
+  notiRef,
+  chatRef,
+  profileRef,
+  setNotificationTrigger,
+  setIsProfileMenuShown,
+  setChatTrigger
+) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !notiRef.current.contains(event.target)
+      ) {
+        setNotificationTrigger(false);
+      }
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !chatRef.current.contains(event.target)
+      ) {
+        setChatTrigger(false);
+      }
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuShown(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}

@@ -20,6 +20,10 @@ export const ChatContent = ({
   dealStatus,
   bookStatus,
   setBookStatus,
+  lastDoc,
+  currentMessagesList,
+  messageEl,
+  messagesEndRef,
 }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
@@ -207,6 +211,10 @@ export const ChatContent = ({
           bookStatus={bookStatus}
           isNewMessage={isNewMessage}
           setIsNewMessage={setIsNewMessage}
+          lastDoc={lastDoc}
+          currentMessagesList={currentMessagesList}
+          messageEl={messageEl}
+          messagesEndRef={messagesEndRef}
         />
 
         <Popover
@@ -302,7 +310,6 @@ export const ChatContent = ({
         )} */}
 
         <div className="chat_window_container_message_box_input">
-
           <form
             className="message-input-form"
             onSubmit={(e) => {

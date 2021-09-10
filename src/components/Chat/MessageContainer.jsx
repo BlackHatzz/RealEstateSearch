@@ -13,6 +13,10 @@ export const MessageContainer = ({
   bookStatus,
   isNewMessage,
   setIsNewMessage,
+  lastDoc,
+  currentMessagesList,
+  messageEl,
+  messagesEndRef,
 }) => {
   const uuid = fb.auth.currentUser?.uid;
   const username = fb.auth.currentUser?.displayName;
@@ -25,15 +29,13 @@ export const MessageContainer = ({
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   const currentDate = new Date();
 
-  const messageEl = useRef(null);
-  const messagesEndRef = useRef(null);
-  let lastDoc = null;
+  // const messageEl = useRef(null);
+  // const messagesEndRef = useRef(null);
+  // let lastDoc = null;
+  // let currentMessagesList = [];
 
-  let currentMessagesList = [];
   useEffect(() => {
     setIsNewMessage(true);
-
-    console.log("conversation", conversation.id);
 
     if (conversation) {
       fb.firestore
@@ -46,7 +48,7 @@ export const MessageContainer = ({
 
       getMessages();
     }
-  }, [conversation, uuid]);
+  }, [conversation.id, uuid]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "auto" });
@@ -56,7 +58,9 @@ export const MessageContainer = ({
     if (isNewMessage) {
       scrollToBottom();
     } else {
-      document.getElementById("chat-window-message-box").scrollTo(0, 200);
+      document
+        .getElementById("chat-window-message-box" + conversation.id)
+        .scrollTo(0, 200);
     }
     // else {
     //   // if (scrollDoc) {
@@ -91,7 +95,6 @@ export const MessageContainer = ({
 
       setMessages(messagesList);
       currentMessagesList = messagesList;
-
       lastDoc = previousDoc;
     });
   };
@@ -103,6 +106,7 @@ export const MessageContainer = ({
   }, []);
 
   const fetchMoreMessages = () => {
+    console.log(lastDoc);
     if (!!lastDoc?.id) {
       const ref = fb.firestore
         .collection("conversations")
@@ -123,7 +127,6 @@ export const MessageContainer = ({
           let newList = [...messagesList, ...currentMessagesList];
           setMessages(newList);
           currentMessagesList = newList;
-
           lastDoc = previousDoc;
         } else {
           messageEl.current.removeEventListener("scroll", handleLoadOnScroll);
@@ -259,7 +262,7 @@ export const MessageContainer = ({
 
   return (
     <div
-      id="chat-window-message-box"
+      id={"chat-window-message-box" + conversation.id}
       className="chat_window_container_message_box_display"
       ref={messageEl}
     >
@@ -383,7 +386,7 @@ export const MessageContainer = ({
                 <div>
                   {message.status === "upcoming" && (
                     <div className="buyer-appointment-message-upcoming">
-                      <p>Lịch hẹn sắp tới{message.status}</p>
+                      <p>Lịch hẹn sắp tới</p>
                       <p>
                         {moment(message.appointment)
                           .locale("vi")
