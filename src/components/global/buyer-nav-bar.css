@@ -22,6 +22,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  z-index: 150;
 }
 
 .nav-bar-wrapper > .nav-bar-container {
@@ -165,6 +166,8 @@
 }
 
 .notification-container {
+  display: flex;
+  flex-direction: column;
   width: 360px;
   z-index: 100;
   max-height: 80vh;
@@ -174,7 +177,7 @@
   border: 1px solid rgb(190, 190, 190);
   right: 0px;
   padding: 0;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: 0px 5px 10px 5px;
 }
 
@@ -229,8 +232,11 @@
 }
 
 .conversation-list {
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   max-height: 80vh;
+  padding-bottom: 10px;
 }
 
 .conversation-item {
@@ -258,7 +264,7 @@
 
 .conversation-item-image > img {
   height: 100%;
-  width: auto;
+  width: 60px;
   border-radius: 5px;
 }
 

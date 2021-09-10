@@ -1,0 +1,14 @@
+.auth-form-container {
+  flex-direction: column;
+  display: flex;
+  background-color: white;
+  padding: 0px 0px 0px 0px;
+}
+.login-logo {
+  margin-top: 0px;
+  display: flex;
+}
+.login-logo img {
+  height: 160px;
+  width: auto;
+}

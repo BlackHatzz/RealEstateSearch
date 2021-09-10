@@ -143,6 +143,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
               appointmentDate: date,
               lastMessage: "lịch hẹn",
               lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+              lastMessageReadStaff: false,
             },
             { merge: true }
           )

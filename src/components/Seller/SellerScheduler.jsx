@@ -104,8 +104,8 @@ export const SellerScheduler = () => {
         console.log("create schedule success");
         setButtonDisable(true);
       } else {
-        setError("Error");
-        console.log(error);
+        setError("Error create schedule");
+        console.log("Error create schedule", error);
       }
     });
   };

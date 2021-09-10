@@ -39,6 +39,7 @@ const BuyerNavbar = () => {
   const [notificationTrigger, setNotificationTrigger] = useState(false);
   const [chatTrigger, setChatTrigger] = useState(false);
   const [unseen, setUnseen] = useState(0);
+  const [unreadChat, setUnreadChat] = useState(0);
   const [notifications, setNotifications] = useState([]);
   const [conversations, setConversations] = useState([]);
   const [modalopen, setModalOpen] = useState(false);
@@ -104,13 +105,23 @@ const BuyerNavbar = () => {
               }))
             );
           });
+
+        const chatNoti = fb.firestore
+          .collection("conversations")
+          .where(role + "Id", "==", uuid)
+          .where("lastMessageReadBuyer", "==", false)
+          .onSnapshot((snapshot) => {
+            setUnreadChat(snapshot.size);
+          });
+
         return () => {
           getChatData();
           getNotifications();
+          chatNoti();
         };
       }
 
-      return () => { };
+      return () => {};
     }
   }, [role, unseen, uuid]);
 
@@ -317,7 +328,7 @@ const BuyerNavbar = () => {
           <div className="nav-bar-item">
             <div className="nav-bar-item-info">
               <div className="nav-bar-item" onClick={switchChat}>
-                <Badge color="secondary" badgeContent={0}>
+                <Badge color="secondary" badgeContent={unreadChat}>
                   <MessageIcon style={{ width: "30px", height: "30px" }} />
                 </Badge>
               </div>
@@ -524,8 +535,6 @@ const BuyerNavbar = () => {
                               className="conversation-item"
                               key={conversation.id}
                               onClick={() => {
-                                console.log("conversation");
-                                console.log(conversation);
                                 addItem(conversation);
                                 addViewChat(conversation);
                                 // setCurrentChat(conversation);
@@ -535,7 +544,7 @@ const BuyerNavbar = () => {
                                   .collection("conversations")
                                   .doc(conversation.id)
                                   .update({
-                                    lastMessageRead: true,
+                                    lastMessageReadBuyer: true,
                                   });
                               }}
                             >
@@ -548,7 +557,8 @@ const BuyerNavbar = () => {
                                 </p>
                                 <p
                                   className={
-                                    conversation.data.lastMessageRead === true
+                                    conversation.data.lastMessageReadBuyer ===
+                                    true
                                       ? "conversation-item-info-lastmessage-seen"
                                       : "conversation-item-info-lastmessage"
                                   }
@@ -569,9 +579,7 @@ const BuyerNavbar = () => {
               {isProfileMenuShown ? (
                 <div className="profile-menu-container">
                   <div className="user-fullname">
-                    <p>
-                      {fb.auth.currentUser?.displayName}
-                    </p>
+                    <p>{fb.auth.currentUser?.displayName}</p>
                   </div>
                   <Link
                     className="link profile-menu-item top-item"
