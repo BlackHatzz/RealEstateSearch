@@ -25,11 +25,9 @@ export const ChatContent = ({
 
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
-  // const [dealtrigger, setDealtrigger] = useState(false);
+
   const [booktrigger, setBooktrigger] = useState(null);
-  // const [bookStatus, setBookStatus] = useState(
-  //   !!currentChat.data?.appointment ? currentChat.data.appointment : "none"
-  // );
+
   const [currentInput, setCurrentInput] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
   const [isNewMessage, setIsNewMessage] = useState(true);
@@ -70,12 +68,11 @@ export const ChatContent = ({
               dealId: dealId + "",
               dealPrice: deal,
               lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+              lastMessageReadStaff: false,
+              lastMessage: "thỏa thuận mới",
             }
             // { merge: true }
           );
-        fb.firestore.collection("conversations").doc(currentChat.id).update({
-          lastMessage: "thỏa thuận mới",
-        });
       })
       .finally(() => {
         setSubmitting(false);
@@ -103,7 +100,7 @@ export const ChatContent = ({
         setIsNewMessage(true);
         setCurrentInput("");
         fb.firestore.collection("conversations").doc(currentChat.id).update({
-          lastMessageRead: false,
+          lastMessageReadStaff: false,
           lastMessage: currentInput,
           lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
         });
@@ -258,7 +255,7 @@ export const ChatContent = ({
                         setAnchorEl(null);
                       }}
                     >
-                      Hủy
+                      Đóng
                     </button>
                   </div>
                 </Form>
@@ -303,26 +300,6 @@ export const ChatContent = ({
         )} */}
 
         <div className="chat_window_container_message_box_input">
-          {/* {role === "buyer" && (
-            <div className="interact-box">
-              <button
-                className="deal-button"
-                disabled={
-                  currentChat.data.deal === "refused" ||
-                  currentChat.data.deal === "none" ||
-                  currentChat.data.deal === "cancel" ||
-                  currentChat.data.deal === undefined
-                    ? false
-                    : true
-                }
-                onClick={handleDeal}
-                type="button"
-              >
-                Thỏa thuận
-              </button>
-            </div>
-          )} */}
-
           <form
             className="message-input-form"
             onSubmit={(e) => {

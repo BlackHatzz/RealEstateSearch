@@ -28,7 +28,7 @@ export const MessageContainer = ({
   const messageEl = useRef(null);
   const messagesEndRef = useRef(null);
   let lastDoc = null;
-  let scrollDoc = null;
+
   let currentMessagesList = [];
   useEffect(() => {
     setIsNewMessage(true);
@@ -58,7 +58,6 @@ export const MessageContainer = ({
       document.getElementById("chat-window-message-box").scrollTo(0, 200);
     }
     // else {
-
     //   // if (scrollDoc) {
     //   //   console.log("sc", scrollDoc);
     //   //   let myElement = document?.getElementById(scrollDoc?.id);
@@ -91,7 +90,6 @@ export const MessageContainer = ({
 
       setMessages(messagesList);
       currentMessagesList = messagesList;
-      scrollDoc = lastDoc;
 
       lastDoc = previousDoc;
     });
@@ -104,7 +102,7 @@ export const MessageContainer = ({
   }, []);
 
   const fetchMoreMessages = () => {
-    if (!!lastDoc.id) {
+    if (!!lastDoc?.id) {
       const ref = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
@@ -124,8 +122,7 @@ export const MessageContainer = ({
           let newList = [...messagesList, ...currentMessagesList];
           setMessages(newList);
           currentMessagesList = newList;
-          scrollDoc = lastDoc;
-          console.log("aa", scrollDoc);
+
           lastDoc = previousDoc;
         } else {
           messageEl.current.removeEventListener("scroll", handleLoadOnScroll);
@@ -146,12 +143,10 @@ export const MessageContainer = ({
         })
         .then(() => {
           fb.firestore.collection("conversations").doc(conversation.id).update({
-            deal: "accepted",
-          });
-
-          fb.firestore.collection("conversations").doc(conversation.id).update({
             lastMessage: "chấp nhận thỏa thuận",
             lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+            lastMessageReadStaff: false,
+            deal: "accepted",
           });
 
           fetch("https://api-realestate.top/apis/apis/deals/create", {
@@ -189,11 +184,10 @@ export const MessageContainer = ({
           fb.firestore.collection("conversations").doc(conversation.id).update({
             deal: "refused",
             dealReason: refuseInput,
-          });
-
-          fb.firestore.collection("conversations").doc(conversation.id).update({
+            lastMessageReadStaff: false,
             lastMessage: refuseInput,
           });
+
           setRefuseInputTrigger(false);
           setRefuseInput("");
         });
@@ -214,6 +208,8 @@ export const MessageContainer = ({
           fb.firestore.collection("conversations").doc(conversation.id).update({
             appointment: "cancel",
             lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+            lastMessageReadStaff: false,
+            lastMessage: "lịch hẹn đã bị hủy",
           });
         });
 
@@ -235,10 +231,6 @@ export const MessageContainer = ({
           status: "cancel",
         });
 
-      fb.firestore.collection("conversations").doc(conversation.id).update({
-        lastMessage: "lịch hẹn đã hủy",
-      });
-
       setBookStatus("cancel");
     }
   };
@@ -256,6 +248,8 @@ export const MessageContainer = ({
           fb.firestore.collection("conversations").doc(conversation.id).update({
             deal: "cancel",
             lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+            lastMessageReadStaff: false,
+            lastMessage: "Thỏa thuận đã bị hủy",
           });
         });
     }

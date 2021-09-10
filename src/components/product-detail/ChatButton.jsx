@@ -79,6 +79,8 @@ export const ChatButton = (props) => {
                     buyerAvatar: buyerAvatar,
                     staffId: doc.data().staffId,
                     realIMG: props.product.images[0].imgUrl,
+                    lastMessageReadBuyer: true,
+                    lastMessageReadStaff: true,
                     // deal: "none",
                     // dealId: "",
                     // appointment: "none",
@@ -97,8 +99,7 @@ export const ChatButton = (props) => {
                           id: doc.id,
                           data: doc.data(),
                         };
-                        console.log("conObject");
-                        console.log(conObject);
+
                         addItem(conObject);
                         addViewChat(conObject);
 
@@ -106,7 +107,8 @@ export const ChatButton = (props) => {
                           .collection("conversations")
                           .doc(doc.id)
                           .update({
-                            lastMessageRead: true,
+                            lastMessageReadBuyer: true,
+                            lastMessageReadStaff: true,
                           });
                       }
                     });
