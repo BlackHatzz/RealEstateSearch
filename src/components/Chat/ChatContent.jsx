@@ -14,21 +14,26 @@ import { v4 as uuidv4 } from "uuid";
 import Popover from "@material-ui/core/Popover";
 import moment from "moment";
 
-export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
+export const ChatContent = ({
+  currentChat,
+  forceUpdate,
+  dealStatus,
+  bookStatus,
+  setBookStatus,
+}) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
   // const [dealtrigger, setDealtrigger] = useState(false);
   const [booktrigger, setBooktrigger] = useState(null);
-  const [bookStatus, setBookStatus] = useState("none");
+  // const [bookStatus, setBookStatus] = useState(
+  //   !!currentChat.data?.appointment ? currentChat.data.appointment : "none"
+  // );
   const [currentInput, setCurrentInput] = useState("");
   const [anchorEl, setAnchorEl] = useState(null);
-  const [dealinfoTrigger, setDealinfoTrigger] = useState(
-    currentChat.data.deal === "accepted" || currentChat.data.deal === "pending"
-      ? false
-      : true
-  );
+  const [isNewMessage, setIsNewMessage] = useState(true);
+
   const username = fb.auth.currentUser?.displayName;
   const uuid = fb.auth.currentUser?.uid;
   const dealPopup = Boolean(anchorEl);
@@ -95,19 +100,23 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
         senderId: uuid,
       })
       .finally(() => {
+        setIsNewMessage(true);
         setCurrentInput("");
+        fb.firestore.collection("conversations").doc(currentChat.id).update({
+          lastMessageRead: false,
+          lastMessage: currentInput,
+          lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+        });
       });
-    fb.firestore.collection("conversations").doc(currentChat.id).update({
-      lastMessageRead: false,
-      lastMessage: currentInput,
-      lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-    });
   }
 
   return (
     <>
       <div className="small-chat-window-title-box">
-        <p className="small-chat-window-title">{currentChat.data.title}</p>
+        <p className="small-chat-window-title">
+          {/* {currentChat.id + "." + currentChat.data.staffId} */}
+          {currentChat.data.title}
+        </p>
         <div className="small-chat-window-buttons">
           {/* <div
             className="small-chat-window-buttons-minimize"
@@ -199,6 +208,8 @@ export const ChatContent = ({ currentChat, forceUpdate, dealStatus }) => {
           handleBook={handleBook}
           setBookStatus={setBookStatus}
           bookStatus={bookStatus}
+          isNewMessage={isNewMessage}
+          setIsNewMessage={setIsNewMessage}
         />
 
         <Popover

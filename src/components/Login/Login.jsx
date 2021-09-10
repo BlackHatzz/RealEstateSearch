@@ -7,7 +7,7 @@ import { validationSchema, defaultValues } from "./formikConfig";
 import * as firebaseui from "firebaseui";
 import "firebaseui/dist/firebaseui.css";
 import { Context } from "../../ChatContext";
-
+import "./login.css";
 // import { useStateValue } from "../../StateProvider";
 // import { actionTypes } from "../../reducer";
 
@@ -135,6 +135,9 @@ export const Login = () => {
 
   return (
     <div className="auth-form-container">
+      <div className="login-logo">
+        <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
+      </div>
       <div id="firebaseui-auth-container" />
       {/* <div className="auth-form">
         <h1 className="title">Đăng Nhập</h1>

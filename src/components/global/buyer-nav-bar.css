@@ -174,7 +174,7 @@
   border: 1px solid rgb(190, 190, 190);
   right: 0px;
   padding: 0;
-  overflow-y: auto;
+  overflow-y: hidden;
   padding: 0px 5px 10px 5px;
 }
 

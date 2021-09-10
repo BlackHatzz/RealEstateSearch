@@ -11,6 +11,8 @@ export const MessageContainer = ({
   handleBook,
   setBookStatus,
   bookStatus,
+  isNewMessage,
+  setIsNewMessage,
 }) => {
   const uuid = fb.auth.currentUser?.uid;
   const username = fb.auth.currentUser?.displayName;
@@ -22,28 +24,16 @@ export const MessageContainer = ({
   const [refuseInput, setRefuseInput] = useState("");
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   const currentDate = new Date();
-  // const [deals, setDeals] = useState([]);
-  // const [appointments, setAppointments] = useState([]);
+
   const messageEl = useRef(null);
+  const messagesEndRef = useRef(null);
+  let lastDoc = null;
+  let scrollDoc = null;
+  let currentMessagesList = [];
   useEffect(() => {
-    if (messageEl) {
-      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
-        const { currentTarget: target } = event;
-        target.scroll({ top: target.scrollHeight, behavior: "smooth" });
-      });
-    }
-  }, []);
-  useEffect(() => {
-    let getMessages = () => {};
+    setIsNewMessage(true);
     let setInfo = () => {};
     if (conversation) {
-      getMessages = fb.firestore
-        .collection("conversations")
-        .doc(conversation.id)
-        .collection("messages")
-        .orderBy("timestamp", "asc")
-        .onSnapshot((snap) => setMessages(snap.docs.map((doc) => doc.data())));
-
       setInfo = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
@@ -51,12 +41,98 @@ export const MessageContainer = ({
           setDealId(doc.data()?.dealId);
           setBookId(doc.data()?.appointmentId);
         });
-    }
-    return () => {
+
       getMessages();
       setInfo();
-    };
+    }
   }, [conversation, uuid]);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "auto" });
+  };
+  useEffect(() => {
+    // scrollToBottom();
+    if (isNewMessage) {
+      scrollToBottom();
+    } else {
+      document.getElementById("chat-window-message-box").scrollTo(0, 200);
+    }
+    // else {
+
+    //   // if (scrollDoc) {
+    //   //   console.log("sc", scrollDoc);
+    //   //   let myElement = document?.getElementById(scrollDoc?.id);
+    //   //   // let topPos = myElement.offsetTop;
+    //   //   // document.getElementById("chat-window-message-box").scrollTop = topPos;
+    //   //   myElement?.scrollIntoView({ behavior: "auto" });
+    //   // }
+    // }
+  }, [messages]);
+
+  const handleLoadOnScroll = (event) => {
+    const { currentTarget: target } = event;
+
+    if (target.scrollTop === 0) {
+      setIsNewMessage(false);
+      fetchMoreMessages();
+    }
+  };
+  const getMessages = () => {
+    const ref = fb.firestore
+      .collection("conversations")
+      .doc(conversation.id)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .limit(5);
+    ref.onSnapshot((snap) => {
+      let docs = snap.docs;
+      let previousDoc = docs[docs.length - 1];
+      let messagesList = docs.map((doc) => doc.data()).reverse();
+
+      setMessages(messagesList);
+      currentMessagesList = messagesList;
+      scrollDoc = lastDoc;
+
+      lastDoc = previousDoc;
+    });
+  };
+
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener("scroll", handleLoadOnScroll);
+    }
+  }, []);
+
+  const fetchMoreMessages = () => {
+    if (!!lastDoc.id) {
+      const ref = fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .collection("messages")
+        .orderBy("timestamp", "desc")
+        .startAfter(lastDoc)
+        .limit(5);
+
+      ref.get().then((snap) => {
+        let docs = snap?.docs;
+
+        if (docs.length) {
+          console.log("docs", docs.length);
+          console.log("st", lastDoc);
+          let previousDoc = docs[docs.length - 1];
+          let messagesList = docs.map((doc) => doc.data()).reverse();
+          let newList = [...messagesList, ...currentMessagesList];
+          setMessages(newList);
+          currentMessagesList = newList;
+          scrollDoc = lastDoc;
+          console.log("aa", scrollDoc);
+          lastDoc = previousDoc;
+        } else {
+          messageEl.current.removeEventListener("scroll", handleLoadOnScroll);
+        }
+      });
+    }
+  };
 
   const handleAccept = (message) => {
     if (dealId) {
@@ -75,6 +151,7 @@ export const MessageContainer = ({
 
           fb.firestore.collection("conversations").doc(conversation.id).update({
             lastMessage: "chấp nhận thỏa thuận",
+            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
           });
 
           fetch("https://api-realestate.top/apis/apis/deals/create", {
@@ -185,9 +262,14 @@ export const MessageContainer = ({
   };
 
   return (
-    <div className="chat_window_container_message_box_display" ref={messageEl}>
+    <div
+      id="chat-window-message-box"
+      className="chat_window_container_message_box_display"
+      ref={messageEl}
+    >
       {messages.map((message) => (
         <div
+          id={message.id}
           key={message.id}
           className={`message ${
             message.sender === username ? "message_send" : "message-receive"
@@ -345,6 +427,7 @@ export const MessageContainer = ({
           </span>
         </div>
       ))}
+      <div ref={messagesEndRef} />
     </div>
   );
 };
