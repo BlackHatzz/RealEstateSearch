@@ -67,11 +67,11 @@ const SellerNavbar = (props) => {
     setChatTrigger(false);
   };
 
-  const switchChat = () => {
-    setChatTrigger((value) => !value);
-    setIsProfileMenuShown(false);
-    setNotificationTrigger(false);
-  };
+  // const switchChat = () => {
+  //   setChatTrigger((value) => !value);
+  //   setIsProfileMenuShown(false);
+  //   setNotificationTrigger(false);
+  // };
 
   useEffect(() => {
     if (uuid !== "null") {
@@ -349,7 +349,7 @@ const SellerNavbar = (props) => {
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
-                  <Link
+                  {/* <Link
                     className="link profile-menu-item"
                     to="/seller/schedule"
                   >
@@ -369,8 +369,8 @@ const SellerNavbar = (props) => {
                       style={{ width: "25px", height: "25px" }}
                     />
                     <span className="title">Lịch Sử Giao Dịch</span>
-                  </Link>
-                  <div className="divide"></div>
+                  </Link> */}
+                  {/* <div className="divide"></div> */}
                   <div
                     className="profile-menu-item bottom-item"
                     onClick={() => {
