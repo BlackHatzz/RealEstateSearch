@@ -1,5 +1,5 @@
 import "./seller-navbar.css";
-import React, { Component, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 
 import { RiArrowDropDownLine } from "react-icons/ri";
 // import MailIcon from "@material-ui/icons/Mail";
@@ -40,6 +40,20 @@ const SellerNavbar = (props) => {
   const [modalopen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState();
   let history = useHistory();
+
+  const wrapperRef = useRef(null);
+  // const chatRef = useRef(null);
+  const notiRef = useRef(null);
+  const profileRef = useRef(null);
+  useOutsideAlerter(
+    wrapperRef,
+    notiRef,
+    // chatRef,
+    profileRef,
+    setNotificationTrigger,
+    setIsProfileMenuShown
+    // setChatTrigger
+  );
 
   const switchProfileMenu = () => {
     setIsProfileMenuShown((value) => !value);
@@ -97,7 +111,7 @@ const SellerNavbar = (props) => {
         };
       }
 
-      return () => { };
+      return () => {};
     }
   }, [role, uuid]);
 
@@ -106,28 +120,34 @@ const SellerNavbar = (props) => {
       <div className="nav-bar-wrapper">
         {/* left content */}
         <div className="nav-bar-container">
-          
-            <div className="nav-bar-item">
-              {!isShowMenu && (<><div
-                onClick={() => {
-                  setShowMenu(!isShowMenu);
-                }}
-                className="drawer-btn-menu"
-              >
-                <MenuIcon style={{ width: 30, height: 30 }} />
-              </div>
-              <div className="nav-bar-logo">
-                <Link to={"/"}>
-                  <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
-                </Link>
-              </div>
-          </>)}
-            </div>
+          <div className="nav-bar-item">
+            {!isShowMenu && (
+              <>
+                <div
+                  onClick={() => {
+                    setShowMenu(!isShowMenu);
+                  }}
+                  className="drawer-btn-menu"
+                >
+                  <MenuIcon style={{ width: 30, height: 30 }} />
+                </div>
+                <div className="nav-bar-logo">
+                  <Link to={"/"}>
+                    <img src="https://i.ibb.co/cXDw5FW/logo.png" alt="" />
+                  </Link>
+                </div>
+              </>
+            )}
+          </div>
 
           {/* right content */}
           <div className="nav-bar-item">
             <div className="nav-bar-item-info">
-              <div className="nav-bar-item" onClick={switchNotification}>
+              <div
+                ref={notiRef}
+                className="nav-bar-item"
+                onClick={switchNotification}
+              >
                 <Badge color="secondary" badgeContent={unseen}>
                   <NotificationsNoneIcon
                     style={{ width: "30px", height: "30px" }}
@@ -135,7 +155,11 @@ const SellerNavbar = (props) => {
                 </Badge>
               </div>
               <div className="nav-bar-item-horizontal">
-                <div onClick={switchProfileMenu} className="nav-bar-item">
+                <div
+                  ref={profileRef}
+                  onClick={switchProfileMenu}
+                  className="nav-bar-item"
+                >
                   <div
                     style={{
                       backgroundImage:
@@ -148,14 +172,16 @@ const SellerNavbar = (props) => {
                   <span className="profile-name-text">
                     {fb.auth.currentUser?.displayName}
                   </span>
-                  <RiArrowDropDownLine style={{ width: "30px", height: "30px" }} />
+                  <RiArrowDropDownLine
+                    style={{ width: "30px", height: "30px" }}
+                  />
                 </div>
               </div>
             </div>
 
             <div className="nav-bar-item-hidden">
               {notificationTrigger ? (
-                <div className="notification-container">
+                <div ref={wrapperRef} className="notification-container">
                   <h3>Thông báo</h3>
                   <br></br>
                   {notifications.length > 0 &&
@@ -165,7 +191,7 @@ const SellerNavbar = (props) => {
                         key={notification.id}
                         onClick={() => {
                           if (notification.data.content === "new appointment") {
-                            history.push("/schedule");
+                            history.push("/seller/schedule");
                           }
                           if (notification.data.content === "new transaction") {
                             setModalOpen(true);
@@ -230,56 +256,6 @@ const SellerNavbar = (props) => {
                 </div>
               ) : null}
 
-              {chatTrigger ? (
-                <div className="notification-container">
-                  <h3>Message</h3>
-                  <br></br>
-                  <div className="conversation-list">
-                    {reals.length > 0 &&
-                      reals.map((real) => (
-                        <div
-                          className="conversation-item"
-                          key={real.id}
-                          onClick={() => {
-                            // addItem(real);
-                            // addViewChat(real);
-                            // setChatTrigger(false);
-                            // fb.firestore
-                            //   .collection("conversations")
-                            //   .doc(conversation.id)
-                            //   .update({
-                            //     lastMessageRead: true,
-                            //   });
-                          }}
-                        >
-                          <div className="conversation-item-image">
-                            <img
-                              src="https://file4.batdongsan.com.vn/crop/350x232/2021/06/13/20210613112547-abeb_wm.jpg"
-                              alt=""
-                            />
-                          </div>
-                          <div className="conversation-item-info">
-                            <p className="conversation-item-info-title">
-                              {real.data.title}
-                            </p>
-                            {/* <p
-                            className={
-                              conversation.data.lastMessageRead === true
-                                ? "conversation-item-info-lastmessage-seen"
-                                : "conversation-item-info-lastmessage"
-                            }
-                          >
-                            {conversation.data.lastMessage}
-                          </p> */}
-                          </div>
-                        </div>
-                      ))}
-                  </div>
-                  {conversations.length === 0 && <div>chua co tin nhan</div>}
-                  <div className="conversation-bottom"></div>
-                </div>
-              ) : null}
-
               {modalData && (
                 <Modal
                   open={modalopen}
@@ -295,7 +271,7 @@ const SellerNavbar = (props) => {
                       <p>Địa chỉ bất động sản: {modalData.data.address}</p>
                       <p>Giá thỏa thuận: {modalData.data.dealPrice} tỷ</p>
                       <p>
-                        Ngày giao dịch: {" "}
+                        Ngày giao dịch:{" "}
                         {moment(modalData.data.appointmentDate).format("LL")} -{" "}
                         {moment(modalData.data.appointmentDate).format("LT")}
                       </p>
@@ -358,11 +334,9 @@ const SellerNavbar = (props) => {
               )}
               {/* profile menu */}
               {isProfileMenuShown ? (
-                <div className="profile-menu-container">
+                <div ref={wrapperRef} className="profile-menu-container">
                   <div className="user-fullname">
-                    <p>
-                      {fb.auth.currentUser?.displayName}
-                    </p>
+                    <p>{fb.auth.currentUser?.displayName}</p>
                   </div>
                   <Link
                     className="link profile-menu-item top-item"
@@ -372,32 +346,29 @@ const SellerNavbar = (props) => {
                       className="icon"
                       style={{ width: "25px", height: "25px" }}
                     />
-                    <span className="title">
-                      Xem Hồ Sơ
-                    </span>
-                  </Link>
-                  <div className="divide"></div>
-                  <Link className="link profile-menu-item" to="/schedule">
-                    <EventNoteOutlinedIcon
-                      className="icon"
-                      style={{ width: "25px", height: "25px" }}
-                    />
-                    <span className="title">
-                      Lịch hẹn
-                    </span>
+                    <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
                   <Link
                     className="link profile-menu-item"
-                    to="/transaction-history-page"
+                    to="/seller/schedule"
+                  >
+                    <EventNoteOutlinedIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">Lịch hẹn</span>
+                  </Link>
+                  <div className="divide"></div>
+                  <Link
+                    className="link profile-menu-item"
+                    to="/seller/transaction-history"
                   >
                     <HistoryIcon
                       className="icon"
                       style={{ width: "25px", height: "25px" }}
                     />
-                    <span className="title">
-                      Lịch Sử Giao Dịch
-                    </span>
+                    <span className="title">Lịch Sử Giao Dịch</span>
                   </Link>
                   <div className="divide"></div>
                   <div
@@ -412,15 +383,11 @@ const SellerNavbar = (props) => {
                       className="icon"
                       style={{ width: "25px", height: "25px" }}
                     />
-                    <span className="title">
-                      Đăng Xuất
-                    </span>
+                    <span className="title">Đăng Xuất</span>
                   </div>
                 </div>
               ) : null}
-
             </div>
-
           </div>
         </div>
       </div>
@@ -429,3 +396,48 @@ const SellerNavbar = (props) => {
 };
 
 export default SellerNavbar;
+function useOutsideAlerter(
+  ref,
+  notiRef,
+  // chatRef,
+  profileRef,
+  setNotificationTrigger,
+  setIsProfileMenuShown
+  // setChatTrigger
+) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    function handleClickOutside(event) {
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !notiRef.current.contains(event.target)
+      ) {
+        setNotificationTrigger(false);
+      }
+      // if (
+      //   ref.current &&
+      //   !ref.current.contains(event.target) &&
+      //   !chatRef.current.contains(event.target)
+      // ) {
+      //   setChatTrigger(false);
+      // }
+      if (
+        ref.current &&
+        !ref.current.contains(event.target) &&
+        !profileRef.current.contains(event.target)
+      ) {
+        setIsProfileMenuShown(false);
+      }
+    }
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref]);
+}

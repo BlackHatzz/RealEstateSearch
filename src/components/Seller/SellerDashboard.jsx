@@ -9,6 +9,7 @@ import "./manage-post-mobile.css";
 import PostAddIcon from "@material-ui/icons/PostAdd";
 import HistoryIcon from "@material-ui/icons/History";
 import ScheduleIcon from "@material-ui/icons/Schedule";
+import EventIcon from "@material-ui/icons/Event";
 import MenuIcon from "@material-ui/icons/Menu";
 import { GrTransaction } from "react-icons/gr";
 import SellerNavbar from "./SellerNavBar";
@@ -84,7 +85,7 @@ const SellerDashboard = () => {
     },
     {
       key: 3,
-      title: "Thời biểu lịch hẹn",
+      title: "Đặt khung giờ rảnh",
       icon: (
         <ScheduleIcon
           id={"seller-dashboard-icon3"}
@@ -98,12 +99,12 @@ const SellerDashboard = () => {
       key: 4,
       title: "Lịch hẹn",
       icon: (
-        <ScheduleIcon
+        <EventIcon
           id={"seller-dashboard-icon4"}
           className="seller-dashboard-el icon"
         />
       ),
-      path: "/schedule",
+      path: "/seller/schedule",
       child: <Schedule />,
     },
     // {
@@ -176,8 +177,10 @@ const SellerDashboard = () => {
     <React.Fragment>
       <div className="seller-wrapper">
         <Router>
-          <div className={(isShowMenu ? "drawer-bg-menu-mobile" : "")}
-          onClick={()=>setShowMenu(!isShowMenu)} />
+          <div
+            className={isShowMenu ? "drawer-bg-menu-mobile" : ""}
+            onClick={() => setShowMenu(!isShowMenu)}
+          />
           <div
             className={
               "left-container " +
@@ -186,7 +189,12 @@ const SellerDashboard = () => {
           >
             <div className="logo-container">
               {/* <img src="logo.png" className="logo-box" /> */}
-              <div style={{ backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')" }} className="logo-box" ></div>
+              <div
+                style={{
+                  backgroundImage: "url('https://i.ibb.co/cXDw5FW/logo.png')",
+                }}
+                className="logo-box"
+              ></div>
               <div
                 style={{ width: 30, height: 30, marginRight: 10 }}
                 onClick={() => {
@@ -261,13 +269,15 @@ const SellerDashboard = () => {
 
             <Switch>
               {items.map((item, index) => {
-                console.log('bull');
+                console.log("bull");
                 console.log(index);
-                return <Route
-                  key={item.key}
-                  path={item.path}
-                  children={() => item.child}
-                />;
+                return (
+                  <Route
+                    key={item.key}
+                    path={item.path}
+                    children={() => item.child}
+                  />
+                );
               })}
               {otherRoutes.map((route) => (
                 <Route
@@ -277,7 +287,6 @@ const SellerDashboard = () => {
                 />
               ))}
               <Redirect to="/seller/search-post" />
-
             </Switch>
 
             {/* </div> */}

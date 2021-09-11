@@ -90,6 +90,7 @@ const App = () => {
           {!authUser && <Login />}
         </Route>
         <Route path="/schedule" component={Schedule} />
+
         <Route path="/profile-page" component={ProfilePage} />
         <Route
           path="/transaction-history-page"
