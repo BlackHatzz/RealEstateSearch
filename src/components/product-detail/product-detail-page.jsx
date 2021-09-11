@@ -32,7 +32,6 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 import moment from "moment";
 import { upperFirstLetter } from "../../utils/upperFirstLetter";
-import { fb } from "../../services";
 
 class ProductDetailPage extends Component {
   constructor(props) {
@@ -92,9 +91,8 @@ class ProductDetailPage extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("real detail");
           console.log("product", result);
-          console.log("product", fb.auth.currentUser.uuid);
+
           this.setState({
             product: result,
             isLoaded: true,
