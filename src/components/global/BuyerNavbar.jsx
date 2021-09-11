@@ -255,12 +255,15 @@ const BuyerNavbar = () => {
                               "new appointment" && (
                               <>
                                 <p className="notification-title-text">
-                                  {notification.data.title}
+                                  Lịch hẹn được đặt thành công
                                 </p>
+
                                 <p>
-                                  {moment(notification.data.date).format("L")} -{" "}
-                                  {moment(notification.data.date).format("LT")}
+                                  {moment(notification.data.date).format(
+                                    "LLLL"
+                                  )}
                                 </p>
+                                <p>{notification.data.address}</p>
                               </>
                             )}
 
@@ -413,7 +416,9 @@ const BuyerNavbar = () => {
                                       : "conversation-item-info-lastmessage"
                                   }
                                 >
-                                  {conversation.data.lastMessage}
+                                  {conversation.data.lastMessage === "lịch hẹn"
+                                    ? "Bạn đã đặt 1 lịch hẹn"
+                                    : conversation.data.lastMessage}
                                 </p>
                               </div>
                             </div>

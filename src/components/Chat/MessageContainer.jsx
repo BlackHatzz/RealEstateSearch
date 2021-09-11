@@ -201,41 +201,49 @@ export const MessageContainer = ({
   const handelCancelAppointment = () => {
     console.log("cancel click", bookId);
     if (bookId) {
-      fb.firestore
+      let batch = fb.firestore.batch();
+      let messageRef = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
         .collection("messages")
-        .doc(bookId)
-        .update({
-          status: "cancel",
-        })
-        .then(() => {
-          fb.firestore.collection("conversations").doc(conversation.id).update({
-            appointment: "cancel",
-            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-            lastMessageReadStaff: false,
-            lastMessage: "lịch hẹn đã bị hủy",
-          });
-        });
+        .doc(bookId);
 
-      fb.firestore
+      batch.update(messageRef, {
+        status: "cancel",
+      });
+
+      let conversationRef = fb.firestore
+        .collection("conversations")
+        .doc(conversation.id);
+
+      batch.update(conversationRef, {
+        appointment: "cancel",
+        lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+        lastMessageReadStaff: false,
+        lastMessage: "lịch hẹn đã bị hủy",
+      });
+      let buyerBookRef = fb.firestore
         .collection("users")
         .doc(uuid)
         .collection("appointments")
-        .doc(bookId)
-        .update({
-          status: "cancel",
-        });
+        .doc(bookId);
 
-      fb.firestore
+      batch.update(buyerBookRef, {
+        status: "cancel",
+      });
+      let staffBookRef = fb.firestore
         .collection("users")
-        .doc(conversation.data.sellerId)
+        .doc(conversation.data.staffId)
         .collection("appointments")
-        .doc(bookId)
-        .update({
-          status: "cancel",
-        });
+        .doc(bookId);
 
+      batch.update(staffBookRef, {
+        status: "cancel",
+      });
+
+      batch.commit().then(() => {
+        console.log("cancel appointment batch commit finished");
+      });
       setBookStatus("cancel");
     }
   };

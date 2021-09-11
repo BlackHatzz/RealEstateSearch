@@ -444,6 +444,16 @@ option {
   width: 40px;
   padding: 5px 3px;
 }
+.book-calendar-button {
+  background-color: #0c67ce;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  width: 60px;
+  padding: 5px 3px;
+  margin-left: 60px;
+}
 
 .chat_window_container_message_box_user {
   border-bottom: 1px solid rgb(175, 175, 175);
@@ -525,6 +535,7 @@ option {
 .time-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding-right: 10px;
 }
 
 .time-select-item {

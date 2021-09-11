@@ -353,7 +353,11 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
             setMyRef(r);
           }}
         >
-          {startTime !== "" && <button onClick={closeCalendar}>Đồng ý</button>}
+          {startTime !== "" && (
+            <button className="book-calendar-button" onClick={closeCalendar}>
+              Đồng ý
+            </button>
+          )}
         </DatePicker>
 
         <div className="deal-form-button">
