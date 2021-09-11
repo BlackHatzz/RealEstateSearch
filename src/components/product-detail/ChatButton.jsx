@@ -5,10 +5,11 @@ import firebase from "firebase/app";
 
 export const ChatButton = (props) => {
   const currentDate = new Date();
+
   const { updateChat, updateOpen, addItem, addViewChat } = useContext(Context);
 
+  const uuid = fb.auth.currentUser.uid;
   const handleConversation = () => {
-    const uuid = fb.auth.currentUser.uid;
     const buyername = fb.auth.currentUser.displayName;
     const buyerPhone = fb.auth.currentUser.phoneNumber;
     const buyerAvatar = fb.auth.currentUser.photoURL;
@@ -152,8 +153,17 @@ export const ChatButton = (props) => {
       });
   };
   return (
-    <div className="link contact-title-container" onClick={handleConversation}>
-      <div className="contact-title-container">&#32; Nhắn tin</div>
-    </div>
+    <>
+      {uuid === props?.product?.sellerId ? null : (
+        <div className="contact-button">
+          <div
+            className="link contact-title-container"
+            onClick={handleConversation}
+          >
+            <div className="contact-title-container">&#32; Nhắn tin</div>
+          </div>
+        </div>
+      )}
+    </>
   );
 };
