@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import BuyerNavbar from "../global/BuyerNavbar";
+import React, { useState, useEffect } from "react";
+import { fb } from "../../services";
 import "./profile.css";
 import "./profile-mobile.css";
 import "../global/shared.css";
@@ -9,185 +9,337 @@ import { GrContactInfo } from "react-icons/gr";
 import { AiFillIdcard } from "react-icons/ai";
 import PhoneIcon from "@material-ui/icons/Phone";
 import MailIcon from "@material-ui/icons/Mail";
-import TransactionItem from "./TransactionItem";
 import Constants from "../global/Constants";
+import Modal from "@material-ui/core/Modal";
+import { ProfileFormField } from "../Login/ProfileFormField";
+import { validationSchema, defaultValues } from "../Login/formikConfig";
+import { Form, Formik, Field } from "formik";
 
-class ProfilePage extends Component {
-  state = {
-    tabs: ["Hồ Sơ", "Giao Dịch"],
-    selectedIndex: 0,
-    transactions: [],
-  };
+const ProfilePage = () => {
+  const user = fb.auth.currentUser;
+  const [isEditing, setIsEditing] = useState(false);
+  const [modalopen, setModalOpen] = useState(false);
+  const [data, setData] = useState();
+  const [avatar, setAvatar] = useState(null);
 
-  componentDidMount() {
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        page: 0,
-        size: 20,
-        userId: "oF91MJ3WgEYUVIpyAh9QfDb2I5y2",
-      }),
-    };
+  useEffect(() => {
+    fb.firestore
+      .collection("users")
+      .doc(user.uid + "")
+      .onSnapshot((doc) => {
+        setData(doc.data());
+      });
+  }, [user.uid]);
 
-    fetch(Constants.getTransactionByUserId, requestOptions)
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          console.log("get transaction from id");
+  const updateProfile = ({ avatar, displayName, email }, { setSubmitting }) => {
+    if (!!avatar) {
+      const uploadTask = fb.storage
+        .ref(`images/${user.uid}/${avatar.name}`)
+        .put(avatar);
 
-          this.setState({
-            transactions: result.content,
-          });
-          console.log(this.state.transactions);
-        },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
         (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
+          console.log("error upload avatar", error);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+            console.log("File available at", downloadURL);
+            fb.firestore
+              .collection("users")
+              .doc(user.uid + "")
+              .set({
+                uuid: user.uid,
+                displayName: displayName,
+                email: email,
+                phoneNumber: user.phoneNumber,
+                photoURL: downloadURL + "",
+                role: "customer",
+              })
+              .then(() => {
+                fetch("https://api-realestate.top/apis/v1/accounts/create", {
+                  method: "POST",
+                  headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({
+                    id: user.uid,
+                    phone: user.phoneNumber,
+                    username: user?.phoneNumber,
+                    fullname: displayName,
+                    email: email,
+                    status: "active",
+                    avatar: downloadURL,
+                    roleId: 4,
+                  }),
+                })
+                  .then((response) => {
+                    if (response.ok) {
+                      fb.auth.currentUser
+                        .updateProfile({
+                          displayName: displayName,
+                          photoURL: downloadURL + "",
+                          email: email,
+                        })
+                        .catch((error) => {
+                          console.log("error update firebase account", error);
+                        });
+                    }
+                  })
+                  .catch((error) => {
+                    console.log("error update profile to database", error);
+                  });
+              })
+              .catch((error) => {
+                console.log("error update profile to firestore", error);
+              })
+              .finally(() => {
+                setSubmitting(false);
+                setModalOpen(false);
+              });
+          });
         }
       );
-  }
-
-  renderContent = () => {
-    switch (this.state.selectedIndex) {
-      case 0:
-        return (
-          <div className="profile-content-container">
-            <div className="row">
-              <div className="silver-circle">
-                <AiFillIdcard className="icon" />
-              </div>
-              <span className="title">ID</span>
-              <div className="read-only-solid-field-container">
-                <input
-                  value="fSUJL0Vjoraru92zOuLbp0Rcff32"
-                  type="text"
-                  className="solid-field"
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="silver-circle">
-                <PersonIcon className="icon" />
-              </div>
-              <span className="title">Tài khoản</span>
-              <div className="read-only-solid-field-container">
-                <input value="huynd123" type="text" className="solid-field" />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="silver-circle">
-                <LockIcon className="icon" />
-              </div>
-              <span className="title">Mật Khẩu</span>
-              <div className="solid-field-container">
-                <input value="********" type="text" className="solid-field" />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="silver-circle">
-                <GrContactInfo className="icon" />
-              </div>
-              <span className="title">Họ Tên</span>
-              <div className="solid-field-container">
-                <input
-                  value="Nguyễn Đức Huy"
-                  type="text"
-                  className="solid-field"
-                />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="silver-circle">
-                <PhoneIcon className="icon" />
-              </div>
-              <span className="title">Điện Thoại</span>
-              <div className="solid-field-container">
-                <input value="0123456789" type="text" className="solid-field" />
-              </div>
-            </div>
-
-            <div className="row">
-              <div className="silver-circle">
-                <MailIcon className="icon" />
-              </div>
-              <span className="title">Mail</span>
-              <div className="solid-field-container">
-                <input
-                  value="huynd@gmail.com"
-                  type="text"
-                  className="solid-field"
-                />
-              </div>
-            </div>
-          </div>
-        );
-      // break;
-      case 1:
-        return (
-          <div className="profile-content-container">
-            {this.state.transactions.map((transaction) => (
-              <div className="row">
-                <TransactionItem transaction={transaction} />
-              </div>
-            ))}
-
-            {/* <div className="row">
-              <TransactionItem />
-            </div>
-            <div className="row">
-              <TransactionItem />
-            </div> */}
-          </div>
-        );
-      default:
-        break;
+    } else {
+      fb.firestore
+        .collection("users")
+        .doc(user.uid + "")
+        .set({
+          uuid: user.uid,
+          displayName: displayName,
+          email: email,
+          phoneNumber: user?.phoneNumber,
+          photoURL: data?.photoURL,
+          role: "customer",
+        })
+        .then(() => {
+          fetch("https://api-realestate.top/apis/v1/accounts/create", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: user.uid,
+              phone: user?.phoneNumber,
+              username: user?.phoneNumber,
+              fullname: displayName,
+              email: email,
+              status: "active",
+              avatar: data?.photoURL,
+              roleId: 4,
+            }),
+          })
+            .then((response) => {
+              if (response.ok) {
+                fb.auth.currentUser
+                  .updateProfile({
+                    displayName: displayName,
+                    email: email,
+                  })
+                  .catch((error) => {
+                    console.log("error update firebase account", error);
+                  });
+              }
+            })
+            .catch((error) => {
+              console.log("error update profile to database", error);
+            });
+        })
+        .catch((error) => {
+          console.log("error update profile to firestore", error);
+        })
+        .finally(() => {
+          setSubmitting(false);
+          setModalOpen(false);
+        });
     }
   };
 
-  switchTab = (index) => {
-    console.log("swt " + index);
-    this.setState({
-      selectedIndex: index,
-    });
-  };
-
-  render() {
-    return (
-      <React.Fragment>
+  return (
+    <>
+      {true && (
         <div className="profile-wrapper">
           <div style={{ height: "10px" }}></div>
 
           <div className="profile-container">
             <div style={{ height: "15px" }}></div>
             <div className="profile-pic-container">
-              {/* <img src="https://vi.wikipedia.org/wiki/Cristiano_Ronaldo#/media/T%E1%BA%ADp_tin:Cristiano_Ronaldo_2018.jpg" alt="" /> */}
+              <img src={data?.photoURL} alt="" />
             </div>
             <div style={{ height: "15px" }}></div>
 
             <div className="divide"></div>
 
             <div className="profile-pic-tab-bar-container">
-              <div onClick={() => this.switchTab(0)} className="item">
+              <div className="item">
                 <span className="title">Thông Tin Hồ Sơ</span>
               </div>
             </div>
 
-            {this.renderContent()}
+            <div className="profile-content-container">
+              <div className="row">
+                <div className="silver-circle">
+                  <GrContactInfo className="icon" />
+                </div>
+                <span className="title">Tên hiển thị</span>
+                <div
+                  className={
+                    isEditing
+                      ? "solid-field-container"
+                      : "read-only-solid-field-container"
+                  }
+                >
+                  <input
+                    value={data?.displayName}
+                    type="text"
+                    className="solid-field"
+                  />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="silver-circle">
+                  <PhoneIcon className="icon" />
+                </div>
+                <span className="title">Số điện thoại</span>
+                <div
+                  className={
+                    isEditing
+                      ? "solid-field-container"
+                      : "read-only-solid-field-container"
+                  }
+                >
+                  <input
+                    value={data?.phoneNumber}
+                    type="text"
+                    className="solid-field"
+                  />
+                </div>
+              </div>
+
+              <div className="row">
+                <div className="silver-circle">
+                  <MailIcon className="icon" />
+                </div>
+                <span className="title">E-mail</span>
+                <div
+                  className={
+                    isEditing
+                      ? "solid-field-container"
+                      : "read-only-solid-field-container"
+                  }
+                >
+                  <input
+                    value={data?.email}
+                    type="text"
+                    className="solid-field"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              className="update-profile-btn"
+              onClick={() => {
+                setModalOpen(true);
+              }}
+            >
+              Sửa
+            </button>
+            <button
+              onClick={() => {
+                console.log("data", data);
+              }}
+            >
+              test
+            </button>
+
+            {true && (
+              <Modal
+                open={modalopen}
+                //   onClose={handleClose}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+              >
+                <div className="update-info-modal">
+                  <h5 id="simple-modal-title">Cập nhật thông tin cá nhân</h5>
+
+                  <Formik
+                    onSubmit={updateProfile}
+                    validateOnMount={true}
+                    initialValues={{
+                      email: data?.email,
+                      displayName: data?.displayName,
+                      avatar: data?.photoURL,
+                    }}
+                    validationSchema={validationSchema}
+                  >
+                    {({ isValid, isSubmitting, setFieldValue }) => (
+                      <Form>
+                        <h2 className="profile-label">Tên hiển thị</h2>
+                        <ProfileFormField
+                          name="displayName"
+                          type="text"
+                          placeholder="Tên hiển thị có độ dài 6-30 ký tự..."
+                          maxlength="30"
+                          size="26"
+                        />
+                        <h2 className="profile-label">Email</h2>
+                        <ProfileFormField
+                          name="email"
+                          type="email"
+                          placeholder="Nhập email của bạn ..."
+                          size="26"
+                        />
+                        <h2 className="profile-label">Ảnh đại diện</h2>
+                        <div className="profile-avatar-preview">
+                          {!!avatar ? (
+                            <img src={URL.createObjectURL(avatar)} alt="" />
+                          ) : (
+                            <img src={user.photoURL} alt="" />
+                          )}
+                        </div>
+                        <input
+                          name="avatar"
+                          type="file"
+                          accept="image/*"
+                          onChange={(event) => {
+                            setFieldValue("avatar", event.target.files[0]);
+                            setAvatar(event.target.files[0]);
+                          }}
+                        />
+
+                        <div className="transaction-modal-button-group">
+                          <button
+                            className="update-profile-btn"
+                            type="submit"
+                            disabled={!isValid || isSubmitting}
+                          >
+                            Cập nhật
+                          </button>
+                          <button
+                            className="update-profile-btn"
+                            onClick={() => {
+                              setModalOpen(false);
+                            }}
+                          >
+                            Đóng
+                          </button>
+                        </div>
+                      </Form>
+                    )}
+                  </Formik>
+                </div>
+              </Modal>
+            )}
           </div>
         </div>
-      </React.Fragment>
-    );
-  }
-}
+      )}
+    </>
+  );
+};
 
 export default ProfilePage;

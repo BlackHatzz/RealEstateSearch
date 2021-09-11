@@ -17,12 +17,10 @@
 .profile-pic-container {
   /* background-color: #D9D9D9; */
   background-color: silver;
-  width: 190px;
-  height: 190px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   margin: 0px auto;
-  background-image: url("https://static.bongda24h.vn/medias/original/2020/9/23/7-Cristiano-Ronaldo-TienDao.jpg");
-  background-size: 190px 190px;
   object-fit: cover;
   background-repeat: no-repeat;
 }
@@ -291,4 +289,21 @@ div.transaction-price-box {
   font-weight: bold;
   /* text-align: center; */
   border-radius: 4px;
+}
+.update-info-form form {
+  justify-content: center;
+  align-items: center;
+}
+
+.update-info-modal {
+  display: inherit;
+  position: absolute;
+  width: 270px;
+  border-radius: 5px;
+  background-color: white;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 0px 0px 10px 10px;
+  /* transform: translate(-50%, -50%); */
 }

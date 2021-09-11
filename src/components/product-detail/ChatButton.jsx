@@ -8,7 +8,7 @@ export const ChatButton = (props) => {
 
   const { updateChat, updateOpen, addItem, addViewChat } = useContext(Context);
 
-  const uuid = fb.auth.currentUser.uid;
+  const uuid = fb.auth?.currentUser?.uid;
   const handleConversation = () => {
     const buyername = fb.auth.currentUser.displayName;
     const buyerPhone = fb.auth.currentUser.phoneNumber;
