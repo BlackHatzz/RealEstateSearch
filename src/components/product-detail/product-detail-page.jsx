@@ -91,8 +91,8 @@ class ProductDetailPage extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("real detail");
-          console.log(result);
+          console.log("product", result);
+
           this.setState({
             product: result,
             isLoaded: true,
@@ -119,7 +119,7 @@ class ProductDetailPage extends Component {
                   averageWardPriceInfo: result,
                 });
               },
-              (error) => { }
+              (error) => {}
             );
           fetch(
             Constants.getAveragePrice(
@@ -139,10 +139,10 @@ class ProductDetailPage extends Component {
                   averageDistrictPriceInfo: result,
                 });
               },
-              (error) => { }
+              (error) => {}
             );
         },
-        (error) => { }
+        (error) => {}
       );
 
     // getAveragePrice(addressType,realEstateId,month,realEstateType,year)
@@ -181,7 +181,6 @@ class ProductDetailPage extends Component {
 
     return (
       <React.Fragment>
-
         <SearchSuggestion
           params={this.props.match.params}
           history={this.props.history}
@@ -190,7 +189,6 @@ class ProductDetailPage extends Component {
         {/* product detail */}
 
         <div className="product-detail-wrapper">
-
           <div className="product-info-dislayed-wrapper">
             {/* left content */}
             <div className="product-info-container">
@@ -233,20 +231,19 @@ class ProductDetailPage extends Component {
               <div className="profile-mobile">
                 <img src={product?.sellerAvatar} alt={product?.sellerName} />
                 <div>
-                  <p className="profile-mobile-name">
-                    {product?.sellerName}
-                  </p>
+                  <p className="profile-mobile-name">{product?.sellerName}</p>
                   <p>
-                    Ngày đăng: {upperFirstLetter(moment(product?.createAt).calendar())}
+                    Ngày đăng:{" "}
+                    {upperFirstLetter(moment(product?.createAt).calendar())}
                   </p>
                 </div>
               </div>
 
               <div className="product-short-detail mobile-hidden">
-                Ngày đăng: {upperFirstLetter(moment(product?.createAt).calendar())}
+                Ngày đăng:{" "}
+                {upperFirstLetter(moment(product?.createAt).calendar())}
                 {/*Hôm nay*/}
               </div>
-
 
               <div className="product-short-detail">
                 Địa chỉ: {product?.realEstateNo} {product?.streetName},{" "}
@@ -269,9 +266,7 @@ class ProductDetailPage extends Component {
                       if (product?.typeName?.toLowerCase() === "chung cư") {
                         return <FaRegBuilding className="short-info-icon" />;
                       } else if (product?.typeName?.toLowerCase() === "nhà") {
-                        return (
-                          <HomeOutlinedIcon className="short-info-icon" />
-                        );
+                        return <HomeOutlinedIcon className="short-info-icon" />;
                       } else if (product?.typeName?.toLowerCase() === "đất") {
                       }
                     })()}
@@ -317,9 +312,7 @@ class ProductDetailPage extends Component {
                       src="https://static.chotot.com/storage/icons/logos/ad-param/toilets.png"
                     />
                     <div className="short-info-content-box">
-                      <span className="short-info-label1">
-                        Số nhà vệ sinh:
-                      </span>
+                      <span className="short-info-label1">Số nhà vệ sinh:</span>
                       <span className="short-info-label2">
                         {product?.numberOfBathroom}
                       </span>
@@ -335,9 +328,7 @@ class ProductDetailPage extends Component {
                       src="https://static.chotot.com/storage/icons/logos/ad-param/price_m2.png"
                     />
                     <div className="short-info-content-box">
-                      <span className="short-info-label1">
-                        Giá:
-                      </span>
+                      <span className="short-info-label1">Giá:</span>
                       <span className="short-info-label2">
                         ~
                         {Math.round(
@@ -415,9 +406,7 @@ class ProductDetailPage extends Component {
                       src="https://static.chotot.com/storage/icons/logos/ad-param/balconydirection.png"
                     />
                     <div className="short-info-content-box">
-                      <span className="short-info-label1">
-                        Hướng ban công:
-                      </span>
+                      <span className="short-info-label1">Hướng ban công:</span>
                       <span className="short-info-label2">
                         {this.state.product?.balconyDirection}
                         {/* {product.balconyDirection} */}
@@ -436,9 +425,7 @@ class ProductDetailPage extends Component {
                       <span className="short-info-label1">
                         Giấy tờ pháp lý:
                       </span>
-                      <span
-                        className="short-info-label2"
-                      >
+                      <span className="short-info-label2">
                         {product?.juridical}
                       </span>
                     </div>
@@ -448,9 +435,7 @@ class ProductDetailPage extends Component {
                     <WeekendOutlinedIcon className="short-info-icon" />
                     <div className="short-info-content-box">
                       <span className="short-info-label1">Nội thất:</span>
-                      <span
-                        className="short-info-label2"
-                      >
+                      <span className="short-info-label2">
                         {(() => {
                           if (this.state.product != null) {
                             if (this.state.product?.furniture != null) {
@@ -501,9 +486,7 @@ class ProductDetailPage extends Component {
 
               <div className="divide"></div>
 
-              <span className="description-title">
-                Giá trung bình khu vực
-              </span>
+              <span className="description-title">Giá trung bình khu vực</span>
               <div className="average-price-wrapper">
                 <div className="average-price-tab">
                   <span className="info">{this.state.product?.disName}</span>
@@ -515,7 +498,7 @@ class ProductDetailPage extends Component {
                           Math.round(
                             (this.state.averageDistrictPriceInfo[0].price /
                               1_000_000) *
-                            100
+                              100
                           ) / 100
                         );
                       }
@@ -533,7 +516,7 @@ class ProductDetailPage extends Component {
                           Math.round(
                             (this.state.averageWardPriceInfo[0].price /
                               1_000_000) *
-                            100
+                              100
                           ) / 100
                         );
                       }
@@ -586,24 +569,22 @@ class ProductDetailPage extends Component {
                           this.state.selectedAmenityType.apikey
                         ]
                           ? this.state.product?.facilities[
-                            this.state.selectedAmenityType.apikey
-                          ].map((item) => {
-                            return (
-                              <div className="info-item">
-                                <span className="amenities-name">
-                                  {item.facilityName} -{" "}
-                                  {item.addressFacility}
-                                </span>
-                                <div className="right-box">
-                                  <LocationOnIcon className="distance-icon" />
-                                  <span className="distance-text">
-                                    {Math.round(item.distance * 100) / 100}{" "}
-                                    km
+                              this.state.selectedAmenityType.apikey
+                            ].map((item) => {
+                              return (
+                                <div className="info-item">
+                                  <span className="amenities-name">
+                                    {item.facilityName} - {item.addressFacility}
                                   </span>
+                                  <div className="right-box">
+                                    <LocationOnIcon className="distance-icon" />
+                                    <span className="distance-text">
+                                      {Math.round(item.distance * 100) / 100} km
+                                    </span>
+                                  </div>
                                 </div>
-                              </div>
-                            );
-                          })
+                              );
+                            })
                           : "";
                       }
                     }
@@ -669,23 +650,10 @@ class ProductDetailPage extends Component {
                 {product?.sellerName}
                 {/*Nguyen Duc Huy*/}
               </div>
-              <div className="contact-button">
-                {/* <BsFillChatDotsFill /> */}
 
-                {/* <div style={{width: "18px"}}></div> */}
-                {/* <Link
-                    className="link contact-title-container"
-                    to="/chat-page"
-                    onClick={() => {
-                      
-                    }}
-                  >
-                    <div className="contact-title-container">
-                      &#32; Nhắn tin
-                    </div>
-                  </Link> */}
-                <ChatButton product={product} />
-              </div>
+              {/* <div className="contact-button"> */}
+              <ChatButton product={product} />
+              {/* </div> */}
 
               <div className="more-post-button">
                 <div className="contact-title-container">
@@ -694,17 +662,11 @@ class ProductDetailPage extends Component {
               </div>
 
               <div className="more-post-button">
-                <div className="contact-title-container">
-                  &#32;Xem hồ sơ
-                </div>
+                <div className="contact-title-container">&#32;Xem hồ sơ</div>
               </div>
             </div>
-
           </div>
-
-
         </div>
-
       </React.Fragment>
     );
   }

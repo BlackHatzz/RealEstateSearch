@@ -10,11 +10,11 @@ const Upcoming = () => {
   const [appointments, setAppointments] = useState([]);
   const currentDate = new Date();
   useEffect(() => {
-    const unsubscribe = fb.firestore
+    fb.firestore
       .collection("users")
       .doc(uuid)
       .collection("appointments")
-      // .where("status", "==", "upcoming")
+      .where(role + "Id", "==", uuid)
       .orderBy("date", "asc")
       .onSnapshot((snapshot) => {
         setAppointments(
@@ -26,20 +26,19 @@ const Upcoming = () => {
             }))
         );
       });
-    return () => {
-      unsubscribe();
-    };
   }, [uuid]);
 
   return (
-    <div>
+    <>
       {appointments.length ? (
         <div className="schedule-list-container">
           {appointments.map((appointment) => (
             <div className="schedule-list-item" key={appointment.id}>
               <div className="schedule-list-item-header">
                 <div className="schedule-list-item-date">
-                  {upperFirstLetter(moment(appointment.data.date).locale("vi").format("dddd")) +
+                  {upperFirstLetter(
+                    moment(appointment.data.date).locale("vi").format("dddd")
+                  ) +
                     " " +
                     moment(appointment.data.date).locale("vi").format("LL")}
                 </div>
@@ -53,8 +52,11 @@ const Upcoming = () => {
                   {"Lúc " + moment(appointment.data.date).format("LT")}
                 </div>
                 <div className="schedule-detail">
+                  <h4> {appointment.data.title}</h4>
                   <p>Địa điểm: {appointment.data.address}</p>
-                  <p>Người mua : {appointment.data.buyer}</p>
+                  {role !== "buyer" && (
+                    <p>Người hẹn : {appointment.data.buyer}</p>
+                  )}
                 </div>
               </div>
             </div>
@@ -63,7 +65,7 @@ const Upcoming = () => {
       ) : (
         <div className="schedule-empty">Chưa có lịch hẹn </div>
       )}
-    </div>
+    </>
   );
 };
 

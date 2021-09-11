@@ -1,59 +1,43 @@
 import React, { useEffect, useState, useContext } from "react";
-import { fb } from "../../services";
-import BuyerNavbar from "../global/BuyerNavbar";
 import Upcoming from "./Upcoming";
 import "./schedule.css";
 import "./schedule-mobile.css";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  useRouteMatch,
-} from "react-router-dom";
+
 import Passed from "./Passed";
 import { Context } from "../../ChatContext";
-const routes = [
-  {
-    path: "/schedule",
-    exact: true,
-    main: () => <Upcoming />,
-  },
-  {
-    path: "/schedule/passed",
-    main: () => <Passed />,
-  },
-];
-const Schedule = () => {
-  const uuid = fb.auth.currentUser.uid;
-  const { role } = useContext(Context);
-  return (
-    <div style={{ background: "#f0f0f0", height: "100%", overflowY:"hidden" }}>
-      {/* {role === "buyer" && <BuyerNavbar />} */}
-      
 
+const Schedule = () => {
+  const [currentTab, setCurrentTab] = useState(0);
+
+  return (
+    <div style={{ background: "#f0f0f0", height: "100%", overflowY: "hidden" }}>
       <div className="schedule-body">
         <div className="schedule-list">
           <div className="schedule-list-menu">
-            <CustomMenuLink
-              activeOnlyWhenExact={true}
-              to="/schedule"
-              label="Sắp tới"
-              style={{ TextDecoder }}
-            />
-            <CustomMenuLink to="/schedule/passed" label="Đã qua" />
+            <button
+              onClick={() => {
+                setCurrentTab(0);
+              }}
+              className={
+                currentTab === 0 ? "schedule-button-active" : "schedule-button"
+              }
+            >
+              <p>Sắp tới</p>
+            </button>
+            <button
+              onClick={() => {
+                setCurrentTab(1);
+              }}
+              className={
+                currentTab === 1 ? "schedule-button-active" : "schedule-button"
+              }
+            >
+              <p>Đã qua</p>
+            </button>
           </div>
 
-          <Switch>
-            {routes.map((route, index) => (
-              <Route
-                key={index}
-                path={route.path}
-                exact={route.exact}
-                children={<route.main />}
-              />
-            ))}
-          </Switch>
+          {currentTab === 0 && <Upcoming />}
+          {currentTab === 1 && <Passed />}
         </div>
       </div>
     </div>
@@ -61,18 +45,3 @@ const Schedule = () => {
 };
 
 export default Schedule;
-
-function CustomMenuLink({ label, to, activeOnlyWhenExact }) {
-  let match = useRouteMatch({
-    path: to,
-    exact: activeOnlyWhenExact,
-  });
-
-  return (
-    <button className={match ? "schedule-button-active" : "schedule-button"}>
-      <Link to={to} className="schedule-list-menu-link">
-        {label}
-      </Link>
-    </button>
-  );
-}
