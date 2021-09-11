@@ -115,7 +115,7 @@ export const ChatContent = ({
     <>
       <div className="small-chat-window-title-box">
         <p className="small-chat-window-title">
-          {/* {currentChat.id + "." + currentChat.data.staffId} */}
+          {currentChat.id}
           {currentChat.data.title}
         </p>
         <div className="small-chat-window-buttons">
