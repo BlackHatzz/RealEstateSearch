@@ -798,8 +798,38 @@ class ManagePost extends Component {
           }),
         };
 
-        fetch(Constants.DataEntry.createRealEstateRef, requestOptions)
-          .then((res) => res.json())
+        fetch(Constants.Seller.createRealEstateRef, requestOptions)
+          .then((res) => {
+            if (res.ok) {
+              // let managerQuery = fb.firestore
+              //   .collection("users")
+              //   .where("role", "==", "manager");
+
+              // managerQuery
+              //   .get()
+              //   .then((snapshot) => {
+              //     snapshot.forEach((doc) => {
+              //       fb.firestore
+              //         .collection("users")
+              //         .doc(doc.id)
+              //         .collection("notifications")
+              //         .add({
+              //           content: "new realestate created",
+              //           dataentryId: fb.auth.currentUser.uid,
+              //           sellerId: this.state.selectedSellerInfo?.id,
+              //           title: title,
+              //           seen: false,
+              //           photo: downloadURLs[0],
+              //           createAt:
+              //             firebase.firestore.FieldValue.serverTimestamp(),
+              //         });
+              //     });
+              //   })
+              //   .catch((err) => {
+              //     console.log("Error getting documents: ", err);
+              //   });
+            }
+          })
           .then(
             (result) => {
               // console.log(result.content);
@@ -1046,7 +1076,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.priceTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1116,7 +1146,7 @@ class ManagePost extends Component {
             <h2 className="title">Giấy tờ pháp lý*</h2>
             <div className="input-container">
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="juridical-input"
                 placeholder="Nhập giấy tờ pháp lý..."
                 type="text"
@@ -1130,8 +1160,8 @@ class ManagePost extends Component {
             <h2 className="title">Chủ đầu tư</h2>
             <div className="input-container">
               <input
-              autoComplete="false"
-              autoComplete="false"
+              autoComplete="off"
+              autoComplete="off"
                 id="investor-input"
                 placeholder="Tên chủ đầu tư"
                 type="text"
@@ -1153,7 +1183,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.areaTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1211,7 +1241,7 @@ class ManagePost extends Component {
                   }
                 }}
                 id="area-input"
-                placeholder="m"
+                placeholder="m2"
                 type="text"
                 className="input-field"
                 maxLength="4"
@@ -1222,15 +1252,14 @@ class ManagePost extends Component {
           <div className="col3">
             <h2 className="title">
               Chiều dài*
-              <br />
-              (m)
+              <br />m
             </h2>
             <div className="input-container">
               {this.state.lengthTooltip.toggle
                 ? this.renderTooltip(this.state.lengthTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1299,15 +1328,14 @@ class ManagePost extends Component {
           <div className="col3">
             <h2 className="title">
               Chiều rộng*
-              <br />
-              (m)
+              <br />m
             </h2>
             <div className="input-container">
               {this.state.widthTooltip.toggle
                 ? this.renderTooltip(this.state.widthTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1365,7 +1393,7 @@ class ManagePost extends Component {
                   }
                 }}
                 id="width-input"
-                placeholder="m2"
+                placeholder="m"
                 type="text"
                 className="input-field"
                 maxLength="4"
@@ -1379,7 +1407,7 @@ class ManagePost extends Component {
             <h2 className="title">Chủ đầu tư</h2>
             <div className="input-container">
               <input
-              autoComplete="false"
+              autoComplete="off"
                 id="investor-input"
                 placeholder="Tên chủ đầu tư"
                 type="text"
@@ -1403,7 +1431,7 @@ class ManagePost extends Component {
                   <h2 className="title">Loại bất động sản</h2>
                   <div className="input-container">
                     <input
-              autoComplete="false"
+              autoComplete="off"
                       placeholder="Loại bất động sản..."
                       type="text"
                       className="input-field"
@@ -1425,7 +1453,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.realEstateTypeTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={() => {
                   this.setState({
                     realEstateTypeTooltip: {
@@ -1463,26 +1491,48 @@ class ManagePost extends Component {
           </div>
 
           {(() => {
-            if (this.state.selectedRealEstateType === 2) {
+            if (this.state.selectedRealEstateType === 1) {
               return (
-                <div className="col4">
-                  <h2 className="title">Số tầng*</h2>
-                  <div className="input-container">
-                    <input
-                      autoComplete="false"
-                      id="floor-input"
-                      placeholder="..."
-                      type="text"
-                      className="input-field"
-                      maxLength="2"
-                    />
+                <>
+                  <div className="col3">
+                    <h2 className="title">Mã phòng*</h2>
+                    <div className="input-container">
+                      <input
+                        autoComplete="off"
+                        id="floor-input"
+                        placeholder="Nhập mã phòng..."
+                        type="text"
+                        className="input-field"
+                        maxLength="15"
+                        autoComplete="off"
+                      />
+                    </div>
                   </div>
-                </div>
+                  <div style={{ width: "8%" }}></div>
+                </>
+              );
+            } else if (this.state.selectedRealEstateType === 2) {
+              return (
+                <>
+                  <div className="col4">
+                    <h2 className="title">Số tầng*</h2>
+                    <div className="input-container">
+                      <input
+                        autoComplete="off"
+                        id="floor-input"
+                        placeholder="..."
+                        type="text"
+                        className="input-field"
+                        maxLength="2"
+                        autoComplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div className="col4"></div>
+                </>
               );
             }
           })()}
-
-          <div className="col4"></div>
         </div>
 
         <div className="row">
@@ -1501,7 +1551,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.doorDirectionTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={() => {
                   this.setState({
                     doorDirectionTooltip: {
@@ -1541,7 +1591,7 @@ class ManagePost extends Component {
                   <h2 className="title">Hướng cửa chính</h2>
                   <div className="input-container">
                     <input
-              autoComplete="false"
+              autoComplete="off"
                       placeholder="Hướng cửa chính..."
                       type="text"
                       className="input-field"
@@ -1553,7 +1603,7 @@ class ManagePost extends Component {
                   <h2 className="title">Hướng ban công</h2>
                   <div className="input-container">
                     <input
-              autoComplete="false"
+              autoComplete="off"
                       placeholder="Hướng ban công..."
                       type="text"
                       className="input-field"
@@ -1572,7 +1622,7 @@ class ManagePost extends Component {
               className="input-container read-only-field"
             >
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="balcony-direction-input"
                 readOnly
                 placeholder="Chọn hướng..."
@@ -1597,7 +1647,7 @@ class ManagePost extends Component {
                   <h2 className="title">Số phòng ngủ</h2>
                   <div className="input-container">
                     <input
-              autoComplete="false"
+              autoComplete="off"
                       placeholder="Nhập số phòng ngủ..."
                       type="text"
                       className="input-field"
@@ -1608,7 +1658,7 @@ class ManagePost extends Component {
                   <h2 className="title">Số phòng tắm</h2>
                   <div className="input-container">
                     <input
-              autoComplete="false"
+              autoComplete="off"
                       placeholder="Nhập số phòng tắm..."
                       type="text"
                       className="input-field"
@@ -1632,7 +1682,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.disTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="dis-input"
                 readOnly
                 placeholder="Chọn tên quận/huyện..."
@@ -1659,7 +1709,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.wardTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="ward-input"
                 readOnly
                 placeholder="Chọn tên phường/xã..."
@@ -1715,14 +1765,14 @@ class ManagePost extends Component {
             <h2 className="title">Địa chỉ*</h2>
             <div style={{ display: "flex" }} className="input-container">
               {/* <input
-              autoComplete="false"
+              autoComplete="off"
                       id="address-input"
                       placeholder="Nhập tên và số địa chỉ..."
                       type="text"
                       className="input-field"
                     />  */}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="house-no-input"
                 placeholder="Số nhà"
                 type="text"
@@ -1734,7 +1784,7 @@ class ManagePost extends Component {
                 : null}
               <div style={{ maxWidth: "calc(100% - 30% - 8px - 8px)" }}>
                 <input
-                  autoComplete="false"
+                  autoComplete="off"
                   onChange={(event) => {
                     const value = event.target.value.toString();
                     if (value === "") {
@@ -1816,7 +1866,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.bedroomTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1894,7 +1944,7 @@ class ManagePost extends Component {
                 ? this.renderTooltip(this.state.bathroomTooltip.text)
                 : null}
               <input
-                autoComplete="false"
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1966,7 +2016,7 @@ class ManagePost extends Component {
             <h2 className="title">Chủ đầu tư</h2>
             <div className="input-container">
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="investor-input"
                 placeholder="Tên chủ đầu tư"
                 type="text"
@@ -1980,7 +2030,7 @@ class ManagePost extends Component {
             <h2 className="title">Tình trạng nội thất*</h2>
             <div className="input-container">
               <input
-              autoComplete="false"
+              autoComplete="off"
                 id="furniture-input"
                 placeholder="Nhập tình trạng nội thất..."
                 type="text"
@@ -1993,7 +2043,7 @@ class ManagePost extends Component {
             <h2 className="title">Dự án</h2>
             <div className="input-container">
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="project-input"
                 placeholder="Nhập tên dự án..."
                 type="text"
@@ -2009,7 +2059,7 @@ class ManagePost extends Component {
             <h2 className="title">Tình trạng nội thất*</h2>
             <div className="input-container">
               <input
-                autoComplete="false"
+                autoComplete="off"
                 id="furniture-input"
                 placeholder="Nhập tình trạng nội thất..."
                 type="text"
@@ -2024,7 +2074,7 @@ class ManagePost extends Component {
             <div className="input-container">
               {this.state.selectedSellerInfo === null ? (
                 <input
-                  autoComplete="false"
+                  autoComplete="off"
                   onChange={(event) => {
                     let searchText = event.target.value.toString();
                     if (searchText === "") {
@@ -2194,7 +2244,7 @@ class ManagePost extends Component {
                   </div>
 
                   <input
-                    autoComplete="false"
+                    autoComplete="off"
                     id="images-input"
                     aria-label=""
                     onChange={this.handleFileChange}
@@ -2246,7 +2296,7 @@ class ManagePost extends Component {
                       <span>Nhấn để chọn hình ảnh</span>
                     </div>
                     <input
-                      autoComplete="false"
+                      autoComplete="off"
                       id="images-input"
                       aria-label=""
                       onChange={this.handleFileChange}

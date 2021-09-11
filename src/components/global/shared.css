@@ -214,3 +214,6 @@ div.collapse-box {
   padding: 10px;
   vertical-align: middle;
 }
+body {
+  overflow: hidden; /* Hide scrollbars */
+}

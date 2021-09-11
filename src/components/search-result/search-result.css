@@ -1,9 +1,20 @@
+div.search-result-wrapper {
+  /* height: calc(100% - 70px - 1px - 50px); */
+  height: 100px;
+  /* overflow-y: auto; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+
 div.product-list {
   margin: 0px 12px 0px 12px;
   /* background-color: blue; */
   width: 800px;
-  height: 100%;
-  margin-top: 15px;
+  height: auto;
+  /* margin-top: 15px; */
 }
 
 div.product-item-container {
@@ -130,4 +141,16 @@ div.product-price-box {
   font-weight: bold;
   /* text-align: center; */
   border-radius: 4px;
+}
+
+.pagination-wrapper {
+  width: 100%;
+  height: auto;
+  background-color: transparent;
+}
+
+.pagination-wrapper > .pagination-container {
+  height: 50px;
+  width: 200px;
+  background-color: green;
 }

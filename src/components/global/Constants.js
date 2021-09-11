@@ -87,6 +87,9 @@ class Constants {
     }
   };
   static Seller = class {
+    static createRealEstateRef =
+    Constants.host + "api/v1/realEstate/createRealEstate";
+    
     static getTransactionHistory(userId, page) {
       return (
         Constants.host +

@@ -345,19 +345,35 @@ class SearchResultPage extends Component {
   render() {
     return (
       <React.Fragment>
-          {/* <BuyerNavbar /> */}
-          <SearchSuggestion history={this.props.history} />
-
-          {/* search result list */}
-          <div
-            style={{
-              overflowY: "auto",
-              overflowX: "hidden",
-              height:"86vh"
-            }}
-          >
-            <div className="horizontal">{this.renderSearchResult()}</div>
-          </div>
+        {/* <BuyerNavbar /> */}
+        <SearchSuggestion
+          suggestionInfo={this.state.suggestionInfo}
+          params={this.props.match.params}
+          history={this.props.history}
+        />
+        {/* search result list */}
+        <div
+          style={{
+            height: "calc(100% - 1px - 70px - 50px)",
+            paddingTop: "12px",
+            paddingBottom: "12px",
+            // height: "2000px",
+            overflowY: "scroll",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            //           display: flex;
+            // flex-direction: row;
+            // align-items: center;
+            // justify-content: center;
+          }}
+        >
+          {this.renderSearchResult()}
+        </div>
+        {/* <div className="pagination-wrapper">
+          <div className="pagination-container"></div>
+        </div> */}
       </React.Fragment>
     );
   }
