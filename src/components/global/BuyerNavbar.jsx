@@ -255,9 +255,9 @@ const BuyerNavbar = () => {
                               "new appointment" && (
                               <>
                                 <p className="notification-title-text">
-                                  Lịch hẹn được đặt thành công
+                                  Lịch hẹn đã được đặt
                                 </p>
-
+                                <p>{notification.data.title}</p>
                                 <p>
                                   {moment(notification.data.date).format(
                                     "LLLL"
