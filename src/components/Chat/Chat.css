@@ -460,7 +460,7 @@ option {
   flex-direction: column;
 }
 
-.react-datepicker {
+/* .react-datepicker {
   font-size: 1.2rem !important;
 }
 
@@ -471,7 +471,7 @@ option {
 .react-datepicker__day-name,
 .react-datepicker__day {
   margin: 0.5rem !important;
-}
+} */
 
 .buyer-appointment-message-upcoming > button {
   border: none;
