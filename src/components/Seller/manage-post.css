@@ -272,7 +272,6 @@
   padding-left: 12px;
   padding-right: 12px;
   resize: none;
-  display: flex;
   margin-left: 10px;
   flex: 1;
   /* align-items: center; */
@@ -586,7 +585,7 @@ div.div-field {
 .manage-post-drop-down-menu {
   width: calc(100% + 24px);
   max-width: calc(100% + 24px);
-  height: auto;
+  height: max-content;
   max-height: 200px;
   background-color: #dadde2;
   position: relative;
