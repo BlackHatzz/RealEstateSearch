@@ -76,7 +76,9 @@ const App = () => {
           //Route path="/seller-search-post/" component={SellerDashboard} />
         }
 
-        <Route path="/seller" component={SellerDashboard} />
+        <Route path="/seller" component={SellerDashboard}>
+          {!!authUser && role === "buyer" && <Redirect to="/" />}
+        </Route>
         <Route exact path="/seller-scheduler" component={SellerScheduler} />
         <Route exact path="/" component={HomePage}>
           {role === "seller" && <Redirect to="/seller" />}

@@ -24,13 +24,14 @@ import MessageIcon from "@material-ui/icons/Message";
 import ChatBubble from "../Chat/ChatBubble";
 import SmallChatWindow from "../Chat/SmallChatWindow";
 import Modal from "@material-ui/core/Modal";
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
   const {
     role,
     resetRole,
     addItem,
-    chats,
+    updateSellerRole,
     viewchats,
     addViewChat,
     triggerNewUser,
@@ -431,6 +432,7 @@ const BuyerNavbar = () => {
                     <p>{fb.auth.currentUser?.displayName}</p>
                   </div>
                   <Link
+                    onClick={() => setIsProfileMenuShown(false)}
                     className="link profile-menu-item top-item"
                     to="/profile-page"
                   >
@@ -441,7 +443,11 @@ const BuyerNavbar = () => {
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
                   <div className="divide"></div>
-                  <Link className="link profile-menu-item" to="/schedule">
+                  <Link
+                    onClick={() => setIsProfileMenuShown(false)}
+                    className="link profile-menu-item"
+                    to="/schedule"
+                  >
                     <EventNoteOutlinedIcon
                       className="icon"
                       style={{ width: "25px", height: "25px" }}
@@ -450,6 +456,7 @@ const BuyerNavbar = () => {
                   </Link>
                   <div className="divide"></div>
                   <Link
+                    onClick={() => setIsProfileMenuShown(false)}
                     className="link profile-menu-item"
                     to="/transaction-history-page"
                   >
@@ -458,6 +465,18 @@ const BuyerNavbar = () => {
                       style={{ width: "25px", height: "25px" }}
                     />
                     <span className="title">Lịch Sử Giao Dịch</span>
+                  </Link>
+                  <div className="divide"></div>
+                  <Link
+                    onClick={() => updateSellerRole()}
+                    className="link profile-menu-item"
+                    to="/seller"
+                  >
+                    <HomeOutlinedIcon
+                      className="icon"
+                      style={{ width: "25px", height: "25px" }}
+                    />
+                    <span className="title">Đến trang bán</span>
                   </Link>
                   <div className="divide"></div>
                   <div

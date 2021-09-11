@@ -13,7 +13,7 @@ import "../global/shared.css";
 import HistoryIcon from "@material-ui/icons/History";
 import { Link, useHistory } from "react-router-dom";
 import MessageIcon from "@material-ui/icons/Message";
-
+import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
 import { fb } from "../../services";
 
 import moment from "moment";
@@ -22,8 +22,7 @@ import { Context } from "../../ChatContext";
 import Modal from "@material-ui/core/Modal";
 
 const SellerNavbar = (props) => {
-  const { role, resetRole, addItem, chats, viewchats, addViewChat } =
-    useContext(Context);
+  const { role, resetRole, updateBuyerRole } = useContext(Context);
 
   const { isShowMenu, setShowMenu } = props;
 
@@ -338,7 +337,8 @@ const SellerNavbar = (props) => {
                   <div className="user-fullname">
                     <p>{fb.auth.currentUser?.displayName}</p>
                   </div>
-                  <Link
+                  {/* <Link
+                    onClick={() => setIsProfileMenuShown(false)}
                     className="link profile-menu-item top-item"
                     to="/profile-page"
                   >
@@ -348,29 +348,22 @@ const SellerNavbar = (props) => {
                     />
                     <span className="title">Xem Hồ Sơ</span>
                   </Link>
-                  <div className="divide"></div>
-                  {/* <Link
-                    className="link profile-menu-item"
-                    to="/seller/schedule"
+                  <div className="divide"></div> */}
+
+                  <Link
+                    onClick={() => {
+                      updateBuyerRole();
+                    }}
+                    className="link profile-menu-item top-item"
+                    to="/"
                   >
-                    <EventNoteOutlinedIcon
+                    <HomeOutlinedIcon
                       className="icon"
                       style={{ width: "25px", height: "25px" }}
                     />
-                    <span className="title">Lịch hẹn</span>
+                    <span className="title">Đến trang mua</span>
                   </Link>
                   <div className="divide"></div>
-                  <Link
-                    className="link profile-menu-item"
-                    to="/seller/transaction-history"
-                  >
-                    <HistoryIcon
-                      className="icon"
-                      style={{ width: "25px", height: "25px" }}
-                    />
-                    <span className="title">Lịch Sử Giao Dịch</span>
-                  </Link> */}
-                  {/* <div className="divide"></div> */}
                   <div
                     className="profile-menu-item bottom-item"
                     onClick={() => {
