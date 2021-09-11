@@ -32,7 +32,8 @@ const ProfilePage = () => {
   }, [user.uid]);
 
   const updateProfile = ({ avatar, displayName, email }, { setSubmitting }) => {
-    if (!!avatar) {
+    if (avatar) {
+      console.log("avatar", avatar);
       const uploadTask = fb.storage
         .ref(`images/${user.uid}/${avatar.name}`)
         .put(avatar);
@@ -249,13 +250,6 @@ const ProfilePage = () => {
             >
               Sửa
             </button>
-            <button
-              onClick={() => {
-                console.log("data", data);
-              }}
-            >
-              test
-            </button>
 
             {true && (
               <Modal
@@ -273,7 +267,7 @@ const ProfilePage = () => {
                     initialValues={{
                       email: data?.email,
                       displayName: data?.displayName,
-                      avatar: data?.photoURL,
+                      avatar: null,
                     }}
                     validationSchema={validationSchema}
                   >
