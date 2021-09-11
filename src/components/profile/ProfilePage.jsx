@@ -25,11 +25,11 @@ const ProfilePage = () => {
   useEffect(() => {
     fb.firestore
       .collection("users")
-      .doc(user.uid + "")
+      .doc(user?.uid + "")
       .onSnapshot((doc) => {
         setData(doc.data());
       });
-  }, [user.uid]);
+  }, []);
 
   const updateProfile = ({ avatar, displayName, email }, { setSubmitting }) => {
     if (avatar) {

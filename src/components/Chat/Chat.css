@@ -460,18 +460,18 @@ option {
   flex-direction: column;
 }
 
-.react-datepicker {
-  font-size: 1.2rem !important;
+/* .react-datepicker {
+  font-size: 1rem !important;
 }
 
 .react-datepicker__current-month {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
 }
 
 .react-datepicker__day-name,
 .react-datepicker__day {
   margin: 0.5rem !important;
-}
+} */
 
 .buyer-appointment-message-upcoming > button {
   border: none;
@@ -809,4 +809,5 @@ p {
   border: none;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 }
