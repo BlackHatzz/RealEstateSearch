@@ -64,8 +64,6 @@ class Constants {
     );
   }
 
-  static createRealEstateRef =
-    Constants.host + "api/v1/realEstate/createRealEstate";
 
   static googleAPIKey = "AIzaSyDPzD4tPUGV3HGIiv7fVcWEFEQ0r1AAxwg";
   static geocodingRefWithSearchText(searchText) {
@@ -97,6 +95,9 @@ class Constants {
     }
   };
   static Seller = class {
+    static createRealEstateRef =
+    Constants.host + "api/v1/realEstate/createRealEstate";
+    
     static getTransactionHistory(userId, page) {
       return (
         Constants.host +

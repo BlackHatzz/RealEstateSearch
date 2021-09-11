@@ -178,12 +178,12 @@ class ProductDetailPage extends Component {
 
     return (
       <React.Fragment>
-        <div
+        {/* <div
           style={{
             width: "100%",
             borderBottom: "1px solid rgba(0,0,0,0.15)",
           }}
-        />
+        /> */}
 
         <SearchSuggestion
           params={this.props.match.params}

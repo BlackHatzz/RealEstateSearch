@@ -345,12 +345,6 @@ class SearchResultPage extends Component {
     return (
       <React.Fragment>
         {/* <BuyerNavbar /> */}
-        <div
-          style={{
-            width: "100%",
-            borderBottom: "1px solid rgba(0,0,0,0.15)",
-          }}
-        />
         <SearchSuggestion
           suggestionInfo={this.state.suggestionInfo}
           params={this.props.match.params}
@@ -360,12 +354,25 @@ class SearchResultPage extends Component {
         <div
           style={{
             height: "calc(100% - 1px - 70px - 50px)",
-            overflowY: "auto",
+            paddingTop: "12px",
+            paddingBottom: "12px",
+            // height: "2000px",
+            overflowY: "scroll",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            //           display: flex;
+            // flex-direction: row;
+            // align-items: center;
+            // justify-content: center;
           }}
-          className="horizontal"
         >
           {this.renderSearchResult()}
         </div>
+        {/* <div className="pagination-wrapper">
+          <div className="pagination-container"></div>
+        </div> */}
       </React.Fragment>
     );
   }

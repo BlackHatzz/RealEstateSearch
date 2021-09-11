@@ -164,3 +164,7 @@ div.collapse-box {
   align-items: center;
   justify-content: center;
 }
+
+body {
+  overflow: hidden; /* Hide scrollbars */
+}
