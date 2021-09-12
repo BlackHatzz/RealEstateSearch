@@ -80,8 +80,8 @@ export const ChatContent = ({
             // { merge: true }
           )
           .then(() => {
-            console.log("chatdata", currentChat);
-            forceUpdate();
+            // console.log("chatdata", currentChat);
+            // forceUpdate();
           })
           .catch((err) =>
             console.log("error add deal info to conversation", err)
@@ -118,6 +118,7 @@ export const ChatContent = ({
           lastMessage: currentInput,
           lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
         });
+        // forceUpdate();
       });
   }
 

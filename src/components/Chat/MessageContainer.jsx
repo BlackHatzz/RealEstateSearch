@@ -17,12 +17,12 @@ export const MessageContainer = ({
   currentMessagesList,
   messageEl,
   messagesEndRef,
-  // messages,
-  // setMessages,
+  messages,
+  setMessages,
 }) => {
   const uuid = fb.auth.currentUser?.uid;
   const username = fb.auth.currentUser?.displayName;
-  const [messages, setMessages] = useState([]);
+  // const [messages, setMessages] = useState([]);
   const { role } = useContext(Context);
   const [dealId, setDealId] = useState();
   const [bookId, setBookId] = useState();
