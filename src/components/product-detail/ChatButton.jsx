@@ -96,13 +96,13 @@ export const ChatButton = (props) => {
                     .get()
                     .then((doc) => {
                       if (doc.exists) {
-                        let conObject = {
-                          id: doc.id,
-                          data: doc.data(),
-                        };
+                        // let conObject = {
+                        //   id: doc.id,
+                        //   data: doc.data(),
+                        // };
 
                         // addItem(conObject);
-                        addViewChat(conObject);
+                        addViewChat(doc.id);
 
                         fb.firestore
                           .collection("conversations")

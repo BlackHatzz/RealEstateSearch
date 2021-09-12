@@ -34,7 +34,7 @@ const ChatContext = (props) => {
   }
 
   function addViewChat(item) {
-    if (viewchats.some((e) => e.id === item.id)) {
+    if (viewchats.some((e) => e === item)) {
       // let index = viewchats.findIndex((e) => e.id === item.id);
       // if (index > 1) {
       //   viewchats.splice(index, 1);
@@ -50,8 +50,8 @@ const ChatContext = (props) => {
   }
 
   function removeViewChat(item) {
-    if (viewchats.some((e) => e.id === item.id)) {
-      let index = viewchats.findIndex((e) => e.id === item.id);
+    if (viewchats.some((e) => e === item)) {
+      let index = viewchats.findIndex((e) => e === item);
       viewchats.splice(index, 1);
       setViewChats(viewchats);
     }

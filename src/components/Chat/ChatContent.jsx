@@ -95,6 +95,7 @@ export const ChatContent = ({
   }
 
   function sendMessage() {
+    console.log("id", currentChat.id);
     let docref = fb.firestore
       .collection("conversations")
       .doc(currentChat.id)
@@ -128,7 +129,7 @@ export const ChatContent = ({
         <>
           <div className="small-chat-window-title-box">
             <p className="small-chat-window-title">
-              {currentChat?.data?.title}
+              {currentChat?.id + "." + currentChat?.data?.title}
             </p>
             <div className="small-chat-window-buttons">
               {/* <div
@@ -142,7 +143,7 @@ export const ChatContent = ({
               <div
                 className="small-chat-window-buttons-close"
                 onClick={() => {
-                  removeViewChat(currentChat);
+                  removeViewChat(currentChat.id);
                   // removeItem(currentChat);
                   forceUpdate();
                 }}

@@ -40,17 +40,22 @@ export const MessageContainer = ({
     setIsNewMessage(true);
 
     if (conversation) {
-      fb.firestore
+      const getIds = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
         .onSnapshot((doc) => {
           setDealId(doc.data()?.dealId);
           setBookId(doc.data()?.appointmentId);
         });
-
       getMessages();
+
+      return () => {
+        // This is its cleanup.
+        getIds();
+        getMessages();
+      };
     }
-  }, [conversation?.id, uuid]);
+  }, [conversation, uuid]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "auto" });
@@ -73,7 +78,7 @@ export const MessageContainer = ({
     //   //   myElement?.scrollIntoView({ behavior: "auto" });
     //   // }
     // }
-  }, [messages]);
+  }, [conversation.id, messages]);
 
   const handleLoadOnScroll = (event) => {
     const { currentTarget: target } = event;
@@ -274,176 +279,191 @@ export const MessageContainer = ({
   };
 
   return (
-    <div
-      id={"chat-window-message-box" + conversation?.id}
-      className="chat_window_container_message_box_display"
-      ref={messageEl}
-    >
-      {messages.map((message) => (
+    <>
+      {messages && (
         <div
-          id={message.id}
-          key={message.id}
-          className={`message ${
-            message.sender === username ? "message_send" : "message-receive"
-          }`}
+          id={"chat-window-message-box" + conversation?.id}
+          className="chat_window_container_message_box_display"
+          ref={messageEl}
         >
-          {message.message && <p>{message.message}</p>}
-          {message.deal && (
-            <div className="deal_message">
-              {role === "buyer" && (
-                <div>
-                  {message.status === "pending" && (
-                    <div className="buyer-deal-message">
-                      <p>Thỏa thuận</p>
-                      <p>Giá {message.deal} tỷ</p>
-                      <p>đang chờ trả lời</p>
-                      <button onClick={handleCancelDeal}>Hủy</button>
-                    </div>
-                  )}
-                  {message.status === "accepted" && (
-                    <div className="buyer-deal-message">
-                      <p>Thỏa thuận</p>
-                      <p>Giá {message.deal} tỷ</p>
-                      <p>đã được chấp nhận</p>
-                      {bookStatus !== "upcoming" && (
-                        <button
-                          disabled={
-                            conversation.data.appointment === "upcoming"
-                              ? true
-                              : false
-                          }
-                          onClick={handleBook}
-                        >
-                          Đặt lịch
-                        </button>
+          {messages.map((message) => (
+            <div
+              id={message.id}
+              key={message.id}
+              className={`message ${
+                message?.sender === username
+                  ? "message_send"
+                  : "message-receive"
+              }`}
+            >
+              {message?.message && <p>{message.message}</p>}
+              {message?.deal && (
+                <div className="deal_message">
+                  {role === "buyer" && (
+                    <div>
+                      {message.status === "pending" && (
+                        <div className="buyer-deal-message">
+                          <p>Thỏa thuận</p>
+                          <p>Giá {message?.deal} tỷ</p>
+                          <p>đang chờ trả lời</p>
+                          <button onClick={handleCancelDeal}>Hủy</button>
+                        </div>
+                      )}
+                      {message.status === "accepted" && (
+                        <div className="buyer-deal-message">
+                          <p>Thỏa thuận</p>
+                          <p>Giá {message?.deal} tỷ</p>
+                          <p>đã được chấp nhận</p>
+                          {bookStatus !== "upcoming" && (
+                            <button
+                              disabled={
+                                conversation?.data?.appointment === "upcoming"
+                                  ? true
+                                  : false
+                              }
+                              onClick={handleBook}
+                            >
+                              Đặt lịch
+                            </button>
+                          )}
+                        </div>
+                      )}
+                      {message.status === "refused" && (
+                        <div>
+                          thỏa thuận bị từ chối
+                          <p>Lý do: {message?.reason}</p>
+                        </div>
+                      )}
+                      {message.status === "cancel" && (
+                        <div>Thỏa thuận đã hủy</div>
                       )}
                     </div>
                   )}
-                  {message.status === "refused" && (
-                    <div>
-                      thỏa thuận bị từ chối
-                      <p>Lý do: {message?.reason}</p>
+
+                  {role === "seller" && (
+                    <div className="seller-deal-message">
+                      {message.status === "pending" && (
+                        <div className="seller-deal-message-pending">
+                          <p>Thỏa thuận</p>
+                          <p>Giá {message.deal} tỷ</p>
+                          {refuseInputTrigger ? (
+                            <form onSubmit={(e) => handleRefuse(e)}>
+                              <input
+                                onChange={(e) => {
+                                  setRefuseInput(e.target.value);
+                                }}
+                                value={refuseInput}
+                                type="text"
+                                maxLength="30"
+                                size="22"
+                                placeholder="lý do từ chối ( tối đa 30 ký tự )"
+                                required
+                              />
+                              <button
+                                type="submit"
+                                disabled={refuseInput === "" ? true : false}
+                              >
+                                chấp nhận
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setRefuseInputTrigger(false);
+                                }}
+                              >
+                                hủy
+                              </button>
+                            </form>
+                          ) : (
+                            <div className="seller-deal-message-pending-button">
+                              <button onClick={() => handleAccept(message)}>
+                                đồng ý
+                              </button>
+                              <button
+                                onClick={() => {
+                                  setRefuseInputTrigger(true);
+                                }}
+                              >
+                                từ chối
+                              </button>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {message.status === "accepted" && (
+                        <div>
+                          Bạn đã chấp nhận thỏa thuận giá {message.deal} tỷ
+                        </div>
+                      )}
+                      {message.status === "refused" && (
+                        <div>
+                          đã từ chối thỏa thuận
+                          <p>Lý do: {message?.reason}</p>
+                        </div>
+                      )}
+                      {message.status === "cancel" && <div>đã hủy</div>}
                     </div>
                   )}
-                  {message.status === "cancel" && <div>Thỏa thuận đã hủy</div>}
                 </div>
               )}
-
-              {role === "seller" && (
-                <div className="seller-deal-message">
-                  {message.status === "pending" && (
-                    <div className="seller-deal-message-pending">
-                      <p>Thỏa thuận</p>
-                      <p>Giá {message.deal} tỷ</p>
-                      {refuseInputTrigger ? (
-                        <form onSubmit={(e) => handleRefuse(e)}>
-                          <input
-                            onChange={(e) => {
-                              setRefuseInput(e.target.value);
-                            }}
-                            value={refuseInput}
-                            type="text"
-                            maxLength="30"
-                            size="22"
-                            placeholder="lý do từ chối ( tối đa 30 ký tự )"
-                            required
-                          />
+              {message.appointment && (
+                <div>
+                  {role === "buyer" && (
+                    <div>
+                      {message.status === "upcoming" && (
+                        <div className="buyer-appointment-message-upcoming">
+                          <p>Lịch hẹn sắp tới</p>
+                          <p>
+                            {moment(message.appointment)
+                              .locale("vi")
+                              .format("LLLL")}
+                          </p>
                           <button
-                            type="submit"
-                            disabled={refuseInput === "" ? true : false}
+                            onClick={() => handelCancelAppointment(message.id)}
                           >
-                            chấp nhận
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setRefuseInputTrigger(false);
-                            }}
-                          >
-                            hủy
-                          </button>
-                        </form>
-                      ) : (
-                        <div className="seller-deal-message-pending-button">
-                          <button onClick={() => handleAccept(message)}>
-                            đồng ý
-                          </button>
-                          <button
-                            onClick={() => {
-                              setRefuseInputTrigger(true);
-                            }}
-                          >
-                            từ chối
+                            Hủy
                           </button>
                         </div>
                       )}
+                      {message.status === "cancel" && (
+                        <div>Lịch hẹn đã hủy</div>
+                      )}
                     </div>
                   )}
-                  {message.status === "accepted" && (
-                    <div>Bạn đã chấp nhận thỏa thuận giá {message.deal} tỷ</div>
-                  )}
-                  {message.status === "refused" && (
+                  {role === "seller" && (
                     <div>
-                      đã từ chối thỏa thuận
-                      <p>Lý do: {message?.reason}</p>
-                    </div>
-                  )}
-                  {message.status === "cancel" && <div>đã hủy</div>}
-                </div>
-              )}
-            </div>
-          )}
-          {message.appointment && (
-            <div>
-              {role === "buyer" && (
-                <div>
-                  {message.status === "upcoming" && (
-                    <div className="buyer-appointment-message-upcoming">
-                      <p>Lịch hẹn sắp tới</p>
-                      <p>
-                        {moment(message.appointment)
-                          .locale("vi")
-                          .format("LLLL")}
-                      </p>
-                      <button
-                        onClick={() => handelCancelAppointment(message.id)}
-                      >
-                        Hủy
-                      </button>
-                    </div>
-                  )}
-                  {message.status === "cancel" && <div>Lịch hẹn đã hủy</div>}
-                </div>
-              )}
-              {role === "seller" && (
-                <div>
-                  <div>
-                    {message.status === "upcoming" && (
                       <div>
-                        <p>Lịch hẹn sắp tới</p>
-                        {moment(message.appointment)
-                          .locale("vi")
-                          .format("LLLL")}
+                        {message.status === "upcoming" && (
+                          <div>
+                            <p>Lịch hẹn sắp tới</p>
+                            {moment(message.appointment)
+                              .locale("vi")
+                              .format("LLLL")}
+                          </div>
+                        )}
+                        {message.status === "cancel" && (
+                          <div>Lịch hẹn đã hủy</div>
+                        )}
                       </div>
-                    )}
-                    {message.status === "cancel" && <div>Lịch hẹn đã hủy</div>}
-                  </div>
+                    </div>
+                  )}
                 </div>
               )}
+              <span
+                className={`message_name ${
+                  message.sender === username
+                    ? "message_name_send"
+                    : "message_name_receive"
+                }`}
+              >
+                {message.sender}
+              </span>
             </div>
-          )}
-          <span
-            className={`message_name ${
-              message.sender === username
-                ? "message_name_send"
-                : "message_name_receive"
-            }`}
-          >
-            {message.sender}
-          </span>
+          ))}
+
+          <div ref={messagesEndRef} />
         </div>
-      ))}
-      <div ref={messagesEndRef} />
-    </div>
+      )}
+    </>
   );
 };

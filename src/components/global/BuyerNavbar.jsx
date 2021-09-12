@@ -144,9 +144,8 @@ const BuyerNavbar = () => {
     <React.Fragment>
       {/* <ChatBubble /> */}
       <SmallChatWindow
-        currentChat={viewchats[0]}
-        oldChat1={viewchats[1]}
-        // oldChat2={viewchats[2]}
+        id1={viewchats[0]}
+        id2={viewchats[1]}
         forceUpdate={forceUpdate}
       />
 
@@ -389,7 +388,7 @@ const BuyerNavbar = () => {
                               key={conversation.id}
                               onClick={() => {
                                 // addItem(conversation);
-                                addViewChat(conversation);
+                                addViewChat(conversation.id);
                                 // setCurrentChat(conversation);
                                 setChatTrigger(false);
 

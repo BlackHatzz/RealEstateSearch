@@ -1,105 +1,111 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { fb } from "../../services";
 import { ChatContent } from "./ChatContent";
+import { Context } from "../../ChatContext";
 
-const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
-  const [currentChatDealStatus, setCurrentChatDealStatus] = useState();
-  const [currentChatBookStatus, setCurrentChatBookStatus] = useState();
+const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
+  const { viewchats, addViewChat } = useContext(Context);
 
-  // const [currentChatLastDoc, setCurrentChatLastDoc] = useState(null);
-  const [currentChatMessages, setCurrentChatMessages] = useState([]);
+  const [chat1DealStatus, setchat1DealStatus] = useState();
+  const [chat1BookStatus, setchat1BookStatus] = useState();
 
-  let currentChatLastDoc = null;
-  let currentChatMessagesList = [];
+  // const [chat1LastDoc, setchat1LastDoc] = useState(null);
+  const [chat1Messages, setchat1Messages] = useState([]);
 
-  const [oldChatDealStatus, setOldChatDealStatus] = useState();
-  const [oldChatBookStatus, setOldChatBookStatus] = useState();
+  let chat1LastDoc = null;
+  let chat1MessagesList = [];
 
-  // const [oldChatLastDoc, setOldChatLastDoc] = useState(null);
-  const [oldChatMessages, setOldChatMessages] = useState([]);
+  const [chat2DealStatus, setchat2DealStatus] = useState();
+  const [chat2BookStatus, setchat2BookStatus] = useState();
 
-  let oldChatLastDoc = null;
-  let oldChatMessagesList = [];
+  // const [chat2LastDoc, setchat2LastDoc] = useState(null);
+  const [chat2Messages, setchat2Messages] = useState([]);
 
-  const currentChatMessageEl = useRef(null);
-  const currentChatMessagesEndRef = useRef(null);
+  let chat2LastDoc = null;
+  let chat2MessagesList = [];
 
-  const oldChatMessageEl = useRef(null);
-  const oldChatMessagesEndRef = useRef(null);
+  const chat1MessageEl = useRef(null);
+  const chat1MessagesEndRef = useRef(null);
+
+  const chat2MessageEl = useRef(null);
+  const chat2MessagesEndRef = useRef(null);
 
   const [chat1, setChat1] = useState(null);
   const [chat2, setChat2] = useState(null);
   useEffect(() => {
-    fb.firestore
+    const getChat1 = fb.firestore
       .collection("conversations")
-      .doc(currentChat?.id + "")
+      .doc(id1 + "")
       .onSnapshot((snap) => {
         let data = snap.data();
-        setCurrentChatDealStatus(
+        setchat1DealStatus(
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
-        setCurrentChatBookStatus(
-          !!data?.appointment ? data.appointment : "none"
-        );
+        setchat1BookStatus(!!data?.appointment ? data.appointment : "none");
         setChat1({
           id: snap.id,
           data: data,
         });
       });
-    fb.firestore
+    const getChat2 = fb.firestore
       .collection("conversations")
-      .doc(oldChat1?.id + "")
+      .doc(id2 + "")
       .onSnapshot((snap) => {
         let data = snap.data();
-        setOldChatDealStatus(
+        setchat2DealStatus(
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
-        setOldChatBookStatus(!!data?.appointment ? data.appointment : "none");
+        setchat2BookStatus(!!data?.appointment ? data.appointment : "none");
         setChat2({
           id: snap.id,
           data: data,
         });
       });
-  }, [currentChat?.id, oldChat1?.id]);
+    // getChat1();
+    // getChat2();
+
+    return () => {
+      getChat1();
+      getChat2();
+    };
+  }, [id1, id2]);
 
   // useEffect(() => {
 
-  // }, [oldChat1]);
+  // }, [chat21]);
   return (
     <div className="small-chat-windows">
-      {currentChat && (
-        <div
-          className={oldChat1 ? "small-chat-window-1" : "small-chat-window-2"}
-        >
+      {id1 && (
+        <div className={id2 ? "small-chat-window-1" : "small-chat-window-2"}>
           <ChatContent
             currentChat={chat1}
             forceUpdate={forceUpdate}
-            dealStatus={currentChatDealStatus}
-            bookStatus={currentChatBookStatus}
-            setBookStatus={setOldChatBookStatus}
-            lastDoc={currentChatLastDoc}
-            currentMessagesList={currentChatMessagesList}
-            messageEl={currentChatMessageEl}
-            messagesEndRef={currentChatMessagesEndRef}
-            messages={currentChatMessages}
-            setMessages={setCurrentChatMessages}
+            dealStatus={chat1DealStatus}
+            bookStatus={chat1BookStatus}
+            setBookStatus={setchat1BookStatus}
+            lastDoc={chat1LastDoc}
+            currentMessagesList={chat1MessagesList}
+            messageEl={chat1MessageEl}
+            messagesEndRef={chat1MessagesEndRef}
+            messages={chat1Messages}
+            setMessages={setchat1Messages}
           />
         </div>
       )}
-      {oldChat1 && (
+      {id2 && (
         <div className="small-chat-window-2">
           <ChatContent
             currentChat={chat2}
             forceUpdate={forceUpdate}
-            dealStatus={oldChatDealStatus}
-            bookStatus={oldChatBookStatus}
-            setBookStatus={setCurrentChatBookStatus}
-            lastDoc={oldChatLastDoc}
-            currentMessagesList={oldChatMessagesList}
-            messageEl={oldChatMessageEl}
-            messagesEndRef={oldChatMessagesEndRef}
-            messages={oldChatMessages}
-            setMessages={setOldChatMessages}
+            dealStatus={chat2DealStatus}
+            bookStatus={chat2BookStatus}
+            setBookStatus={setchat2BookStatus}
+            lastDoc={chat2LastDoc}
+            currentMessagesList={chat2MessagesList}
+            messageEl={chat2MessageEl}
+            messagesEndRef={chat2MessagesEndRef}
+            messages={chat2Messages}
+            setMessages={setchat2Messages}
           />
         </div>
       )}
