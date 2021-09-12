@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import BuyerNavbar from "../global/BuyerNavbar";
 import "./transaction-history.css";
-import "./transaction-history.css";
+import "./transaction-history-mobile.css";
 import Constants from "../global/Constants";
 import { fb } from "../../services/firebase";
+import moment from "moment";
 
 class TransactionHistoryPage extends Component {
   state = {
@@ -34,7 +35,6 @@ class TransactionHistoryPage extends Component {
         {/* <BuyerNavbar /> */}
 
         <div className="history-wrapper">
-          <div style={{ height: "40px" }}></div>
           <div className="history-container">
             <div className="transaction-history-container">
               <div className="grid-header">Thời gian</div>
@@ -46,7 +46,7 @@ class TransactionHistoryPage extends Component {
 
               {this.state.transactions.map((transaction, index) => (
                 <React.Fragment key={index}>
-                  <div className="grid-item">{transaction.createAt}</div>
+                  <div className="grid-item">{moment(transaction.createAt).format('DD/MM/yyyy HH:mm')}</div>
                   <div className="grid-item">
                     <span>
                       {transaction.streetName}, {transaction.disName},{" "}

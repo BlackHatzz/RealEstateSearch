@@ -22,9 +22,7 @@
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  /* z-index: 150; */
-  position: sticky;
-  z-index: 999;
+  border-bottom: 1px solid #b8b8b8;
 }
 
 .nav-bar-wrapper > .nav-bar-container {
@@ -32,7 +30,6 @@
   flex: 1;
   padding: 0px 0px 0px 0px;
   height: 100%;
-  border-bottom: 1px solid #b8b8b8;
 }
 
 .nav-bar-container > .nav-bar-item {
@@ -79,7 +76,6 @@
   width: 200px;
   height: 100%;
   /* object-fit: cover; */
-  background-color: white;
   cursor: pointer;
   /* background-image: url('https://i.ibb.co/MhLF1VS/abc.png'); */
 }
