@@ -444,6 +444,16 @@ option {
   width: 40px;
   padding: 5px 3px;
 }
+.book-calendar-button {
+  background-color: #0c67ce;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  color: white;
+  width: 60px;
+  padding: 5px 3px;
+  margin-left: 60px;
+}
 
 .chat_window_container_message_box_user {
   border-bottom: 1px solid rgb(175, 175, 175);
@@ -460,18 +470,20 @@ option {
   flex-direction: column;
 }
 
-.react-datepicker {
+/* .react-datepicker {
+
   font-size: 1.2rem !important;
+
 }
 
 .react-datepicker__current-month {
-  font-size: 1.2rem !important;
+  font-size: 1rem !important;
 }
 
 .react-datepicker__day-name,
 .react-datepicker__day {
   margin: 0.5rem !important;
-}
+} */
 
 .buyer-appointment-message-upcoming > button {
   border: none;
@@ -523,6 +535,7 @@ option {
 .time-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  padding-right: 10px;
 }
 
 .time-select-item {
@@ -809,4 +822,5 @@ p {
   border: none;
   border-radius: 5px;
   color: white;
+  cursor: pointer;
 }

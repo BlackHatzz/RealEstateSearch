@@ -15,6 +15,7 @@ const Upcoming = () => {
       .doc(uuid)
       .collection("appointments")
       .where(role + "Id", "==", uuid)
+      .where("status", "==", "upcoming")
       .orderBy("date", "asc")
       .onSnapshot((snapshot) => {
         setAppointments(
