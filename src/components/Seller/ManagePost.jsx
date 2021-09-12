@@ -1071,7 +1071,7 @@ class ManagePost extends Component {
               <br />
               (tỷ đồng)
             </h2>
-            <div className="input-container">
+            <div className="input-container w-60">
               {this.state.priceTooltip.toggle
                 ? this.renderTooltip(this.state.priceTooltip.text)
                 : null}

@@ -62,21 +62,26 @@
     flex-wrap: wrap;
   }
   .seller-wrapper>.right-container>.content-container .col3 {
-    width: 50%;
-  }
-  .seller-wrapper>.right-container>.content-container .col3:first-child {
-    width: 60%;
+    width: 100%;
   }
   .seller-wrapper>.right-container>.content-container .col2 {
     width: 100%;
     margin-top: 5px;
   }
-  .seller-wrapper>.right-container>.content-container .col2 .title {
-    flex: 1;
+  .seller-wrapper>.right-container .title {
+    width: 130px;
   }
   .seller-wrapper>.right-container>.content-container .col4 {
     width: 50%;
     margin-top: 5px;
+  }
+  .seller-wrapper>.right-container .row .col3 .w-60{
+    width: 60px;
+  }
+  .seller-wrapper>.right-container .col3 .input-container {
+    width: 30px;
+    flex: none;
+    /* align-items: center; */
   }
   .seller-wrapper>.right-container .file-box {
     background-color: transparent;
@@ -105,7 +110,6 @@
   .manage-post-drop-down-menu {
     position: absolute;
     right: 10px;
-    top: 40px;
     left: initial;
     bottom: initial;
     width: 170px;

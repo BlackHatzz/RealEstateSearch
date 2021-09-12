@@ -9,6 +9,7 @@
     height: auto;
     text-align: center;
     padding: 5px 0;
+    z-index: 2;
   }
   .search-suggestion-filter-menu-container {
     width: 80vw;
@@ -44,8 +45,6 @@
   .show-more-mobile-filtler {
     display: inline-block;
     margin-bottom: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
   .more-filter-container>.title::before {
     margin-left: 0;

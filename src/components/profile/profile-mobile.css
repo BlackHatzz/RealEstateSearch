@@ -1,1 +1,33 @@
-@media only screen and (max-width:500px) {}
+@media only screen and (max-width:500px) {
+    .profile-content-container {
+        padding-top: 0;
+    }
+    .profile-content-container .row {
+        display: block;
+    }
+    .profile-content-container .row .silver-circle {
+        display: inline-flex;
+        margin-left: 0;
+    }
+    .profile-content-container .row>* {
+        display: inline-block;
+    }
+    .profile-content-container .title {
+        width: max-content;
+        display: inline-flex;
+        height:auto;
+        vertical-align: top;
+        margin-top: 7px;
+    }
+    .profile-wrapper {
+        padding-top: 0;
+    }
+    .profile-container {
+        width: auto;
+        box-shadow: none;
+    }
+    div.read-only-solid-field-container {
+        width: 85%;
+        padding-left: 45px;
+    }
+}

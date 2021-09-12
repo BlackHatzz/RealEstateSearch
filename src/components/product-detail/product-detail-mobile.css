@@ -99,4 +99,7 @@
     text-transform: uppercase;
     font-size: 1.1em;
   }
+  .amenities-wrapper .info-container {
+    height: max-content;
+  }
 }

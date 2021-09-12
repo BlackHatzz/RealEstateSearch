@@ -163,10 +163,8 @@ const ProfilePage = () => {
     <>
       {true && (
         <div className="profile-wrapper">
-          <div style={{ height: "10px" }}></div>
 
           <div className="profile-container">
-            <div style={{ height: "15px" }}></div>
             <div className="profile-pic-container">
               <img src={data?.photoURL} alt="" />
             </div>
