@@ -168,10 +168,10 @@ export const ChatContent = ({
                   </div>
                   {role === "buyer" && (
                     <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                      {dealStatus && currentChat ? (
+                      {dealStatus ? (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
                           Thỏa thuận: {currentChat?.data?.dealPrice + ""} tỷ{" "}
-                          {currentChat.data.deal === "pending"
+                          {currentChat?.data?.deal === "pending"
                             ? "(đang chờ)"
                             : ""}
                           {/* {currentChat?.data?.deal + ""} */}
@@ -185,10 +185,10 @@ export const ChatContent = ({
                           Thỏa thuận
                         </button>
                       )}
-                      {bookStatus === "upcoming" && currentChat && (
+                      {bookStatus === "upcoming" && (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
                           Lịch hẹn:{" "}
-                          {moment(currentChat.data.appointmentDate).format(
+                          {moment(currentChat?.data?.appointmentDate).format(
                             "llll"
                           )}
                         </p>
