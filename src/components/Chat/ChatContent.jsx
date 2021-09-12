@@ -128,7 +128,6 @@ export const ChatContent = ({
         <>
           <div className="small-chat-window-title-box">
             <p className="small-chat-window-title">
-              {currentChat?.id}
               {currentChat?.data?.title}
             </p>
             <div className="small-chat-window-buttons">
@@ -153,7 +152,7 @@ export const ChatContent = ({
             </div>
           </div>
           <div className="chat_window_container_message_box">
-            <div>
+            <div className="chat_window_container_message_box_display_realestate-wrapper">
               <div className="chat_window_container_message_box_display_realestate">
                 <div className="chat_window_container_message_box_display_realestate_image">
                   <img src={currentChat?.data?.realIMG} alt="" />
@@ -163,15 +162,23 @@ export const ChatContent = ({
                   <div className="chat_window_container_message_box_display_realestate_info_title">
                     <p>{currentChat?.data?.address}</p>
                     <p>
-                      {currentChat?.data?.price} tỷ - {currentChat?.data?.bed}{" "}
-                      PN - {currentChat?.data?.bath} WC
+                      {currentChat?.data?.price +
+                        " tỷ - " +
+                        currentChat?.data?.area +
+                        " m"}
+                      <sup>2</sup>
+                      {" - " +
+                        currentChat?.data?.bed +
+                        " PN - " +
+                        currentChat?.data?.bath +
+                        " WC"}
                     </p>
                   </div>
                   {role === "buyer" && (
                     <div className="chat_window_container_message_box_display_realestate_info_deal_book">
                       {dealStatus ? (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
-                          Thỏa thuận: {currentChat?.data?.dealPrice + ""} tỷ{" "}
+                          Thỏa thuận: {currentChat?.data?.dealPrice + " tỷ "}
                           {currentChat?.data?.deal === "pending"
                             ? "(đang chờ)"
                             : ""}
@@ -188,10 +195,14 @@ export const ChatContent = ({
                       )}
                       {bookStatus === "upcoming" && (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
-                          Lịch hẹn:{" "}
-                          {moment(currentChat?.data?.appointmentDate).format(
-                            "llll"
-                          )}
+                          {"Lịch hẹn: " +
+                            moment(currentChat?.data?.appointmentDate).format(
+                              "LT"
+                            ) +
+                            " - " +
+                            moment(currentChat?.data?.appointmentDate).format(
+                              "L"
+                            )}
                         </p>
                       )}
                       {bookStatus === "cancel" && (

@@ -127,10 +127,12 @@
   background-color: rgb(255, 255, 255);
   flex-direction: row;
   display: flex;
-  /* width: 100%; */
-  /* height: 60px; */
+
   height: 80px;
-  border-bottom: 1px solid rgb(219, 217, 217);
+}
+.chat_window_container_message_box_display_realestate-wrapper {
+  box-shadow: 0 5px 5px -5px #ccc;
+  z-index: 100;
 }
 
 .chat_window_container_message_box_display_realestate_image {
@@ -229,7 +231,6 @@
 
 .chat_window_container_message_box_input {
   padding: 10px 8px 0;
-  border-top: 1px solid gray;
   height: auto;
   display: inline-block;
 }
