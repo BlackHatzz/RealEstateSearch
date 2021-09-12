@@ -146,7 +146,7 @@ const BuyerNavbar = () => {
       <SmallChatWindow
         currentChat={viewchats[0]}
         oldChat1={viewchats[1]}
-        oldChat2={viewchats[2]}
+        // oldChat2={viewchats[2]}
         forceUpdate={forceUpdate}
       />
 

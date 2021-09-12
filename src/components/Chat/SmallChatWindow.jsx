@@ -1,28 +1,38 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import { fb } from "../../services";
-
+import { Context } from "../../ChatContext";
 import { ChatContent } from "./ChatContent";
 
 const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
+  const { viewchats } = useContext(Context);
   const [currentChatDealStatus, setCurrentChatDealStatus] = useState();
   const [currentChatBookStatus, setCurrentChatBookStatus] = useState();
+
   // const [currentChatLastDoc, setCurrentChatLastDoc] = useState(null);
-  // const [currentChatMessagesList, setCurrentChatMessagesList] = useState([]);
+  const [currentChatMessages, setCurrentChatMessages] = useState([]);
+
   let currentChatLastDoc = null;
   let currentChatMessagesList = [];
+
   const [oldChatDealStatus, setOldChatDealStatus] = useState();
   const [oldChatBookStatus, setOldChatBookStatus] = useState();
+
   // const [oldChatLastDoc, setOldChatLastDoc] = useState(null);
-  // const [oldChatMessagesList, setOldChatMessagesList] = useState([]);
+  const [oldChatMessages, setOldChatMessages] = useState([]);
+
   let oldChatLastDoc = null;
   let oldChatMessagesList = [];
 
   const currentChatMessageEl = useRef(null);
   const currentChatMessagesEndRef = useRef(null);
+
   const oldChatMessageEl = useRef(null);
   const oldChatMessagesEndRef = useRef(null);
+
+  const [chat1, setChat1] = useState(null);
+  const [chat2, setChat2] = useState(null);
   useEffect(() => {
-    const currentChatDeal = fb.firestore
+    fb.firestore
       .collection("conversations")
       .doc(currentChat?.id + "")
       .onSnapshot((snap) => {
@@ -33,8 +43,12 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
         setCurrentChatBookStatus(
           !!data?.appointment ? data.appointment : "none"
         );
+        setChat1({
+          id: snap.id,
+          data: data,
+        });
       });
-    const oldChatDeal = fb.firestore
+    fb.firestore
       .collection("conversations")
       .doc(oldChat1?.id + "")
       .onSnapshot((snap) => {
@@ -43,12 +57,16 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
           data?.deal === "accepted" || data?.deal === "pending" ? true : false
         );
         setOldChatBookStatus(!!data?.appointment ? data.appointment : "none");
+        setChat2({
+          id: snap.id,
+          data: data,
+        });
       });
-    return () => {
-      currentChatDeal();
-      oldChatDeal();
-    };
   }, [currentChat?.id, oldChat1?.id]);
+
+  // useEffect(() => {
+
+  // }, [oldChat1]);
   return (
     <div className="small-chat-windows">
       {currentChat && (
@@ -56,7 +74,7 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
           className={oldChat1 ? "small-chat-window-1" : "small-chat-window-2"}
         >
           <ChatContent
-            currentChat={currentChat}
+            currentChat={chat1}
             forceUpdate={forceUpdate}
             dealStatus={currentChatDealStatus}
             bookStatus={currentChatBookStatus}
@@ -65,13 +83,15 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             currentMessagesList={currentChatMessagesList}
             messageEl={currentChatMessageEl}
             messagesEndRef={currentChatMessagesEndRef}
+            messages={currentChatMessages}
+            setMessages={setCurrentChatMessages}
           />
         </div>
       )}
       {oldChat1 && (
         <div className="small-chat-window-2">
           <ChatContent
-            currentChat={oldChat1}
+            currentChat={chat2}
             forceUpdate={forceUpdate}
             dealStatus={oldChatDealStatus}
             bookStatus={oldChatBookStatus}
@@ -80,6 +100,8 @@ const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
             currentMessagesList={oldChatMessagesList}
             messageEl={oldChatMessageEl}
             messagesEndRef={oldChatMessagesEndRef}
+            messages={oldChatMessages}
+            setMessages={setOldChatMessages}
           />
         </div>
       )}

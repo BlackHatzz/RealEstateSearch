@@ -17,6 +17,8 @@ export const MessageContainer = ({
   currentMessagesList,
   messageEl,
   messagesEndRef,
+  // messages,
+  // setMessages,
 }) => {
   const uuid = fb.auth.currentUser?.uid;
   const username = fb.auth.currentUser?.displayName;
@@ -48,7 +50,7 @@ export const MessageContainer = ({
 
       getMessages();
     }
-  }, [conversation.id, uuid]);
+  }, [conversation?.id, uuid]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "auto" });
@@ -251,26 +253,29 @@ export const MessageContainer = ({
     if (dealId) {
       fb.firestore
         .collection("conversations")
-        .doc(conversation.id)
+        .doc(conversation?.id)
         .collection("messages")
         .doc(dealId)
         .update({
           status: "cancel",
         })
         .then(() => {
-          fb.firestore.collection("conversations").doc(conversation.id).update({
-            deal: "cancel",
-            lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-            lastMessageReadStaff: false,
-            lastMessage: "Thỏa thuận đã bị hủy",
-          });
+          fb.firestore
+            .collection("conversations")
+            .doc(conversation?.id)
+            .update({
+              deal: "cancel",
+              lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+              lastMessageReadStaff: false,
+              lastMessage: "Thỏa thuận đã bị hủy",
+            });
         });
     }
   };
 
   return (
     <div
-      id={"chat-window-message-box" + conversation.id}
+      id={"chat-window-message-box" + conversation?.id}
       className="chat_window_container_message_box_display"
       ref={messageEl}
     >

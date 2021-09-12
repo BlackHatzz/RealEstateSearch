@@ -101,7 +101,7 @@ export const ChatButton = (props) => {
                           data: doc.data(),
                         };
 
-                        addItem(conObject);
+                        // addItem(conObject);
                         addViewChat(conObject);
 
                         fb.firestore

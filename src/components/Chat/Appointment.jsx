@@ -114,6 +114,8 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
     );
   };
   const handleAppointmentSubmit = (event) => {
+    console.log("appointmentId", bookId);
+    console.log("deal price", conversation.data.dealPrice);
     event.preventDefault();
 
     const d = moment(startDate).format("L");

@@ -24,6 +24,8 @@ export const ChatContent = ({
   currentMessagesList,
   messageEl,
   messagesEndRef,
+  messages,
+  setMessages,
 }) => {
   const { role, removeItem, removeViewChat } = useContext(Context);
 
@@ -76,8 +78,16 @@ export const ChatContent = ({
               lastMessage: "thỏa thuận mới",
             }
             // { merge: true }
+          )
+          .then(() => {
+            console.log("chatdata", currentChat);
+            forceUpdate();
+          })
+          .catch((err) =>
+            console.log("error add deal info to conversation", err)
           );
       })
+      .catch((err) => console.log("error create deal", err))
       .finally(() => {
         setSubmitting(false);
         setAnchorEl(null);
@@ -113,13 +123,15 @@ export const ChatContent = ({
 
   return (
     <>
-      <div className="small-chat-window-title-box">
-        <p className="small-chat-window-title">
-          {currentChat.id}
-          {currentChat.data.title}
-        </p>
-        <div className="small-chat-window-buttons">
-          {/* <div
+      {currentChat && (
+        <>
+          <div className="small-chat-window-title-box">
+            <p className="small-chat-window-title">
+              {currentChat?.id}
+              {currentChat?.data?.title}
+            </p>
+            <div className="small-chat-window-buttons">
+              {/* <div
             className="small-chat-window-buttons-minimize"
             onClick={() => {
               setMinimize(true);
@@ -127,67 +139,59 @@ export const ChatContent = ({
           >
             <MinimizeIcon />
           </div> */}
-          <div
-            className="small-chat-window-buttons-close"
-            onClick={() => {
-              removeViewChat(currentChat);
-              removeItem(currentChat);
-              forceUpdate();
-            }}
-          >
-            <CloseIcon style={{ width: 20, height: 20 }} />
-          </div>
-        </div>
-      </div>
-      <div className="chat_window_container_message_box">
-        <div>
-          <div className="chat_window_container_message_box_display_realestate">
-            <div className="chat_window_container_message_box_display_realestate_image">
-              <img src={currentChat.data?.realIMG} alt="" />
-            </div>
-
-            <div className="chat_window_container_message_box_display_realestate_info">
-              <div className="chat_window_container_message_box_display_realestate_info_title">
-                <p>{currentChat.data.address}</p>
-                <p>
-                  {currentChat.data.price} tỷ - {currentChat.data.bed} PN -{" "}
-                  {currentChat.data.bath} WC
-                </p>
+              <div
+                className="small-chat-window-buttons-close"
+                onClick={() => {
+                  removeViewChat(currentChat);
+                  // removeItem(currentChat);
+                  forceUpdate();
+                }}
+              >
+                <CloseIcon style={{ width: 20, height: 20 }} />
               </div>
-              {role === "buyer" && (
-                <div className="chat_window_container_message_box_display_realestate_info_deal_book">
-                  {dealStatus ? (
-                    <p className="chat_window_container_message_box_display_realestate_info_deal">
-                      Thỏa thuận: {currentChat?.data?.dealPrice} tỷ{" "}
-                      {currentChat.data.deal === "pending" ? "(đang chờ)" : ""}
+            </div>
+          </div>
+          <div className="chat_window_container_message_box">
+            <div>
+              <div className="chat_window_container_message_box_display_realestate">
+                <div className="chat_window_container_message_box_display_realestate_image">
+                  <img src={currentChat?.data?.realIMG} alt="" />
+                </div>
+
+                <div className="chat_window_container_message_box_display_realestate_info">
+                  <div className="chat_window_container_message_box_display_realestate_info_title">
+                    <p>{currentChat?.data?.address}</p>
+                    <p>
+                      {currentChat?.data?.price} tỷ - {currentChat?.data?.bed}{" "}
+                      PN - {currentChat?.data?.bath} WC
                     </p>
-                  ) : (
-                    <button
-                      className="chat-window-deal-button"
-                      onClick={handleDeal}
-                      type="button"
-                    >
-                      Thỏa thuận
-                    </button>
-                  )}
-                  {bookStatus === "upcoming" && (
-                    <p className="chat_window_container_message_box_display_realestate_info_deal">
-                      Lịch hẹn:{" "}
-                      {moment(currentChat.data.appointmentDate).format("llll")}
-                    </p>
-                  )}
-                  {bookStatus === "cancel" && (
-                    <button
-                      className="chat-window-deal-button"
-                      onClick={handleBook}
-                      type="button"
-                    >
-                      Đặt lịch
-                    </button>
-                  )}
-                  {bookStatus === "none" && dealStatus && (
-                    <div>
-                      {currentChat.data.deal === "accepted" && (
+                  </div>
+                  {role === "buyer" && (
+                    <div className="chat_window_container_message_box_display_realestate_info_deal_book">
+                      {dealStatus && currentChat ? (
+                        <p className="chat_window_container_message_box_display_realestate_info_deal">
+                          Thỏa thuận: {currentChat?.data?.dealPrice + ""} tỷ{" "}
+                          {/* {currentChat.data.deal === "pending" ? "(đang chờ)" : ""} */}
+                          {currentChat?.data?.deal + ""}
+                        </p>
+                      ) : (
+                        <button
+                          className="chat-window-deal-button"
+                          onClick={handleDeal}
+                          type="button"
+                        >
+                          Thỏa thuận
+                        </button>
+                      )}
+                      {bookStatus === "upcoming" && currentChat && (
+                        <p className="chat_window_container_message_box_display_realestate_info_deal">
+                          Lịch hẹn:{" "}
+                          {moment(currentChat.data.appointmentDate).format(
+                            "llll"
+                          )}
+                        </p>
+                      )}
+                      {bookStatus === "cancel" && (
                         <button
                           className="chat-window-deal-button"
                           onClick={handleBook}
@@ -196,108 +200,126 @@ export const ChatContent = ({
                           Đặt lịch
                         </button>
                       )}
+                      {bookStatus === "none" &&
+                        dealStatus &&
+                        currentChat?.data && (
+                          <div>
+                            {currentChat.data.deal === "accepted" && (
+                              <button
+                                className="chat-window-deal-button"
+                                onClick={handleBook}
+                                type="button"
+                              >
+                                Đặt lịch
+                              </button>
+                            )}
+                          </div>
+                        )}
                     </div>
                   )}
                 </div>
-              )}
+              </div>
             </div>
-          </div>
-        </div>
 
-        <MessageContainer
-          conversation={currentChat}
-          handleBook={handleBook}
-          setBookStatus={setBookStatus}
-          bookStatus={bookStatus}
-          isNewMessage={isNewMessage}
-          setIsNewMessage={setIsNewMessage}
-          lastDoc={lastDoc}
-          currentMessagesList={currentMessagesList}
-          messageEl={messageEl}
-          messagesEndRef={messagesEndRef}
-        />
+            <MessageContainer
+              conversation={currentChat}
+              handleBook={handleBook}
+              setBookStatus={setBookStatus}
+              bookStatus={bookStatus}
+              isNewMessage={isNewMessage}
+              setIsNewMessage={setIsNewMessage}
+              lastDoc={lastDoc}
+              currentMessagesList={currentMessagesList}
+              messageEl={messageEl}
+              messagesEndRef={messagesEndRef}
+              messages={messages}
+              setMessages={setMessages}
+            />
 
-        <Popover
-          id={dealPopup ? "simple-popover" : undefined}
-          anchorEl={anchorEl}
-          open={dealPopup}
-          onClose={() => {
-            setAnchorEl(null);
-          }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          className="chat-mobile-confirm"
-        >
-          <div className="deal-popup-form">
-            <Formik
-              onSubmit={submitDeal}
-              validateOnMount={true}
-              initialValues={defaultValues}
-              validationSchema={validationSchema}
+            <Popover
+              id={dealPopup ? "simple-popover" : undefined}
+              anchorEl={anchorEl}
+              open={dealPopup}
+              onClose={() => {
+                setAnchorEl(null);
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              className="chat-mobile-confirm"
             >
-              {({ isValid, isSubmitting, errors }) => (
-                <Form className="deal-form">
-                  <p>Giá gốc: {currentChat.data.price} tỷ</p>
-                  <FormField
-                    name="deal"
-                    placeholder={currentChat.data.price}
-                    maxLength="4"
-                    size="1"
-                    label="Thỏa thuận (tỷ VNĐ): "
-                  />
+              <div className="deal-popup-form">
+                <Formik
+                  onSubmit={submitDeal}
+                  validateOnMount={true}
+                  initialValues={defaultValues}
+                  validationSchema={validationSchema}
+                >
+                  {({ isValid, isSubmitting, errors }) => (
+                    <Form className="deal-form">
+                      <p>Giá gốc: {currentChat.data.price} tỷ</p>
+                      <FormField
+                        name="deal"
+                        placeholder={currentChat.data.price}
+                        maxLength="4"
+                        size="4"
+                        label="Thỏa thuận (tỷ VNĐ): "
+                      />
 
-                  <div className="deal-form-button">
-                    {!isSubmitting && isValid && (
-                      <button disabled={isSubmitting || !isValid} type="submit">
-                        Gửi
-                      </button>
-                    )}
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setAnchorEl(null);
-                      }}
-                    >
-                      Đóng
-                    </button>
-                  </div>
-                </Form>
-              )}
-            </Formik>
-          </div>
-        </Popover>
+                      <div className="deal-form-button">
+                        {!isSubmitting && isValid && (
+                          <button
+                            disabled={isSubmitting || !isValid}
+                            type="submit"
+                          >
+                            Gửi
+                          </button>
+                        )}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAnchorEl(null);
+                          }}
+                        >
+                          Đóng
+                        </button>
+                      </div>
+                    </Form>
+                  )}
+                </Formik>
+              </div>
+            </Popover>
 
-        <Popover
-          id={bookPopup ? "simple-popover" : undefined}
-          anchorEl={booktrigger}
-          open={bookPopup}
-          onClose={() => {
-            setBooktrigger(null);
-          }}
-          anchorOrigin={{
-            vertical: "top",
-            horizontal: "center",
-          }}
-          transformOrigin={{
-            vertical: "bottom",
-            horizontal: "center",
-          }}
-          className="chat-mobile-confirm"
-        >
-          <Appointment
-            setBookStatus={setBookStatus}
-            trigger={booktrigger}
-            setTrigger={setBooktrigger}
-            conversation={currentChat}
-          />
-        </Popover>
-        {/* {booktrigger && (
+            <Popover
+              id={bookPopup ? "simple-popover" : undefined}
+              anchorEl={booktrigger}
+              open={bookPopup}
+              onClose={() => {
+                setBooktrigger(null);
+              }}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "center",
+              }}
+              transformOrigin={{
+                vertical: "bottom",
+                horizontal: "center",
+              }}
+              className="chat-mobile-confirm"
+            >
+              <Appointment
+                setBookStatus={setBookStatus}
+                trigger={booktrigger}
+                setTrigger={setBooktrigger}
+                conversation={currentChat}
+              />
+            </Popover>
+            {/* {booktrigger && (
           <div className="chat_window_container_message_box_popup">
             {booktrigger && (
               <Appointment
@@ -309,49 +331,54 @@ export const ChatContent = ({
           </div>
         )} */}
 
-        <div className="chat_window_container_message_box_input">
-          <form
-            className="message-input-form"
-            onSubmit={(e) => {
-              e.preventDefault();
-              sendMessage();
-            }}
-          >
-            <textarea
-              maxLength="2000"
-              className="textarea-input"
-              autoComplete="off"
-              value={currentInput}
-              onChange={(e) => {
-                setCurrentInput(e.target.value);
-                const target = e.target;
-                target.style.height = "20px";
-                // target.style.height = `${target.scrollHeight}px`;
-                target.style.height = `${Math.min(target.scrollHeight, 80)}px`;
-              }}
-              onKeyPress={(e) => {
-                if (e.key === "Enter") {
+            <div className="chat_window_container_message_box_input">
+              <form
+                className="message-input-form"
+                onSubmit={(e) => {
                   e.preventDefault();
-                  currentInput.trim() !== "" && sendMessage();
-                }
-              }}
-              placeholder="Gửi tin nhắn ..."
-            />
-            {currentInput.trim() !== "" && (
-              <button
-                className="button_send_message"
-                type="submit"
-                disabled={currentInput === "" ? true : false}
+                  sendMessage();
+                }}
               >
-                <TelegramIcon
-                  className="send-message-icon"
-                  style={{ width: 30, height: 30, color: "#0C67CE" }}
+                <textarea
+                  maxLength="2000"
+                  className="textarea-input"
+                  autoComplete="off"
+                  value={currentInput}
+                  onChange={(e) => {
+                    setCurrentInput(e.target.value);
+                    const target = e.target;
+                    target.style.height = "20px";
+                    // target.style.height = `${target.scrollHeight}px`;
+                    target.style.height = `${Math.min(
+                      target.scrollHeight,
+                      80
+                    )}px`;
+                  }}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      e.preventDefault();
+                      currentInput.trim() !== "" && sendMessage();
+                    }
+                  }}
+                  placeholder="Gửi tin nhắn ..."
                 />
-              </button>
-            )}
-          </form>
-        </div>
-      </div>
+                {currentInput.trim() !== "" && (
+                  <button
+                    className="button_send_message"
+                    type="submit"
+                    disabled={currentInput === "" ? true : false}
+                  >
+                    <TelegramIcon
+                      className="send-message-icon"
+                      style={{ width: 30, height: 30, color: "#0C67CE" }}
+                    />
+                  </button>
+                )}
+              </form>
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 };
