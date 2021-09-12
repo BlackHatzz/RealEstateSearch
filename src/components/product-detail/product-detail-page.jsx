@@ -287,21 +287,47 @@ class ProductDetailPage extends Component {
                     </div>
                   </li>
 
-                  {product?.typeName === "Nhà" ? (
-                    <li className="short-info-item">
-                      <img
-                        className="short-info-icon"
-                        alt="Hướng cửa chính"
-                        src="https://i.ibb.co/BtkH9J7/stairs.png"
-                      />
-                      <div className="short-info-content-box">
-                        <span className="short-info-label1">Số tầng:</span>
-                        <span className="short-info-label2">
-                          {product?.floor}
-                        </span>
-                      </div>
-                    </li>
-                  ) : null}
+                  {(() => {
+                    if (product?.typeName?.toLowerCase() === "chung cư") {
+                      return (
+                        <li className="short-info-item">
+                          {/* <img
+                            className="short-info-icon"
+                            alt="Hướng cửa chính"
+                            src="https://i.ibb.co/BtkH9J7/stairs.png"
+                          /> */}
+                          <img
+                            className="short-info-icon"
+                            alt="Mã phòng"
+                            src="https://i.ibb.co/bmgqF7B/keys.png"
+                          />
+                          <div className="short-info-content-box">
+                            <span className="short-info-label1">Mã phòng:</span>
+                            <span className="short-info-label2">
+                              {product?.floor}
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    } else if (product?.typeName === "Nhà") {
+                      return (
+                        <li className="short-info-item">
+                          <img
+                            className="short-info-icon"
+                            alt="Hướng cửa chính"
+                            src="https://i.ibb.co/BtkH9J7/stairs.png"
+                          />
+                          <div className="short-info-content-box">
+                            <span className="short-info-label1">Số tầng:</span>
+                            <span className="short-info-label2">
+                              {product?.floor}
+                            </span>
+                          </div>
+                        </li>
+                      );
+                    }
+                  })()}
+
                   <li className="short-info-item">
                     <HotelOutlinedIcon className="short-info-icon" />
                     <div className="short-info-content-box">
