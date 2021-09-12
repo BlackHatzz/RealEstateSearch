@@ -1,10 +1,8 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { fb } from "../../services";
-import { Context } from "../../ChatContext";
 import { ChatContent } from "./ChatContent";
 
 const SmallChatWindow = ({ currentChat, oldChat1, forceUpdate }) => {
-  const { viewchats } = useContext(Context);
   const [currentChatDealStatus, setCurrentChatDealStatus] = useState();
   const [currentChatBookStatus, setCurrentChatBookStatus] = useState();
 

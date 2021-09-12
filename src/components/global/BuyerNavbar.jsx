@@ -388,7 +388,7 @@ const BuyerNavbar = () => {
                               className="conversation-item"
                               key={conversation.id}
                               onClick={() => {
-                                addItem(conversation);
+                                // addItem(conversation);
                                 addViewChat(conversation);
                                 // setCurrentChat(conversation);
                                 setChatTrigger(false);
