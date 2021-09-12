@@ -171,8 +171,10 @@ export const ChatContent = ({
                       {dealStatus && currentChat ? (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
                           Thỏa thuận: {currentChat?.data?.dealPrice + ""} tỷ{" "}
-                          {/* {currentChat.data.deal === "pending" ? "(đang chờ)" : ""} */}
-                          {currentChat?.data?.deal + ""}
+                          {currentChat.data.deal === "pending"
+                            ? "(đang chờ)"
+                            : ""}
+                          {/* {currentChat?.data?.deal + ""} */}
                         </p>
                       ) : (
                         <button
