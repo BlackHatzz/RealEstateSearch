@@ -4,38 +4,40 @@ import { ChatContent } from "./ChatContent";
 import { Context } from "../../ChatContext";
 
 const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
+  // - Context
   const { viewchats, addViewChat } = useContext(Context);
 
+  // - deal-book button triggers
   const [chat1DealStatus, setchat1DealStatus] = useState();
   const [chat1BookStatus, setchat1BookStatus] = useState();
-
-  // const [chat1LastDoc, setchat1LastDoc] = useState(null);
-  const [chat1Messages, setchat1Messages] = useState([]);
-
-  let chat1LastDoc = null;
-  let chat1MessagesList = [];
-
   const [chat2DealStatus, setchat2DealStatus] = useState();
   const [chat2BookStatus, setchat2BookStatus] = useState();
 
-  // const [chat2LastDoc, setchat2LastDoc] = useState(null);
+  // - set messages
+  const [chat1Messages, setchat1Messages] = useState([]);
   const [chat2Messages, setchat2Messages] = useState([]);
 
+  // - pagination
+  const [chat1LastDoc, setChat1LastDoc] = useState(null);
+  // let chat1LastDoc = null;
+  let chat1MessagesList = [];
+  // const [chat2LastDoc, setChat2LastDoc] = useState(null);
   let chat2LastDoc = null;
   let chat2MessagesList = [];
 
+  // - ref
   const chat1MessageEl = useRef(null);
   const chat1MessagesEndRef = useRef(null);
-
   const chat2MessageEl = useRef(null);
   const chat2MessagesEndRef = useRef(null);
 
+  // - set conversations
   const [chat1, setChat1] = useState(null);
   const [chat2, setChat2] = useState(null);
   useEffect(() => {
     const getChat1 = fb.firestore
       .collection("conversations")
-      .doc(id1 + "")
+      .doc(id1)
       .onSnapshot((snap) => {
         let data = snap.data();
         setchat1DealStatus(
@@ -47,6 +49,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
           data: data,
         });
       });
+
     const getChat2 = fb.firestore
       .collection("conversations")
       .doc(id2 + "")
@@ -63,10 +66,48 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       });
     // getChat1();
     // getChat2();
+    const getChat1Messages = fb.firestore
+      .collection("conversations")
+      .doc(id1)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .limit(5)
+      .onSnapshot((snap) => {
+        let docs = snap.docs;
+        let previousDoc = docs[docs.length - 1];
+        let messagesList = docs.map((doc) => doc.data()).reverse();
+
+        setchat1Messages(messagesList);
+        chat1MessagesList = messagesList;
+        setChat1LastDoc(previousDoc);
+        // chat1LastDoc = previousDoc;
+        console.log("doc", chat1LastDoc);
+      });
+    const getChat2Messages = fb.firestore
+      .collection("conversations")
+      .doc(id2)
+      .collection("messages")
+      .orderBy("timestamp", "desc")
+      .limit(5)
+      .onSnapshot((snap) => {
+        let docs = snap.docs;
+        let previousDoc = docs[docs.length - 1];
+        let messagesList = docs.map((doc) => doc.data()).reverse();
+
+        setchat2Messages(messagesList);
+        chat2MessagesList = messagesList;
+        // setChat2LastDoc(previousDoc);
+        chat2LastDoc = previousDoc;
+        // console.log("doc", lastDoc);
+      });
 
     return () => {
+      console.log("id1", id1);
       getChat1();
+      getChat1Messages();
+      console.log("id2", id2);
       getChat2();
+      getChat2Messages();
     };
   }, [id1, id2]);
 
@@ -77,19 +118,22 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
     <div className="small-chat-windows">
       {id1 && (
         <div className={id2 ? "small-chat-window-1" : "small-chat-window-2"}>
-          <ChatContent
-            currentChat={chat1}
-            forceUpdate={forceUpdate}
-            dealStatus={chat1DealStatus}
-            bookStatus={chat1BookStatus}
-            setBookStatus={setchat1BookStatus}
-            lastDoc={chat1LastDoc}
-            currentMessagesList={chat1MessagesList}
-            messageEl={chat1MessageEl}
-            messagesEndRef={chat1MessagesEndRef}
-            messages={chat1Messages}
-            setMessages={setchat1Messages}
-          />
+          {chat1 && (
+            <ChatContent
+              currentChat={chat1}
+              forceUpdate={forceUpdate}
+              dealStatus={chat1DealStatus}
+              bookStatus={chat1BookStatus}
+              setBookStatus={setchat1BookStatus}
+              lastDoc={chat1LastDoc}
+              // setLastDoc={setChat1LastDoc}
+              currentMessagesList={chat1MessagesList}
+              messageEl={chat1MessageEl}
+              messagesEndRef={chat1MessagesEndRef}
+              messages={chat1Messages}
+              setMessages={setchat1Messages}
+            />
+          )}
         </div>
       )}
       {id2 && (

@@ -13,7 +13,8 @@ export const MessageContainer = ({
   bookStatus,
   isNewMessage,
   setIsNewMessage,
-  lastDoc,
+  // lastDoc,
+  setLastDoc,
   currentMessagesList,
   messageEl,
   messagesEndRef,
@@ -31,6 +32,7 @@ export const MessageContainer = ({
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   const currentDate = new Date();
 
+  let lastDoc = messages[0];
   // const messageEl = useRef(null);
   // const messagesEndRef = useRef(null);
   // let lastDoc = null;
@@ -47,24 +49,25 @@ export const MessageContainer = ({
           setDealId(doc.data()?.dealId);
           setBookId(doc.data()?.appointmentId);
         });
-      getMessages();
+      // getMessages();
 
       return () => {
         // This is its cleanup.
         getIds();
-        getMessages();
+
+        // getMessages();
       };
     }
-  }, [conversation, uuid]);
+  }, [conversation?.id, uuid]);
 
   const scrollToBottom = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "auto" });
   };
   useEffect(() => {
-    // scrollToBottom();
     if (isNewMessage) {
       scrollToBottom();
     } else {
+      console.log("?", isNewMessage);
       document
         .getElementById("chat-window-message-box" + conversation.id)
         .scrollTo(0, 200);
@@ -84,6 +87,7 @@ export const MessageContainer = ({
     const { currentTarget: target } = event;
 
     if (target.scrollTop === 0) {
+      console.log("top", lastDoc);
       setIsNewMessage(false);
       fetchMoreMessages();
     }
@@ -103,6 +107,7 @@ export const MessageContainer = ({
       setMessages(messagesList);
       currentMessagesList = messagesList;
       lastDoc = previousDoc;
+      console.log("doc", lastDoc);
     });
   };
 
@@ -113,8 +118,7 @@ export const MessageContainer = ({
   }, []);
 
   const fetchMoreMessages = () => {
-    console.log(lastDoc);
-    if (!!lastDoc?.id) {
+    if (lastDoc) {
       const ref = fb.firestore
         .collection("conversations")
         .doc(conversation.id)
@@ -127,14 +131,13 @@ export const MessageContainer = ({
         let docs = snap?.docs;
 
         if (docs.length) {
-          console.log("docs", docs.length);
-          console.log("st", lastDoc);
           let previousDoc = docs[docs.length - 1];
           let messagesList = docs.map((doc) => doc.data()).reverse();
           let newList = [...messagesList, ...currentMessagesList];
           setMessages(newList);
           currentMessagesList = newList;
-          lastDoc = previousDoc;
+          setLastDoc(previousDoc);
+          // lastDoc = previousDoc;
         } else {
           messageEl.current.removeEventListener("scroll", handleLoadOnScroll);
         }

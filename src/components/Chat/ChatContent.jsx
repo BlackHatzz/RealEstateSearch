@@ -21,13 +21,14 @@ export const ChatContent = ({
   bookStatus,
   setBookStatus,
   lastDoc,
+  setLastDoc,
   currentMessagesList,
   messageEl,
   messagesEndRef,
   messages,
   setMessages,
 }) => {
-  const { role, removeItem, removeViewChat } = useContext(Context);
+  const { role, removeViewChat } = useContext(Context);
 
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
@@ -95,7 +96,6 @@ export const ChatContent = ({
   }
 
   function sendMessage() {
-    console.log("id", currentChat.id);
     let docref = fb.firestore
       .collection("conversations")
       .doc(currentChat.id)
@@ -114,6 +114,7 @@ export const ChatContent = ({
       .finally(() => {
         setIsNewMessage(true);
         setCurrentInput("");
+        document.getElementById("textarea-send-message").style.height = "27px";
         fb.firestore.collection("conversations").doc(currentChat.id).update({
           lastMessageReadStaff: false,
           lastMessage: currentInput,
@@ -244,6 +245,7 @@ export const ChatContent = ({
               isNewMessage={isNewMessage}
               setIsNewMessage={setIsNewMessage}
               lastDoc={lastDoc}
+              setLastDoc={setLastDoc}
               currentMessagesList={currentMessagesList}
               messageEl={messageEl}
               messagesEndRef={messagesEndRef}
@@ -334,17 +336,6 @@ export const ChatContent = ({
                 conversation={currentChat}
               />
             </Popover>
-            {/* {booktrigger && (
-          <div className="chat_window_container_message_box_popup">
-            {booktrigger && (
-              <Appointment
-                trigger={booktrigger}
-                setTrigger={setBooktrigger}
-                conversation={currentChat}
-              />
-            )}
-          </div>
-        )} */}
 
             <div className="chat_window_container_message_box_input">
               <form
@@ -355,6 +346,7 @@ export const ChatContent = ({
                 }}
               >
                 <textarea
+                  id="textarea-send-message"
                   maxLength="2000"
                   className="textarea-input"
                   autoComplete="off"
@@ -363,7 +355,6 @@ export const ChatContent = ({
                     setCurrentInput(e.target.value);
                     const target = e.target;
                     target.style.height = "20px";
-                    // target.style.height = `${target.scrollHeight}px`;
                     target.style.height = `${Math.min(
                       target.scrollHeight,
                       80
