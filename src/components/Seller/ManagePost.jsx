@@ -24,6 +24,10 @@ import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
 import { useHistory } from "react-router";
+import "./manage-post-mobile.css";
+import "../global/buyer-nav-bar-mobile.css";
+// import "./seller-mobile.css";
+// import "./search-post-mobile.css";
 
 import {
   BrowserRouter as Router,
