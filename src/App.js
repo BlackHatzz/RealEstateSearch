@@ -16,25 +16,17 @@ import AssignedPostPage from "./components/staff-assigned-post/assigned-post-pag
 import { useAuth, useResolved } from "./hooks";
 import { Login } from "./components/Login";
 import { Signup } from "./components/Signup";
-import { Chat } from "./components/Chat";
 import ProfilePage from "./components/profile/ProfilePage";
-import { ChatLauncher } from "./components/Chat/ChatLauncher";
 import { Context } from "./ChatContext";
 import { Role } from "./components/Role/Role";
-import { Seller } from "./components/Seller/Seller";
 import TransactionHistoryPage from "./components/transaction-history/TransactionHistoryPage";
-import ManagePost from "./components/Seller/ManagePost";
 import SellerDashboard from "./components/Seller/SellerDashboard";
-import Autocomplete from "react-google-autocomplete";
-import SearchPost from "./components/Seller/SearchPost";
 
 // import { getToken, onMessageListener } from "./services";
 import Schedule from "./components/Schedule/Schedule";
 import { SellerScheduler } from "./components/Seller/SellerScheduler";
 import BuyerNavbar from "./components/global/BuyerNavbar";
 
-import ChatBubble from "./components/Chat/ChatBubble";
-import SmallChatWindow from "./components/Chat/SmallChatWindow";
 import NewProfile from "./components/Login/NewProfile";
 
 moment.locale("vi");
