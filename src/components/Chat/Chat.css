@@ -641,7 +641,7 @@ option {
 
 .message-input-form .textarea-input {
   resize: none !important;
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   /* min-height: 10px; */
   overflow-y: auto;
   font-size: 14px;
