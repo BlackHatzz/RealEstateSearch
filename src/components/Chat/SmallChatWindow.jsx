@@ -21,8 +21,8 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
   const [chat1LastDoc, setChat1LastDoc] = useState(null);
   // let chat1LastDoc = null;
   let chat1MessagesList = [];
-  // const [chat2LastDoc, setChat2LastDoc] = useState(null);
-  let chat2LastDoc = null;
+  const [chat2LastDoc, setChat2LastDoc] = useState(null);
+  // let chat2LastDoc = null;
   let chat2MessagesList = [];
 
   // - ref
@@ -71,7 +71,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       .doc(id1)
       .collection("messages")
       .orderBy("timestamp", "desc")
-      .limit(5)
+      .limit(10)
       .onSnapshot((snap) => {
         let docs = snap.docs;
         let previousDoc = docs[docs.length - 1];
@@ -88,7 +88,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       .doc(id2)
       .collection("messages")
       .orderBy("timestamp", "desc")
-      .limit(5)
+      .limit(10)
       .onSnapshot((snap) => {
         let docs = snap.docs;
         let previousDoc = docs[docs.length - 1];
@@ -96,8 +96,8 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
 
         setchat2Messages(messagesList);
         chat2MessagesList = messagesList;
-        // setChat2LastDoc(previousDoc);
-        chat2LastDoc = previousDoc;
+        setChat2LastDoc(previousDoc);
+        // chat2LastDoc = previousDoc;
         // console.log("doc", lastDoc);
       });
 
@@ -126,7 +126,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
               bookStatus={chat1BookStatus}
               setBookStatus={setchat1BookStatus}
               lastDoc={chat1LastDoc}
-              // setLastDoc={setChat1LastDoc}
+              setLastDoc={setChat1LastDoc}
               currentMessagesList={chat1MessagesList}
               messageEl={chat1MessageEl}
               messagesEndRef={chat1MessagesEndRef}
@@ -145,6 +145,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
             bookStatus={chat2BookStatus}
             setBookStatus={setchat2BookStatus}
             lastDoc={chat2LastDoc}
+            setLastDoc={setChat2LastDoc}
             currentMessagesList={chat2MessagesList}
             messageEl={chat2MessageEl}
             messagesEndRef={chat2MessagesEndRef}

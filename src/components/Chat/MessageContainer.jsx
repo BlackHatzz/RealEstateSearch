@@ -13,7 +13,7 @@ export const MessageContainer = ({
   bookStatus,
   isNewMessage,
   setIsNewMessage,
-  // lastDoc,
+  lastDoc,
   setLastDoc,
   currentMessagesList,
   messageEl,
@@ -32,7 +32,7 @@ export const MessageContainer = ({
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   const currentDate = new Date();
 
-  let lastDoc = messages[0];
+  // let lastDoc = messages[0];
   // const messageEl = useRef(null);
   // const messagesEndRef = useRef(null);
   // let lastDoc = null;
@@ -125,7 +125,7 @@ export const MessageContainer = ({
         .collection("messages")
         .orderBy("timestamp", "desc")
         .startAfter(lastDoc)
-        .limit(5);
+        .limit(10);
 
       ref.get().then((snap) => {
         let docs = snap?.docs;
