@@ -795,6 +795,7 @@ class ManagePost extends Component {
             address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
             floor: floor,
             juridical: juridical,
+            note: "created by seller",
           }),
         };
 
@@ -1495,12 +1496,12 @@ class ManagePost extends Component {
               return (
                 <>
                   <div className="col3">
-                    <h2 className="title">Mã phòng*</h2>
+                    <h2 className="title">Mã chung cư*</h2>
                     <div className="input-container">
                       <input
                         autoComplete="off"
                         id="floor-input"
-                        placeholder="Nhập mã phòng..."
+                        placeholder="Nhập mã chung cư..."
                         type="text"
                         className="input-field"
                         maxLength="15"

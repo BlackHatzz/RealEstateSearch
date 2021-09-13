@@ -658,12 +658,12 @@ class ProductDetailPage extends Component {
                 <div className="linear-gray-border contact-wrapper-fixed-box contact-wrapper">
                   <div
                     style={{
-                      backgroundImage: "url('" + product?.sellerAvatar + "')",
+                      backgroundImage: "url('" + product?.staffAvatar + "')",
                     }}
                     className="contact-pic"
                   ></div>
                   <div className="contact-name">
-                    {product?.sellerName}
+                    {product?.staffName}
                     {/*Nguyen Duc Huy*/}
                   </div>
                   <div className="contact-button">
