@@ -1,5 +1,5 @@
 @media only screen and (max-width: 500px) {
-  .chat-mobile-confirm>div {
+  .chat-mobile-confirm > div {
     background: none;
     border: none;
     min-height: 0 !important;
@@ -32,7 +32,7 @@
     right: 0;
     bottom: 0;
     width: 100vw;
-    z-index: 2;
+    z-index: 80;
     border-radius: 0;
   }
   .small-chat-window-1 {
@@ -42,7 +42,7 @@
     right: 0;
     bottom: 0;
     width: 100vw;
-    z-index: 3;
+    z-index: 80;
     border-radius: 0;
   }
   .chat_window_container_message_box {
