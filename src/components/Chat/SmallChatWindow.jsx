@@ -3,6 +3,7 @@ import { fb } from "../../services";
 import { ChatContent } from "./ChatContent";
 import { Context } from "../../ChatContext";
 import "./Chat.css";
+import "./Chat-mobile.css";
 
 const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
   // - Context
