@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import { fb } from "../../services";
 import { ChatContent } from "./ChatContent";
 import { Context } from "../../ChatContext";
+import "./Chat.css";
 
 const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
   // - Context
