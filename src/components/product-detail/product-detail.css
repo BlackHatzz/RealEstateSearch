@@ -195,6 +195,7 @@ div.detail-box-row {
   font-size: 28px;
   background-color: silver;
   object-fit: cover;
+  background-size: 90px 90px;
 }
 
 .contact-name {
