@@ -266,7 +266,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
               }}
               checked={startTime === time.slice(0, 5)}
             />
-            {time}
+            <label>{time}</label>
           </div>
         ))}
     </div>

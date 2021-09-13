@@ -229,7 +229,8 @@ export const MessageContainer = ({
       batch.update(conversationRef, {
         appointment: "cancel",
         lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-        lastMessageReadStaff: false,
+        lastMessageReadStaff: true,
+        lastMessageReadBuyer: false,
         lastMessage: "lịch hẹn đã bị hủy",
       });
       let buyerBookRef = fb.firestore

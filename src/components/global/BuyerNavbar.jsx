@@ -25,6 +25,7 @@ import ChatBubble from "../Chat/ChatBubble";
 import SmallChatWindow from "../Chat/SmallChatWindow";
 import Modal from "@material-ui/core/Modal";
 import HomeOutlinedIcon from "@material-ui/icons/HomeOutlined";
+import "../Seller/seller-mobile.css";
 const BuyerNavbar = () => {
   const uuid = fb.auth.currentUser?.uid;
   const {

@@ -542,6 +542,10 @@ option {
 .time-select-item {
   width: 100px;
 }
+.time-select-item > label {
+  font-weight: 400;
+  font-size: 14px;
+}
 
 .deal-button {
   height: 30px;
