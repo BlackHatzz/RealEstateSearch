@@ -641,11 +641,11 @@ option {
 
 .message-input-form .textarea-input {
   resize: none !important;
-  overflow: hidden !important;
-  /* min-height: 10px; */
-  overflow-y: auto;
+  /* overflow: hidden !important; */
+
+  overflow-y: auto !important;
   font-size: 14px;
-  height: 30px;
+  height: 27px;
   border-radius: 5px;
   border: none;
   background-color: #ebebeb;
