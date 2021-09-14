@@ -59,7 +59,7 @@ const SellerDashboard = () => {
   var [items, setItems] = useState([
     {
       key: 1,
-      title: "Quản lý bài viết",
+      title: "Quản lý bất động sản",
       icon: (
         <PostAddIcon
           id={"seller-dashboard-icon1"}
