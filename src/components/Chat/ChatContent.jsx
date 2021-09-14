@@ -233,7 +233,7 @@ export const ChatContent = ({
                         )}
                     </div>
                   )}
-                  {currentChat?.data?.status === "disable" && (
+                  {currentChat?.data?.status !== "active" && (
                     <p>Bất động sản đã được giao dịch</p>
                   )}
                 </div>

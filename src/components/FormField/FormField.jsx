@@ -11,6 +11,7 @@ export const FormField = ({
   <label>
     {label}
     <Field
+      autoComplete="off"
       name={name}
       type={type}
       placeholder={placeholder}
