@@ -348,7 +348,17 @@ const SellerNavbar = (props) => {
                                   sellerAccept: false,
                                 },
                                 { merge: true }
-                              );
+                              )
+                              .then(() => {
+                                fb.firestore
+                                  .collection("users")
+                                  .doc(uuid)
+                                  .collection("notifications")
+                                  .doc(modalData.data.id + "")
+                                  .update({
+                                    status: "inactive",
+                                  });
+                              });
                             setModalOpen(false);
                           }}
                         >
