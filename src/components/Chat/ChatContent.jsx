@@ -130,7 +130,7 @@ export const ChatContent = ({
         <>
           <div className="small-chat-window-title-box">
             <p className="small-chat-window-title">
-              {currentChat?.id + "." + currentChat?.data?.title}
+              {currentChat?.data?.title}
             </p>
             <div className="small-chat-window-buttons">
               {/* <div
@@ -176,7 +176,7 @@ export const ChatContent = ({
                         " WC"}
                     </p>
                   </div>
-                  {role === "buyer" && (
+                  {role === "buyer" && currentChat?.data?.status === "active" && (
                     <div className="chat_window_container_message_box_display_realestate_info_deal_book">
                       {dealStatus ? (
                         <p className="chat_window_container_message_box_display_realestate_info_deal">
@@ -232,6 +232,9 @@ export const ChatContent = ({
                           </div>
                         )}
                     </div>
+                  )}
+                  {currentChat?.data?.status === "disable" && (
+                    <p>Bất động sản đã được giao dịch</p>
                   )}
                 </div>
               </div>
@@ -346,6 +349,7 @@ export const ChatContent = ({
                 }}
               >
                 <textarea
+                  disabled={currentChat?.data?.status === "disable"}
                   id="textarea-send-message"
                   maxLength="2000"
                   className="textarea-input"

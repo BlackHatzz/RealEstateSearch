@@ -82,6 +82,7 @@ export const ChatButton = (props) => {
                     realIMG: props.product.images[0].imgUrl,
                     lastMessageReadBuyer: true,
                     lastMessageReadStaff: true,
+                    status: "active",
                     // deal: "none",
                     // dealId: "",
                     // appointment: "none",
