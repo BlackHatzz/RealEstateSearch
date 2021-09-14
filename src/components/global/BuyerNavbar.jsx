@@ -333,82 +333,85 @@ const BuyerNavbar = () => {
                         />
                       </div>
                     </div>
-                    {modalData.data?.status === "active" && (
-                      <div className="transaction-modal-button-group">
-                        <button
-                          onClick={() => {
-                            fb.firestore
-                              .collection("users")
-                              .doc(modalData.data.staffId + "")
-                              .collection("transactions")
-                              .doc(modalData.data.realId + "")
-                              .set(
-                                {
-                                  buyerId: modalData.data.buyerId,
-                                  sellerId: modalData.data.sellerId,
-                                  realId: modalData.data.realId,
-                                  staff: modalData.data.staffId,
-                                  buyerAccept: true,
-                                },
-                                { merge: true }
-                              )
-                              .then(() => {
-                                fb.firestore
-                                  .collection("users")
-                                  .doc(uuid)
-                                  .collection("notifications")
-                                  .doc(modalData.data.id + "")
-                                  .update({
-                                    status: "inactive",
-                                  });
-                              });
 
-                            setModalOpen(false);
-                          }}
-                        >
-                          Xác nhận
-                        </button>
-                        <button
-                          onClick={() => {
-                            fb.firestore
-                              .collection("users")
-                              .doc(modalData.data.staffId + "")
-                              .collection("transactions")
-                              .doc(modalData.data.realId + "")
-                              .set(
-                                {
-                                  buyerId: modalData.data.buyerId,
-                                  sellerId: modalData.data.sellerId,
-                                  staff: modalData.data.staffId,
-                                  realId: modalData.data.realId,
-                                  buyerAccept: false,
-                                },
-                                { merge: true }
-                              )
-                              .then(() => {
-                                fb.firestore
-                                  .collection("users")
-                                  .doc(uuid)
-                                  .collection("notifications")
-                                  .doc(modalData.data.id + "")
-                                  .update({
-                                    status: "inactive",
-                                  });
-                              });
-                            setModalOpen(false);
-                          }}
-                        >
-                          Từ chối
-                        </button>
-                        <button
-                          onClick={() => {
-                            setModalOpen(false);
-                          }}
-                        >
-                          Hủy
-                        </button>
-                      </div>
-                    )}
+                    <div className="transaction-modal-button-group">
+                      {modalData.data?.status === "active" && (
+                        <>
+                          <button
+                            onClick={() => {
+                              fb.firestore
+                                .collection("users")
+                                .doc(modalData.data.staffId + "")
+                                .collection("transactions")
+                                .doc(modalData.data.realId + "")
+                                .set(
+                                  {
+                                    buyerId: modalData.data.buyerId,
+                                    sellerId: modalData.data.sellerId,
+                                    realId: modalData.data.realId,
+                                    staff: modalData.data.staffId,
+                                    buyerAccept: true,
+                                  },
+                                  { merge: true }
+                                )
+                                .then(() => {
+                                  fb.firestore
+                                    .collection("users")
+                                    .doc(uuid)
+                                    .collection("notifications")
+                                    .doc(modalData.data.id + "")
+                                    .update({
+                                      status: "inactive",
+                                    });
+                                });
+
+                              setModalOpen(false);
+                            }}
+                          >
+                            Xác nhận
+                          </button>
+                          <button
+                            onClick={() => {
+                              fb.firestore
+                                .collection("users")
+                                .doc(modalData.data.staffId + "")
+                                .collection("transactions")
+                                .doc(modalData.data.realId + "")
+                                .set(
+                                  {
+                                    buyerId: modalData.data.buyerId,
+                                    sellerId: modalData.data.sellerId,
+                                    staff: modalData.data.staffId,
+                                    realId: modalData.data.realId,
+                                    buyerAccept: false,
+                                  },
+                                  { merge: true }
+                                )
+                                .then(() => {
+                                  fb.firestore
+                                    .collection("users")
+                                    .doc(uuid)
+                                    .collection("notifications")
+                                    .doc(modalData.data.id + "")
+                                    .update({
+                                      status: "inactive",
+                                    });
+                                });
+                              setModalOpen(false);
+                            }}
+                          >
+                            Từ chối
+                          </button>
+                        </>
+                      )}
+                      <button
+                        onClick={() => {
+                          setModalOpen(false);
+                        }}
+                      >
+                        Đóng
+                      </button>
+                    </div>
                   </div>
                 </Modal>
               )}
