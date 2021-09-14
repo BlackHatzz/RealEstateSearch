@@ -29,7 +29,6 @@ export const ChatContent = ({
   setMessages,
 }) => {
   const { role, removeViewChat } = useContext(Context);
-
   const [dealId, setDealId] = useState();
   const [minimize, setMinimize] = useState(false);
 
