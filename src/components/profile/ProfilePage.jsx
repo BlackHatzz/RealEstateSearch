@@ -68,7 +68,7 @@ const ProfilePage = () => {
                   body: JSON.stringify({
                     id: user.uid,
                     phone: user.phoneNumber,
-                    username: user?.phoneNumber,
+
                     fullname: displayName,
                     email: email,
                     status: "active",
@@ -125,7 +125,7 @@ const ProfilePage = () => {
             body: JSON.stringify({
               id: user.uid,
               phone: user?.phoneNumber,
-              username: user?.phoneNumber,
+
               fullname: displayName,
               email: email,
               status: "active",
@@ -163,7 +163,6 @@ const ProfilePage = () => {
     <>
       {true && (
         <div className="profile-wrapper">
-
           <div className="profile-container">
             <div className="profile-pic-container">
               <img src={data?.photoURL} alt="" />

@@ -57,7 +57,7 @@ const NewProfile = () => {
               .doc(user.uid + "")
               .set({
                 uuid: user.uid,
-                userName: displayName,
+
                 email: email,
                 phoneNumber: user.phoneNumber,
                 photoURL: downloadURL + "",
@@ -73,7 +73,7 @@ const NewProfile = () => {
                   body: JSON.stringify({
                     id: user.uid,
                     phone: user.phoneNumber,
-                    username: displayName,
+
                     fullname: displayName,
                     email: email,
                     status: "active",
@@ -114,7 +114,7 @@ const NewProfile = () => {
         .doc(user.uid + "")
         .set({
           uuid: user.uid,
-          userName: displayName,
+
           email: email,
           phoneNumber: user.phoneNumber,
           photoURL: "",
@@ -130,7 +130,7 @@ const NewProfile = () => {
             body: JSON.stringify({
               id: user.uid,
               phone: user.phoneNumber,
-              username: displayName,
+
               fullname: displayName,
               email: email,
               status: "active",
