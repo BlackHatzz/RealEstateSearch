@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import CheckCircleIcon from "@material-ui/icons/CheckCircle";
 import CancelIcon from "@material-ui/icons/Cancel";
-
+import "./seller.css";
 import { fb } from "../../services";
 
 export const SellerScheduler = () => {

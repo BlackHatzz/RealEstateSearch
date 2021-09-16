@@ -20,34 +20,9 @@ const NewProfile = () => {
 
       uploadTask.on(
         "state_changed",
-        (snapshot) => {
-          // var progress =
-          //   (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          // console.log("Upload is " + progress + "% done");
-          // eslint-disable-next-line default-case
-          // switch (snapshot.state) {
-          //   case fb.storage.TaskState.PAUSED:
-          //     console.log("Upload is paused");
-          //     break;
-          //   case fb.storage.TaskState.RUNNING:
-          //     console.log("Upload is running");
-          //     break;
-          // }
-        },
+        (snapshot) => {},
         (error) => {
-          // eslint-disable-next-line default-case
           console.log("error upload avatar", error);
-          // switch (error.code) {
-          //   case 'storage/unauthorized':
-          //     // User doesn't have permission to access the object
-          //     break;
-          //   case 'storage/canceled':
-          //     // User canceled the upload
-          //     break;
-          //   case 'storage/unknown':
-          //     // Unknown error occurred, inspect error.serverResponse
-          //     break;
-          // }
         },
         () => {
           uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
@@ -57,7 +32,7 @@ const NewProfile = () => {
               .doc(user.uid + "")
               .set({
                 uuid: user.uid,
-
+                displayName: displayName,
                 email: email,
                 phoneNumber: user.phoneNumber,
                 photoURL: downloadURL + "",
@@ -73,7 +48,6 @@ const NewProfile = () => {
                   body: JSON.stringify({
                     id: user.uid,
                     phone: user.phoneNumber,
-
                     fullname: displayName,
                     email: email,
                     status: "active",
@@ -114,9 +88,9 @@ const NewProfile = () => {
         .doc(user.uid + "")
         .set({
           uuid: user.uid,
-
+          displayName: displayName,
           email: email,
-          phoneNumber: user.phoneNumber,
+          phoneNumber: user?.phoneNumber,
           photoURL: "",
           role: "customer",
         })
@@ -129,7 +103,7 @@ const NewProfile = () => {
             },
             body: JSON.stringify({
               id: user.uid,
-              phone: user.phoneNumber,
+              phone: user?.phoneNumber,
 
               fullname: displayName,
               email: email,
@@ -143,7 +117,7 @@ const NewProfile = () => {
                 fb.auth.currentUser
                   .updateProfile({
                     displayName: displayName,
-                    photoURL: "",
+
                     email: email,
                   })
                   .catch((error) => {
@@ -198,6 +172,14 @@ const NewProfile = () => {
                 size="25"
               />
               <h2 className="profile-label">Chọn ảnh đại diện</h2>
+
+              <div className="profile-avatar-preview">
+                {!!avatar ? (
+                  <img src={URL.createObjectURL(avatar)} alt="" />
+                ) : (
+                  <img src={user.photoURL} alt="" />
+                )}
+              </div>
               <input
                 name="avatar"
                 type="file"
@@ -207,10 +189,6 @@ const NewProfile = () => {
                   setAvatar(event.target.files[0]);
                 }}
               />
-
-              <div className="profile-avatar-preview">
-                <img src={avatar && URL.createObjectURL(avatar)} alt="" />
-              </div>
 
               <button
                 className="update-profile-btn"

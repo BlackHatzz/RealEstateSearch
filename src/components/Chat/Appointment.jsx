@@ -57,7 +57,6 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
         })
         .then((data) => {
           const active = data;
-          console.log(active);
           const freeDays = active.map((e) => e.weekDay.id);
           const busyDays = defaultWeekday.filter((e) => !freeDays.includes(e));
           const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];

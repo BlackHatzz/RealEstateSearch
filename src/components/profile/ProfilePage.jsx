@@ -33,7 +33,6 @@ const ProfilePage = () => {
 
   const updateProfile = ({ avatar, displayName, email }, { setSubmitting }) => {
     if (avatar) {
-      console.log("avatar", avatar);
       const uploadTask = fb.storage
         .ref(`images/${user.uid}/${avatar.name}`)
         .put(avatar);
@@ -68,7 +67,6 @@ const ProfilePage = () => {
                   body: JSON.stringify({
                     id: user.uid,
                     phone: user.phoneNumber,
-
                     fullname: displayName,
                     email: email,
                     status: "active",
@@ -191,7 +189,7 @@ const ProfilePage = () => {
                   }
                 >
                   <input
-                    value={data?.displayName}
+                    value={user?.displayName}
                     type="text"
                     className="solid-field"
                   />

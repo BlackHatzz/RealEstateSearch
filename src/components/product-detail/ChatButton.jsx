@@ -29,22 +29,6 @@ export const ChatButton = (props) => {
         throw response;
       })
       .then((data) => {
-        // fb.firestore
-        //   .collection("realestates")
-        //   .doc(props.product.id + "")
-        //   .set({
-        //     id: props.product.id,
-        //     address: address,
-        //     title: props.product.title,
-        //     seller: props.product.sellerName,
-        //     sellerId: props.product.sellerId,
-        //     area: props.product.area,
-        //     bed: props.product.numberOfBedroom,
-        //     bath: props.product.numberOfBathroom,
-        //     price: props.product.price,
-        //     chats: [],
-        //   });
-
         fb.firestore
           .collection("realestates")
           .doc(props.product.id + "")
@@ -105,34 +89,6 @@ export const ChatButton = (props) => {
                 });
             }
           });
-
-        // fb.firestore
-        //   .collection("conversations")
-        //   .doc("" + data.id)
-        //   .set(
-        //     {
-        //       lastvisit: currentDate.toUTCString(),
-        //       title: props.product.title,
-        //       realId: props.product.id,
-        //       realImage: props.product.images[0].imgUrl,
-        //       address: address,
-        //       seller: props.product.sellerName,
-        //       sellerId: props.product.sellerId,
-        //       buyerId: uuid,
-        //       buyer: buyername,
-        //       price: props.product.price,
-        //       area: props.product.area,
-        //       bed: props.product.numberOfBedroom,
-        //       bath: props.product.numberOfBathroom,
-        //       buyerPhone: buyerPhone,
-        //       buyerAvatar: buyerAvatar,
-        //       // deal: "none",
-        //       // dealId: "",
-        //       // appointment: "none",
-        //       // appointmentId: "",
-        //     },
-        //     { merge: true }
-        //   );
 
         updateOpen();
         updateChat(data.id + "");
