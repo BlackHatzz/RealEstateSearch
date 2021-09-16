@@ -20,7 +20,7 @@ export const ChatButton = (props) => {
       ", " +
       props.product.disName;
 
-    const reqUrl = `https://api-realestate.top/apis/v1/conversations/messages?%20realEstateId=${props.product.id}&buyerId=${uuid}&sellerId=${props.product.sellerId}`;
+    const reqUrl = `https://api-realestate.top/apis/v1/conversations/messages?%20realEstateId=${props.product.id}&buyerId=${uuid}&staffId=${props.product.staffId}`;
     fetch(reqUrl)
       .then((response) => {
         if (response.ok) {
@@ -78,11 +78,13 @@ export const ChatButton = (props) => {
                     bath: props.product.numberOfBathroom,
                     buyerPhone: buyerPhone,
                     buyerAvatar: buyerAvatar,
+                    staff: props.product.staffName,
                     staffId: doc.data().staffId,
                     realIMG: props.product.images[0].imgUrl,
                     lastMessageReadBuyer: true,
-                    lastMessageReadStaff: true,
+                    lastMessageReadStaff: false,
                     status: "active",
+
                     // deal: "none",
                     // dealId: "",
                     // appointment: "none",
@@ -97,21 +99,7 @@ export const ChatButton = (props) => {
                     .get()
                     .then((doc) => {
                       if (doc.exists) {
-                        // let conObject = {
-                        //   id: doc.id,
-                        //   data: doc.data(),
-                        // };
-
-                        // addItem(conObject);
                         addViewChat(doc.id);
-
-                        fb.firestore
-                          .collection("conversations")
-                          .doc(doc.id)
-                          .update({
-                            lastMessageReadBuyer: true,
-                            lastMessageReadStaff: true,
-                          });
                       }
                     });
                 });
@@ -161,7 +149,9 @@ export const ChatButton = (props) => {
             className="link contact-title-container"
             onClick={handleConversation}
           >
-            <div className="contact-title-container">&#32; Nhắn tin</div>
+            <div className="contact-title-container">
+              &#32; Nhắn tin với nhà môi giới
+            </div>
           </div>
         </div>
       )}

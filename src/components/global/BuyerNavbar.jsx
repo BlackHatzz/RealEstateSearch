@@ -327,13 +327,17 @@ const BuyerNavbar = () => {
                           moment(modalData.data.appointmentDate).format("LL")}
                       </p>
                       <div className="modal-transaction-image">
-                        <img
-                          src={`data:image/*;base64,${modalData.data.image}`}
-                          alt=""
-                        />
+                        {modalData.data.images.map((image) => (
+                          <img src={`data:image/*;base64,${image}`} alt="" />
+                        ))}
                       </div>
                     </div>
-
+                    {modalData.data?.status === "failed" && (
+                      <p>
+                        Đã quá thời hạn xác nhận giao dịch, vui lòng liên hệ với
+                        nhân viên để được tư vấn
+                      </p>
+                    )}
                     <div className="transaction-modal-button-group">
                       {modalData.data?.status === "active" && (
                         <>
@@ -361,7 +365,7 @@ const BuyerNavbar = () => {
                                     .collection("notifications")
                                     .doc(modalData.data.id + "")
                                     .update({
-                                      status: "inactive",
+                                      status: "accepted",
                                     });
                                 });
 
@@ -394,7 +398,7 @@ const BuyerNavbar = () => {
                                     .collection("notifications")
                                     .doc(modalData.data.id + "")
                                     .update({
-                                      status: "inactive",
+                                      status: "rejected",
                                     });
                                 });
                               setModalOpen(false);

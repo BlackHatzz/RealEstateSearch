@@ -546,7 +546,9 @@ option {
   font-weight: 400;
   font-size: 14px;
 }
-
+.bookForm {
+  padding: 5px 5px 5px 5px;
+}
 .deal-button {
   height: 30px;
   background-color: #fcba03;

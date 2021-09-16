@@ -355,4 +355,5 @@
 .modal-transaction-image > img {
   height: 100px;
   width: auto;
+  margin-right: 5px;
 }

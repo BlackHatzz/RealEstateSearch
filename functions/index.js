@@ -25,6 +25,7 @@ admin.initializeApp(functions.config().firebase);
 //       .add(notification)
 //       .then((doc) => console.log("noti added", doc));
 //   });
+
 exports.appointmentCreated = functions.firestore
   .document("users/{userId}/appointments/{appointmentId}")
   .onCreate((doc, context) => {
