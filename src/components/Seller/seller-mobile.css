@@ -1,5 +1,5 @@
-@media only screen and (max-width:500px) {
-  .set-schedule-form {
+@media only screen and (max-width: 500px) {
+  .seller-wrapper .set-schedule-form {
     margin-left: 0;
     padding: 5px;
     display: flex;
@@ -77,8 +77,8 @@
     border-radius: 5%;
     font-weight: bold;
   }
-  .modal-confirm{
-  width: 90%;
-  padding: 10px;
+  .modal-confirm {
+    width: 90%;
+    padding: 10px;
   }
 }
