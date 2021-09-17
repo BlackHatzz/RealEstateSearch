@@ -642,9 +642,9 @@ class ManagePost extends Component {
     const realEstateType = parseInt(
       document.getElementById("real-estate-type-input").value.toString()
     );
-    var floor = 0;
+    var floor = "0";
     if (document.getElementById("floor-input") != null) {
-      floor = parseInt(document.getElementById("floor-input").value.toString());
+      floor = document.getElementById("floor-input").value.toString();
     }
     const project = document.getElementById("project-input").value.toString();
     const doorDirection = document
