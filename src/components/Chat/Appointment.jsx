@@ -165,6 +165,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
             {
               buyerId: uuid,
               sellerId: conversation.data.sellerId,
+              staffId: conversation.data.staffId,
               realId: conversation.data.realId,
               status: "upcoming",
               id: bookId,
@@ -174,7 +175,6 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
               buyer: conversation.data.buyer,
               dealprice: conversation.data.dealPrice,
               title: conversation.data.title,
-              staffId: conversation.data.staffId,
             },
             { merge: true }
           );

@@ -471,7 +471,9 @@ const BuyerNavbar = () => {
                           ) : null
                         )}
                   </div>
-                  {conversations.length === 0 && <div>chua co tin nhan</div>}
+                  {conversations.length === 0 && (
+                    <div>chưa có cuộc trò chuyện</div>
+                  )}
                   <div className="conversation-bottom"></div>
                 </div>
               ) : null}
