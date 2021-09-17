@@ -52,7 +52,7 @@ input.search-bar:focus {
 
 .filter-drop-box-label {
   background-color: transparent;
-  font-size: 0.8em;
+  font-size: 12.5px;
   color: #2c2f36;
 }
 
@@ -62,7 +62,7 @@ input.search-bar:focus {
 
 .filter-drop-box-value {
   background-color: transparent;
-  font-size: 1em;
+  font-size: 15px;
 }
 
 .search-button {

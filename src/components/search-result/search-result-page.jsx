@@ -13,6 +13,24 @@ class SearchResultPage extends Component {
     isLoaded: false,
     searchText: null,
 
+    disId: null,
+    minPrice: null,
+    minPrice: null,
+    maxPrice: null,
+    minArea: null,
+    maxArea: null,
+    type: null,
+    doorDirection: null,
+    numberOfBedroom: null,
+    numberOfBathroom: null,
+    sort: null,
+    paging: {
+      totalRecord: 0,
+      totalPage: 0,
+      contentSize: 0,
+      pageIndex: 0,
+    },
+
     suggestionInfo: {},
     realEstateTypes: [
       { key: 0, text: "Tất cả" },
@@ -48,13 +66,13 @@ class SearchResultPage extends Component {
     //this.props.match.params.searchtext
     this.state.searchText =
       this.props.match.params.searchtext === undefined ||
-        this.props.match.params.searchtext === null
+      this.props.match.params.searchtext === null
         ? ""
         : this.props.match.params.searchtext;
     this.setState({
       searchText:
         this.props.match.params.searchtext === undefined ||
-          this.props.match.params.searchtext === null
+        this.props.match.params.searchtext === null
           ? ""
           : this.props.match.params.searchtext,
     });
@@ -224,6 +242,21 @@ class SearchResultPage extends Component {
     console.log(fromArea);
     console.log(toArea);
 
+    this.setState({
+      disId: address,
+      minPrice: fromPrice,
+      minPrice: fromPrice,
+      maxPrice: toPrice,
+      minArea: fromArea,
+      maxArea: toArea,
+      type:
+        this.props.match.params.type == 0 ? null : this.props.match.params.type,
+      doorDirection: doorDirection,
+      numberOfBedroom: bedroom,
+      numberOfBathroom: bathroom,
+      sort: sort,
+    });
+
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -269,9 +302,9 @@ class SearchResultPage extends Component {
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("search result");
+          console.log("search result zz");
 
-          console.log(result.content);
+          console.log(result);
           this.setState({
             items: result.content,
             isLoaded: true,
@@ -342,6 +375,111 @@ class SearchResultPage extends Component {
     );
   }
 
+  callAPIGetAllByPaging = (pageIndex) => {
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        page: pageIndex,
+        search: this.state.searchText,
+        disId: this.state.disId,
+        wardId: null,
+        minPrice: this.state.minPrice,
+        maxPrice: this.state.maxPrice,
+        minArea: this.state.minArea,
+        maxArea: this.state.maxArea,
+        type: this.state.type,
+        direction: this.state.doorDirection,
+        numberOfBedroom: this.state.numberOfBedroom,
+        numberOfBathroom: this.state.numberOfBathroom,
+        sort: this.state.sort,
+      }),
+    };
+
+    fetch(Constants.getRealEstateRef, requestOptions)
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          console.log("search result exe");
+          console.log(result);
+          this.setState({
+            items: result.content,
+            isLoaded: true,
+          });
+        },
+        (error) => {}
+      );
+  };
+
+  generatePaging = () => {
+    let firstTag = (
+      <li
+        class={
+          "page-item " + (this.state.paging.pageIndex == 0 ? "disabled" : "")
+        }
+      >
+        <a
+          class="page-link"
+          onClick={() =>
+            this.callAPIGetAllByPaging(
+              Math.max(0, this.state.paging.pageIndex - 1)
+            )
+          }
+        >
+          Trước
+        </a>
+      </li>
+    );
+    let lastTag = (
+      <li
+        class={
+          "page-item " +
+          (this.state.paging.totalPage - 1 == this.state.paging.pageIndex
+            ? "disabled"
+            : "")
+        }
+      >
+        <a
+          class="page-link"
+          onClick={() =>
+            this.callAPIGetAllByPaging(
+              Math.min(
+                this.state.paging.pageIndex + 1,
+                this.state.paging.totalPage - 1
+              )
+            )
+          }
+        >
+          Sau
+        </a>
+      </li>
+    );
+
+    let tags = [firstTag];
+
+    for (let i = 0; i < this.state.paging.totalPage; i++) {
+      let tag = (
+        <li class="page-item">
+          <a class="page-link" onClick={() => this.callAPIGetAllByPaging(i)}>
+            {i + 1}
+          </a>
+        </li>
+      );
+      let currentIndexTag = (
+        <li class="page-item active">
+          <span class="page-link">{i + 1}</span>
+        </li>
+      );
+      if (this.state.paging.pageIndex == i) {
+        tags.push(currentIndexTag);
+      } else {
+        tags.push(tag);
+      }
+    }
+    tags.push(lastTag);
+    return tags;
+  };
+
   render() {
     return (
       <React.Fragment>
@@ -371,6 +509,9 @@ class SearchResultPage extends Component {
         >
           {this.renderSearchResult()}
         </div>
+
+        <ul class="pagination">{this.generatePaging().map((val) => val)}</ul>
+
         {/* <div className="pagination-wrapper">
           <div className="pagination-container"></div>
         </div> */}

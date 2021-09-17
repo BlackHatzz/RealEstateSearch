@@ -426,7 +426,7 @@ const SearchPost = () => {
                             pageIndex: result.pageIndex,
                           }
 
-                          setPaging(myPaging)
+                          setPaging(myPaging);
                         } else {
                           setRealEstateList([]);
                           let myPaging = {
@@ -733,9 +733,8 @@ const RealItem = ({ realEstate, link = null }) => {
 
 
         {/* description */}
-        <div className="description"> 
-        Mô tả: {realEstate.description}
-        </div>
+        {/* <div className="description"> */}
+        {/* Mô tả: {realEstate.description} */}
 
         {/* Căn hộ 3PN chỉ từ 2,5̉ TỶ Gần ngay Phố Cổ ̉ Đầy đủ ̣Nội Thất
 
@@ -745,7 +744,7 @@ const RealItem = ({ realEstate, link = null }) => {
             400Triệu - Khi Thanh Toán Sớm . */}
         {/* </div> */}
 
-        {/* {realEstate.status === "active" && (
+        {realEstate.status === "active" && (
           <div className="real-post-item-buyer-list">
             {conversations.length > 0 && (
               <p className="real-post-item-buyer-list-header">Thỏa thuận</p>
@@ -799,7 +798,7 @@ const RealItem = ({ realEstate, link = null }) => {
               </div>
             ))}
           </div>
-        )} */}
+        )}
 
         <div className="other-info">
 

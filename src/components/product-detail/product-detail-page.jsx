@@ -236,9 +236,9 @@ class ProductDetailPage extends Component {
                 {product?.price} tỷ - {product?.area} m²
               </div>
               <div className="profile-mobile">
-                <img src={product?.sellerAvatar} alt={product?.sellerName} />
+                <img src={product?.staffAvatar} alt={product?.staffName} />
                 <div>
-                  <p className="profile-mobile-name">{product?.sellerName}</p>
+                  <p className="profile-mobile-name">{product?.staffName}</p>
                   <p>
                     Ngày đăng:{" "}
                     {upperFirstLetter(moment(product?.createAt).calendar())}
