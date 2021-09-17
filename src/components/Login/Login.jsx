@@ -26,9 +26,7 @@ export const Login = () => {
           var isNewUser = authResult.additionalUserInfo.isNewUser;
           var providerId = authResult.additionalUserInfo.providerId;
           var operationType = authResult.operationType;
-          console.log("credential:" + credential);
-          console.log("provider id:" + providerId);
-          console.log("operationType:" + operationType);
+
           if (isNewUser) {
             console.log("new user");
             history.push("/new-profile");

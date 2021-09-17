@@ -6,29 +6,32 @@ import { upperFirstLetter } from "../../utils/upperFirstLetter";
 
 const Passed = () => {
   const { role } = useContext(Context);
-  const uuid = fb.auth.currentUser.uid;
+  const uuid = fb.auth.currentUser?.uid;
   const [appointments, setAppointments] = useState([]);
   useEffect(() => {
-    const unsubscribe = fb.firestore
-      .collection("users")
-      .doc(uuid)
-      .collection("appointments")
-      .where(role + "Id", "==", uuid)
-      .where("status", "==", "upcoming")
-      .orderBy("date", "desc")
-      .onSnapshot((snapshot) => {
-        setAppointments(
-          snapshot.docs
-            .filter((e) => moment().isAfter(moment(e.data().date).format()))
-            .map((doc) => ({
-              id: doc.id,
-              data: doc.data(),
-            }))
-        );
-      });
-    return () => {
-      unsubscribe();
-    };
+    if (uuid) {
+      const unsubscribe = fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("appointments")
+        .where(role + "Id", "==", uuid)
+        .where("status", "==", "upcoming")
+        .orderBy("date", "desc")
+        .onSnapshot((snapshot) => {
+          setAppointments(
+            snapshot.docs
+              .filter((e) => moment().isAfter(moment(e.data().date).format()))
+              .map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+          );
+        });
+
+      return () => {
+        unsubscribe();
+      };
+    }
   }, [uuid]);
 
   return (

@@ -6,27 +6,29 @@ import "./schedule.css";
 import { upperFirstLetter } from "../../utils/upperFirstLetter";
 const Upcoming = () => {
   const { role } = useContext(Context);
-  const uuid = fb.auth.currentUser.uid;
+  const uuid = fb.auth.currentUser?.uid;
   const [appointments, setAppointments] = useState([]);
   const currentDate = new Date();
   useEffect(() => {
-    fb.firestore
-      .collection("users")
-      .doc(uuid)
-      .collection("appointments")
-      .where(role + "Id", "==", uuid)
-      .where("status", "==", "upcoming")
-      .orderBy("date", "asc")
-      .onSnapshot((snapshot) => {
-        setAppointments(
-          snapshot.docs
-            .filter((e) => moment().isBefore(moment(e.data().date).format()))
-            .map((doc) => ({
-              id: doc.id,
-              data: doc.data(),
-            }))
-        );
-      });
+    if (uuid) {
+      fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("appointments")
+        .where(role + "Id", "==", uuid)
+        .where("status", "==", "upcoming")
+        .orderBy("date", "asc")
+        .onSnapshot((snapshot) => {
+          setAppointments(
+            snapshot.docs
+              .filter((e) => moment().isBefore(moment(e.data().date).format()))
+              .map((doc) => ({
+                id: doc.id,
+                data: doc.data(),
+              }))
+          );
+        });
+    }
   }, [uuid]);
 
   return (
