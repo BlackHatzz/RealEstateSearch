@@ -309,15 +309,19 @@ class SearchResultPage extends Component {
             items: result.content,
             isLoaded: true,
           });
+
+          let myPaging = {
+            totalRecord: result.totalRecord,
+            totalPage: result.totalPage,
+            contentSize: result.contentSize,
+            pageIndex: result.pageIndex,
+          }
+
+          this.setState({
+            paging: myPaging,
+          });
         },
-        // Note: it's important to handle errors here
-        // instead of a catch() block so that we don't swallow
-        // exceptions from actual bugs in components.
         (error) => {
-          // this.setState({
-          //   isLoaded: true,
-          //   error,
-          // });
         }
       );
 
