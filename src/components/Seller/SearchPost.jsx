@@ -123,7 +123,7 @@ const SearchPost = () => {
               pageIndex: result.pageIndex,
             }
 
-            setPaging(myPaging)
+            setPaging(myPaging);
             //   realEstateList = result.content;
             console.log(" step 2 - " + realEstateList.length);
             for (var i = 0; i < realEstateList.length; i++) {
