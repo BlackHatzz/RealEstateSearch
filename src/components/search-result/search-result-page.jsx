@@ -371,6 +371,7 @@ class SearchResultPage extends Component {
           // <ProductItem item={item} />
           // </Link>
         ))}
+        <ul class="pagination">{this.generatePaging().map((val) => val)}</ul>
         {/* <ProductItem />
               <ProductItem />
               <ProductItem />
@@ -497,6 +498,7 @@ class SearchResultPage extends Component {
         <div
           style={{
             height: "calc(100% - 1px - 70px - 50px)",
+            // height: "200px",
             paddingTop: "12px",
             paddingBottom: "12px",
             // height: "2000px",
@@ -512,9 +514,10 @@ class SearchResultPage extends Component {
           }}
         >
           {this.renderSearchResult()}
+
         </div>
 
-        <ul class="pagination">{this.generatePaging().map((val) => val)}</ul>
+        
 
         {/* <div className="pagination-wrapper">
           <div className="pagination-container"></div>
