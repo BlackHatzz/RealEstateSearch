@@ -178,9 +178,8 @@
   position: absolute;
   border-radius: 6px;
   border: 1px solid rgb(190, 190, 190);
-  padding: 0;
   overflow-y: auto;
-  padding: 0px 5px 10px 5px;
+  padding: 10px 5px 10px 10px;
 }
 
 .notification-item {
