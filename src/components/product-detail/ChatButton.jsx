@@ -47,7 +47,7 @@ export const ChatButton = (props) => {
                 .doc("" + data.id)
                 .set(
                   {
-                    lastvisit: currentDate.toUTCString(),
+                    lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
                     title: props.product.title,
                     realId: props.product.id,
                     realImage: props.product.images[0].imgUrl,

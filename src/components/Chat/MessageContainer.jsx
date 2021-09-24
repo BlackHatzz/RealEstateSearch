@@ -282,6 +282,56 @@ export const MessageContainer = ({
     }
   };
 
+  const changeBookMessageStatus = (message) => {
+    let status =
+      moment().diff(moment(message.appointment), "minutes") > 120
+        ? "passed"
+        : "upcoming";
+    console.log(status);
+    if (message?.id) {
+      let batch = fb.firestore.batch();
+      let messageRef = fb.firestore
+        .collection("conversations")
+        .doc(conversation.id)
+        .collection("messages")
+        .doc(message?.id);
+
+      batch.update(messageRef, {
+        status: status,
+      });
+
+      let conversationRef = fb.firestore
+        .collection("conversations")
+        .doc(conversation.id);
+
+      batch.update(conversationRef, {
+        appointment: status,
+      });
+      let buyerBookRef = fb.firestore
+        .collection("users")
+        .doc(uuid)
+        .collection("appointments")
+        .doc(message?.id);
+
+      batch.update(buyerBookRef, {
+        status: status,
+      });
+      let staffBookRef = fb.firestore
+        .collection("users")
+        .doc(conversation.data.staffId)
+        .collection("appointments")
+        .doc(message?.id);
+
+      batch.update(staffBookRef, {
+        status: status,
+      });
+
+      batch.commit().then(() => {
+        console.log("update appointment status batch commit finished");
+      });
+      setBookStatus("cancel");
+    }
+  };
   return (
     <>
       {messages && (
@@ -315,8 +365,7 @@ export const MessageContainer = ({
                       )}
                       {message.status === "accepted" && (
                         <div className="buyer-deal-message">
-                          <p>Thỏa thuận</p>
-                          <p>Giá {message?.deal} tỷ</p>
+                          <p>{"Thỏa thuận " + message?.deal + " tỷ"}</p>
                           <p>đã được chấp nhận</p>
                           {bookStatus !== "upcoming" && (
                             <button
@@ -410,23 +459,38 @@ export const MessageContainer = ({
                   )}
                 </div>
               )}
-              {message.appointment && (
+              {message?.appointment && (
                 <div>
                   {role === "buyer" && (
                     <div>
-                      {message.status === "upcoming" && (
+                      {message.status !== "cancel" && (
                         <div className="buyer-appointment-message-upcoming">
-                          <p>Lịch hẹn sắp tới</p>
+                          <>
+                            {message.status === "upcoming" &&
+                              moment().isAfter(moment(message.appointment)) &&
+                              changeBookMessageStatus(message)}
+                          </>
+                          <p>
+                            {message.status === "upcoming" &&
+                              "Lịch hẹn sắp tới"}
+                            {message.status === "ongoing" &&
+                              "Lịch hẹn đang diễn ra"}
+                            {message.status === "passed" && "Lịch hẹn đã qua"}
+                          </p>
                           <p>
                             {moment(message.appointment)
                               .locale("vi")
                               .format("LLLL")}
                           </p>
-                          <button
-                            onClick={() => handelCancelAppointment(message.id)}
-                          >
-                            Hủy
-                          </button>
+                          {message.status === "upcoming" && (
+                            <button
+                              onClick={() =>
+                                handelCancelAppointment(message.id)
+                              }
+                            >
+                              Hủy
+                            </button>
+                          )}
                         </div>
                       )}
                       {message.status === "cancel" && (

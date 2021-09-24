@@ -15,7 +15,7 @@ const Passed = () => {
         .doc(uuid)
         .collection("appointments")
         .where(role + "Id", "==", uuid)
-        .where("status", "==", "upcoming")
+        .where("status", "==", "passed")
         .orderBy("date", "desc")
         .onSnapshot((snapshot) => {
           setAppointments(

@@ -73,7 +73,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       .doc(id1)
       .collection("messages")
       .orderBy("timestamp", "desc")
-      .limit(10)
+      // .limit(10)
       .onSnapshot((snap) => {
         let docs = snap.docs;
         let previousDoc = docs[docs.length - 1];
@@ -90,7 +90,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       .doc(id2)
       .collection("messages")
       .orderBy("timestamp", "desc")
-      .limit(10)
+      // .limit(10)
       .onSnapshot((snap) => {
         let docs = snap.docs;
         let previousDoc = docs[docs.length - 1];

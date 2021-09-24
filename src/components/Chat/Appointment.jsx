@@ -127,6 +127,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
       .collection("messages")
       .doc(bookId)
       .set({
+        id: bookId,
         type: "appointment",
         appointment: date,
         sender: username,
@@ -228,23 +229,26 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
         setTrigger((value) => !value);
       })
       .then(() => {
-        // fetch("https://api-realestate.top/apis/v1/appointments/create", {
-        //   method: "POST",
-        //   headers: {
-        //     Accept: "application/json",
-        //     "Content-Type": "application/json",
-        //   },
-        //   body: JSON.stringify({
-        //     conversationId: conversation.id,
-        //     createAt: currentDate.toISOString(),
-        //     id: 0,
-        //     scheduleDate: startDate.toISOString(),
-        //     staffId: "SaLjk0fE9xTr2qu3JLj6bFgNUPq1",
-        //     status: "upcoming",
-        //   }),
-        // }).then((response) => {
-        //   console.log(response);
-        // });
+        fetch("https://api-realestate.top/apis/v1/appointments/create", {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            conversationId: conversation.id,
+            createAt: currentDate.toISOString(),
+            scheduleDate: startDate.toISOString(),
+            staffId: conversation.data.staffId,
+            status: "upcoming",
+          }),
+        })
+          .then((response) => {
+            console.log("create appointment success", response);
+          })
+          .catch((err) => {
+            console.log("create appointment db err", err);
+          });
       });
   };
 

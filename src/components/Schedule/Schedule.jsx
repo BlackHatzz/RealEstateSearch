@@ -22,7 +22,7 @@ const Schedule = () => {
                 currentTab === 0 ? "schedule-button-active" : "schedule-button"
               }
             >
-              <p>Sắp tới</p>
+              <p>Đang chờ</p>
             </button>
             <button
               onClick={() => {
@@ -32,7 +32,7 @@ const Schedule = () => {
                 currentTab === 1 ? "schedule-button-active" : "schedule-button"
               }
             >
-              <p>Đã qua</p>
+              <p>Đã kết thúc</p>
             </button>
           </div>
 
