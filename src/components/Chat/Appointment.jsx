@@ -130,7 +130,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
         id: bookId,
         type: "appointment",
         appointment: date,
-        sender: username,
+        sender: uuid,
         status: "upcoming",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })

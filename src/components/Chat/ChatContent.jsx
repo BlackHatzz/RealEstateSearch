@@ -79,7 +79,8 @@ export const ChatContent = ({
               id: dealId,
               type: "deal",
               deal: deal,
-              sender: username,
+              sender: uuid,
+              receiver: currentChat.data.staffId,
               status: "pending",
               timestamp: firebase.firestore.FieldValue.serverTimestamp(),
             })
@@ -117,7 +118,7 @@ export const ChatContent = ({
           id: dealId,
           type: "deal",
           deal: deal,
-          sender: username,
+          sender: uuid,
           status: "pending",
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         })
@@ -164,9 +165,8 @@ export const ChatContent = ({
         id: docref.id,
         type: "text",
         message: currentInput,
-        sender: username,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-        senderId: uuid,
+        sender: uuid,
       })
       .finally(() => {
         setIsNewMessage(true);

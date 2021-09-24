@@ -27,7 +27,8 @@ export const MessageContainer = ({
   const { role } = useContext(Context);
   const [dealId, setDealId] = useState();
   const [bookId, setBookId] = useState();
-
+  const [staffId, setStaffId] = useState();
+  const [staffName, setStaffName] = useState();
   const [refuseInput, setRefuseInput] = useState("");
   const [refuseInputTrigger, setRefuseInputTrigger] = useState(false);
   const currentDate = new Date();
@@ -48,6 +49,7 @@ export const MessageContainer = ({
         .onSnapshot((doc) => {
           setDealId(doc.data()?.dealId);
           setBookId(doc.data()?.appointmentId);
+          setStaffId(doc.data()?.staffId);
         });
       // getMessages();
 
@@ -110,7 +112,16 @@ export const MessageContainer = ({
       console.log("doc", lastDoc);
     });
   };
-
+  useEffect(() => {
+    if (staffId) {
+      fb.firestore
+        .collection("users")
+        .doc(staffId)
+        .onSnapshot((snap) => {
+          setStaffName(snap.data().displayName);
+        });
+    }
+  }, [staffId]);
   useEffect(() => {
     if (messageEl) {
       messageEl.current.addEventListener("scroll", handleLoadOnScroll);
@@ -345,9 +356,7 @@ export const MessageContainer = ({
               id={message.id}
               key={message.id}
               className={`message ${
-                message?.sender === username
-                  ? "message_send"
-                  : "message-receive"
+                message?.sender === uuid ? "message_send" : "message-receive"
               }`}
             >
               {message?.message && <p>{message.message}</p>}
@@ -519,12 +528,12 @@ export const MessageContainer = ({
               )}
               <span
                 className={`message_name ${
-                  message.sender === username
+                  message.sender === uuid
                     ? "message_name_send"
                     : "message_name_receive"
                 }`}
               >
-                {message.sender}
+                {message.sender === uuid ? username : staffName}
               </span>
             </div>
           ))}

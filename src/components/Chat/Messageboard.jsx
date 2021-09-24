@@ -55,7 +55,7 @@ const Messageboard = () => {
       .collection("messages")
       .add({
         message: input,
-        sender: username,
+        sender: uuid,
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
@@ -68,7 +68,7 @@ const Messageboard = () => {
         .collection("messages")
         .add({
           message: input,
-          sender: username,
+          sender: uuid,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
     } else {
@@ -80,7 +80,7 @@ const Messageboard = () => {
         .collection("messages")
         .add({
           message: input,
-          sender: username,
+          sender: uuid,
           timestamp: firebase.firestore.FieldValue.serverTimestamp(),
         });
     }

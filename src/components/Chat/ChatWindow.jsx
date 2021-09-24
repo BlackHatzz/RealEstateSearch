@@ -59,7 +59,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
         id: dealId,
         type: "deal",
         deal: deal,
-        sender: username,
+        sender: uuid,
         status: "pending",
         timestamp: firebase.firestore.FieldValue.serverTimestamp(),
       })
@@ -212,7 +212,7 @@ export const ChatWindow = ({ onClickChat, conversations, reals }) => {
                         id: docref.id,
                         type: "text",
                         message: currentInput,
-                        sender: username,
+                        sender: uuid,
                         timestamp:
                           firebase.firestore.FieldValue.serverTimestamp(),
                         senderId: uuid,

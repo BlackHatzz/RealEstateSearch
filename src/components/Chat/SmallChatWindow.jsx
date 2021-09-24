@@ -36,6 +36,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
   // - set conversations
   const [chat1, setChat1] = useState(null);
   const [chat2, setChat2] = useState(null);
+
   useEffect(() => {
     const getChat1 = fb.firestore
       .collection("conversations")
@@ -107,6 +108,7 @@ const SmallChatWindow = ({ id1, id2, forceUpdate }) => {
       console.log("id1", id1);
       getChat1();
       getChat1Messages();
+
       console.log("id2", id2);
       getChat2();
       getChat2Messages();

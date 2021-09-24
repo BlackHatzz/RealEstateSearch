@@ -29,7 +29,7 @@ const ProfilePage = () => {
       .onSnapshot((doc) => {
         setData(doc.data());
       });
-  }, []);
+  }, [user?.uid]);
 
   const updateProfile = ({ avatar, displayName, email }, { setSubmitting }) => {
     if (avatar) {
