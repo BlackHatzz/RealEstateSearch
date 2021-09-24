@@ -56,42 +56,161 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
           throw response;
         })
         .then((data) => {
-          const active = data;
-          const freeDays = active.map((e) => e.weekDay.id);
-          const busyDays = defaultWeekday.filter((e) => !freeDays.includes(e));
-          const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];
-          setWeekdays(filterDays);
-          const sun = active
-            .filter((e) => e.weekDay.id === 0)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const mon = active
-            .filter((e) => e.weekDay.id === 1)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const tue = active
-            .filter((e) => e.weekDay.id === 2)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const wed = active
-            .filter((e) => e.weekDay.id === 3)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const thu = active
-            .filter((e) => e.weekDay.id === 4)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const fri = active
-            .filter((e) => e.weekDay.id === 5)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const sat = active
-            .filter((e) => e.weekDay.id === 6)
-            .map((e) => periods[e.timeFrame.id - 1]);
-          const scheduleTable = [];
-          scheduleTable.push(sun);
-          scheduleTable.push(mon);
-          scheduleTable.push(tue);
-          scheduleTable.push(wed);
-          scheduleTable.push(thu);
-          scheduleTable.push(fri);
-          scheduleTable.push(sat);
-          setSchedule(scheduleTable);
-          console.log(schedule);
+          fb.firestore
+            .collection("users")
+            .doc(conversation.data.sellerId + "")
+            .collection("appointments")
+            .get()
+            .then((snap) => {
+              let docs = snap.docs;
+              if (docs.length) {
+                console.log("test1", docs);
+
+                const active = data;
+                let freeDays = active.map((e) => e.weekDay.id);
+                freeDays = freeDays.map(function (e) {
+                  return e === 7 ? 0 : e;
+                });
+                const busyDays = defaultWeekday.filter(
+                  (e) => !freeDays.includes(e)
+                );
+                const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];
+                setWeekdays(filterDays);
+                const sun = active
+                  .filter((e) => e.weekDay.id === 7)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const mon = active
+                  .filter((e) => e.weekDay.id === 1)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const tue = active
+                  .filter((e) => e.weekDay.id === 2)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const wed = active
+                  .filter((e) => e.weekDay.id === 3)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const thu = active
+                  .filter((e) => e.weekDay.id === 4)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const fri = active
+                  .filter((e) => e.weekDay.id === 5)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const sat = active
+                  .filter((e) => e.weekDay.id === 6)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const scheduleTable = [];
+                scheduleTable.push(sun);
+                scheduleTable.push(mon);
+                scheduleTable.push(tue);
+                scheduleTable.push(wed);
+                scheduleTable.push(thu);
+                scheduleTable.push(fri);
+                scheduleTable.push(sat);
+
+                console.log(scheduleTable);
+                let newScheduleTable = scheduleTable;
+                for (let doc of docs) {
+                  let datestring = doc.data().date;
+                  let isFuture = moment(datestring).isAfter(moment());
+                  if (isFuture) {
+                    let hour = moment(datestring).hour();
+                    let hourString = `${hour}:00 - ${hour + 2}:00`;
+                    let day = moment(datestring).day();
+                    day = day === 7 ? 0 : day;
+                    // console.log("date", moment(datestring));
+                    // console.log("hour", hourString);
+                    // console.log("day", day);
+                    // console.log("dayarr", scheduleTable[day]);
+                    let arr = scheduleTable[day].filter(
+                      (e) => e !== hourString
+                    );
+                    console.log(arr);
+                    newScheduleTable[day] = arr;
+                  }
+                }
+                console.log("after", scheduleTable);
+                console.log("after2", newScheduleTable);
+                setSchedule(newScheduleTable);
+              } else {
+                const active = data;
+                let freeDays = active.map((e) => e.weekDay.id);
+                freeDays = freeDays.map(function (e) {
+                  return e === 7 ? 0 : e;
+                });
+                const busyDays = defaultWeekday.filter(
+                  (e) => !freeDays.includes(e)
+                );
+                const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];
+                setWeekdays(filterDays);
+                const sun = active
+                  .filter((e) => e.weekDay.id === 7)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const mon = active
+                  .filter((e) => e.weekDay.id === 1)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const tue = active
+                  .filter((e) => e.weekDay.id === 2)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const wed = active
+                  .filter((e) => e.weekDay.id === 3)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const thu = active
+                  .filter((e) => e.weekDay.id === 4)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const fri = active
+                  .filter((e) => e.weekDay.id === 5)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const sat = active
+                  .filter((e) => e.weekDay.id === 6)
+                  .map((e) => periods[e.timeFrame.id - 1]);
+                const scheduleTable = [];
+                scheduleTable.push(sun);
+                scheduleTable.push(mon);
+                scheduleTable.push(tue);
+                scheduleTable.push(wed);
+                scheduleTable.push(thu);
+                scheduleTable.push(fri);
+                scheduleTable.push(sat);
+                setSchedule(scheduleTable);
+                console.log(scheduleTable);
+              }
+            });
+
+          // const active = data;
+          // const freeDays = active.map((e) => e.weekDay.id);
+          // const busyDays = defaultWeekday.filter((e) => !freeDays.includes(e));
+          // const filterDays = [...busyDays, ...[7, 7, 7, 7, 7, 7, 7]];
+          // setWeekdays(filterDays);
+          // const sun = active
+          //   .filter((e) => e.weekDay.id === 0)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const mon = active
+          //   .filter((e) => e.weekDay.id === 1)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const tue = active
+          //   .filter((e) => e.weekDay.id === 2)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const wed = active
+          //   .filter((e) => e.weekDay.id === 3)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const thu = active
+          //   .filter((e) => e.weekDay.id === 4)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const fri = active
+          //   .filter((e) => e.weekDay.id === 5)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const sat = active
+          //   .filter((e) => e.weekDay.id === 6)
+          //   .map((e) => periods[e.timeFrame.id - 1]);
+          // const scheduleTable = [];
+          // scheduleTable.push(sun);
+          // scheduleTable.push(mon);
+          // scheduleTable.push(tue);
+          // scheduleTable.push(wed);
+          // scheduleTable.push(thu);
+          // scheduleTable.push(fri);
+          // scheduleTable.push(sat);
+          // setSchedule(scheduleTable);
+          // console.log(scheduleTable);
         });
       return () => {
         // cleanup
@@ -345,7 +464,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
           placeholderText="Nhấn để chọn ngày"
           selected={startDate}
           minDate={addDays(new Date(), 1)}
-          maxDate={addDays(new Date(), 15)}
+          maxDate={addDays(new Date(), 14)}
           filterDate={filterDay}
           onChange={(date) => {
             setStartDate(date);
