@@ -38,6 +38,8 @@ const SellerNavbar = (props) => {
   const [reals, setReals] = useState([]);
   const [modalopen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState();
+  const [profileData, setProfileData] = useState();
+
   let history = useHistory();
 
   const wrapperRef = useRef(null);
@@ -71,6 +73,15 @@ const SellerNavbar = (props) => {
   //   setIsProfileMenuShown(false);
   //   setNotificationTrigger(false);
   // };
+
+  useEffect(() => {
+    fb.firestore
+      .collection("users")
+      .doc(fb.auth.currentUser?.uid + "")
+      .onSnapshot((doc) => {
+        setProfileData(doc.data());
+      });
+  }, []);
 
   useEffect(() => {
     if (uuid !== "null") {
@@ -161,15 +172,14 @@ const SellerNavbar = (props) => {
                 >
                   <div
                     style={{
-                      backgroundImage:
-                        "url('" + fb.auth.currentUser?.photoURL + "')",
+                      backgroundImage: "url('" + profileData?.photoURL + "')",
                     }}
                     className="profile-pic"
                   >
                     {/* <img src={fb.auth.currentUser?.photoURL} alt="" /> */}
                   </div>
                   <span className="profile-name-text">
-                    {fb.auth.currentUser?.displayName}
+                    {profileData?.displayName}
                   </span>
                   <RiArrowDropDownLine
                     style={{ width: "30px", height: "30px" }}
