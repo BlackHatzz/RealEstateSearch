@@ -8,7 +8,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import moment from "moment";
-
+import "moment/locale/vi";
 import SearchResultPage from "./components/search-result/search-result-page";
 import HomePage from "./components/home/home-page";
 import ProductDetailPage from "./components/product-detail/product-detail-page";

@@ -823,7 +823,8 @@ const RealItem = ({ realEstate, link = null }) => {
           <div className="uptime">
             {" "}
             {/* Ngày đăng:  */}
-            {moment(realEstate.createAt).calendar()}
+            {moment(moment(realEstate.createAt).add(7, 'hours')._d).calendar()}
+            {/* {moment(realEstate.createAt).calendar()} */}
           </div>
           {/* {renderStatus(item.user, realEstate)} */}
           {/* <div className="owner">Người đăng: </div> */}

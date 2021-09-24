@@ -241,14 +241,16 @@ class ProductDetailPage extends Component {
                   <p className="profile-mobile-name">{product?.staffName}</p>
                   <p>
                     Ngày đăng:{" "}
-                    {upperFirstLetter(moment(product?.createAt).calendar())}
+                    {upperFirstLetter(moment(moment(product?.createAt).add(7, 'hours')._d).calendar())}
+                    {/* {upperFirstLetter(moment(product?.createAt).calendar())} */}
                   </p>
                 </div>
               </div>
 
               <div className="product-short-detail mobile-hidden">
                 Ngày đăng:{" "}
-                {upperFirstLetter(moment(product?.createAt).calendar())}
+                {upperFirstLetter(moment(moment(product?.createAt).add(7, 'hours')._d).calendar())}
+                {/* {upperFirstLetter(moment(product?.createAt).calendar())} */}
                 {/*Hôm nay*/}
               </div>
 
