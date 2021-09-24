@@ -35,7 +35,7 @@ const SearchPost = () => {
     totalRecord: 0,
     totalPage: 0,
     contentSize: 0,
-    pageIndex: 0
+    pageIndex: 0,
   });
 
   const [tabItemList, setTabItemList] = useState([
@@ -66,7 +66,7 @@ const SearchPost = () => {
   ]);
 
   useEffect(() => {
-    console.log("userId old", userId, fb.auth.currentUser)
+    console.log("userId old", userId, fb.auth.currentUser);
     userId = fb.auth.currentUser?.uid;
     console.log("user here");
     console.log(userId);
@@ -93,9 +93,9 @@ const SearchPost = () => {
     }
 
     if (!isRealEstateLoaded) {
-      console.log("userId", userId, fb.auth.currentUser)
+      console.log("userId", userId, fb.auth.currentUser);
       fetch(
-        Constants.getRealEstateRefBySellerId(userId, "inactive", 0),
+        Constants.getRealEstateRefBySellerId(userId, "inactive", 0)
         // "https://api-realestate.top/api/v1/realEstate/getRealEstateBySeller/JvY1p2IyXTSxeKXmF4XeE5lOHkw2/inactive/0"
       )
         .then((res) => {
@@ -114,38 +114,31 @@ const SearchPost = () => {
                 realEstate: result.content[i],
               });
               setRealEstateList(myRealEstateList);
-            };
+            }
 
             let myPaging = {
               totalRecord: result.totalRecord,
               totalPage: result.totalPage,
               contentSize: result.contentSize,
               pageIndex: result.pageIndex,
-            }
+            };
 
             setPaging(myPaging);
             //   realEstateList = result.content;
             console.log(" step 2 - " + realEstateList.length);
             for (var i = 0; i < realEstateList.length; i++) {
-
               fetchMyAPI(realEstateList[i].realEstate, i);
-
             }
-
           },
-          (error) => { }
+          (error) => {}
         );
     }
-
-
 
     //   getTheChosenBuyerByRealEstateRef
   }, [isRealEstateLoaded]);
 
   const callAPIGetAllByPaging = (pageIndex) => {
-    fetch(
-      Constants.getRealEstateRefBySellerId(userId, "inactive", pageIndex)
-    )
+    fetch(Constants.getRealEstateRefBySellerId(userId, "inactive", pageIndex))
       .then((res) => res.json())
       .then(
         (result) => {
@@ -160,15 +153,15 @@ const SearchPost = () => {
               realEstate: result.content[i],
             });
             setRealEstateList(myRealEstateList);
-          };
+          }
           let myPaging = {
             totalRecord: result.totalRecord,
             totalPage: result.totalPage,
             contentSize: result.contentSize,
             pageIndex: result.pageIndex,
-          }
+          };
 
-          setPaging(myPaging)
+          setPaging(myPaging);
           //   realEstateList = result.content;
           console.log(" step 2 - " + realEstateList.length);
           // for (var i = 0; i < realEstateList.length; i++) {
@@ -199,10 +192,10 @@ const SearchPost = () => {
           //     );
           // }
         },
-        (error) => { }
+        (error) => {}
       );
-  }
-  const renderRealEstateItem = (item, index, link = null) => {
+  };
+  const renderRealEstateItem = (item, index, link = null, reason = null) => {
     if (item.realEstate == null) {
       return null;
     }
@@ -302,25 +295,53 @@ const SearchPost = () => {
     );
   };
   const generatePaging = () => {
-
-    let firstTag = <li class={"page-item " + (paging.pageIndex == 0 ? "disabled" : "")}>
-      <a   class="page-link" onClick={() => callAPIGetAllByPaging(Math.max(0, paging.pageIndex - 1))}>Trước</a>
-    </li>
-    let lastTag = <li class={"page-item " + (paging.totalPage - 1 == paging.pageIndex ? "disabled" : "")}>
-      <a class="page-link" onClick={() => callAPIGetAllByPaging(Math.min(paging.pageIndex + 1, paging.totalPage-1))}>Sau</a>
-    </li>
+    let firstTag = (
+      <li class={"page-item " + (paging.pageIndex == 0 ? "disabled" : "")}>
+        <a
+          class="page-link"
+          onClick={() =>
+            callAPIGetAllByPaging(Math.max(0, paging.pageIndex - 1))
+          }
+        >
+          Trước
+        </a>
+      </li>
+    );
+    let lastTag = (
+      <li
+        class={
+          "page-item " +
+          (paging.totalPage - 1 == paging.pageIndex ? "disabled" : "")
+        }
+      >
+        <a
+          class="page-link"
+          onClick={() =>
+            callAPIGetAllByPaging(
+              Math.min(paging.pageIndex + 1, paging.totalPage - 1)
+            )
+          }
+        >
+          Sau
+        </a>
+      </li>
+    );
 
     let tags = [firstTag];
 
     for (let i = 0; i < paging.totalPage; i++) {
-      let tag = <li class="page-item">
-        <a class="page-link" onClick={() => callAPIGetAllByPaging(i)}>{i + 1}</a>
-      </li>;
-      let currentIndexTag = <li class="page-item active">
-        <span class="page-link">
-          {i + 1}
-        </span>
-      </li>;
+      let tag = (
+        <li class="page-item">
+          <a class="page-link" onClick={() => callAPIGetAllByPaging(i)}>
+            {i + 1}
+          </a>
+        </li>
+      );
+      let currentIndexTag = (
+        <li class="page-item active">
+          <span class="page-link">{i + 1}</span>
+        </li>
+      );
       if (paging.pageIndex == i) {
         tags.push(currentIndexTag);
       } else {
@@ -329,18 +350,14 @@ const SearchPost = () => {
     }
     tags.push(lastTag);
     return tags;
-  }
+  };
   return (
     <React.Fragment>
       <div className="seller-search-post-wrapper">
-
         <div className="seller-search-create">
           <div className="seller-title-tab-list">DANH SÁCH BẤT ĐỘNG SẢN</div>
           <div className="plastic-white seller-search-post-search-bar-container">
-            <input
-              placeholder="Tìm kiếm bất động sản..."
-              type="text"
-            />
+            <input placeholder="Tìm kiếm bất động sản..." type="text" />
             <SearchIcon className="icon" />
           </div>
 
@@ -351,7 +368,6 @@ const SearchPost = () => {
             <span>+ Tạo mới Bất Động Sản</span>
           </Link>
         </div>
-
 
         <div className="seller-tab-container">
           {
@@ -375,7 +391,7 @@ const SearchPost = () => {
                       const titleTabItemElement = document.getElementById(
                         "span-" + reRenderItem.key
                       );
-                      titleTabItemElement.style.color = "black";//reRenderItem.hexColorCode;
+                      titleTabItemElement.style.color = "black"; //reRenderItem.hexColorCode;
                     } else {
                       // selected item
                       setSelectedTabItemKey(reRenderItem.key);
@@ -384,15 +400,15 @@ const SearchPost = () => {
                       );
                       tabItemElement.style.borderBottomColor =
                         reRenderItem.hexColorCode;
-                      tabItemElement.style.fontWeight =
-                        "bold";
+                      tabItemElement.style.fontWeight = "bold";
                       // tabItemElement.style.border =
                       //   "3px solid " + reRenderItem.hexColorCode;
 
                       const titleTabItemElement = document.getElementById(
                         "span-" + reRenderItem.key
                       );
-                      titleTabItemElement.style.color = reRenderItem.hexColorCode;//"white";//
+                      titleTabItemElement.style.color =
+                        reRenderItem.hexColorCode; //"white";//
                     }
                   });
 
@@ -424,7 +440,7 @@ const SearchPost = () => {
                             totalPage: result.totalPage,
                             contentSize: result.contentSize,
                             pageIndex: result.pageIndex,
-                          }
+                          };
 
                           setPaging(myPaging);
                         } else {
@@ -438,7 +454,7 @@ const SearchPost = () => {
                           setPaging(myPaging);
                         }
                       },
-                      (error) => { }
+                      (error) => {}
                     );
                 }}
                 key={item.key}
@@ -461,22 +477,19 @@ const SearchPost = () => {
               if (tabItemElement != null) {
                 tabItemElement.style.borderBottomColor =
                   selectedItem.hexColorCode;
-                tabItemElement.style.fontWeight =
-                  "bold";
+                tabItemElement.style.fontWeight = "bold";
                 // tabItemElement.style.border =
                 //   "3px solid " + selectedItem.hexColorCode;
 
                 const titleTabItemElement = document.getElementById(
                   "span-" + selectedItem.key
                 );
-                titleTabItemElement.style.color = selectedItem.hexColorCode//"white";
+                titleTabItemElement.style.color = selectedItem.hexColorCode; //"white";
 
                 setFirstLoad(false);
               }
             }
           })()}
-
-
 
           <div className="seller-total-record">
             Tổng số bài đăng: {paging.totalRecord} bài
@@ -485,18 +498,28 @@ const SearchPost = () => {
         <div className="seller-search-list-search-result">
           <div className="seller-search-list-search-container">
             {realEstateList.length > 0 ? (
-              <> {realEstateList.map((item, index) => {
-                var link = null;
-                if (selectedTabItemKey === tabItemList[1].key) {
-                  link = "/seller-update-post/" + item.realEstate.id;
-                }
-                return renderRealEstateItem(item, index, link);
-              })}
-                <ul class="pagination" >
-
-                  {generatePaging().map(val => val)}
-                </ul>
-              </>) : (
+              <>
+                {" "}
+                {realEstateList.map((item, index) => {
+                  var link = null;
+                  if (selectedTabItemKey === tabItemList[0].key) {
+                    link = {
+                      pathname:
+                        "/seller/seller-update-post/" + item.realEstate.id,
+                      reason: item.realEstate.reason,
+                    };
+                  } else if (selectedTabItemKey === tabItemList[1].key) {
+                    link = {
+                      pathname:
+                        "/seller/seller-update-post/" + item.realEstate.id,
+                      reason: item.realEstate.reason,
+                    };
+                  }
+                  return renderRealEstateItem(item, index, link);
+                })}
+                <ul class="pagination">{generatePaging().map((val) => val)}</ul>
+              </>
+            ) : (
               <React.Fragment>
                 <div className="not-found-container">
                   <div className="not-found"></div>
@@ -508,11 +531,7 @@ const SearchPost = () => {
                 </div>
               </React.Fragment>
             )}
-
           </div>
-
-
-
         </div>
       </div>
     </React.Fragment>
@@ -585,7 +604,6 @@ const RealItem = ({ realEstate, link = null }) => {
     };
   }, [realEstate.id]);
   return (
-
     //   <div className="box">
     //     <div
     //       style={{
@@ -700,10 +718,12 @@ const RealItem = ({ realEstate, link = null }) => {
     //     </div>
     //   </div>
     <Link to={link == null ? "#" : link} className="box link">
-      <div
-        className="seller-search-image-container"
-      >
-        <img src={realEstate.images[0].imgUrl} alt="" style={{ width: "auto", height: "100%" }} />
+      <div className="seller-search-image-container">
+        <img
+          src={realEstate.images[0].imgUrl}
+          alt=""
+          style={{ width: "auto", height: "100%" }}
+        />
       </div>
       <div className="content-product-container">
         {/* title of product */}
@@ -730,7 +750,6 @@ const RealItem = ({ realEstate, link = null }) => {
           Địa chỉ: {realEstate.realEstateNo} {realEstate.streetName},{" "}
           {realEstate.wardName}, {realEstate.disName}
         </span>
-
 
         {/* description */}
         {/* <div className="description"> */}
@@ -801,9 +820,11 @@ const RealItem = ({ realEstate, link = null }) => {
         )}
 
         <div className="other-info">
-
-          <div className="uptime"> {/* Ngày đăng:  */}{
-            moment(realEstate.createAt).calendar()}</div>
+          <div className="uptime">
+            {" "}
+            {/* Ngày đăng:  */}
+            {moment(realEstate.createAt).calendar()}
+          </div>
           {/* {renderStatus(item.user, realEstate)} */}
           {/* <div className="owner">Người đăng: </div> */}
           {/* <div className="product-phone-contact horizontal">

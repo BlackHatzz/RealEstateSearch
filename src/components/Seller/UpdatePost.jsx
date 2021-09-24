@@ -14,7 +14,7 @@ import { ControlPointSharp } from "@material-ui/icons";
 import { Editor } from "react-draft-wysiwyg";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import Autocomplete from "react-google-autocomplete";
-import { useHistory, useParams } from "react-router";
+import { useHistory, useParams, useLocation } from "react-router";
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,19 +25,19 @@ import {
 import ClearIcon from "@material-ui/icons/Clear";
 
 const UpdatePost = () => {
-    useEffect(() => {
-        
-    }, []);
-    console.log("annoying");
-    console.log(useParams());
-    let { id } = useParams();
-    return (<UpdatePostComponent />);
-}
+  useEffect(() => {}, []);
+  console.log("annoying");
+  console.log(useLocation());
+  let { id } = useParams();
+  let { reason } = useLocation();
+  return <UpdatePostComponent id={parseInt(id)} reason={reason} />;
+};
 
 class UpdatePostComponent extends Component {
   placeInfo = null;
   state = {
     //apiKey: "u5upZp6pDlFDxcV9fiknYyjk0hAboyQUngPRB-zJe1A", // here api
+    realEState: null,
     address: "",
     files: [],
     fileImages: [],
@@ -173,24 +173,284 @@ class UpdatePostComponent extends Component {
     isPopupLoaded: false,
   };
 
+  // componentDidMount() {
+  //   // get districts and wards data
+  //   fetch(
+  //     Constants.getDistrictsAndWards
+  //     //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress"
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         console.log("get dis ward");
+
+  //         this.setState({
+  //           districtWardList: result,
+  //         });
+  //         console.log(this.state.districtWardList);
+  //       },
+  //       (error) => {}
+  //     );
+  //   // set key event
+  //   document
+  //     .getElementById("title-textarea")
+  //     .addEventListener("keypress", (evt) => {
+  //       // this.updateCount();
+  //       console.log("heriwjeorw");
+  //       console.log(evt);
+  //       if (evt.which === 13) {
+  //         evt.preventDefault();
+  //       }
+  //       // else {
+  //       //   if (
+  //       //     document.getElementById("title-input").textContent.length >= 100
+  //       //   ) {
+  //       //     evt.preventDefault();
+  //       //   }
+  //       // }
+  //     });
+
+  //   // get data of the real estate
+  //   console.log("many stuff");
+  //   console.log(this.props);
+  //   fetch(
+  //       Constants.getRealEstateDetailById(12)
+  //     )
+  //       .then((res) => res.json())
+  //       .then(
+  //         (result) => {
+  //           console.log("get real estate data");
+  //           console.log(result);
+  //         },
+  //         (error) => {}
+  //       );
+  // }
   componentDidMount() {
-    // get districts and wards data
-    fetch(
-      Constants.getDistrictsAndWards
-      //   "http://realestatebackend-env.eba-9zjfbgxp.ap-southeast-1.elasticbeanstalk.com/api/v1/address/getAddress"
-    )
+    if (fb.auth.currentUser === null) {
+      return;
+    }
+    fetch(Constants.getRealEstateDetailById(this.props.id))
       .then((res) => res.json())
       .then(
         (result) => {
-          console.log("get dis ward");
+          console.log("get detail");
+          console.log(result);
+          this.state.realEstate = result;
+          // set data field
+          document.getElementById("title-textarea").value =
+            result.title.toString();
+
+          document.getElementById("price-input").value =
+            result.price.toString();
+          document.getElementById("juridical-input").value =
+            result.juridical.toString();
+
+          document.getElementById("area-input").value = result.area.toString();
+          document.getElementById("length-input").value =
+            result.length.toString();
+          document.getElementById("width-input").value =
+            result.width.toString();
+
+          document.getElementById("house-no-input").value =
+            result.realEstateNo.toString();
+          document.getElementById("street-name-input").value =
+            result.streetName.toString();
+          document.getElementById("bedroom-input").value =
+            result.numberOfBedroom.toString();
+          document.getElementById("bathroom-input").value =
+            result.numberOfBathroom.toString();
+
+          document.getElementById("investor-input").value =
+            result.investor.toString();
+          document.getElementById("project-input").value =
+            result.project.toString();
+
+          document.getElementById("furniture-input").value =
+            result.furniture.toString();
 
           this.setState({
-            districtWardList: result,
+            selectedRealEstateType: result.typeId,
           });
-          console.log(this.state.districtWardList);
+          document.getElementById("real-estate-type-input").value =
+            result.typeName;
+
+          document.getElementById("floor-input").value = result.floor;
+
+          for (var i = 0; i < this.state.doorDirections.length; i++) {
+            if (this.state.doorDirections[i].title === result.direction) {
+              this.setState({
+                selectedDoorDirection: this.state.doorDirections[i].key,
+              });
+            }
+          }
+          document.getElementById("door-direction-input").value =
+            result.direction;
+
+          for (var i = 0; i < this.state.balconyDirections.length; i++) {
+            if (
+              this.state.balconyDirections[i].title === result.balconyDirection
+            ) {
+              this.setState({
+                selectedBalconyDirection: this.state.balconyDirections[i].key,
+              });
+            }
+          }
+          document.getElementById("balcony-direction-input").value =
+            result.balconyDirection;
+
+          fetch(Constants.getDistrictsAndWards)
+            .then((res) => res.json())
+            .then(
+              (districtsAndWards) => {
+                this.setState({
+                  districtWardList: districtsAndWards,
+                });
+                this.setState({
+                  selectedDistrictId: result.disId,
+                  selectedWardId: result.wardId,
+                });
+                // maybe missing?
+                document.getElementById("dis-input").value = result.disName;
+                document.getElementById("ward-input").value = result.wardName;
+              },
+              (error) => {}
+            );
+
+          // set seller info
+          this.setState({
+            selectedSellerInfo: {
+              avatar: result.sellerAvatar,
+              phone: result.sellerPhone,
+              fullname: result.sellerName,
+              id: result.sellerId,
+            },
+          });
+
+          // set description
+          document.getElementsByClassName(
+            "public-DraftEditor-content"
+          )[0].textContent = result.description;
+
+          // set images
+          var urlsTemp = [];
+          for (var i = 0; i < result.images?.length; i++) {
+            urlsTemp.push(result.images[i].imgUrl);
+          }
+          this.setState({
+            files: urlsTemp,
+          });
+          //   console.log(this.getBase64Image(urlsTemp[0]));
+          const toDataURL = (url) =>
+            fetch(url)
+              .then((response) => response.blob())
+              .then(
+                (blob) =>
+                  new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                  })
+              );
+
+          function dataURLtoFile(dataurl, filename) {
+            var arr = dataurl.split(","),
+              mime = arr[0].match(/:(.*?);/)[1],
+              bstr = atob(arr[1]),
+              n = bstr.length,
+              u8arr = new Uint8Array(n);
+            while (n--) {
+              u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new File([u8arr], filename, { type: mime });
+          }
+          //https://i.ibb.co/pfHbbcS/Screen-Shot-2021-06-27-at-09-06-47.png
+          // "https://firebasestorage.googleapis.com/v0/b/real-estate-5552a.appspot.com/o/images%2F8074342b-a1e7-4761-ad7e-eeb13091c548.png?alt=media&token=fc1b5ca1-e13c-4ebe-b377-9406b0c2de92"
+          toDataURL(
+            "https://firebasestorage.googleapis.com/v0/b/real-estate-5552a.appspot.com/o/images%2F8074342b-a1e7-4761-ad7e-eeb13091c548.png"
+          ).then((dataUrl) => {
+            console.log("Here is Base64 Url", dataUrl);
+            var fileData = dataURLtoFile(dataUrl, "imageName.jpg");
+            console.log("Here is JavaScript File Object", fileData);
+            // fileArr.push(fileData);
+          });
+
+          const handleURLToFile = async (urls) => {
+            var handleResult = [];
+            for (var i = 0; i < urls.length; i++) {
+              await toDataURL(urls[i]).then((dataUrl) => {
+                console.log("Here is Base64 Url", dataUrl);
+                var fileData = dataURLtoFile(dataUrl, "imageName.jpg");
+                console.log("Here is JavaScript File Object", fileData);
+                // fileArr.push(fileData);
+                handleResult.push(fileData);
+              });
+            }
+            console.log("final temp");
+            console.log(handleResult);
+            return handleResult;
+          };
+          //   var noTokenUrls = [];
+          //   for (var i = 0; i < urlsTemp.length; i++) {
+          //     const splitUrls = urlsTemp[i].split("?");
+          //     noTokenUrls.push(splitUrls[0]);
+          //   }
+          //   handleURLToFile(noTokenUrls).then((handleResult) => {
+          //     console.log("fuck");
+          //     console.log(handleResult);
+          //     this.setState({
+          //       fileImages: handleResult,
+          //     });
+          //   });
+
+          this.setState({
+            oldFileUrls: result.images,
+          });
+
+          this.updateCount();
+
+          //   fetch(
+          //     "https://firebasestorage.googleapis.com/v0/b/real-estate-5552a.appspot.com/o/images%2F8074342b-a1e7-4761-ad7e-eeb13091c548.png?alt=media&token=fc1b5ca1-e13c-4ebe-b377-9406b0c2de92",
+          //     {
+          //       mode: "no-cors",
+          //       origin: ["*"],
+          //       method: ["GET"],
+          //       "Access-Control-Allow-Origin": "*",
+          //       //   maxAgeSeconds: 3600,
+          //     }
+          //   )
+          //     .then(function (response) {
+          //       // Convert to JSON
+          //       return response.json();
+          //     })
+          //     .then(function (j) {
+          //       // Yay, `j` is a JavaScript object
+          //       console.log(JSON.stringify(j));
+          //     })
+          //     .catch(function (error) {
+          //       console.log("Request failed", error);
+          //     });
+
+          //   import { getStorage, ref } from "firebase/storage";
+
+          // Create a reference with an initial file path and name
+          //   const storage = getStorage();
+          //   const pathReference = ref(storage, "images/stars.jpg");
+
+          //   // Create a reference from a Google Cloud Storage URI
+          //   const gsReference = ref(storage, "gs://bucket/images/stars.jpg");
+
+          //   // Create a reference from an HTTPS URL
+          //   // Note that in the URL, characters are URL escaped!
+          //   const httpsReference = ref(
+          //     storage,
+          //     "https://firebasestorage.googleapis.com/b/bucket/o/images%20stars.jpg"
+          //   );
         },
         (error) => {}
       );
+    // get districts and wards data
+
     // set key event
     document
       .getElementById("title-textarea")
@@ -209,21 +469,6 @@ class UpdatePostComponent extends Component {
         //   }
         // }
       });
-
-    // get data of the real estate
-    console.log("many stuff");
-    console.log(this.props);
-    fetch(
-        Constants.getRealEstateDetailById(12)
-      )
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            console.log("get real estate data");
-            console.log(result);
-          },
-          (error) => {}
-        );
   }
 
   renderSelectedImage = () => {
@@ -602,12 +847,23 @@ class UpdatePostComponent extends Component {
     const width = parseFloat(
       document.getElementById("width-input").value.toString()
     );
+    const juridical = document
+      .getElementById("juridical-input")
+      .value.toString();
 
     const investor = document.getElementById("investor-input").value.toString();
+
+    const furniture = document
+      .getElementById("furniture-input")
+      .value.toString();
 
     const realEstateType = parseInt(
       document.getElementById("real-estate-type-input").value.toString()
     );
+    var floor = "";
+    if (document.getElementById("floor-input") != null) {
+      floor = document.getElementById("floor-input").value.toString();
+    }
     const project = document.getElementById("project-input").value.toString();
     const doorDirection = document
       .getElementById("door-direction-input")
@@ -695,29 +951,273 @@ class UpdatePostComponent extends Component {
 
     const putFileToStorage = async () => {
       var downloadURLs = [];
-      for (var i = 0; i < this.state.fileImages.length; i++) {
+      console.log("length");
+      console.log(this.state.fileImages.length);
+      //   for (var i = 0; i < this.state.fileImages.length; i++) {
+      //     console.log("counter");
+      //     console.log(i);
+      //     const imageNamez = this.uuidv4();
+
+      //     // var promise = await fb.storage
+      //     //   .ref()
+      //     //   .child("images/" + imageNamez + ".png")
+      //     //   .put(this.state.fileImages[i]);
+
+      //     // console.log("tired");
+      //     // console.log(promise);
+
+      //     // var next = await promise.then(async (snapshot) => {
+      //     //   snapshot.ref.getDownloadURL().then(async (downloadURL) => {
+      //     //     console.log(downloadURL);
+      //     //     // downloadURLs.push(downloadURL);
+      //     //     return downloadURL;
+      //     //   });
+      //     // });
+      //     // downloadURLs.push(next);
+
+      //     var item = await fb.storage
+      //         .ref()
+      //         .child("images/" + imageNamez + ".png")
+      //         .put(this.state.fileImages[i])
+      //     .then((snapshot) => {
+      //       snapshot.ref.getDownloadURL().then((downloadURL) => {
+      //         console.log(downloadURL);
+      //         // downloadURLs.push(downloadURL);
+      //         return downloadURL;
+      //       });
+      //     });
+      //     downloadURLs.push(item);
+      //   }
+      var counter = 0;
+      for await (let fileImage of this.state.fileImages) {
+        counter++;
         const imageNamez = this.uuidv4();
+
         await fb.storage
           .ref()
           .child("images/" + imageNamez + ".png")
-          .put(this.state.fileImages[i])
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((downloadURL) => {
+          .put(fileImage)
+          .then(async (snapshot) => {
+            await snapshot.ref.getDownloadURL().then((downloadURL) => {
               console.log(downloadURL);
               downloadURLs.push(downloadURL);
+              // return downloadURL;
+              console.log("in counter");
+              console.log(counter);
+              console.log(downloadURL);
+
+              if (counter === this.state.fileImages.length) {
+                var downloadURLsJSON = [];
+                //   console.log("oopopo");
+                for (var i = 0; i < this.state.oldFileUrls.length; i++) {
+                  downloadURLsJSON.push({
+                    imgUrl: this.state.oldFileUrls[i].imgUrl,
+                  });
+                }
+                for (var i = 0; i < downloadURLs.length; i++) {
+                  downloadURLsJSON.push({
+                    imgUrl: downloadURLs[i],
+                  });
+                }
+                console.log("image data", downloadURLsJSON);
+
+                const requestOptions = {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    id: this.props.id,
+                    dataentryId: this.state.realEstate.dataentryId,
+                    sellerId: fb.auth.currentUser?.uid, // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+                    title: title,
+                    // view: 0,
+                    // districtId: this.state.selectedDistrictId,
+                    wardId: this.state.selectedWardId,
+                    length: length,
+                    width: width,
+                    streetName: streetName,
+                    realEstateNo: houseNo,
+                    // latitude: locationRealEstate.lat,
+                    // longitude: locationRealEstate.lng,
+                    typeId: this.state.selectedRealEstateType,
+                    description: description,
+                    area: area,
+                    price: price,
+                    direction: doorDirection,
+                    balconyDirection: balconyDirection,
+                    project: project,
+                    investor: investor,
+                    juridical: juridical,
+                    furniture: furniture,
+                    numberOfBedroom: numberOfBedroom,
+                    numberOfBathroom: numberOfBathroom,
+                    images: downloadURLsJSON,
+                    address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
+                    floor: floor,
+                  }),
+                };
+                fetch(
+                  Constants.host + "api/v1/realEstate/updateRealEstate",
+                  requestOptions
+                )
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      // console.log(result.content);
+                      console.log("a new realestate is updated");
+                      console.log(result);
+                      this.setState({
+                        isLoaded: true,
+                      });
+                    },
+                    (error) => {}
+                  );
+
+                const requestOptions2 = {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    id: this.props.id,
+                    status: "inactive",
+                  }),
+                };
+
+                fetch(
+                  Constants.host + "api/v1/realEstate/updateRealEstateStatus",
+                  requestOptions2
+                )
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      console.log("a new status is updated");
+                      console.log(result);
+                    },
+                    (error) => {}
+                  );
+              }
             });
           });
       }
       return downloadURLs;
     };
 
+    // id
+    // "sellerId"
+    // "dataentryId"
+    // "title":
+    // "wardId":
+    // "streetName"
+    // "realEstateNo"
+    // "address"
+    // "typeId"
+    // "description"
+    // "length"
+    // "width"
+    // "area"
+    // "floor"
+    // "price"
+    // "direction"
+    // "balconyDirection"
+    // "project"
+    // "investor":
+    // "juridical": "Đã có sổ đỏ",
+    // "furniture": "Nội thất cao cấp",
+    // "numberOfBedroom": 4,
+    // "numberOfBathroom": 4,
+    // "images"
+    if (this.state.fileImages.length > 0) {
+      putFileToStorage().then((downloadURLs) => {});
+    } else {
+      console.log("old image data", this.state.oldFileUrls);
+      const requestOptions = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: this.props.id,
+          dataentryId: this.state.realEstate.dataentryId,
+          sellerId: fb.auth.currentUser?.uid, // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+          title: title,
+          // view: 0,
+          // districtId: this.state.selectedDistrictId,
+          wardId: this.state.selectedWardId,
+          length: length,
+          width: width,
+          streetName: streetName,
+          realEstateNo: houseNo,
+          // latitude: locationRealEstate.lat,
+          // longitude: locationRealEstate.lng,
+          typeId: this.state.selectedRealEstateType,
+          description: description,
+          area: area,
+          price: price,
+          direction: doorDirection,
+          balconyDirection: balconyDirection,
+          project: project,
+          investor: investor,
+          juridical: juridical,
+          furniture: furniture,
+          numberOfBedroom: numberOfBedroom,
+          numberOfBathroom: numberOfBathroom,
+          images:
+            //   [{
+            //     "imgUrl": "https://thuthuatnhanh.com/wp-content/uploads/2020/01/hinh-anh-nha-ong-3-tang-dep-3d-o-pho.jpg"
+            // },],
+            [...this.state.oldFileUrls],
+          address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
+          floor: floor,
+        }),
+      };
+      fetch(
+        Constants.host + "api/v1/realEstate/updateRealEstate",
+        requestOptions
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            // console.log(result.content);
+            console.log("a new realestate is updated");
+            console.log(result);
+            this.setState({
+              isLoaded: true,
+            });
+          },
+          (error) => {}
+        );
+
+      const requestOptions2 = {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: this.props.id,
+          status: "inactive",
+        }),
+      };
+
+      fetch(
+        Constants.host + "api/v1/realEstate/updateRealEstateStatus",
+        requestOptions2
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log("a new status is updated");
+            console.log(result);
+          },
+          (error) => {}
+        );
+    }
+
+    return;
+
     putFileToStorage().then((downloadURLs) => {
+      console.log("then loop image");
+      console.log(downloadURLs);
 
       fetchLocationData(searchText).then((locationData) => {
         console.log("after fetch location data");
         const locationRealEstate = locationData.results[0].geometry.location;
         console.log(locationRealEstate);
         var downloadURLsJSON = [];
+        console.log("oopopo");
         for (var i = 0; i < downloadURLs.length; i++) {
           downloadURLsJSON.push({
             imgUrl: downloadURLs[i],
@@ -729,7 +1229,9 @@ class UpdatePostComponent extends Component {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
+            dataentryId: fb.auth.currentUser?.uid,
+            sellerId: this.state.selectedSellerInfo?.id,
+            // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
             title: title,
             view: 0,
             districtId: this.state.selectedDistrictId,
@@ -740,7 +1242,7 @@ class UpdatePostComponent extends Component {
             realEstateNo: houseNo,
             latitude: locationRealEstate.lat,
             longitude: locationRealEstate.lng,
-            typeId: realEstateType,
+            typeId: this.state.selectedRealEstateType,
             description: description,
             area: area,
             price: price,
@@ -748,31 +1250,18 @@ class UpdatePostComponent extends Component {
             balconyDirection: balconyDirection,
             project: project,
             investor: investor,
-            juridical: "Đã có sổ đỏ",
-            furniture: "Nội thất cao cấp",
+            juridical: juridical,
+            furniture: furniture,
             numberOfBedroom: numberOfBedroom,
             numberOfBathroom: numberOfBathroom,
             images: downloadURLsJSON,
-            facilities: [
-              {
-                facilityTypeId: 2,
-                facilityName: "Bệnh Viện 105",
-                latitude: 11.2367,
-                longitude: 102.8123678,
-                distance: 3.0,
-              },
-              {
-                facilityTypeId: 3,
-                facilityName: "Trường FPT",
-                latitude: 13.1234,
-                longitude: 101.1234,
-                distance: 5.0,
-              },
-            ],
+            address: `${houseNo} ${streetName}, ${ward}, ${dis}, Hồ Chí Minh, Việt Nam`,
+            floor: floor,
+            juridical: juridical,
           }),
         };
 
-        fetch(Constants.createRealEstateRef, requestOptions)
+        fetch(Constants.DataEntry.createRealEstateRef, requestOptions)
           .then((res) => res.json())
           .then(
             (result) => {
@@ -886,6 +1375,17 @@ class UpdatePostComponent extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
+        <div className="row">
+          <div className="col1">
+            <div className="reason-container">
+              <div className="reason-content">
+                <span>Lý do từ chối: </span>
+                <br />
+                <span>{this.props.reason}</span>
+              </div>
+            </div>
+          </div>
+        </div>
         <div className="tab-title">Thông tin bài viết</div>
         {/* kfqne;kf;qwej;gf
                 j;qewhjr;ogne;qorng;oq3bnro;g
@@ -1015,11 +1515,12 @@ class UpdatePostComponent extends Component {
               <br />
               tỷ đồng
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.priceTooltip.toggle
                 ? this.renderTooltip(this.state.priceTooltip.text)
                 : null}
               <input
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1080,17 +1581,19 @@ class UpdatePostComponent extends Component {
                 placeholder="tỷ đồng"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
 
           <div className="col2">
-            <h2 className="title">Chủ đầu tư</h2>
+            <h2 className="title">Giấy tờ pháp lý*</h2>
             <div className="input-container">
               <input
-                id="investor-input"
-                placeholder="Tên chủ đầu tư"
+                autoComplete="off"
+                id="juridical-input"
+                placeholder="Nhập giấy tờ pháp lý..."
                 type="text"
                 className="input-field"
                 maxLength="25"
@@ -1102,6 +1605,8 @@ class UpdatePostComponent extends Component {
             <h2 className="title">Chủ đầu tư</h2>
             <div className="input-container">
               <input
+              autoComplete="off"
+              autoComplete="off"
                 id="investor-input"
                 placeholder="Tên chủ đầu tư"
                 type="text"
@@ -1116,13 +1621,14 @@ class UpdatePostComponent extends Component {
             <h2 className="title">
               Diện tích*
               <br />
-              m2
+              {Constants.squareMeter}
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.areaTooltip.toggle
                 ? this.renderTooltip(this.state.areaTooltip.text)
                 : null}
               <input
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1180,25 +1686,26 @@ class UpdatePostComponent extends Component {
                   }
                 }}
                 id="area-input"
-                placeholder="m2"
+                placeholder={Constants.squareMeter}
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
 
           <div className="col3">
             <h2 className="title">
-              Chiều dài*
-              <br />
-              m2
+              Chiều sâu*
+              <br />m
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.lengthTooltip.toggle
                 ? this.renderTooltip(this.state.lengthTooltip.text)
                 : null}
               <input
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1256,25 +1763,26 @@ class UpdatePostComponent extends Component {
                   }
                 }}
                 id="length-input"
-                placeholder="m2"
+                placeholder="m"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
 
           <div className="col3">
             <h2 className="title">
-              Chiều rộng*
-              <br />
-              m2
+              Chiều ngang*
+              <br />m
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.widthTooltip.toggle
                 ? this.renderTooltip(this.state.widthTooltip.text)
                 : null}
               <input
+                autoComplete="off"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1332,10 +1840,11 @@ class UpdatePostComponent extends Component {
                   }
                 }}
                 id="width-input"
-                placeholder="m2"
+                placeholder="m"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
@@ -1346,6 +1855,7 @@ class UpdatePostComponent extends Component {
             <h2 className="title">Chủ đầu tư</h2>
             <div className="input-container">
               <input
+              autoComplete="off"
                 id="investor-input"
                 placeholder="Tên chủ đầu tư"
                 type="text"
@@ -1359,7 +1869,7 @@ class UpdatePostComponent extends Component {
         <div style={{ height: "20px" }}></div>
         <div className="row session-row">
           <div className="manage-post-tag">
-            <span>Thông tin bất động sản</span>
+            <span>Thông tin chi tiết</span>
           </div>
           <div className="manage-post-right-arrow"></div>
         </div>
@@ -1369,6 +1879,7 @@ class UpdatePostComponent extends Component {
                   <h2 className="title">Loại bất động sản</h2>
                   <div className="input-container">
                     <input
+              autoComplete="off"
                       placeholder="Loại bất động sản..."
                       type="text"
                       className="input-field"
@@ -1390,6 +1901,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.realEstateTypeTooltip.text)
                 : null}
               <input
+                autoComplete="off"
                 onChange={() => {
                   this.setState({
                     realEstateTypeTooltip: {
@@ -1426,18 +1938,51 @@ class UpdatePostComponent extends Component {
             </div>
           </div>
 
-          <div className="col2">
-            <h2 className="title">Dự án</h2>
-            <div className="input-container">
-              <input
-                id="project-input"
-                placeholder="Nhập tên dự án..."
-                type="text"
-                className="input-field"
-                maxLength="25"
-              />
-            </div>
-          </div>
+          {(() => {
+            if (this.state.selectedRealEstateType === 1) {
+              return (
+                <>
+                  <div className="col3">
+                    <h2 className="title">Mã chung cư*</h2>
+                    <div className="input-container resize-input-container">
+                      <input
+                        style={{ width: "auto" }}
+                        autoComplete="off"
+                        id="floor-input"
+                        placeholder="Nhập mã chung cư..."
+                        type="text"
+                        className="input-field"
+                        maxLength="15"
+                        size="15"
+                        autoComplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div style={{ width: "8%" }}></div>
+                </>
+              );
+            } else if (this.state.selectedRealEstateType === 2) {
+              return (
+                <>
+                  <div className="col4">
+                    <h2 className="title">Số tầng*</h2>
+                    <div className="input-container">
+                      <input
+                        autoComplete="off"
+                        id="floor-input"
+                        placeholder="..."
+                        type="text"
+                        className="input-field"
+                        maxLength="2"
+                        autoComplete="off"
+                      />
+                    </div>
+                  </div>
+                  <div className="col4"></div>
+                </>
+              );
+            }
+          })()}
         </div>
 
         <div className="row">
@@ -1456,6 +2001,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.doorDirectionTooltip.text)
                 : null}
               <input
+                autoComplete="false"
                 onChange={() => {
                   this.setState({
                     doorDirectionTooltip: {
@@ -1495,6 +2041,7 @@ class UpdatePostComponent extends Component {
                   <h2 className="title">Hướng cửa chính</h2>
                   <div className="input-container">
                     <input
+              autoComplete="false"
                       placeholder="Hướng cửa chính..."
                       type="text"
                       className="input-field"
@@ -1506,6 +2053,7 @@ class UpdatePostComponent extends Component {
                   <h2 className="title">Hướng ban công</h2>
                   <div className="input-container">
                     <input
+              autoComplete="false"
                       placeholder="Hướng ban công..."
                       type="text"
                       className="input-field"
@@ -1524,6 +2072,7 @@ class UpdatePostComponent extends Component {
               className="input-container read-only-field"
             >
               <input
+                autoComplete="false"
                 id="balcony-direction-input"
                 readOnly
                 placeholder="Chọn hướng..."
@@ -1548,6 +2097,7 @@ class UpdatePostComponent extends Component {
                   <h2 className="title">Số phòng ngủ</h2>
                   <div className="input-container">
                     <input
+              autoComplete="false"
                       placeholder="Nhập số phòng ngủ..."
                       type="text"
                       className="input-field"
@@ -1558,6 +2108,7 @@ class UpdatePostComponent extends Component {
                   <h2 className="title">Số phòng tắm</h2>
                   <div className="input-container">
                     <input
+              autoComplete="false"
                       placeholder="Nhập số phòng tắm..."
                       type="text"
                       className="input-field"
@@ -1581,6 +2132,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.disTooltip.text)
                 : null}
               <input
+                autoComplete="false"
                 id="dis-input"
                 readOnly
                 placeholder="Chọn tên quận/huyện..."
@@ -1607,6 +2159,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.wardTooltip.text)
                 : null}
               <input
+                autoComplete="false"
                 id="ward-input"
                 readOnly
                 placeholder="Chọn tên phường/xã..."
@@ -1662,12 +2215,14 @@ class UpdatePostComponent extends Component {
             <h2 className="title">Địa chỉ*</h2>
             <div style={{ display: "flex" }} className="input-container">
               {/* <input
+              autoComplete="false"
                       id="address-input"
                       placeholder="Nhập tên và số địa chỉ..."
                       type="text"
                       className="input-field"
                     />  */}
               <input
+                autoComplete="false"
                 id="house-no-input"
                 placeholder="Số nhà"
                 type="text"
@@ -1677,19 +2232,68 @@ class UpdatePostComponent extends Component {
               {this.state.streetNameTooltip.toggle
                 ? this.renderTooltip(this.state.streetNameTooltip.text)
                 : null}
-              <input
-                onChange={(event) => {
-                  const value = event.target.value.toString();
-                  if (value === "") {
+              <div style={{ maxWidth: "calc(100% - 30% - 8px - 8px)" }}>
+                <input
+                  autoComplete="false"
+                  onChange={(event) => {
+                    const value = event.target.value.toString();
+                    if (value === "") {
+                      this.setState({
+                        streetNameTooltip: {
+                          toggle: true,
+                          text: "Dữ liệu bắt buộc nhập",
+                          isValid: false,
+                        },
+                      });
+                    } else {
+                      this.setState({
+                        streetNameTooltip: {
+                          toggle: false,
+                          text: "",
+                          isValid: true,
+                        },
+                      });
+                    }
+                  }}
+                  onBlur={(event) => {
+                    const value = event.target.value.toString();
+                    if (value === "") {
+                      this.setState({
+                        streetNameTooltip: {
+                          toggle: true,
+                          text: "Dữ liệu bắt buộc nhập",
+                          isValid: false,
+                        },
+                      });
+                    } else {
+                      this.setState({
+                        streetNameTooltip: {
+                          toggle: false,
+                          text: "",
+                          isValid: true,
+                        },
+                      });
+                    }
+                    // this.setState({
+                    //   isAutoCompleteMenuShown: false,
+                    // })
+                  }}
+                  id="street-name-input"
+                  onChange={this.handleChangeAddress}
+                  placeholder="Tên đường"
+                  type="text"
+                  style={{ width: "100%" }}
+                  className="cou-input-field-right"
+                />
+                {this.renderMenu(
+                  this.state.isAutoCompleteMenuShown,
+                  this.state.autoCompleteMenu,
+                  "street-name-input",
+                  (selectedItem) => {
+                    document.getElementById("street-name-input").value =
+                      selectedItem.title;
                     this.setState({
-                      streetNameTooltip: {
-                        toggle: true,
-                        text: "Dữ liệu bắt buộc nhập",
-                        isValid: false,
-                      },
-                    });
-                  } else {
-                    this.setState({
+                      isAutoCompleteMenuShown: false,
                       streetNameTooltip: {
                         toggle: false,
                         text: "",
@@ -1697,33 +2301,8 @@ class UpdatePostComponent extends Component {
                       },
                     });
                   }
-                }}
-                onBlur={(event) => {
-                  const value = event.target.value.toString();
-                  if (value === "") {
-                    this.setState({
-                      streetNameTooltip: {
-                        toggle: true,
-                        text: "Dữ liệu bắt buộc nhập",
-                        isValid: false,
-                      },
-                    });
-                  } else {
-                    this.setState({
-                      streetNameTooltip: {
-                        toggle: false,
-                        text: "",
-                        isValid: true,
-                      },
-                    });
-                  }
-                }}
-                id="street-name-input"
-                // onChange={this.handleChangeAddress}
-                placeholder="Tên đường"
-                type="text"
-                className="cou-input-field-right"
-              />
+                )}
+              </div>
             </div>
           </div>
 
@@ -1737,6 +2316,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.bedroomTooltip.text)
                 : null}
               <input
+                autoComplete="false"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1814,6 +2394,7 @@ class UpdatePostComponent extends Component {
                 ? this.renderTooltip(this.state.bathroomTooltip.text)
                 : null}
               <input
+                autoComplete="false"
                 onChange={(event) => {
                   const value = event.target.value;
                   if (isNaN(value)) {
@@ -1875,6 +2456,65 @@ class UpdatePostComponent extends Component {
                 type="text"
                 className="input-field"
                 maxLength="2"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col2">
+            <h2 className="title">Chủ đầu tư</h2>
+            <div className="input-container">
+              <input
+                autoComplete="false"
+                id="investor-input"
+                placeholder="Tên chủ đầu tư"
+                type="text"
+                className="input-field"
+                maxLength="25"
+              />
+            </div>
+          </div>
+
+          {/* <div className="col2">
+            <h2 className="title">Tình trạng nội thất*</h2>
+            <div className="input-container">
+              <input
+              autoComplete="false"
+                id="furniture-input"
+                placeholder="Nhập tình trạng nội thất..."
+                type="text"
+                className="input-field"
+                maxLength="25"
+              />
+            </div>
+          </div> */}
+          <div className="col2">
+            <h2 className="title">Dự án</h2>
+            <div className="input-container">
+              <input
+                autoComplete="false"
+                id="project-input"
+                placeholder="Nhập tên dự án..."
+                type="text"
+                className="input-field"
+                maxLength="25"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col2">
+            <h2 className="title">Tình trạng nội thất*</h2>
+            <div className="input-container">
+              <input
+                autoComplete="false"
+                id="furniture-input"
+                placeholder="Nhập tình trạng nội thất..."
+                type="text"
+                className="input-field"
+                maxLength="25"
               />
             </div>
           </div>
@@ -1953,12 +2593,30 @@ class UpdatePostComponent extends Component {
                   >
                     <div
                       onClick={() => {
-                        console.log("delete image");
+                        console.log("delete image", index);
                         // console.log(this.state.files.splice(index, 1));
+                        if (index < this.state.oldFileUrls.length) {
+                          this.state.oldFileUrls.splice(index, 1);
+                          this.setState({
+                            oldFileUrls: [...this.state.oldFileUrls],
+                          });
+                        }
                         this.state.files.splice(index, 1);
                         this.setState({
                           files: [...this.state.files],
                         });
+                        // if (index <= this.state.oldFileUrls.length - 1) {
+                        //   this.state.oldFileUrls.splice(index, 1);
+                        //   this.setState({
+                        //     oldFileUrls: [...this.state.oldFileUrls],
+                        //     files: [...this.state.files],
+                        //   });
+                        // } else {
+                        //   this.state.files.splice(index, 1);
+                        //   this.setState({
+                        //     files: [...this.state.files],
+                        //   });
+                        // }
                       }}
                       className="delete-file-container"
                     >
