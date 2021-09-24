@@ -14,6 +14,8 @@ export const ChatButton = (props) => {
     const buyerPhone = fb.auth.currentUser.phoneNumber;
     const buyerAvatar = fb.auth.currentUser.photoURL;
     const address =
+      props.product?.realEstateNo +
+      " " +
       props.product.streetName +
       ", " +
       props.product.wardName +
