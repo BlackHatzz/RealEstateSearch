@@ -46,6 +46,7 @@ const BuyerNavbar = () => {
   const [conversations, setConversations] = useState([]);
   const [modalopen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState();
+  const [profileData, setProfileData] = useState();
   // const [currentChat, setCurrentChat] = useState();
   const [, forceUpdate] = useReducer((x) => x + 1, 0);
   let history = useHistory();
@@ -87,6 +88,15 @@ const BuyerNavbar = () => {
     console.log(document.title);
     document.title = unseen > 0 ? "(" + unseen + ") " + title : title;
   }
+
+  useEffect(() => {
+    fb.firestore
+      .collection("users")
+      .doc(fb.auth.currentUser?.uid + "")
+      .onSnapshot((doc) => {
+        setProfileData(doc.data());
+      });
+  }, []);
   useEffect(() => {
     if (uuid !== "null") {
       const getNotifications = fb.firestore
@@ -188,13 +198,12 @@ const BuyerNavbar = () => {
                 >
                   <div
                     style={{
-                      backgroundImage:
-                        "url('" + fb.auth.currentUser?.photoURL + "')",
+                      backgroundImage: "url('" + profileData?.photoURL + "')",
                     }}
                     className="profile-pic"
                   ></div>
                   <span className="profile-name-text">
-                    {fb.auth.currentUser?.displayName}
+                    {profileData?.displayName}
                   </span>
                   <RiArrowDropDownLine
                     style={{ width: "30px", height: "30px" }}

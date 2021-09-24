@@ -189,7 +189,7 @@ const ProfilePage = () => {
                   }
                 >
                   <input
-                    value={user?.displayName}
+                    value={data?.displayName}
                     type="text"
                     className="solid-field"
                   />
