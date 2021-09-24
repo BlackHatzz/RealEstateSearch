@@ -51,47 +51,105 @@ export const ChatContent = ({
   };
 
   function submitDeal({ deal }, { setSubmitting }) {
-    fb.firestore
-      .collection("conversations")
-      .doc(currentChat.id)
-      .collection("messages")
-      .doc(dealId)
-      .set({
-        id: dealId,
-        type: "deal",
-        deal: deal,
-        sender: username,
-        status: "pending",
-        timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-      })
-      .then(() => {
-        fb.firestore
-          .collection("conversations")
-          .doc(currentChat.id)
-          .update(
-            {
-              deal: "pending",
-              dealId: dealId + "",
-              dealPrice: deal,
-              lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
-              lastMessageReadStaff: false,
-              lastMessage: "thỏa thuận mới",
-            }
-            // { merge: true }
-          )
-          .then(() => {
-            // console.log("chatdata", currentChat);
-            // forceUpdate();
-          })
-          .catch((err) =>
-            console.log("error add deal info to conversation", err)
-          );
-      })
-      .catch((err) => console.log("error create deal", err))
-      .finally(() => {
-        setSubmitting(false);
-        setAnchorEl(null);
-      });
+    let reDeal = currentChat?.data?.deal === "accepted" ? true : false;
+    if (reDeal) {
+      let oldDealId;
+      fb.firestore
+        .collection("conversations")
+        .doc(currentChat.id)
+        .get()
+        .then((doc) => {
+          oldDealId = doc.data()?.dealId;
+          console.log(oldDealId);
+          fb.firestore
+            .collection("conversations")
+            .doc(currentChat.id)
+            .collection("messages")
+            .doc(oldDealId)
+            .update({
+              status: "cancel",
+            });
+
+          fb.firestore
+            .collection("conversations")
+            .doc(currentChat.id)
+            .collection("messages")
+            .doc(dealId)
+            .set({
+              id: dealId,
+              type: "deal",
+              deal: deal,
+              sender: username,
+              status: "pending",
+              timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            })
+            .then(() => {
+              fb.firestore
+                .collection("conversations")
+                .doc(currentChat.id)
+                .update(
+                  {
+                    deal: "pending",
+                    dealId: dealId + "",
+                    dealPrice: deal,
+                    lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastMessageReadStaff: false,
+                    lastMessage: "thỏa thuận mới",
+                  }
+                  // { merge: true }
+                )
+                .catch((err) =>
+                  console.log("error add deal info to conversation", err)
+                );
+            });
+        })
+        .finally(() => {
+          setSubmitting(false);
+          setAnchorEl(null);
+        });
+    } else {
+      fb.firestore
+        .collection("conversations")
+        .doc(currentChat.id)
+        .collection("messages")
+        .doc(dealId)
+        .set({
+          id: dealId,
+          type: "deal",
+          deal: deal,
+          sender: username,
+          status: "pending",
+          timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+        })
+        .then(() => {
+          fb.firestore
+            .collection("conversations")
+            .doc(currentChat.id)
+            .update(
+              {
+                deal: "pending",
+                dealId: dealId + "",
+                dealPrice: deal,
+                lastvisit: firebase.firestore.FieldValue.serverTimestamp(),
+                lastMessageReadStaff: false,
+                lastMessage: "thỏa thuận mới",
+              }
+              // { merge: true }
+            )
+            .then(() => {
+              // console.log("chatdata", currentChat);
+              // forceUpdate();
+            })
+            .catch((err) =>
+              console.log("error add deal info to conversation", err)
+            );
+        })
+        .catch((err) => console.log("error create deal", err))
+        .finally(() => {
+          setSubmitting(false);
+          setAnchorEl(null);
+        });
+    }
   }
 
   function sendMessage() {
@@ -238,6 +296,17 @@ export const ChatContent = ({
                           Đặt lịch
                         </button>
                       )}
+                      {bookStatus === "passed" &&
+                        dealStatus &&
+                        currentChat?.data && (
+                          <button
+                            className="chat-window-deal-button"
+                            onClick={handleBook}
+                            type="button"
+                          >
+                            Đặt lịch
+                          </button>
+                        )}
                       {bookStatus === "none" &&
                         dealStatus &&
                         currentChat?.data && (

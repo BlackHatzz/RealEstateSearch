@@ -69,7 +69,7 @@ const Passed = () => {
           ))}
         </div>
       ) : (
-        <div className="schedule-empty">Chưa có lịch hẹn đã qua </div>
+        <div className="schedule-empty"> </div>
       )}
     </>
   );

@@ -241,6 +241,7 @@ function Appointment({ setTrigger, conversation, setBookStatus }) {
             scheduleDate: startDate.toISOString(),
             staffId: conversation.data.staffId,
             status: "upcoming",
+            id: bookId,
           }),
         })
           .then((response) => {

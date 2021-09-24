@@ -15,7 +15,7 @@ export const FormField = ({
       name={name}
       type={type}
       placeholder={placeholder}
-      maxlength={maxlength}
+      maxLength={maxlength}
       size={size}
     />
     <ErrorMessage className="error" component="div" name={name} />

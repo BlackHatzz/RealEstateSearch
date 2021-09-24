@@ -286,7 +286,7 @@ export const MessageContainer = ({
     let status =
       moment().diff(moment(message.appointment), "minutes") > 120
         ? "passed"
-        : "upcoming";
+        : "passed";
     console.log(status);
     if (message?.id) {
       let batch = fb.firestore.batch();
@@ -329,7 +329,7 @@ export const MessageContainer = ({
       batch.commit().then(() => {
         console.log("update appointment status batch commit finished");
       });
-      setBookStatus("passed");
+      setBookStatus(status);
     }
   };
   return (
