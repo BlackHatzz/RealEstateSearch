@@ -105,7 +105,7 @@ class ProductDetailPage extends Component {
             Constants.getAveragePrice(
               "ward",
               result?.wardId,
-              6,
+              8,
               result?.typeName.toLowerCase(),
               "2021"
             )
@@ -125,7 +125,7 @@ class ProductDetailPage extends Component {
             Constants.getAveragePrice(
               "district",
               result?.disId,
-              6,
+              8,
               result?.typeName.toLowerCase(),
               "2021"
             )
@@ -526,37 +526,45 @@ class ProductDetailPage extends Component {
                 <div className="average-price-tab">
                   <span className="info">{this.state.product?.disName}</span>
                   <span className="sub-info">
-                    {"~"}
+                    
                     {(() => {
                       if (this.state.averageDistrictPriceInfo?.length > 0) {
                         return (
+                          "~" +
                           Math.round(
                             (this.state.averageDistrictPriceInfo[0].price /
                               1_000_000) *
                               100
-                          ) / 100
+                          ) / 100 + " triệu/" + Constants.squareMeter
                         );
+                      } else {
+                        return "--";
                       }
-                    })()}{" "}
-                    triệu/{Constants.squareMeter}
+                    })()}
+                    {/* {" "}
+                    triệu/{Constants.squareMeter} */}
                   </span>
                 </div>
                 <div className="average-price-tab">
                   <span className="info">{this.state.product?.wardName}</span>
                   <span className="sub-info">
-                    {"~"}
+                    
                     {(() => {
                       if (this.state.averageWardPriceInfo?.length > 0) {
                         return (
+                          "~" +
                           Math.round(
                             (this.state.averageWardPriceInfo[0].price /
                               1_000_000) *
                               100
-                          ) / 100
+                          ) / 100 + " triệu/" + Constants.squareMeter
                         );
+                      } else {
+                        return "--";
                       }
-                    })()}{" "}
-                    triệu/{Constants.squareMeter}
+                    })()}
+                    {/* {" "}
+                    triệu/{Constants.squareMeter} */}
                   </span>
                 </div>
               </div>
