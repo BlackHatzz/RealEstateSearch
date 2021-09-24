@@ -178,15 +178,36 @@ export const ChatContent = ({
                   {role === "buyer" && currentChat?.data?.status === "active" && (
                     <div className="chat_window_container_message_box_display_realestate_info_deal_book">
                       {dealStatus ? (
-                        <p className="chat_window_container_message_box_display_realestate_info_deal">
-                          Thỏa thuận: {currentChat?.data?.dealPrice + " tỷ "}
-                          {currentChat?.data?.deal === "pending"
-                            ? "(đang chờ)"
-                            : ""}
-                          {/* {currentChat?.data?.deal + ""} */}
-                        </p>
+                        <div className="chat_window_container_message_box_display_realestate_info_deal">
+                          <p>
+                            Thỏa thuận: {currentChat?.data?.dealPrice + " tỷ "}
+                            {currentChat?.data?.deal === "pending"
+                              ? "(đang chờ)"
+                              : ""}
+                          </p>
+                          {currentChat?.data?.deal === "accepted" &&
+                            bookStatus === "passed" && (
+                              <button
+                                disabled={
+                                  currentChat?.data?.status === "active"
+                                    ? false
+                                    : true
+                                }
+                                className="chat-window-deal-button"
+                                onClick={handleDeal}
+                                type="button"
+                              >
+                                Đặt lại
+                              </button>
+                            )}
+                        </div>
                       ) : (
                         <button
+                          disabled={
+                            currentChat?.data?.status === "active"
+                              ? false
+                              : true
+                          }
                           className="chat-window-deal-button"
                           onClick={handleDeal}
                           type="button"
@@ -195,16 +216,18 @@ export const ChatContent = ({
                         </button>
                       )}
                       {bookStatus === "upcoming" && (
-                        <p className="chat_window_container_message_box_display_realestate_info_deal">
-                          {"Lịch hẹn: " +
-                            moment(currentChat?.data?.appointmentDate).format(
-                              "LT"
-                            ) +
-                            " - " +
-                            moment(currentChat?.data?.appointmentDate).format(
-                              "L"
-                            )}
-                        </p>
+                        <div className="chat_window_container_message_box_display_realestate_info_deal">
+                          <p>
+                            {"Lịch hẹn: " +
+                              moment(currentChat?.data?.appointmentDate).format(
+                                "LT"
+                              ) +
+                              " - " +
+                              moment(currentChat?.data?.appointmentDate).format(
+                                "L"
+                              )}
+                          </p>
+                        </div>
                       )}
                       {bookStatus === "cancel" && (
                         <button

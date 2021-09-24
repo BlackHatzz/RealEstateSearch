@@ -329,7 +329,7 @@ export const MessageContainer = ({
       batch.commit().then(() => {
         console.log("update appointment status batch commit finished");
       });
-      setBookStatus("cancel");
+      setBookStatus("passed");
     }
   };
   return (

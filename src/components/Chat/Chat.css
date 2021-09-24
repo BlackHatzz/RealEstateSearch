@@ -820,8 +820,13 @@ p {
   cursor: pointer;
 }
 
-.chat_window_container_message_box_display_realestate_info_deal {
+.chat_window_container_message_box_display_realestate_info_deal > p {
   font-size: 12px;
+  margin-right: 5px;
+}
+.chat_window_container_message_box_display_realestate_info_deal {
+  display: flex;
+  flex-direction: row;
 }
 
 .chat-window-deal-button {
@@ -830,4 +835,5 @@ p {
   border-radius: 5px;
   color: white;
   cursor: pointer;
+  font-size: 12px;
 }
