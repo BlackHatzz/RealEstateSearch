@@ -335,6 +335,10 @@ const BuyerNavbar = () => {
                         {" " +
                           moment(modalData.data.appointmentDate).format("LL")}
                       </p>
+                      <h4>Nội dung giao dịch</h4>
+                      <p className="modal-transaction-text">
+                        {modalData.data.description}
+                      </p>
                       <div className="modal-transaction-image">
                         {modalData.data.images.map((image) => (
                           <img src={`data:image/*;base64,${image}`} alt="" />
