@@ -5,6 +5,7 @@ import "./schedule-mobile.css";
 
 import Passed from "./Passed";
 import { Context } from "../../ChatContext";
+import { fb } from "../../services";
 
 const Schedule = () => {
   const [currentTab, setCurrentTab] = useState(0);

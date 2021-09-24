@@ -286,7 +286,7 @@ export const MessageContainer = ({
     let status =
       moment().diff(moment(message.appointment), "minutes") > 120
         ? "passed"
-        : "passed";
+        : "upcoming";
     console.log(status);
     if (message?.id) {
       let batch = fb.firestore.batch();

@@ -16,12 +16,15 @@ const Upcoming = () => {
         .doc(uuid)
         .collection("appointments")
         .where(role + "Id", "==", uuid)
-        .where("status", "==", "upcoming")
         .orderBy("date", "asc")
         .onSnapshot((snapshot) => {
           setAppointments(
             snapshot.docs
-              .filter((e) => moment().isBefore(moment(e.data().date).format()))
+              .filter(
+                (e) =>
+                  moment().diff(moment(e.data().date).format(), "minutes") <
+                    120 && e.data().status !== "cancel"
+              )
               .map((doc) => ({
                 id: doc.id,
                 data: doc.data(),
@@ -66,7 +69,7 @@ const Upcoming = () => {
           ))}
         </div>
       ) : (
-        <div className="schedule-empty">Chưa có lịch hẹn </div>
+        <div className="schedule-empty">Chưa có lịch hẹn</div>
       )}
     </>
   );
