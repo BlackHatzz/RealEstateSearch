@@ -51,7 +51,9 @@ class ProductItem extends Component {
 
             <div className="product-other-info">
               <div className="product-owner"></div>
-              <div className="product-uptime">Ngày đăng: {moment(this.props.item.createAt).calendar()}</div>
+              <div className="product-uptime">Ngày đăng: {moment(moment(this.props.item.createAt).add(7, 'hours')._d).calendar()}
+              {/* {moment(this.props.item.createAt).calendar()} */}
+              </div>
               {/* <div className="product-phone-contact horizontal">
                 <BsFillChatDotsFill />
                 <div style={{ width: "12px" }}></div>

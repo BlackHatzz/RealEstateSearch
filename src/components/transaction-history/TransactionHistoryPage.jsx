@@ -146,10 +146,15 @@ const TransactionHistoryPage = () => {
           </h1>
           <h1 className="title-session2">
             Thời gian tạo giao dịch:
+            {moment(moment(selectedTransaction?.createAt).add(7, 'hours')._d).format("dddd")},{" "}
+            {moment(moment(selectedTransaction?.createAt).add(7, 'hours')._d).format("LT")} giờ, ngày{" "}
+            {/* {moment(selectedTransaction?.createAt).format("LL")} */}
+            {moment(moment(selectedTransaction?.createAt).add(7, 'hours')._d).format("LL")}
+
             {/* {selectedTransaction?.createAt} */}{" "}
-            {moment(selectedTransaction?.createAt).format("dddd")},{" "}
+            {/* {moment(selectedTransaction?.createAt).format("dddd")},{" "}
             {moment(selectedTransaction?.createAt).format("LT")} giờ, ngày{" "}
-            {moment(selectedTransaction?.createAt).format("LL")}
+            {moment(selectedTransaction?.createAt).format("LL")} */}
           </h1>
           <h1 className="title-session2">Hình ảnh</h1>
           <div className="staff-transaction-history-image-wrapper">
@@ -206,13 +211,25 @@ const TransactionHistoryPage = () => {
               <React.Fragment key={index}>
                 <div className="date-container">
                   <span className="spec-date">
-                    {moment(item.createAt).format("dddd")}, ngày{" "}
-                    {moment(item.createAt).format("LL")}
+                    {moment(moment(item.createAt).add(7, "hours")._d).format(
+                      "dddd"
+                    )}
+                    , ngày{" "}
+                    {moment(moment(item.createAt).add(7, "hours")._d).format(
+                      "LL"
+                    )}
+                    {/* {moment(item.createAt).format("dddd")}, ngày{" "}
+                    {moment(item.createAt).format("LL")} */}
                   </span>
                 </div>
                 <div className="schedule-time-container">
                   <div className="schedule-time">
-                    Lúc {moment(item.createAt).format("LT")} giờ
+                    Lúc{" "}
+                    {moment(moment(item.createAt).add(7, "hours")._d).format(
+                      "LT"
+                    )}{" "}
+                    giờ
+                    {/* {moment(item.createAt).format("LT")} */}
                   </div>
                   <div className="info">
                     <span>
