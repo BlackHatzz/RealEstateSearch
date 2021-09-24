@@ -7,4 +7,10 @@
   .history-container {
     width: max-content;
   }
+  .transaction-history-container>.grid-header {
+    padding: 10px 0;
+  }
+  .transaction-history-container>.grid-item{
+    padding:5px 0;
+  }
 }
