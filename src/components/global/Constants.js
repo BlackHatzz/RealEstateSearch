@@ -85,6 +85,7 @@ class Constants {
         page.toString()
       );
     }
+
   };
   static Seller = class {
     static createRealEstateRef =
@@ -99,6 +100,14 @@ class Constants {
         "seller" +
         "/" +
         page.toString()
+      );
+    }
+
+    static getTransactionDetail(id) {
+      return (
+        Constants.host +
+        "api/v1/transaction/getTransactionDetailById/" +
+        id.toString()
       );
     }
   };

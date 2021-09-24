@@ -642,7 +642,7 @@ class ManagePost extends Component {
     const realEstateType = parseInt(
       document.getElementById("real-estate-type-input").value.toString()
     );
-    var floor = "0";
+    var floor = "";
     if (document.getElementById("floor-input") != null) {
       floor = document.getElementById("floor-input").value.toString();
     }
@@ -770,7 +770,7 @@ class ManagePost extends Component {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            dataentryId: null,
+            dataentryId: "",
             sellerId: fb.auth.currentUser?.uid,
             // sellerId: "JvY1p2IyXTSxeKXmF4XeE5lOHkw2",
             title: title,
@@ -1069,14 +1069,14 @@ class ManagePost extends Component {
           </div>
         </div>
 
-        <div className="row">
+        <div style={{ justifyContent: "flex-start" }} className="row">
           <div className="col3">
             <h2 className="title">
               Giá tiền*
               <br />
-              (tỷ đồng)
+              tỷ đồng
             </h2>
-            <div className="input-container w-60">
+            <div className="input-container resize-input-container">
               {this.state.priceTooltip.toggle
                 ? this.renderTooltip(this.state.priceTooltip.text)
                 : null}
@@ -1142,7 +1142,8 @@ class ManagePost extends Component {
                 placeholder="tỷ đồng"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
@@ -1181,9 +1182,9 @@ class ManagePost extends Component {
             <h2 className="title">
               Diện tích*
               <br />
-              (m2)
+              {Constants.squareMeter}
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.areaTooltip.toggle
                 ? this.renderTooltip(this.state.areaTooltip.text)
                 : null}
@@ -1246,20 +1247,21 @@ class ManagePost extends Component {
                   }
                 }}
                 id="area-input"
-                placeholder="m2"
+                placeholder={Constants.squareMeter}
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
 
           <div className="col3">
             <h2 className="title">
-              Chiều dài*
+              Chiều sâu*
               <br />m
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.lengthTooltip.toggle
                 ? this.renderTooltip(this.state.lengthTooltip.text)
                 : null}
@@ -1325,17 +1327,18 @@ class ManagePost extends Component {
                 placeholder="m"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
 
           <div className="col3">
             <h2 className="title">
-              Chiều rộng*
+              Chiều ngang*
               <br />m
             </h2>
-            <div className="input-container">
+            <div className="input-container resize-input-container">
               {this.state.widthTooltip.toggle
                 ? this.renderTooltip(this.state.widthTooltip.text)
                 : null}
@@ -1401,7 +1404,8 @@ class ManagePost extends Component {
                 placeholder="m"
                 type="text"
                 className="input-field"
-                maxLength="4"
+                maxLength="7"
+                size="7"
               />
             </div>
           </div>
@@ -1424,7 +1428,7 @@ class ManagePost extends Component {
 
         {/* session 1 */}
         <div style={{ height: "20px" }}></div>
-        <div className="row-group session-row">
+        <div className="row session-row">
           <div className="manage-post-tag">
             <span>Thông tin chi tiết</span>
           </div>
@@ -1501,14 +1505,16 @@ class ManagePost extends Component {
                 <>
                   <div className="col3">
                     <h2 className="title">Mã chung cư*</h2>
-                    <div className="input-container">
+                    <div className="input-container resize-input-container">
                       <input
+                        style={{ width: "auto" }}
                         autoComplete="off"
                         id="floor-input"
                         placeholder="Nhập mã chung cư..."
                         type="text"
                         className="input-field"
                         maxLength="15"
+                        size="15"
                         autoComplete="off"
                       />
                     </div>

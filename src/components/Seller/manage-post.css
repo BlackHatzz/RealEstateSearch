@@ -271,8 +271,7 @@
 }
 
 .seller-wrapper>.right-container .input-container {
-  background-color: #dadde2/*#f1f1f1*/
-  ;
+  background-color: #dadde2/*#f1f1f1*/;
   position: relative;
   height: 40px;
   border-radius: 4px;
@@ -281,6 +280,11 @@
   resize: none;
   flex: 1;
   /* align-items: center; */
+}
+
+.seller-wrapper > .right-container .resize-input-container {
+  flex: none !important;
+  width: auto !important;
 }
 
 .seller-wrapper>.right-container .input-container .count {
@@ -705,4 +709,18 @@ div.div-field {
   border-width: 5px;
   border-style: solid;
   border-color: #ea6863 transparent transparent transparent;
+}
+
+
+.reason-container {
+  width: 100%;
+  height: auto;
+  background-color: #FFE694;
+}
+.reason-content {
+  padding: 5px;
+}
+
+.reason-content span {
+  font-size: 15px;
 }
