@@ -25,6 +25,51 @@ admin.initializeApp(functions.config().firebase);
 //       .add(notification)
 //       .then((doc) => console.log("noti added", doc));
 //   });
+exports.addAdminRole = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .getUserByEmail(data.email)
+    .then((user) => {
+      return admin.auth().setCustomUserClaims(user.uid, {
+        admin: true,
+      });
+    })
+    .then(() => {
+      return {
+        message: `Success! ${data.email} has been made an admin`,
+      };
+    })
+    .catch((err) => {
+      return err;
+    });
+});
+
+exports.createCustomerUser = functions.https.onCall((data, context) => {
+  return admin
+    .auth()
+    .createUser({
+      email: data.email,
+      emailVerified: false,
+      phoneNumber: data.phoneNumber,
+      displayName: data.displayName,
+      photoURL: data.photoURL,
+      password: data.password,
+      disabled: false,
+    })
+    .then((userRecord) => {
+      console.log("Successfully created new user:", userRecord.uid);
+      return {
+        message: `tao tai khoan thanh cong`,
+        uuid: userRecord.uid,
+      };
+    })
+    .catch((error) => {
+      console.log("Error creating new user:", error);
+      return {
+        message: `tao tai khoan that bai: ${error}`,
+      };
+    });
+});
 
 exports.appointmentCreated = functions.firestore
   .document("users/{userId}/appointments/{appointmentId}")
