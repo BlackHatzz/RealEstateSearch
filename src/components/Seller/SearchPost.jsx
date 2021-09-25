@@ -356,10 +356,10 @@ const SearchPost = () => {
       <div className="seller-search-post-wrapper">
         <div className="seller-search-create">
           <div className="seller-title-tab-list">DANH SÁCH BẤT ĐỘNG SẢN</div>
-          <div className="plastic-white seller-search-post-search-bar-container">
+          {/* <div className="plastic-white seller-search-post-search-bar-container">
             <input placeholder="Tìm kiếm bất động sản..." type="text" />
             <SearchIcon className="icon" />
-          </div>
+          </div> */}
 
           <Link
             to={"/seller/manage-post"}
